@@ -11,7 +11,6 @@ interface ThemedButtonProps {
 const ThemedButton = ({ children, onPress }: ThemedButtonProps) => {
   const { theme } = useThemeContext();
   const styles = themedButtonStyles(theme);
-
   return (
     <Pressable style={styles.buttonContainer} onPress={onPress}>
       <Text style={styles.text}>{children}</Text>
