@@ -1,6 +1,8 @@
-import { Text, View } from "react-native";
+import useThemeContext from "@/contexts/Theme/useThemeContext";
+import { Button, Text, View } from "react-native";
 
 export default function Index() {
+  const { theme, toggleTheme } = useThemeContext();
   return (
     <View
       style={{
@@ -9,7 +11,8 @@ export default function Index() {
         alignItems: "center",
       }}
     >
-      <Text>Edit app/index.tsx to edit this screen.</Text>
+      <Text>{theme}</Text>
+      <Button title="change theme" onPress={toggleTheme} />
     </View>
   );
 }
