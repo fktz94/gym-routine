@@ -1,4 +1,4 @@
-type Theme = "light" | "dark" | null;
+type Theme = "light" | "dark";
 
 type ThemeValueType = {
   theme: Theme;

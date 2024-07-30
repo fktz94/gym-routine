@@ -1,6 +1,7 @@
+import App from "@/components/App";
 import ThemeProvider from "@/contexts/Theme/ThemeProvider";
 import { useFonts } from "expo-font";
-import { SplashScreen, Stack } from "expo-router";
+import { SplashScreen } from "expo-router";
 import { useEffect } from "react";
 
 SplashScreen.preventAutoHideAsync();
@@ -22,9 +23,7 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider>
-      <Stack>
-        <Stack.Screen name="index" />
-      </Stack>
+      <App />
     </ThemeProvider>
   );
 }
