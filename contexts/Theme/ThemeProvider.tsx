@@ -2,7 +2,7 @@ import useTheme from "@/hooks/useTheme";
 import ThemeContext from "./ThemeContext";
 
 type Props = {
-  storedTheme: Theme | null;
+  storedTheme: Theme;
   children: React.ReactNode;
 };
 

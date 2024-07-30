@@ -6,9 +6,7 @@ const useTheme = (storedTheme: Theme) => {
 
   const toggleTheme = () => {
     const newTheme = theme === "dark" ? "light" : "dark";
-    (async () => {
-      storeTheme(newTheme);
-    })();
+    (async () => storeTheme(newTheme))();
     setTheme(newTheme);
   };
 
