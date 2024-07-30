@@ -4,11 +4,8 @@ import { StatusBar } from "expo-status-bar";
 
 export default function Header() {
   return (
-    <>
-      <StatusBar style="light" />
-      <View>
-        <Text>Header</Text>
-      </View>
-    </>
+    <View>
+      <Text>Header</Text>
+    </View>
   );
 }

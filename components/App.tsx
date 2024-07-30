@@ -1,17 +1,20 @@
 import { StyleSheet } from "react-native";
-import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Header from "./Header";
 import { Stack } from "expo-router";
 import useThemeContext from "@/contexts/Theme/useThemeContext";
 import { Colors } from "@/constants/Colors";
+import { StatusBar } from "expo-status-bar";
 
 export default function App() {
   const { theme } = useThemeContext();
   const styles = appStyles(theme);
 
+  const statusBarStyle = theme === "light" ? "dark" : "light";
+
   return (
     <SafeAreaView style={styles.container}>
+      <StatusBar style={statusBarStyle} />
       <Header />
       <Stack
         screenOptions={{ headerShown: false, contentStyle: { backgroundColor: "transparent" } }}
