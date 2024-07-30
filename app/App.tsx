@@ -1,10 +1,10 @@
 import { StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import Header from "./Header";
 import { Stack } from "expo-router";
 import useThemeContext from "@/contexts/Theme/useThemeContext";
 import { Colors } from "@/constants/Colors";
 import { StatusBar } from "expo-status-bar";
+import Header from "@/components/Header";
 
 export default function App() {
   const { theme } = useThemeContext();
