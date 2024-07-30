@@ -1,12 +1,7 @@
 import { Colors } from "@/constants/Colors";
 import useThemeContext from "@/contexts/Theme/useThemeContext";
-import { ReactNode } from "react";
+import { ThemedButtonProps } from "@/types/Components";
 import { Text, Pressable, StyleSheet } from "react-native";
-
-interface ThemedButtonProps {
-  children: ReactNode;
-  onPress: () => void;
-}
 
 const ThemedButton = ({ children, onPress }: ThemedButtonProps) => {
   const { theme } = useThemeContext();
