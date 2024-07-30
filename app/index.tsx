@@ -1,15 +1,16 @@
+import ThemedButton from "@/components/ThemedButton";
 import { Colors } from "@/constants/Colors";
 import useThemeContext from "@/contexts/Theme/useThemeContext";
 import { Button, StyleSheet, Text, View } from "react-native";
 
 export default function Index() {
-  const { theme, toggleTheme } = useThemeContext();
+  const { theme } = useThemeContext();
   const styles = indexStyles(theme);
 
   return (
     <View style={styles.container}>
       <Text>{theme}</Text>
-      <Button title="change theme" onPress={toggleTheme} />
+      <ThemedButton onPress={() => {}}>New routine</ThemedButton>
     </View>
   );
 }
@@ -19,7 +20,6 @@ const indexStyles = (theme: Theme) =>
     container: {
       flex: 1,
       flexGrow: 1,
-      justifyContent: "center",
       alignItems: "center",
     },
   });
