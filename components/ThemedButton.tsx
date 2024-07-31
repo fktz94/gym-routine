@@ -1,24 +1,30 @@
 import { Colors } from "@/constants/Colors";
 import useThemeContext from "@/contexts/Theme/useThemeContext";
 import { DefaultStyle, ThemedButtonProps } from "@/types/Components";
+import { forwardRef } from "react";
 import { Text, TouchableOpacity, StyleSheet } from "react-native";
 
-const ThemedButton = ({
-  children,
-  defaultStyle = "primary",
-  externalButtonStyles,
-  externalTextStyles,
-  onPress,
-}: ThemedButtonProps) => {
-  const { theme } = useThemeContext();
-  const styles = themedButtonStyles(defaultStyle, theme);
+const ThemedButton = forwardRef(
+  (
+    {
+      children,
+      defaultStyle = "primary",
+      externalButtonStyles,
+      externalTextStyles,
+      onPress,
+    }: ThemedButtonProps,
+    ref
+  ) => {
+    const { theme } = useThemeContext();
+    const styles = themedButtonStyles(defaultStyle, theme);
 
-  return (
-    <TouchableOpacity style={[styles.buttonContainer, externalButtonStyles]} onPress={onPress}>
-      <Text style={[styles.text, externalTextStyles]}>{children}</Text>
-    </TouchableOpacity>
-  );
-};
+    return (
+      <TouchableOpacity style={[styles.buttonContainer, externalButtonStyles]} onPress={onPress}>
+        <Text style={[styles.text, externalTextStyles]}>{children}</Text>
+      </TouchableOpacity>
+    );
+  }
+);
 
 export default ThemedButton;
 

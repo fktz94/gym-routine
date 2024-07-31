@@ -8,12 +8,12 @@ export interface ThemedButtonProps {
   defaultStyle?: DefaultStyle;
   externalButtonStyles?: ViewStyle;
   externalTextStyles?: TextStyle;
-  onPress: () => void;
+  onPress?: () => void;
 }
 
 export interface CurrentThemedButtonProps {
   routineName: string;
-  onPress: () => void;
+  onPress?: () => void;
 }
 
 export interface RoutinesListProps {

@@ -4,6 +4,7 @@ import useThemeContext from "@/contexts/Theme/useThemeContext";
 import { RoutinesListProps } from "@/types/Components";
 import { Colors } from "@/constants/Colors";
 import CurrentThemedButton from "./CurrentThemedButton";
+import { Link } from "expo-router";
 
 export default function RoutinesList({ selectedRoutines, isCurrent = false }: RoutinesListProps) {
   const { theme } = useThemeContext();
@@ -11,11 +12,13 @@ export default function RoutinesList({ selectedRoutines, isCurrent = false }: Ro
 
   const itemList = (routineName: string, madeOn: string) => (
     <View style={styles.itemList}>
-      {isCurrent ? (
-        <CurrentThemedButton onPress={() => {}} routineName={routineName} />
-      ) : (
-        <ThemedButton onPress={() => {}}>{routineName}</ThemedButton>
-      )}
+      <Link href={{ pathname: "/routine/[routine]", params: { routine: routineName } }} asChild>
+        {isCurrent ? (
+          <CurrentThemedButton routineName={routineName} />
+        ) : (
+          <ThemedButton>{routineName}</ThemedButton>
+        )}
+      </Link>
       <Text style={styles.madeOnText}>
         Made on <Text style={styles.bold}>{madeOn}</Text>
       </Text>
