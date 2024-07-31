@@ -6,15 +6,16 @@ import { Text, TouchableOpacity, StyleSheet } from "react-native";
 const ThemedButton = ({
   children,
   defaultStyle = "primary",
-  externalStyles,
+  externalButtonStyles,
+  externalTextStyles,
   onPress,
 }: ThemedButtonProps) => {
   const { theme } = useThemeContext();
   const styles = themedButtonStyles(defaultStyle, theme);
 
   return (
-    <TouchableOpacity style={[styles.buttonContainer, externalStyles]} onPress={onPress}>
-      <Text style={styles.text}>{children}</Text>
+    <TouchableOpacity style={[styles.buttonContainer, externalButtonStyles]} onPress={onPress}>
+      <Text style={[styles.text, externalTextStyles]}>{children}</Text>
     </TouchableOpacity>
   );
 };
@@ -26,11 +27,12 @@ const themedButtonStyles = (defaultStyle: DefaultStyle, theme: Theme) =>
     buttonContainer: {
       paddingHorizontal: 16,
       paddingVertical: 8,
-      backgroundColor: defaultStyle === "primary" ? Colors[theme].primary : Colors[theme].secondary,
+      backgroundColor:
+        defaultStyle === "secondary" ? Colors[theme].primary : Colors[theme].secondary,
       borderRadius: 10,
       borderWidth: 1,
       borderColor: `${
-        defaultStyle === "primary" ? Colors[theme].secondary : Colors[theme].primary
+        defaultStyle === "secondary" ? Colors[theme].secondary : Colors[theme].primary
       }99`,
       shadowColor: Colors[theme].text,
 
@@ -46,6 +48,6 @@ const themedButtonStyles = (defaultStyle: DefaultStyle, theme: Theme) =>
       shadowRadius: 1.0,
     },
     text: {
-      color: defaultStyle === "primary" ? Colors[theme].text : Colors[theme].background,
+      color: defaultStyle === "secondary" ? Colors[theme].text : Colors[theme].background,
     },
   });
