@@ -27,7 +27,7 @@ const themedButtonStyles = (defaultStyle: DefaultStyle, theme: Theme) =>
       paddingHorizontal: 16,
       paddingVertical: 8,
       backgroundColor: defaultStyle === "primary" ? Colors[theme].primary : Colors[theme].secondary,
-      borderRadius: 5,
+      borderRadius: 10,
       borderWidth: 1,
       borderColor: `${
         defaultStyle === "primary" ? Colors[theme].secondary : Colors[theme].primary
