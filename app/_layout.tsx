@@ -16,7 +16,7 @@ export default function RootLayout() {
   const [initialTheme, setInitialTheme] = useState<Theme>("light");
 
   const setStoredTheme = async () => {
-    const storedTheme = (await getTheme()) as Theme;
+    const storedTheme = (await getTheme()) as Theme | undefined | null;
     setInitialTheme(storedTheme ?? useColorScheme() ?? "light");
   };
 

@@ -1,32 +1,42 @@
 import { Colors } from "@/constants/Colors";
 import useThemeContext from "@/contexts/Theme/useThemeContext";
-import { ThemedButtonProps } from "@/types/Components";
-import { Text, Pressable, StyleSheet } from "react-native";
+import { DefaultStyle, ThemedButtonProps } from "@/types/Components";
+import { Text, TouchableOpacity, StyleSheet } from "react-native";
 
-const ThemedButton = ({ children, onPress }: ThemedButtonProps) => {
+const ThemedButton = ({
+  children,
+  defaultStyle = "primary",
+  externalStyles,
+  onPress,
+}: ThemedButtonProps) => {
   const { theme } = useThemeContext();
-  const styles = themedButtonStyles(theme);
+  const styles = themedButtonStyles(defaultStyle, theme);
+
   return (
-    <Pressable style={styles.buttonContainer} onPress={onPress}>
+    <TouchableOpacity style={[styles.buttonContainer, externalStyles]} onPress={onPress}>
       <Text style={styles.text}>{children}</Text>
-    </Pressable>
+    </TouchableOpacity>
   );
 };
 
 export default ThemedButton;
 
-const themedButtonStyles = (theme: Theme) =>
+const themedButtonStyles = (defaultStyle: DefaultStyle, theme: Theme) =>
   StyleSheet.create({
     buttonContainer: {
-      paddingHorizontal: 15,
+      paddingHorizontal: 16,
       paddingVertical: 8,
-      backgroundColor: Colors[theme].primary,
+      backgroundColor: defaultStyle === "primary" ? Colors[theme].primary : Colors[theme].secondary,
       borderRadius: 5,
       borderWidth: 1,
-      borderColor: `${Colors[theme].secondary}99`,
+      borderColor: `${
+        defaultStyle === "primary" ? Colors[theme].secondary : Colors[theme].primary
+      }99`,
       shadowColor: Colors[theme].text,
+
       // Shadow for Android
       elevation: 1,
+
       // Shadow for iOS
       shadowOffset: {
         width: 0,
@@ -36,6 +46,6 @@ const themedButtonStyles = (theme: Theme) =>
       shadowRadius: 1.0,
     },
     text: {
-      color: Colors[theme].text,
+      color: defaultStyle === "primary" ? Colors[theme].text : Colors[theme].background,
     },
   });
