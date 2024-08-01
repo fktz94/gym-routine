@@ -2,16 +2,25 @@ import { StyleSheet, View } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import useThemeContext from "@/contexts/Theme/useThemeContext";
 import { Colors } from "@/constants/Colors";
+import { router, usePathname } from "expo-router";
 
 export default function Header() {
+  // Executes usePathname so the Header components subscribes to global navigation changes.
+  usePathname();
+
   const { theme, toggleTheme } = useThemeContext();
   const iconName = theme === "light" ? "moon" : "sunny";
+
+  const showBackArrowButton = router.canGoBack();
+  const goBack = () => router.back();
 
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <Ionicons name={iconName} size={32} color={Colors[theme].text} onPress={toggleTheme} />
-        <Ionicons name="arrow-back" size={32} color={Colors[theme].text} onPress={toggleTheme} />
+        {showBackArrowButton && (
+          <Ionicons name="arrow-back" size={32} color={Colors[theme].text} onPress={goBack} />
+        )}
       </View>
     </View>
   );
