@@ -10,9 +10,9 @@ export default function RoutinesList({ selectedRoutines, isCurrent = false }: Ro
   const { theme } = useThemeContext();
   const styles = routinesListStyles(theme, isCurrent);
 
-  const itemList = (routineName: string, madeOn: string) => (
+  const itemList = (routineName: string, madeOn: string, id: number) => (
     <View style={styles.itemList}>
-      <Link href={{ pathname: "/routine/[routine]", params: { routine: routineName } }} asChild>
+      <Link href={`/routine/${id}`} asChild>
         {isCurrent ? (
           <CurrentThemedButton routineName={routineName} />
         ) : (
@@ -28,7 +28,7 @@ export default function RoutinesList({ selectedRoutines, isCurrent = false }: Ro
   return (
     <FlatList
       data={selectedRoutines}
-      renderItem={({ item: { name, madeOn } }) => itemList(name, madeOn)}
+      renderItem={({ item: { name, madeOn, id } }) => itemList(name, madeOn, id)}
       keyExtractor={({ name }) => name}
       ItemSeparatorComponent={() => <View style={styles.separator} />}
     />

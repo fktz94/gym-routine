@@ -9,7 +9,10 @@ export default function Header() {
 
   return (
     <View style={styles.container}>
-      <Ionicons name={iconName} size={32} color={Colors[theme].text} onPress={toggleTheme} />
+      <View style={styles.header}>
+        <Ionicons name={iconName} size={32} color={Colors[theme].text} onPress={toggleTheme} />
+        <Ionicons name="arrow-back" size={32} color={Colors[theme].text} onPress={toggleTheme} />
+      </View>
     </View>
   );
 }
@@ -17,8 +20,9 @@ export default function Header() {
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 40,
-    paddingTop: 20,
+    paddingVertical: 20,
     backgroundColor: "transparent",
-    marginLeft: "auto",
+    width: "100%",
   },
+  header: { flexDirection: "row-reverse", justifyContent: "space-between" },
 });

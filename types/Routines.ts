@@ -12,6 +12,7 @@ interface Exercise {
 type RoutineDay = Exercise[];
 
 interface RoutineStructure {
+  id: number;
   name: string;
   madeOn: string;
   data: RoutineDay[];

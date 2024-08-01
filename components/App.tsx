@@ -20,6 +20,7 @@ export default function App() {
         screenOptions={{ headerShown: false, contentStyle: { backgroundColor: "transparent" } }}
       >
         <Stack.Screen name="index" />
+        <Stack.Screen name="routine/[id]" />
       </Stack>
     </SafeAreaView>
   );
