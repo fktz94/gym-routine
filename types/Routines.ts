@@ -12,15 +12,15 @@ interface Exercise {
 type RoutineDay = Exercise[];
 
 interface RoutineStructure {
-  id: number;
-  name: string;
-  madeOn: string;
   data: RoutineDay[];
+  id: number;
+  madeOn: string;
+  name: string;
 }
 
 type Routine = RoutineStructure[];
 
 interface RoutinesData {
+  currentRoutine: string;
   routines: Routine;
-  current: string;
 }

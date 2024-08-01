@@ -5,6 +5,8 @@ import { useFonts } from "expo-font";
 import { getTheme } from "@/utils/AsyncStorage/Theme";
 import { useColorScheme } from "react-native";
 import App from "@/components/App";
+import { Provider } from "react-redux";
+import { store } from "@/store/store";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -33,7 +35,9 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider storedTheme={initialTheme}>
-      <App />
+      <Provider store={store}>
+        <App />
+      </Provider>
     </ThemeProvider>
   );
 }

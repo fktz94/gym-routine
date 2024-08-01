@@ -7,10 +7,10 @@ import { useState } from "react";
 import RoutinesList from "@/components/RoutinesList";
 
 export default function Index() {
-  const [{ routines, current }] = useState<RoutinesData>(data);
+  const [{ routines, currentRoutine }] = useState<RoutinesData>(data);
 
-  const currentRoutine = routines.filter((el) => el.name === current);
-  const pastRoutines = routines.filter((el) => el.name !== current);
+  const current = routines.filter((el) => el.name === currentRoutine);
+  const pastRoutines = routines.filter((el) => el.name !== currentRoutine);
 
   const { theme } = useThemeContext();
   const styles = indexStyles(theme);
@@ -22,7 +22,7 @@ export default function Index() {
       </ThemedButton>
       <View style={styles.listContainer}>
         <Text style={styles.title}>Current routine</Text>
-        <RoutinesList selectedRoutines={currentRoutine} isCurrent />
+        <RoutinesList selectedRoutines={current} isCurrent />
       </View>
       <View style={styles.listContainer}>
         <Text style={styles.title}>Past routines</Text>
