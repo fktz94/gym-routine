@@ -51,6 +51,9 @@ const themedButtonStyles = (isSecondary: boolean, theme: Theme) =>
       shadowRadius: 1.0,
     },
     text: {
-      color: isSecondary ? Colors[theme].text : Colors[theme].background,
+      color:
+        (theme === "light" && isSecondary) || (theme === "dark" && !isSecondary)
+          ? Colors[theme].background
+          : Colors[theme].text,
     },
   });
