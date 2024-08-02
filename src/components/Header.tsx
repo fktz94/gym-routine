@@ -1,7 +1,7 @@
 import { StyleSheet, View } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import useThemeContext from "@/contexts/Theme/useThemeContext";
-import { Colors } from "@/constants/Colors";
+import useThemeContext from "../contexts/Theme/useThemeContext";
+import { Colors } from "../constants/Colors";
 import { router, usePathname } from "expo-router";
 
 export default function Header() {

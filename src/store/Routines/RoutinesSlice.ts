@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { getAllRoutines } from "./RoutinesAsyncThunk";
-import { ResponseStatus, RoutineStore } from "@/types/Store";
+import { ResponseStatus, RoutineStore } from "@/src/types/Store";
 import data from "@/data.json";
-import { findCurrentRoutine } from "@/utils/Store/Routine";
+import { findCurrentRoutine } from "@/src/utils/Store/Routine";
 
 const initialState: RoutineStore = {
   currentRoutineData: data.routines[0],

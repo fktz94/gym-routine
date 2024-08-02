@@ -1,12 +1,12 @@
-import ThemeProvider from "@/contexts/Theme/ThemeProvider";
+import ThemeProvider from "../contexts/Theme/ThemeProvider";
 import { SplashScreen } from "expo-router";
 import { useEffect, useState } from "react";
 import { useFonts } from "expo-font";
-import { getTheme } from "@/utils/AsyncStorage/Theme";
+import { getTheme } from "../utils/AsyncStorage/Theme";
 import { useColorScheme } from "react-native";
-import App from "@/components/App";
 import { Provider } from "react-redux";
-import { store } from "@/store/store";
+import { store } from "../store/store";
+import App from "../components/App";
 
 SplashScreen.preventAutoHideAsync();
 

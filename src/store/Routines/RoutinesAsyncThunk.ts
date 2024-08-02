@@ -1,4 +1,4 @@
-import { getRoutines } from "@/utils/AsyncStorage/Routines";
+import { getRoutines } from "@/src/utils/AsyncStorage/Routines";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const getAllRoutines = createAsyncThunk("routines/getAllRoutines", async () => {

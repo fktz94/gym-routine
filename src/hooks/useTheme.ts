@@ -1,4 +1,4 @@
-import { storeTheme } from "@/utils/AsyncStorage/Theme";
+import { storeTheme } from "@/src/utils/AsyncStorage/Theme";
 import { useState } from "react";
 
 const useTheme = (storedTheme: Theme) => {

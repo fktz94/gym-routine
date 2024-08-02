@@ -1,11 +1,11 @@
 import { View, Text, StyleSheet } from "react-native";
 import React from "react";
-import useThemeContext from "@/contexts/Theme/useThemeContext";
+import useThemeContext from "../contexts/Theme/useThemeContext";
 import { Link } from "expo-router";
 import CurrentThemedButton from "./CurrentThemedButton";
 import ThemedButton from "./ThemedButton";
 import { Colors } from "react-native/Libraries/NewAppScreen";
-import { RoutinesItemListProps } from "@/types/Components";
+import { RoutinesItemListProps } from "../types/Components";
 
 export default function RoutineItemList({
   routineName,

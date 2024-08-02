@@ -1,4 +1,4 @@
-import useTheme from "@/hooks/useTheme";
+import useTheme from "@/src/hooks/useTheme";
 import ThemeContext from "./ThemeContext";
 
 type Props = {

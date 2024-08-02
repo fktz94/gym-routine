@@ -1,10 +1,10 @@
-import ThemedButton from "@/components/ThemedButton";
-import { Colors } from "@/constants/Colors";
-import useThemeContext from "@/contexts/Theme/useThemeContext";
+import ThemedButton from "../components/ThemedButton";
+import { Colors } from "../constants/Colors";
+import useThemeContext from "../contexts/Theme/useThemeContext";
 import { StyleSheet, Text, View } from "react-native";
-import RoutinesList from "@/components/RoutinesList";
-import { useAppSelector } from "@/hooks/reactReduxHook";
-import RoutineItemList from "@/components/RoutineItemList";
+import RoutinesList from "../components/RoutinesList";
+import { useAppSelector } from "../hooks/reactReduxHook";
+import RoutineItemList from "../components/RoutineItemList";
 
 export default function Index() {
   const { theme } = useThemeContext();
