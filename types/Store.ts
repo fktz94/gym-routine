@@ -9,4 +9,5 @@ export interface RoutineStore extends RoutinesData {
   errorMessage: string;
   isLoading: boolean;
   status: ResponseStatus;
+  currentRoutineData: RoutineStructure;
 }
