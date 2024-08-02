@@ -21,6 +21,6 @@ interface RoutineStructure {
 type Routine = RoutineStructure[];
 
 interface RoutinesData {
-  currentRoutine: string;
+  currentRoutineName: string;
   routines: Routine;
 }

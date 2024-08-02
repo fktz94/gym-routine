@@ -2,18 +2,24 @@ import ThemedButton from "@/components/ThemedButton";
 import { Colors } from "@/constants/Colors";
 import useThemeContext from "@/contexts/Theme/useThemeContext";
 import { StyleSheet, Text, View } from "react-native";
-import data from "../data.json";
-import { useState } from "react";
 import RoutinesList from "@/components/RoutinesList";
+import { useAppSelector } from "@/hooks/reactReduxHook";
+import RoutineItemList from "@/components/RoutineItemList";
 
 export default function Index() {
-  const [{ routines, currentRoutine }] = useState<RoutinesData>(data);
-
-  const current = routines.filter((el) => el.name === currentRoutine);
-  const pastRoutines = routines.filter((el) => el.name !== currentRoutine);
-
   const { theme } = useThemeContext();
   const styles = indexStyles(theme);
+
+  const { currentRoutineName, currentRoutineData, routines } = useAppSelector(
+    (state) => state.routines
+  );
+
+  const pastRoutines = routines.filter((el) => el.name !== currentRoutineName);
+
+  const currentRoutineButton = () => {
+    const { id, madeOn, name } = currentRoutineData;
+    return <RoutineItemList id={id} madeOn={madeOn} routineName={name} isCurrent />;
+  };
 
   return (
     <View style={styles.mainContainer}>
@@ -22,7 +28,7 @@ export default function Index() {
       </ThemedButton>
       <View style={styles.listContainer}>
         <Text style={styles.title}>Current routine</Text>
-        <RoutinesList selectedRoutines={current} isCurrent />
+        {currentRoutineButton()}
       </View>
       <View style={styles.listContainer}>
         <Text style={styles.title}>Past routines</Text>

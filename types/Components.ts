@@ -20,3 +20,10 @@ export interface RoutinesListProps {
   selectedRoutines: Routine;
   isCurrent?: boolean;
 }
+
+export interface RoutinesItemListProps {
+  routineName: string;
+  madeOn: string;
+  id: number;
+  isCurrent?: boolean;
+}
