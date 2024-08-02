@@ -1,17 +1,17 @@
-import ThemedButton from "../components/ThemedButton";
-import { Colors } from "../constants/Colors";
-import useThemeContext from "../contexts/Theme/useThemeContext";
+import ThemedButton from "@/src/components/ThemedButton";
+import { Colors } from "@/src/constants/Colors";
+import useThemeContext from "@/src/contexts/Theme/useThemeContext";
 import { StyleSheet, Text, View } from "react-native";
-import RoutinesList from "../components/RoutinesList";
-import { useAppSelector } from "../hooks/reactReduxHook";
-import RoutineItemList from "../components/RoutineItemList";
+import RoutinesList from "@/src/components/RoutinesList";
+import { useAppSelector } from "@/src/hooks/reactReduxHook";
+import RoutineItemList from "@/src/components/RoutineItemList";
 
 export default function Index() {
   const { theme } = useThemeContext();
   const styles = indexStyles(theme);
 
   const { currentRoutineName, currentRoutineData, routines } = useAppSelector(
-    (state) => state.routines
+    ({ routines }) => routines
   );
 
   const pastRoutines = routines.filter((el) => el.name !== currentRoutineName);
@@ -23,7 +23,7 @@ export default function Index() {
 
   return (
     <View style={styles.mainContainer}>
-      <ThemedButton defaultStyle="secondary" onPress={() => {}}>
+      <ThemedButton isSecondary onPress={() => {}}>
         New routine
       </ThemedButton>
       <View style={styles.listContainer}>

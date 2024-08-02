@@ -1,6 +1,6 @@
 import { Colors } from "../constants/Colors";
 import useThemeContext from "../contexts/Theme/useThemeContext";
-import { DefaultStyle, ThemedButtonProps } from "../types/Components";
+import { ThemedButtonProps } from "../types/Components";
 import { forwardRef } from "react";
 import { Text, TouchableOpacity, StyleSheet } from "react-native";
 
@@ -8,7 +8,7 @@ const ThemedButton = forwardRef(
   (
     {
       children,
-      defaultStyle = "primary",
+      isSecondary = false,
       externalButtonStyles,
       externalTextStyles,
       onPress,
@@ -16,7 +16,7 @@ const ThemedButton = forwardRef(
     ref
   ) => {
     const { theme } = useThemeContext();
-    const styles = themedButtonStyles(defaultStyle, theme);
+    const styles = themedButtonStyles(isSecondary, theme);
 
     return (
       <TouchableOpacity style={[styles.buttonContainer, externalButtonStyles]} onPress={onPress}>
@@ -28,18 +28,15 @@ const ThemedButton = forwardRef(
 
 export default ThemedButton;
 
-const themedButtonStyles = (defaultStyle: DefaultStyle, theme: Theme) =>
+const themedButtonStyles = (isSecondary: boolean, theme: Theme) =>
   StyleSheet.create({
     buttonContainer: {
       paddingHorizontal: 16,
       paddingVertical: 8,
-      backgroundColor:
-        defaultStyle === "secondary" ? Colors[theme].primary : Colors[theme].secondary,
+      backgroundColor: isSecondary ? Colors[theme].primary : Colors[theme].secondary,
       borderRadius: 10,
       borderWidth: 1,
-      borderColor: `${
-        defaultStyle === "secondary" ? Colors[theme].secondary : Colors[theme].primary
-      }99`,
+      borderColor: `${isSecondary ? Colors[theme].secondary : Colors[theme].primary}99`,
       shadowColor: Colors[theme].text,
 
       // Shadow for Android
@@ -54,6 +51,6 @@ const themedButtonStyles = (defaultStyle: DefaultStyle, theme: Theme) =>
       shadowRadius: 1.0,
     },
     text: {
-      color: defaultStyle === "secondary" ? Colors[theme].text : Colors[theme].background,
+      color: isSecondary ? Colors[theme].text : Colors[theme].background,
     },
   });

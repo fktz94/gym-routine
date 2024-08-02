@@ -1,11 +1,9 @@
 import { ReactNode } from "react";
 import { TextStyle, ViewStyle } from "react-native";
 
-export type DefaultStyle = "primary" | "secondary";
-
 export interface ThemedButtonProps {
   children: ReactNode;
-  defaultStyle?: DefaultStyle;
+  isSecondary?: boolean;
   externalButtonStyles?: ViewStyle;
   externalTextStyles?: TextStyle;
   onPress?: () => void;
@@ -24,6 +22,6 @@ export interface RoutinesListProps {
 export interface RoutinesItemListProps {
   routineName: string;
   madeOn: string;
-  id: number;
+  id: string;
   isCurrent?: boolean;
 }
