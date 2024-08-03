@@ -1,3 +1,4 @@
+import RoutineDetails from "@/src/components/RoutineDetails";
 import ThemedButton from "@/src/components/ThemedButton";
 import { Colors } from "@/src/constants/Colors";
 import useThemeContext from "@/src/contexts/Theme/useThemeContext";
@@ -6,7 +7,7 @@ import useRoutineDescription from "@/src/hooks/useRoutineDescription";
 import { useLocalSearchParams } from "expo-router";
 import { View, Text, StyleSheet } from "react-native";
 
-export default function RoutineDescription() {
+export default function RoutineScreen() {
   const { theme } = useThemeContext();
   const styles = routineDescriptionStyles(theme);
 
@@ -27,23 +28,42 @@ export default function RoutineDescription() {
     ));
 
   const day = routine?.data[selectedDay];
+  const isDayEmpty = !day || day?.length === 0;
+
+  const emptyDayText = () => (
+    <Text style={styles.emptyDay}>This day is empty! {"\n"} Fill it!</Text>
+  );
 
   return (
     <View style={styles.container}>
       <Text style={styles.routineName}>{routine?.name}</Text>
       <View style={styles.daysButtonsContainer}>{daysButtons()}</View>
-      <View style={styles.routineContainer}></View>
+      {isDayEmpty ? (
+        emptyDayText()
+      ) : (
+        <View style={styles.routineContainer}>
+          <RoutineDetails routineDay={routine?.data[selectedDay]} />
+        </View>
+      )}
     </View>
   );
 }
 
 const routineDescriptionStyles = (theme: Theme) =>
   StyleSheet.create({
-    container: { borderWidth: 1 },
+    container: {},
     daysButtonsContainer: {
       paddingVertical: 16,
       flexDirection: "row",
       justifyContent: "space-evenly",
+    },
+    emptyDay: {
+      fontWeight: "bold",
+      fontSize: 26,
+      color: Colors[theme].text,
+      textAlign: "center",
+      paddingTop: 32,
+      lineHeight: 64,
     },
     routineContainer: {},
     routineName: {
