@@ -51,7 +51,10 @@ export default function RoutineScreen() {
 
 const routineDescriptionStyles = (theme: Theme) =>
   StyleSheet.create({
-    container: {},
+    container: {
+      flex: 1,
+      gap: 12,
+    },
     daysButtonsContainer: {
       paddingVertical: 16,
       flexDirection: "row",
@@ -65,7 +68,7 @@ const routineDescriptionStyles = (theme: Theme) =>
       paddingTop: 32,
       lineHeight: 64,
     },
-    routineContainer: {},
+    routineContainer: { flex: 1 },
     routineName: {
       fontWeight: "bold",
       fontSize: 32,

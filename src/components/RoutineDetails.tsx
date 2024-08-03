@@ -1,11 +1,12 @@
-import { View, Text } from "react-native";
-import ExerciseItem from "./ExerciseItem";
+import { ScrollView, StyleSheet, View } from "react-native";
+import { ExerciseItem, ExerciseItemTitle } from "./ExerciseItem";
 
 const RoutineDetails = ({ routineDay }: { routineDay: RoutineDay }) => {
   console.log(routineDay);
 
   return (
-    <View>
+    <ScrollView contentContainerStyle={styles.container}>
+      <ExerciseItemTitle />
       {routineDay.map(({ name, sets, weightsAndRepetitions }, i) => (
         <ExerciseItem
           name={name}
@@ -14,8 +15,15 @@ const RoutineDetails = ({ routineDay }: { routineDay: RoutineDay }) => {
           key={i}
         />
       ))}
-    </View>
+    </ScrollView>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    padding: 12,
+    gap: 6,
+  },
+});
 
 export default RoutineDetails;
