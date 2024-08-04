@@ -5,11 +5,12 @@ const RoutineDetails = ({ routineDay }: { routineDay: RoutineDay }) => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <ExerciseItemTitle />
-      {routineDay.map(({ name, sets, weightsAndRepetitions }, i) => (
+      {routineDay.map(({ name, sets, weightsAndRepetitions, current }, i) => (
         <ExerciseItem
           name={name}
           sets={sets}
           weightsAndRepetitions={weightsAndRepetitions}
+          current={current}
           key={i}
         />
       ))}

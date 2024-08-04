@@ -16,10 +16,11 @@ export default function RootLayout() {
   });
 
   const [initialTheme, setInitialTheme] = useState<Theme>("light");
+  const colorScheme = useColorScheme();
 
   const setStoredTheme = async () => {
     const storedTheme = (await getTheme()) as Theme | undefined | null;
-    setInitialTheme(storedTheme ?? useColorScheme() ?? "light");
+    setInitialTheme(storedTheme ?? colorScheme ?? "light");
   };
 
   useEffect(() => {

@@ -4,8 +4,8 @@ import useThemeContext from "../contexts/Theme/useThemeContext";
 import { Link } from "expo-router";
 import CurrentThemedButton from "./CurrentThemedButton";
 import ThemedButton from "./ThemedButton";
-import { Colors } from "react-native/Libraries/NewAppScreen";
 import { RoutinesItemListProps } from "../types/Components";
+import { Colors } from "../constants/Colors";
 
 export default function RoutineItemList({
   routineName,

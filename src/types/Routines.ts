@@ -7,6 +7,7 @@ interface Exercise {
   name: string;
   sets: number;
   weightsAndRepetitions: WeightsAndRepetitions[];
+  current: number;
 }
 
 type RoutineDay = Exercise[];

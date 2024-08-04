@@ -4,6 +4,7 @@ import { Colors } from "../constants/Colors";
 import SelectDropdown from "react-native-select-dropdown";
 import { Ionicons } from "@expo/vector-icons";
 import { RepetitionsButtonProps } from "../types/Components";
+import { useState } from "react";
 
 export const ExerciseItemTitle = () => {
   const { theme } = useThemeContext();
@@ -18,11 +19,16 @@ export const ExerciseItemTitle = () => {
   );
 };
 
-export const ExerciseItem = ({ name, sets, weightsAndRepetitions }: Exercise) => {
+export const ExerciseItem = ({ name, sets, weightsAndRepetitions, current }: Exercise) => {
   const { theme } = useThemeContext();
   const styles = exerciseItemStyles(theme, false);
 
   const repetitions = weightsAndRepetitions.map((el) => el.qty);
+  const [weight, setWeight] = useState(weightsAndRepetitions[current].weight);
+
+  const handleWeight = (i: number) => {
+    setWeight(weightsAndRepetitions[i].weight);
+  };
 
   const repetitionsButton = ({
     selectedItem,
@@ -32,7 +38,12 @@ export const ExerciseItem = ({ name, sets, weightsAndRepetitions }: Exercise) =>
     return (
       <View style={styles.dropdownButtonStyle}>
         <Text style={styles.dropdownButtonTxtStyle}>{selectedItem}</Text>
-        {!isUnique && <Ionicons name={isOpened ? "chevron-up" : "chevron-down"} />}
+        {!isUnique && (
+          <Ionicons
+            style={styles.dropdownButtonArrowStyle}
+            name={isOpened ? "chevron-up" : "chevron-down"}
+          />
+        )}
       </View>
     );
   };
@@ -44,7 +55,7 @@ export const ExerciseItem = ({ name, sets, weightsAndRepetitions }: Exercise) =>
       <SelectDropdown
         data={mappedData}
         defaultValue={mappedData[0]} // hardcoded data
-        onSelect={(el, i) => {}}
+        onSelect={(el, i) => handleWeight(i)}
         renderButton={(selectedItem, isOpened) =>
           repetitionsButton({ selectedItem: selectedItem?.rep, isOpened })
         }
@@ -52,13 +63,17 @@ export const ExerciseItem = ({ name, sets, weightsAndRepetitions }: Exercise) =>
           <View
             style={{
               ...styles.dropdownItemStyle,
-              ...(isSelected && { backgroundColor: Colors[theme].primary }),
+              ...(isSelected && {
+                backgroundColor: theme === "light" ? Colors[theme].primary : Colors[theme].text,
+              }),
             }}
           >
             <Text
               style={{
                 ...styles.dropdownItemTxtStyle,
-                ...(isSelected && { color: Colors[theme].background }),
+                ...(isSelected && {
+                  color: theme === "light" ? Colors[theme].background : Colors[theme].primary,
+                }),
               }}
             >
               {item?.rep}
@@ -79,7 +94,13 @@ export const ExerciseItem = ({ name, sets, weightsAndRepetitions }: Exercise) =>
       <Text style={[styles.inputContainer, styles.sets]}>{sets}</Text>
       <View style={[styles.inputContainer, styles.weightAndRepetitionsView]}>
         {repetitionsSelect(repetitions)}
-        <TextInput style={styles.weightText} defaultValue="50" keyboardType="number-pad" readOnly />
+        <TextInput
+          style={styles.weightText}
+          defaultValue={weight.toString()}
+          keyboardType="number-pad"
+          multiline
+          scrollEnabled
+        />
       </View>
     </View>
   );
@@ -91,25 +112,26 @@ const exerciseItemStyles = (theme: Theme, isTitle: boolean) =>
       flexDirection: "row",
       borderTopLeftRadius: isTitle ? 6 : undefined,
       borderTopRightRadius: isTitle ? 6 : undefined,
-      overflow: "hidden",
     },
     inputContainer: {
       flex: 1,
+      flexGrow: 1,
       textAlign: "center",
       textAlignVertical: "center",
       color: isTitle ? Colors[theme].background : Colors[theme].text,
       backgroundColor: isTitle ? Colors[theme].text : Colors[theme].background,
       borderBottomWidth: 1,
       fontWeight: isTitle ? "bold" : undefined,
-      height: 60,
+      minHeight: 60,
     },
     sets: { fontSize: 16 },
     weightAndRepetitionsView: {
       flexDirection: "row",
       gap: 6,
       alignItems: "center",
+      height: "auto",
     },
-    weightText: { flex: 1, textAlign: "center" },
+    weightText: { flex: 1, textAlign: "center", color: Colors[theme].text, height: "100%" },
     //
     dropdownButtonStyle: {
       flex: 1,
@@ -125,6 +147,9 @@ const exerciseItemStyles = (theme: Theme, isTitle: boolean) =>
       flexGrow: 1,
       fontSize: 16,
       fontWeight: "500",
+      color: Colors[theme].text,
+    },
+    dropdownButtonArrowStyle: {
       color: Colors[theme].text,
     },
     dropdownMenuStyle: {

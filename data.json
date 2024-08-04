@@ -10,6 +10,7 @@
           {
             "name": "Estocadas en maquina smith",
             "sets": 3,
+            "current": 0,
             "weightsAndRepetitions": [
               { "qty": 6, "weight": 25 },
               { "qty": 8, "weight": 20 },
@@ -21,13 +22,15 @@
           {
             "name": "Sillón de isquiotibiales",
             "sets": 4,
+            "current": 0,
             "weightsAndRepetitions": [{ "qty": 12, "weight": 45 }]
           },
           {
             "name": "Press militar convergente",
             "sets": 4,
+            "current": 0,
             "weightsAndRepetitions": [
-              { "qty": 8, "weight": 17.5 },
+              { "qty": 8, "weight": "17.5 kg c/l" },
               { "qty": 10, "weight": 20 },
               { "qty": 12, "weight": 15 },
               { "qty": 6, "weight": 22.5 },
@@ -37,16 +40,19 @@
           {
             "name": "Remo al mentón",
             "sets": 3,
+            "current": 0,
             "weightsAndRepetitions": [{ "qty": 10, "weight": 10 }]
           },
           {
             "name": "Sillón de cuádriceps",
             "sets": 3,
+            "current": 0,
             "weightsAndRepetitions": [{ "qty": 14, "weight": 45 }]
           },
           {
             "name": "Frog pump c/ banda circular",
             "sets": 3,
+            "current": 0,
             "weightsAndRepetitions": [
               { "qty": 12, "weight": 30 },
               { "qty": 15, "weight": 20 }
@@ -55,16 +61,19 @@
           {
             "name": "Vuelos laterales completos",
             "sets": 3,
+            "current": 0,
             "weightsAndRepetitions": [{ "qty": 10, "weight": 5 }]
           },
           {
             "name": "Plancha lateral dinámica",
             "sets": 3,
+            "current": 0,
             "weightsAndRepetitions": [{ "qty": "10\"", "weight": "N/A" }]
           },
           {
             "name": "Sit up + rotación",
             "sets": 3,
+            "current": 0,
             "weightsAndRepetitions": [{ "qty": "8 c/l", "weight": "N/A" }]
           }
         ],
