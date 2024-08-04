@@ -2,8 +2,6 @@ import { ScrollView, StyleSheet, View } from "react-native";
 import { ExerciseItem, ExerciseItemTitle } from "./ExerciseItem";
 
 const RoutineDetails = ({ routineDay }: { routineDay: RoutineDay }) => {
-  console.log(routineDay);
-
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <ExerciseItemTitle />
@@ -22,7 +20,7 @@ const RoutineDetails = ({ routineDay }: { routineDay: RoutineDay }) => {
 const styles = StyleSheet.create({
   container: {
     padding: 12,
-    gap: 6,
+    gap: 2,
   },
 });
 

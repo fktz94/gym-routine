@@ -25,3 +25,9 @@ export interface RoutinesItemListProps {
   id: string;
   isCurrent?: boolean;
 }
+
+export interface RepetitionsButtonProps {
+  selectedItem: number | string;
+  isUnique?: boolean;
+  isOpened?: boolean;
+}
