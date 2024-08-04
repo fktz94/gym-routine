@@ -30,7 +30,7 @@
             "sets": 4,
             "current": 0,
             "weightsAndRepetitions": [
-              { "qty": 8, "weight": "17.5 kg c/l" },
+              { "qty": 8, "weight": "170.5 kg c/l" },
               { "qty": 10, "weight": 20 },
               { "qty": 12, "weight": 15 },
               { "qty": 6, "weight": 22.5 },

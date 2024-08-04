@@ -5,6 +5,7 @@ import SelectDropdown from "react-native-select-dropdown";
 import { Ionicons } from "@expo/vector-icons";
 import { RepetitionsButtonProps } from "../types/Components";
 import { useState } from "react";
+import ThemedButton from "./ThemedButton";
 
 export const ExerciseItemTitle = () => {
   const { theme } = useThemeContext();
@@ -92,15 +93,25 @@ export const ExerciseItem = ({ name, sets, weightsAndRepetitions, current }: Exe
     <View style={styles.container}>
       <Text style={styles.inputContainer}>{name}</Text>
       <Text style={[styles.inputContainer, styles.sets]}>{sets}</Text>
-      <View style={[styles.inputContainer, styles.weightAndRepetitionsView]}>
-        {repetitionsSelect(repetitions)}
-        <TextInput
-          style={styles.weightText}
-          defaultValue={weight.toString()}
-          keyboardType="number-pad"
-          multiline
-          scrollEnabled
-        />
+      <View style={styles.inputContainer}>
+        <View style={styles.weightAndRepetitionsView}>
+          {repetitionsSelect(repetitions)}
+          <TextInput
+            style={styles.weightText}
+            defaultValue={weight.toString()}
+            multiline
+            scrollEnabled
+          />
+        </View>
+
+        <View style={styles.themedButtonContainer}>
+          <ThemedButton
+            externalButtonStyles={styles.themedButtonView}
+            externalTextStyles={styles.themedButtonText}
+          >
+            Exercise done!
+          </ThemedButton>
+        </View>
       </View>
     </View>
   );
@@ -129,12 +140,23 @@ const exerciseItemStyles = (theme: Theme, isTitle: boolean) =>
       flexDirection: "row",
       gap: 6,
       alignItems: "center",
-      height: "auto",
+      minHeight: 60,
     },
-    weightText: { flex: 1, textAlign: "center", color: Colors[theme].text, height: "100%" },
+    weightText: {
+      flex: 3,
+      textAlign: "center",
+      fontWeight: "bold",
+      letterSpacing: 1,
+      fontSize: 16,
+      color: Colors[theme].text,
+      height: "100%",
+    },
+    themedButtonContainer: { paddingTop: 6, paddingBottom: 12 },
+    themedButtonView: { paddingVertical: 6, backgroundColor: Colors.light.secondary },
+    themedButtonText: { textAlign: "center", fontSize: 12, fontWeight: "bold" },
     //
     dropdownButtonStyle: {
-      flex: 1,
+      flex: 2,
       height: "75%",
       backgroundColor: Colors[theme].secondaryTransparent,
       borderRadius: 12,
