@@ -1,6 +1,6 @@
 import { Colors } from "../constants/Colors";
 import useThemeContext from "../contexts/Theme/useThemeContext";
-import { ThemedButtonProps } from "../types/Components";
+import { AcceptButtonProps, CancelButtonProps, ThemedButtonProps } from "../types/Components";
 import { forwardRef } from "react";
 import { Text, TouchableOpacity, StyleSheet } from "react-native";
 
@@ -33,13 +33,7 @@ const ThemedButton = forwardRef(
 
 export default ThemedButton;
 
-export const AcceptButton = ({
-  onAccept,
-  isDisabled,
-}: {
-  isDisabled: boolean;
-  onAccept: () => void;
-}) => {
+export const AcceptButton = ({ onAccept, isDisabled }: AcceptButtonProps) => {
   const { theme } = useThemeContext();
   const styles = themedButtonStyles(false, theme, isDisabled);
   return (
@@ -54,7 +48,7 @@ export const AcceptButton = ({
   );
 };
 
-export const CancelButton = ({ onCancel }: { onCancel: () => void }) => {
+export const CancelButton = ({ onCancel }: CancelButtonProps) => {
   const { theme } = useThemeContext();
   const styles = themedButtonStyles(false, theme);
   return (
@@ -97,13 +91,13 @@ const themedButtonStyles = (isSecondary: boolean, theme: Theme, isDisabled = fal
           : Colors[theme].text,
     },
     acceptView: {
-      backgroundColor: isDisabled ? Colors.light.text : Colors.accept.background,
+      backgroundColor: isDisabled ? Colors.light.text : Colors.acceptBackground,
     },
     acceptText: {
       color: isDisabled ? Colors.light.secondary : Colors.dark.text,
       fontWeight: "bold",
       letterSpacing: 1,
     },
-    cancelView: { backgroundColor: Colors.cancel.background },
+    cancelView: { backgroundColor: Colors.cancelBackground },
     cancelText: { color: Colors.dark.text, fontWeight: "bold", letterSpacing: 1 },
   });

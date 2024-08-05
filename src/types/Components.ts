@@ -34,7 +34,17 @@ export interface RepetitionsButtonProps {
 }
 
 export interface EditExerciseModalProps {
-  isOpen: boolean;
   closeModal: () => void;
   data: WeightsAndRepetitions;
+  isCurrent: boolean;
+  index: number;
+}
+
+export interface AcceptButtonProps {
+  isDisabled: boolean;
+  onAccept: () => void;
+}
+
+export interface CancelButtonProps {
+  onCancel: () => void;
 }

@@ -7,17 +7,20 @@ import { EditExerciseModalProps } from "../types/Components";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import { AcceptButton, CancelButton } from "./ThemedButton";
 
-const EditExerciseModal = ({ isOpen, closeModal, data }: EditExerciseModalProps) => {
+const EditExerciseModal = ({ closeModal, data, isCurrent, index }: EditExerciseModalProps) => {
   const [newValue, setNewValue] = useState(data.weight);
   const [customValue, setCustomValue] = useState(Number.isNaN(+data.weight));
+  const [settedToCurrent, setSettedToCurrent] = useState(isCurrent);
 
   const { theme } = useThemeContext();
   const styles = editExerciseModalStyles(theme, customValue);
 
-  const handleCheckbox = () => {
+  const handleCustomCheckbox = () => {
     setNewValue("");
     setCustomValue(!customValue);
   };
+
+  const handleCurrentCheckbox = () => setSettedToCurrent(!settedToCurrent);
 
   const handleNewValue = (input: number | string) => {
     const isNotNumber = Number.isNaN(+input);
@@ -25,36 +28,31 @@ const EditExerciseModal = ({ isOpen, closeModal, data }: EditExerciseModalProps)
     setNewValue(newVal);
   };
 
-  const handleCancel = () => {
-    closeModal();
-    setNewValue(data.weight);
-    setCustomValue(Number.isNaN(+data.weight));
-  };
-
   const handleAccept = () => {
-    // change the global state and change the local storage data
     closeModal();
-    setNewValue(data.weight);
-    setCustomValue(Number.isNaN(+data.weight));
+    console.log(index);
+
+    // change the global state and change the local storage data
   };
 
-  const isAcceptButtonDisabled = data.weight === newValue || !newValue;
+  const isValueInvalid = data.weight === newValue || !newValue;
+  const isButtonDisabled = isValueInvalid && settedToCurrent === isCurrent;
 
   return (
-    <Modal animationType="slide" transparent visible={isOpen}>
+    <Modal animationType="slide" transparent visible>
       <View style={styles.container}>
         <Ionicons
           style={styles.closeIconBtn}
           name="close"
           color={Colors[theme].text}
           size={30}
-          onPress={handleCancel}
+          onPress={closeModal}
         />
         <View style={styles.inputContainer}>
           {data.weight && (
             <View style={styles.previousWeightTextView}>
               <Text style={[styles.previousWeightText, { fontSize: 10, letterSpacing: 0.5 }]}>
-                Previous:{" "}
+                Current weight:{" "}
               </Text>
               <Text style={[styles.previousWeightText, { fontWeight: "bold" }]}>
                 {data.weight} {typeof data.weight === "number" ? "kg" : undefined}
@@ -67,6 +65,8 @@ const EditExerciseModal = ({ isOpen, closeModal, data }: EditExerciseModalProps)
               keyboardType={customValue ? "default" : "decimal-pad"}
               onChangeText={handleNewValue}
               value={newValue?.toString()}
+              placeholder={customValue ? '100 kg c/l - 45" - fallo' : "12,5"}
+              placeholderTextColor={Colors.greyText}
             />
             {!customValue && <Text style={styles.kgText}>kg</Text>}
           </View>
@@ -76,14 +76,25 @@ const EditExerciseModal = ({ isOpen, closeModal, data }: EditExerciseModalProps)
               size={18}
               fillColor={Colors.light.primary}
               innerIconStyle={{ borderWidth: 2 }}
-              onPress={handleCheckbox}
+              onPress={handleCustomCheckbox}
               isChecked={customValue}
             />
           </View>
-
+          {!isCurrent && (
+            <View style={styles.customContainer}>
+              <Text style={styles.customText}>Set to current week?</Text>
+              <BouncyCheckbox
+                size={18}
+                fillColor={Colors.light.primary}
+                innerIconStyle={{ borderWidth: 2 }}
+                onPress={handleCurrentCheckbox}
+                // isChecked={customValue}
+              />
+            </View>
+          )}
           <View style={styles.buttonsContainer}>
-            <CancelButton onCancel={handleCancel} />
-            <AcceptButton onAccept={handleAccept} isDisabled={isAcceptButtonDisabled} />
+            <CancelButton onCancel={closeModal} />
+            <AcceptButton onAccept={handleAccept} isDisabled={isButtonDisabled} />
           </View>
         </View>
       </View>
@@ -147,7 +158,7 @@ const editExerciseModalStyles = (theme: Theme, customValue: boolean) =>
       paddingRight: 6,
       paddingLeft: 2,
       paddingBottom: 6,
-      gap: 2,
+      gap: 4,
     },
     previousWeightText: {
       color: Colors[theme].text,

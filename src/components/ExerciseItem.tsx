@@ -101,11 +101,14 @@ export const ExerciseItem = ({ name, sets, weightsAndRepetitions, current }: Exe
 
   return (
     <View style={styles.container}>
-      <EditExerciseModal
-        isOpen={isEditingExercise}
-        closeModal={closeEditModal}
-        data={weightsAndRepetitions[selectedDropdownItem]}
-      />
+      {isEditingExercise && (
+        <EditExerciseModal
+          isCurrent={selectedDropdownItem === current}
+          index={selectedDropdownItem}
+          closeModal={closeEditModal}
+          data={weightsAndRepetitions[selectedDropdownItem]}
+        />
+      )}
       <Text style={styles.inputContainer}>{name}</Text>
       <Text style={[styles.inputContainer, styles.sets]}>{sets}</Text>
       <View style={styles.inputContainer}>
