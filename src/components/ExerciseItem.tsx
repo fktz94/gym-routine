@@ -144,7 +144,7 @@ export const ExerciseItem = ({ name, sets, weightsAndRepetitions, current }: Exe
             externalButtonStyles={styles.finishedButtonView}
             externalTextStyles={styles.finishedButtonText}
           >
-            Finished!
+            Done!
           </ThemedButton>
           <ThemedButton externalButtonStyles={styles.editButtonView} onPress={openEditModal}>
             <Ionicons color={Colors[theme].background} name="pencil" />

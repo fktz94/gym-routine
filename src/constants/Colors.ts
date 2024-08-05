@@ -25,7 +25,7 @@ export const Colors = {
     primary: "#134B70",
     secondary: "#508C9B",
     secondaryTransparent: "#508C9B54",
-    modalBackground: "rgba(255,255,255,0.9)",
+    modalBackground: "rgba(100,100,100,0.8)",
     // tint: tintColorDark,
     // icon: "#9BA1A6",
     // tabIconDefault: "#9BA1A6",
