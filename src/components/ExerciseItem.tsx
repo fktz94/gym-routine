@@ -27,6 +27,7 @@ export const ExerciseItem = ({ name, sets, weightsAndRepetitions, current }: Exe
   const repetitions = weightsAndRepetitions.map((el) => el.qty);
 
   const [weight, setWeight] = useState(weightsAndRepetitions[current].weight);
+  const prevWeight = weightsAndRepetitions.at(current - 1);
 
   const handleWeight = (i: number) => {
     setWeight(weightsAndRepetitions[i].weight);
@@ -56,7 +57,7 @@ export const ExerciseItem = ({ name, sets, weightsAndRepetitions, current }: Exe
     return data.length > 1 ? (
       <SelectDropdown
         data={mappedData}
-        defaultValue={mappedData[0]} // hardcoded data
+        defaultValue={mappedData[current]} // hardcoded data
         onSelect={(el, i) => handleWeight(i)}
         renderButton={(selectedItem, isOpened) =>
           repetitionsButton({ selectedItem: selectedItem?.rep, isOpened })
@@ -75,6 +76,9 @@ export const ExerciseItem = ({ name, sets, weightsAndRepetitions, current }: Exe
                 ...styles.dropdownItemTxtStyle,
                 ...(isSelected && {
                   color: theme === "light" ? Colors[theme].background : Colors[theme].primary,
+                }),
+                ...(current === index && {
+                  color: "red",
                 }),
               }}
             >
@@ -95,11 +99,29 @@ export const ExerciseItem = ({ name, sets, weightsAndRepetitions, current }: Exe
       <Text style={styles.inputContainer}>{name}</Text>
       <Text style={[styles.inputContainer, styles.sets]}>{sets}</Text>
       <View style={styles.inputContainer}>
+        {!weightsAndRepetitions[current].weight ? (
+          <Text style={styles.prevText}>Add today's weight!</Text>
+        ) : (
+          weightsAndRepetitions.length > 1 && (
+            <>
+              <Text style={styles.prevText}>
+                Today: {weightsAndRepetitions[current].qty}r -
+                {weightsAndRepetitions[current].weight} kg
+              </Text>
+              {prevWeight?.weight && (
+                <Text style={styles.prevText}>
+                  Prev: {prevWeight.qty}r - {prevWeight.weight} kg
+                </Text>
+              )}
+            </>
+          )
+        )}
+
         <View style={styles.weightAndRepetitionsView}>
           {repetitionsSelect(repetitions)}
           <TextInput
             style={styles.weightText}
-            defaultValue={weight.toString()}
+            defaultValue={weight?.toString()}
             multiline
             scrollEnabled
           />
@@ -146,6 +168,13 @@ const exerciseItemStyles = (theme: Theme, isTitle: boolean) =>
       alignItems: "center",
       minHeight: 60,
     },
+    prevText: {
+      fontSize: 11,
+      fontWeight: "bold",
+      margin: "auto",
+      paddingTop: 6,
+      color: Colors[theme].text,
+    },
     weightText: {
       flex: 3,
       textAlign: "center",
@@ -158,7 +187,7 @@ const exerciseItemStyles = (theme: Theme, isTitle: boolean) =>
     themedButtonContainer: { flexDirection: "row", paddingTop: 6, paddingBottom: 12, gap: 2 },
     finishedButtonView: {
       paddingVertical: 6,
-      backgroundColor: Colors.light.secondary,
+      backgroundColor: theme === "light" ? Colors.light.secondary : Colors.light.primary,
       flex: 1,
       flexGrow: 3,
     },
@@ -210,3 +239,43 @@ const exerciseItemStyles = (theme: Theme, isTitle: boolean) =>
       color: Colors[theme].text,
     },
   });
+
+// {
+//   "name": "Remo al mentón",
+//   "sets": 3,
+//   "current": 0,
+//   "weightsAndRepetitions": [{ "qty": 10, "weight": 10 }]
+// },
+// {
+//   "name": "Sillón de cuádriceps",
+//   "sets": 3,
+//   "current": 0,
+//   "weightsAndRepetitions": [{ "qty": 14, "weight": 45 }]
+// },
+// {
+//   "name": "Frog pump c/ banda circular",
+//   "sets": 3,
+//   "current": 1,
+//   "weightsAndRepetitions": [
+//     { "qty": 12, "weight": 30 },
+//     { "qty": 15, "weight": 20 }
+//   ]
+// },
+// {
+//   "name": "Vuelos laterales completos",
+//   "sets": 3,
+//   "current": 0,
+//   "weightsAndRepetitions": [{ "qty": 10, "weight": 5 }]
+// },
+// {
+//   "name": "Plancha lateral dinámica",
+//   "sets": 3,
+//   "current": 0,
+//   "weightsAndRepetitions": [{ "qty": "10\"", "weight": "N/A" }]
+// },
+// {
+//   "name": "Sit up + rotación",
+//   "sets": 3,
+//   "current": 0,
+//   "weightsAndRepetitions": [{ "qty": "8 c/l", "weight": "N/A" }]
+// }
