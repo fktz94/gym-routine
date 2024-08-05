@@ -25,6 +25,7 @@ export const ExerciseItem = ({ name, sets, weightsAndRepetitions, current }: Exe
   const styles = exerciseItemStyles(theme, false);
 
   const repetitions = weightsAndRepetitions.map((el) => el.qty);
+
   const [weight, setWeight] = useState(weightsAndRepetitions[current].weight);
 
   const handleWeight = (i: number) => {
@@ -106,10 +107,13 @@ export const ExerciseItem = ({ name, sets, weightsAndRepetitions, current }: Exe
 
         <View style={styles.themedButtonContainer}>
           <ThemedButton
-            externalButtonStyles={styles.themedButtonView}
-            externalTextStyles={styles.themedButtonText}
+            externalButtonStyles={styles.finishedButtonView}
+            externalTextStyles={styles.finishedButtonText}
           >
-            Exercise done!
+            Finished!
+          </ThemedButton>
+          <ThemedButton externalButtonStyles={styles.editButtonView}>
+            <Ionicons color={Colors[theme].background} name="pencil" />
           </ThemedButton>
         </View>
       </View>
@@ -151,9 +155,22 @@ const exerciseItemStyles = (theme: Theme, isTitle: boolean) =>
       color: Colors[theme].text,
       height: "100%",
     },
-    themedButtonContainer: { paddingTop: 6, paddingBottom: 12 },
-    themedButtonView: { paddingVertical: 6, backgroundColor: Colors.light.secondary },
-    themedButtonText: { textAlign: "center", fontSize: 12, fontWeight: "bold" },
+    themedButtonContainer: { flexDirection: "row", paddingTop: 6, paddingBottom: 12, gap: 2 },
+    finishedButtonView: {
+      paddingVertical: 6,
+      backgroundColor: Colors.light.secondary,
+      flex: 1,
+      flexGrow: 3,
+    },
+    finishedButtonText: { textAlign: "center", fontSize: 12, fontWeight: "bold" },
+    editButtonView: {
+      backgroundColor: Colors[theme].text,
+      paddingHorizontal: 2,
+      flex: 1,
+      flexGrow: 1,
+      alignItems: "center",
+    },
+    editButtonIcon: {},
     //
     dropdownButtonStyle: {
       flex: 2,
