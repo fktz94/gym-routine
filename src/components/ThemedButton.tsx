@@ -12,6 +12,7 @@ const ThemedButton = forwardRef(
       externalButtonStyles,
       externalTextStyles,
       onPress,
+      disabled = false,
     }: ThemedButtonProps,
     ref
   ) => {
@@ -19,7 +20,11 @@ const ThemedButton = forwardRef(
     const styles = themedButtonStyles(isSecondary, theme);
 
     return (
-      <TouchableOpacity style={[styles.buttonContainer, externalButtonStyles]} onPress={onPress}>
+      <TouchableOpacity
+        disabled={disabled}
+        style={[styles.buttonContainer, externalButtonStyles]}
+        onPress={onPress}
+      >
         <Text style={[styles.text, externalTextStyles]}>{children}</Text>
       </TouchableOpacity>
     );
@@ -28,7 +33,42 @@ const ThemedButton = forwardRef(
 
 export default ThemedButton;
 
-const themedButtonStyles = (isSecondary: boolean, theme: Theme) =>
+export const AcceptButton = ({
+  onAccept,
+  isDisabled,
+}: {
+  isDisabled: boolean;
+  onAccept: () => void;
+}) => {
+  const { theme } = useThemeContext();
+  const styles = themedButtonStyles(false, theme, isDisabled);
+  return (
+    <ThemedButton
+      externalButtonStyles={styles.acceptView}
+      externalTextStyles={styles.acceptText}
+      onPress={onAccept}
+      disabled={isDisabled}
+    >
+      Accept
+    </ThemedButton>
+  );
+};
+
+export const CancelButton = ({ onCancel }: { onCancel: () => void }) => {
+  const { theme } = useThemeContext();
+  const styles = themedButtonStyles(false, theme);
+  return (
+    <ThemedButton
+      externalButtonStyles={styles.cancelView}
+      externalTextStyles={styles.cancelText}
+      onPress={onCancel}
+    >
+      Cancel
+    </ThemedButton>
+  );
+};
+
+const themedButtonStyles = (isSecondary: boolean, theme: Theme, isDisabled = false) =>
   StyleSheet.create({
     buttonContainer: {
       paddingHorizontal: 16,
@@ -56,4 +96,14 @@ const themedButtonStyles = (isSecondary: boolean, theme: Theme) =>
           ? Colors[theme].background
           : Colors[theme].text,
     },
+    acceptView: {
+      backgroundColor: isDisabled ? Colors.light.text : Colors.accept.background,
+    },
+    acceptText: {
+      color: isDisabled ? Colors.light.secondary : Colors.dark.text,
+      fontWeight: "bold",
+      letterSpacing: 1,
+    },
+    cancelView: { backgroundColor: Colors.cancel.background },
+    cancelText: { color: Colors.dark.text, fontWeight: "bold", letterSpacing: 1 },
   });

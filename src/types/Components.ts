@@ -7,6 +7,7 @@ export interface ThemedButtonProps {
   externalButtonStyles?: ViewStyle;
   externalTextStyles?: TextStyle;
   onPress?: () => void;
+  disabled?: boolean;
 }
 
 export interface CurrentThemedButtonProps {

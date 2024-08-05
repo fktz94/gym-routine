@@ -31,6 +31,8 @@ export const Colors = {
     // tabIconDefault: "#9BA1A6",
     // tabIconSelected: tintColorDark,
   },
+  accept: { text: "", background: "#367E18" },
+  cancel: { text: "", background: "#CC3636" },
 };
 
 // dark ?

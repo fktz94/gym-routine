@@ -5,6 +5,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { Colors } from "../constants/Colors";
 import { EditExerciseModalProps } from "../types/Components";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
+import { AcceptButton, CancelButton } from "./ThemedButton";
 
 const EditExerciseModal = ({ isOpen, closeModal, data }: EditExerciseModalProps) => {
   const [newValue, setNewValue] = useState(data.weight);
@@ -24,17 +25,20 @@ const EditExerciseModal = ({ isOpen, closeModal, data }: EditExerciseModalProps)
     setNewValue(newVal);
   };
 
-  const cancel = () => {
+  const handleCancel = () => {
     closeModal();
     setNewValue(data.weight);
     setCustomValue(Number.isNaN(+data.weight));
   };
 
-  const hasChangedValue = data.weight !== newValue;
-  console.log(data.weight);
-  console.log(newValue);
+  const handleAccept = () => {
+    // change the global state and change the local storage data
+    closeModal();
+    setNewValue(data.weight);
+    setCustomValue(Number.isNaN(+data.weight));
+  };
 
-  console.log(hasChangedValue);
+  const isAcceptButtonDisabled = data.weight === newValue || !newValue;
 
   return (
     <Modal animationType="slide" transparent visible={isOpen}>
@@ -44,7 +48,7 @@ const EditExerciseModal = ({ isOpen, closeModal, data }: EditExerciseModalProps)
           name="close"
           color={Colors[theme].text}
           size={30}
-          onPress={cancel}
+          onPress={handleCancel}
         />
         <View style={styles.inputContainer}>
           {data.weight && (
@@ -75,6 +79,11 @@ const EditExerciseModal = ({ isOpen, closeModal, data }: EditExerciseModalProps)
               onPress={handleCheckbox}
               isChecked={customValue}
             />
+          </View>
+
+          <View style={styles.buttonsContainer}>
+            <CancelButton onCancel={handleCancel} />
+            <AcceptButton onAccept={handleAccept} isDisabled={isAcceptButtonDisabled} />
           </View>
         </View>
       </View>
@@ -123,7 +132,7 @@ const editExerciseModalStyles = (theme: Theme, customValue: boolean) =>
       color: Colors[theme].text,
       textAlign: "center",
       fontSize: 20,
-      borderWidth: 0.7,
+      borderBottomWidth: 0.9,
       minWidth: customValue ? "70%" : "25%",
       padding: 10,
       borderColor: Colors[theme].text,
@@ -133,6 +142,7 @@ const editExerciseModalStyles = (theme: Theme, customValue: boolean) =>
       flexDirection: "row",
       alignItems: "flex-end",
       borderBottomWidth: 0.5,
+      borderColor: Colors[theme].text,
       width: "100%",
       paddingRight: 6,
       paddingLeft: 2,
@@ -144,4 +154,5 @@ const editExerciseModalStyles = (theme: Theme, customValue: boolean) =>
     },
     customContainer: { flexDirection: "row", gap: 12, justifyContent: "flex-end" },
     customText: { textAlignVertical: "center", color: Colors[theme].text, fontSize: 12 },
+    buttonsContainer: { flexDirection: "row", gap: 20, justifyContent: "center" },
   });
