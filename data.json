@@ -30,7 +30,7 @@
             "sets": 4,
             "current": 0,
             "weightsAndRepetitions": [
-              { "qty": 8, "weight": null },
+              { "qty": 8, "weight": "170 kg c/l" },
               { "qty": 10, "weight": null },
               { "qty": 12, "weight": null }
             ]

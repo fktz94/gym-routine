@@ -6,6 +6,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { RepetitionsButtonProps } from "../types/Components";
 import { useState } from "react";
 import ThemedButton from "./ThemedButton";
+import EditExerciseModal from "./EditExerciseModal";
 
 export const ExerciseItemTitle = () => {
   const { theme } = useThemeContext();
@@ -28,10 +29,15 @@ export const ExerciseItem = ({ name, sets, weightsAndRepetitions, current }: Exe
 
   const [weight, setWeight] = useState(weightsAndRepetitions[current].weight);
   const prevWeight = weightsAndRepetitions.at(current - 1);
+  const currentWeight = weightsAndRepetitions[current].weight;
+  const [isEditingExercise, setIsEditingExercise] = useState(false);
 
   const handleWeight = (i: number) => {
     setWeight(weightsAndRepetitions[i].weight);
   };
+
+  const openEditModal = () => setIsEditingExercise(true);
+  const closeEditModal = () => setIsEditingExercise(false);
 
   const repetitionsButton = ({
     selectedItem,
@@ -77,9 +83,7 @@ export const ExerciseItem = ({ name, sets, weightsAndRepetitions, current }: Exe
                 ...(isSelected && {
                   color: theme === "light" ? Colors[theme].background : Colors[theme].primary,
                 }),
-                ...(current === index && {
-                  color: "red",
-                }),
+                ...(current === index && { color: "red" }),
               }}
             >
               {item?.rep}
@@ -96,21 +100,23 @@ export const ExerciseItem = ({ name, sets, weightsAndRepetitions, current }: Exe
 
   return (
     <View style={styles.container}>
+      <EditExerciseModal isOpen={isEditingExercise} closeModal={closeEditModal} />
       <Text style={styles.inputContainer}>{name}</Text>
       <Text style={[styles.inputContainer, styles.sets]}>{sets}</Text>
       <View style={styles.inputContainer}>
-        {!weightsAndRepetitions[current].weight ? (
+        {!currentWeight ? (
           <Text style={styles.prevText}>Add today's weight!</Text>
         ) : (
           weightsAndRepetitions.length > 1 && (
             <>
               <Text style={styles.prevText}>
-                Today: {weightsAndRepetitions[current].qty}r -
-                {weightsAndRepetitions[current].weight} kg
+                Today: {weightsAndRepetitions[current].qty}r -{currentWeight}
+                {typeof currentWeight === "number" && " kg"}
               </Text>
               {prevWeight?.weight && (
                 <Text style={styles.prevText}>
-                  Prev: {prevWeight.qty}r - {prevWeight.weight} kg
+                  Prev: {prevWeight.qty}r - {prevWeight.weight}
+                  {typeof prevWeight.weight === "number" && " kg"}
                 </Text>
               )}
             </>
@@ -124,6 +130,7 @@ export const ExerciseItem = ({ name, sets, weightsAndRepetitions, current }: Exe
             defaultValue={weight?.toString()}
             multiline
             scrollEnabled
+            readOnly
           />
         </View>
 
@@ -134,7 +141,7 @@ export const ExerciseItem = ({ name, sets, weightsAndRepetitions, current }: Exe
           >
             Finished!
           </ThemedButton>
-          <ThemedButton externalButtonStyles={styles.editButtonView}>
+          <ThemedButton externalButtonStyles={styles.editButtonView} onPress={openEditModal}>
             <Ionicons color={Colors[theme].background} name="pencil" />
           </ThemedButton>
         </View>
