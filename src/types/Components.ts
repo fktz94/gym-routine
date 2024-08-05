@@ -31,3 +31,9 @@ export interface RepetitionsButtonProps {
   isUnique?: boolean;
   isOpened?: boolean;
 }
+
+export interface EditExerciseModalProps {
+  isOpen: boolean;
+  closeModal: () => void;
+  data: WeightsAndRepetitions;
+}

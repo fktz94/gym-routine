@@ -27,14 +27,15 @@ export const ExerciseItem = ({ name, sets, weightsAndRepetitions, current }: Exe
 
   const repetitions = weightsAndRepetitions.map((el) => el.qty);
 
-  const [weight, setWeight] = useState(weightsAndRepetitions[current].weight);
   const prevWeight = weightsAndRepetitions.at(current - 1);
   const currentWeight = weightsAndRepetitions[current].weight;
+
   const [isEditingExercise, setIsEditingExercise] = useState(false);
 
-  const handleWeight = (i: number) => {
-    setWeight(weightsAndRepetitions[i].weight);
-  };
+  const [selectedDropdownItem, setSelectedDropdownItem] = useState(current);
+  const weight = weightsAndRepetitions[selectedDropdownItem].weight;
+
+  const handleDropdownItem = (i: number) => setSelectedDropdownItem(i);
 
   const openEditModal = () => setIsEditingExercise(true);
   const closeEditModal = () => setIsEditingExercise(false);
@@ -63,8 +64,8 @@ export const ExerciseItem = ({ name, sets, weightsAndRepetitions, current }: Exe
     return data.length > 1 ? (
       <SelectDropdown
         data={mappedData}
-        defaultValue={mappedData[current]} // hardcoded data
-        onSelect={(el, i) => handleWeight(i)}
+        defaultValue={mappedData[current]}
+        onSelect={(el, i) => handleDropdownItem(i)}
         renderButton={(selectedItem, isOpened) =>
           repetitionsButton({ selectedItem: selectedItem?.rep, isOpened })
         }
@@ -100,7 +101,11 @@ export const ExerciseItem = ({ name, sets, weightsAndRepetitions, current }: Exe
 
   return (
     <View style={styles.container}>
-      <EditExerciseModal isOpen={isEditingExercise} closeModal={closeEditModal} />
+      <EditExerciseModal
+        isOpen={isEditingExercise}
+        closeModal={closeEditModal}
+        data={weightsAndRepetitions[selectedDropdownItem]}
+      />
       <Text style={styles.inputContainer}>{name}</Text>
       <Text style={[styles.inputContainer, styles.sets]}>{sets}</Text>
       <View style={styles.inputContainer}>
@@ -127,7 +132,7 @@ export const ExerciseItem = ({ name, sets, weightsAndRepetitions, current }: Exe
           {repetitionsSelect(repetitions)}
           <TextInput
             style={styles.weightText}
-            defaultValue={weight?.toString()}
+            defaultValue={typeof weight === "number" ? `${weight?.toString()} kg` : weight}
             multiline
             scrollEnabled
             readOnly
