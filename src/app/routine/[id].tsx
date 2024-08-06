@@ -1,8 +1,8 @@
 import RoutineDetails from "@/src/components/RoutineDetails";
 import ThemedButton from "@/src/components/ThemedButton";
 import { Colors } from "@/src/constants/Colors";
+import RoutineProvider from "@/src/contexts/Routine/RoutineProvider";
 import useThemeContext from "@/src/contexts/Theme/useThemeContext";
-import { useAppSelector } from "@/src/hooks/reactReduxHook";
 import useRoutineDescription from "@/src/hooks/useRoutineDescription";
 import { useLocalSearchParams } from "expo-router";
 import { View, Text, StyleSheet } from "react-native";
@@ -12,13 +12,7 @@ export default function RoutineScreen() {
   const styles = routineDescriptionStyles(theme);
 
   const { id } = useLocalSearchParams<{ id: string }>();
-  const { currentRoutineData, routines } = useAppSelector(({ routines }) => routines);
-
-  const { routine, selectedDay, handleSelectedDay } = useRoutineDescription({
-    currentRoutineData,
-    id,
-    routines,
-  });
+  const { routine, selectedDay, handleSelectedDay } = useRoutineDescription({ id });
 
   const daysButtons = () =>
     routine?.data.map((_, i) => (
@@ -35,17 +29,19 @@ export default function RoutineScreen() {
   );
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.routineName}>{routine?.name}</Text>
-      <View style={styles.daysButtonsContainer}>{daysButtons()}</View>
-      {isDayEmpty ? (
-        emptyDayText()
-      ) : (
-        <View style={styles.routineContainer}>
-          <RoutineDetails routineDay={routine?.data[selectedDay]} />
-        </View>
-      )}
-    </View>
+    <RoutineProvider routine={routine}>
+      <View style={styles.container}>
+        <Text style={styles.routineName}>{routine?.name}</Text>
+        <View style={styles.daysButtonsContainer}>{daysButtons()}</View>
+        {isDayEmpty ? (
+          emptyDayText()
+        ) : (
+          <View style={styles.routineContainer}>
+            <RoutineDetails routineDay={routine?.data[selectedDay]} />
+          </View>
+        )}
+      </View>
+    </RoutineProvider>
   );
 }
 

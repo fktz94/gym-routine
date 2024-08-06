@@ -106,7 +106,7 @@ export const ExerciseItem = ({ name, sets, weightsAndRepetitions, current }: Exe
           isCurrent={selectedDropdownItem === current}
           index={selectedDropdownItem}
           closeModal={closeEditModal}
-          data={weightsAndRepetitions[selectedDropdownItem]}
+          exerciseData={weightsAndRepetitions[selectedDropdownItem]}
         />
       )}
       <Text style={styles.inputContainer}>{name}</Text>
@@ -135,7 +135,9 @@ export const ExerciseItem = ({ name, sets, weightsAndRepetitions, current }: Exe
           {repetitionsSelect(repetitions)}
           <TextInput
             style={styles.weightText}
-            defaultValue={typeof weight === "number" ? `${weight?.toString()} kg` : weight}
+            defaultValue={
+              typeof weight === "number" ? `${weight?.toString()} kg` : weight ?? undefined
+            }
             multiline
             scrollEnabled
             readOnly

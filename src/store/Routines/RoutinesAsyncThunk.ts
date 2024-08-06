@@ -1,3 +1,4 @@
+import { ModifyOneExerciseProps } from "@/src/types/Store";
 import { getRoutines } from "@/src/utils/AsyncStorage/Routines";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
@@ -9,3 +10,13 @@ export const getAllRoutines = createAsyncThunk("routines/getAllRoutines", async 
     throw error;
   }
 });
+
+export const modifyOneExercise = createAsyncThunk(
+  "routines/modifyOneExercise",
+  async ({ index, data }: ModifyOneExerciseProps, { getState }) => {
+    const storedData = getState();
+    console.log(storedData);
+    console.log(index);
+    console.log(data);
+  }
+);

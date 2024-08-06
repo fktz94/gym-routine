@@ -7,13 +7,26 @@ import { EditExerciseModalProps } from "../types/Components";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import { AcceptButton, CancelButton } from "./ThemedButton";
 import { validateWeightInputNumber } from "../utils/Validations/Validations";
+import useRoutineContext from "../contexts/Routine/useRoutineContext";
+import { useAppDispatch } from "../hooks/reactReduxHook";
+import { modifyOneExercise } from "../store/Routines/RoutinesAsyncThunk";
 
-const EditExerciseModal = ({ closeModal, data, isCurrent, index }: EditExerciseModalProps) => {
-  const [newValue, setNewValue] = useState(data.weight);
-  const [customValue, setCustomValue] = useState(Number.isNaN(data.weight && +data.weight));
+const EditExerciseModal = ({
+  closeModal,
+  exerciseData,
+  isCurrent,
+  index,
+}: EditExerciseModalProps) => {
+  const [newValue, setNewValue] = useState(exerciseData.weight);
+  const [customValue, setCustomValue] = useState(
+    Number.isNaN(exerciseData.weight && +exerciseData.weight)
+  );
   const [settedToCurrent, setSettedToCurrent] = useState(isCurrent);
   const { theme } = useThemeContext();
   const styles = editExerciseModalStyles(theme, customValue);
+  const dispatch = useAppDispatch();
+
+  const { currentDay, data, id, madeOn, name } = useRoutineContext();
 
   const handleCustomCheckbox = () => {
     setNewValue("");
@@ -31,12 +44,13 @@ const EditExerciseModal = ({ closeModal, data, isCurrent, index }: EditExerciseM
 
   const handleAccept = () => {
     closeModal();
-    console.log(data);
 
     // change the global state and change the local storage data
+    // pass the routine id, the SELECTED day (day of where the edited exercise belongs), name of the exercise and a boolean (optional) what would change the current week of the ex
+    dispatch(modifyOneExercise({ data: exerciseData, index: index }));
   };
 
-  const isValueInvalid = data.weight === newValue || !newValue;
+  const isValueInvalid = exerciseData.weight === newValue || !newValue;
   const isButtonDisabled = isValueInvalid && settedToCurrent === isCurrent;
 
   return (
@@ -50,13 +64,13 @@ const EditExerciseModal = ({ closeModal, data, isCurrent, index }: EditExerciseM
           onPress={closeModal}
         />
         <View style={styles.inputContainer}>
-          {data.weight && (
+          {exerciseData.weight && (
             <View style={styles.previousWeightTextView}>
               <Text style={[styles.previousWeightText, { fontSize: 10, letterSpacing: 0.5 }]}>
                 Current weight:{" "}
               </Text>
               <Text style={[styles.previousWeightText, { fontWeight: "bold" }]}>
-                {data.weight} {typeof data.weight === "number" ? "kg" : undefined}
+                {exerciseData.weight} {typeof exerciseData.weight === "number" ? "kg" : undefined}
               </Text>
             </View>
           )}

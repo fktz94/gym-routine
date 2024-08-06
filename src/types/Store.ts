@@ -6,8 +6,12 @@ export enum ResponseStatus {
 }
 
 export interface RoutineStore extends RoutinesData {
-  errorMessage: string;
-  isLoading: boolean;
-  status: ResponseStatus;
-  currentRoutineData: RoutineStructure;
+  getAllRoutinesErrorMessage: string;
+  isGettingAllRoutines: boolean;
+  getAllRoutinesStatus: ResponseStatus;
+}
+
+export interface ModifyOneExerciseProps {
+  index: any;
+  data: any;
 }

@@ -1,7 +1,7 @@
 {
   "routines": [
     {
-      "id": "0",
+      "id": "0001",
       "name": "Jul",
       "madeOn": "Jul 07 2024",
       "currentDay": 0,
@@ -40,8 +40,8 @@
         []
       ]
     },
-    { "id": "1", "name": "Jun", "madeOn": "Jun 01 2024", "currentDay": 0, "data": [[], [], []] },
-    { "id": "2", "name": "May", "madeOn": "May 05 2024", "currentDay": 0, "data": [[], [], []] }
+    { "id": "0002", "name": "Jun", "madeOn": "Jun 01 2024", "currentDay": 0, "data": [[], [], []] },
+    { "id": "0003", "name": "May", "madeOn": "May 05 2024", "currentDay": 0, "data": [[], [], []] }
   ],
   "currentRoutineName": "Jul"
 }

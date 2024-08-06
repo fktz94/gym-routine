@@ -1,8 +1,12 @@
 import { useState } from "react";
+import { useAppSelector } from "./reactReduxHook";
+import useRoutines from "./useRoutines";
 
-const useRoutineDescription = ({ currentRoutineData, routines, id }: UseRoutineDescription) => {
-  const isCurrent = id === currentRoutineData.id;
-  const routine = isCurrent ? currentRoutineData : routines.find((el) => el.id === id);
+const useRoutineDescription = ({ id }: UseRoutineDescription) => {
+  const { currentRoutine, routines } = useRoutines();
+
+  const isCurrent = id === currentRoutine.id;
+  const routine = isCurrent ? currentRoutine : routines.find((el) => el.id === id) || routines[0];
 
   const currentDay = routine?.currentDay ?? 0;
 

@@ -1,16 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getAllRoutines } from "./RoutinesAsyncThunk";
+import { getAllRoutines, modifyOneExercise } from "./RoutinesAsyncThunk";
 import { ResponseStatus, RoutineStore } from "@/src/types/Store";
 import data from "@/data.json";
-import { findCurrentRoutine } from "@/src/utils/Store/Routine";
 
 const initialState: RoutineStore = {
-  currentRoutineData: data.routines[0],
   currentRoutineName: data.currentRoutineName,
-  errorMessage: "",
-  isLoading: false,
   routines: data.routines,
-  status: ResponseStatus.IDLE,
+
+  getAllRoutinesStatus: ResponseStatus.IDLE,
+  getAllRoutinesErrorMessage: "",
+  isGettingAllRoutines: false,
 };
 
 export const routinesSlice = createSlice({
@@ -20,24 +19,26 @@ export const routinesSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getAllRoutines.pending, (state) => {
-        state.status = ResponseStatus.PENDING;
-        state.isLoading = true;
-        state.errorMessage = "";
+        state.getAllRoutinesStatus = ResponseStatus.PENDING;
+        state.isGettingAllRoutines = true;
+        state.getAllRoutinesErrorMessage = "";
       })
       .addCase(getAllRoutines.fulfilled, (state, { payload }) => {
-        state.status = ResponseStatus.FULFILLED;
-        state.isLoading = false;
+        state.getAllRoutinesStatus = ResponseStatus.FULFILLED;
+        state.isGettingAllRoutines = false;
         if (payload) {
           state.routines = payload.routines;
           state.currentRoutineName = payload.currentRoutineName;
-          state.currentRoutineData = findCurrentRoutine(payload);
         }
       })
       .addCase(getAllRoutines.rejected, (state, { error }) => {
-        state.status = ResponseStatus.REJECTED;
-        state.isLoading = false;
-        state.errorMessage = error.message ?? "Error getting all routines";
-      });
+        state.getAllRoutinesStatus = ResponseStatus.REJECTED;
+        state.isGettingAllRoutines = false;
+        state.getAllRoutinesErrorMessage = error.message ?? "Error getting all routines";
+      })
+      .addCase(modifyOneExercise.pending, () => {})
+      .addCase(modifyOneExercise.fulfilled, () => {})
+      .addCase(modifyOneExercise.rejected, () => {});
   },
 });
 

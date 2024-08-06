@@ -35,7 +35,7 @@ export interface RepetitionsButtonProps {
 
 export interface EditExerciseModalProps {
   closeModal: () => void;
-  data: WeightsAndRepetitions;
+  exerciseData: WeightsAndRepetitions;
   isCurrent: boolean;
   index: number;
 }

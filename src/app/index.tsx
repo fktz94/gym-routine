@@ -3,21 +3,17 @@ import { Colors } from "@/src/constants/Colors";
 import useThemeContext from "@/src/contexts/Theme/useThemeContext";
 import { StyleSheet, Text, View } from "react-native";
 import RoutinesList from "@/src/components/RoutinesList";
-import { useAppSelector } from "@/src/hooks/reactReduxHook";
 import RoutineItemList from "@/src/components/RoutineItemList";
+import useRoutines from "../hooks/useRoutines";
 
 export default function Index() {
   const { theme } = useThemeContext();
   const styles = indexStyles(theme);
 
-  const { currentRoutineName, currentRoutineData, routines } = useAppSelector(
-    ({ routines }) => routines
-  );
-
-  const pastRoutines = routines.filter((el) => el.name !== currentRoutineName);
+  const { currentRoutine, pastRoutines } = useRoutines();
 
   const currentRoutineButton = () => {
-    const { id, madeOn, name } = currentRoutineData;
+    const { id, madeOn, name } = currentRoutine;
     return <RoutineItemList id={id} madeOn={madeOn} routineName={name} isCurrent />;
   };
 
