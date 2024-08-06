@@ -6,12 +6,12 @@ import { Colors } from "../constants/Colors";
 import { EditExerciseModalProps } from "../types/Components";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import { AcceptButton, CancelButton } from "./ThemedButton";
+import { validateWeightInputNumber } from "../utils/Validations/Validations";
 
 const EditExerciseModal = ({ closeModal, data, isCurrent, index }: EditExerciseModalProps) => {
   const [newValue, setNewValue] = useState(data.weight);
-  const [customValue, setCustomValue] = useState(Number.isNaN(+data.weight));
+  const [customValue, setCustomValue] = useState(Number.isNaN(data.weight && +data.weight));
   const [settedToCurrent, setSettedToCurrent] = useState(isCurrent);
-
   const { theme } = useThemeContext();
   const styles = editExerciseModalStyles(theme, customValue);
 
@@ -25,12 +25,13 @@ const EditExerciseModal = ({ closeModal, data, isCurrent, index }: EditExerciseM
   const handleNewValue = (input: number | string) => {
     const isNotNumber = Number.isNaN(+input);
     const newVal = isNotNumber || input === "" ? input : +input;
+    if (!customValue && validateWeightInputNumber(newVal)) return;
     setNewValue(newVal);
   };
 
   const handleAccept = () => {
     closeModal();
-    console.log(index);
+    console.log(data);
 
     // change the global state and change the local storage data
   };
@@ -88,7 +89,7 @@ const EditExerciseModal = ({ closeModal, data, isCurrent, index }: EditExerciseM
                 fillColor={Colors.light.primary}
                 innerIconStyle={{ borderWidth: 2 }}
                 onPress={handleCurrentCheckbox}
-                // isChecked={customValue}
+                isChecked={settedToCurrent}
               />
             </View>
           )}

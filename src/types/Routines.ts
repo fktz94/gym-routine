@@ -1,6 +1,6 @@
 interface WeightsAndRepetitions {
   qty: number | string;
-  weight: number | string;
+  weight: number | string | null;
 }
 
 interface Exercise {
