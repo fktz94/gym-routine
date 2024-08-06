@@ -11,12 +11,12 @@ export const getAllRoutines = createAsyncThunk("routines/getAllRoutines", async 
   }
 });
 
-export const modifyOneExercise = createAsyncThunk(
-  "routines/modifyOneExercise",
-  async ({ index, data }: ModifyOneExerciseProps, { getState }) => {
-    const storedData = getState();
-    console.log(storedData);
-    console.log(index);
-    console.log(data);
-  }
-);
+// export const modifyOneExercise = createAsyncThunk(
+//   "routines/modifyOneExercise",
+//   async ({ index, data }: ModifyOneExerciseProps, { getState }) => {
+//     const storedData = getState();
+//     console.log(storedData);
+//     console.log(index);
+//     console.log(data);
+//   }
+// );

@@ -107,6 +107,7 @@ export const ExerciseItem = ({ name, sets, weightsAndRepetitions, current }: Exe
           index={selectedDropdownItem}
           closeModal={closeEditModal}
           exerciseData={weightsAndRepetitions[selectedDropdownItem]}
+          exerciseName={name}
         />
       )}
       <Text style={styles.inputContainer}>{name}</Text>

@@ -29,7 +29,7 @@ export default function RoutineScreen() {
   );
 
   return (
-    <RoutineProvider routine={routine}>
+    <RoutineProvider routine={routine} selectedDay={selectedDay}>
       <View style={styles.container}>
         <Text style={styles.routineName}>{routine?.name}</Text>
         <View style={styles.daysButtonsContainer}>{daysButtons()}</View>

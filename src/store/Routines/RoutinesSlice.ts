@@ -35,10 +35,10 @@ export const routinesSlice = createSlice({
         state.getAllRoutinesStatus = ResponseStatus.REJECTED;
         state.isGettingAllRoutines = false;
         state.getAllRoutinesErrorMessage = error.message ?? "Error getting all routines";
-      })
-      .addCase(modifyOneExercise.pending, () => {})
-      .addCase(modifyOneExercise.fulfilled, () => {})
-      .addCase(modifyOneExercise.rejected, () => {});
+      });
+    // .addCase(modifyOneExercise.pending, () => {})
+    // .addCase(modifyOneExercise.fulfilled, () => {})
+    // .addCase(modifyOneExercise.rejected, () => {});
   },
 });
 

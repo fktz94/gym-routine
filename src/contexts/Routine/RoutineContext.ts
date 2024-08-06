@@ -1,5 +1,9 @@
 import { createContext } from "react";
 
-const RoutineContext = createContext<RoutineStructure | null>(null);
+interface RoutineContextProps extends RoutineStructure {
+  selectedDay: number;
+}
+
+const RoutineContext = createContext<RoutineContextProps | null>(null);
 
 export default RoutineContext;

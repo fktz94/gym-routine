@@ -10,8 +10,3 @@ export interface RoutineStore extends RoutinesData {
   isGettingAllRoutines: boolean;
   getAllRoutinesStatus: ResponseStatus;
 }
-
-export interface ModifyOneExerciseProps {
-  index: any;
-  data: any;
-}

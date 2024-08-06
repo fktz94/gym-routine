@@ -38,6 +38,7 @@ export interface EditExerciseModalProps {
   exerciseData: WeightsAndRepetitions;
   isCurrent: boolean;
   index: number;
+  exerciseName: string;
 }
 
 export interface AcceptButtonProps {

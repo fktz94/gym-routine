@@ -8,14 +8,15 @@ import BouncyCheckbox from "react-native-bouncy-checkbox";
 import { AcceptButton, CancelButton } from "./ThemedButton";
 import { validateWeightInputNumber } from "../utils/Validations/Validations";
 import useRoutineContext from "../contexts/Routine/useRoutineContext";
-import { useAppDispatch } from "../hooks/reactReduxHook";
-import { modifyOneExercise } from "../store/Routines/RoutinesAsyncThunk";
+import { useAppDispatch, useAppSelector } from "../hooks/reactReduxHook";
+import { modifyOneExercise } from "../utils/Store/Routine";
 
 const EditExerciseModal = ({
   closeModal,
   exerciseData,
   isCurrent,
   index,
+  exerciseName,
 }: EditExerciseModalProps) => {
   const [newValue, setNewValue] = useState(exerciseData.weight);
   const [customValue, setCustomValue] = useState(
@@ -26,7 +27,9 @@ const EditExerciseModal = ({
   const styles = editExerciseModalStyles(theme, customValue);
   const dispatch = useAppDispatch();
 
-  const { currentDay, data, id, madeOn, name } = useRoutineContext();
+  const { data, id, madeOn, name, selectedDay } = useRoutineContext();
+
+  const { routines } = useAppSelector((state) => state.routines);
 
   const handleCustomCheckbox = () => {
     setNewValue("");
@@ -43,11 +46,17 @@ const EditExerciseModal = ({
   };
 
   const handleAccept = () => {
-    closeModal();
+    if (!newValue) return;
 
-    // change the global state and change the local storage data
-    // pass the routine id, the SELECTED day (day of where the edited exercise belongs), name of the exercise and a boolean (optional) what would change the current week of the ex
-    dispatch(modifyOneExercise({ data: exerciseData, index: index }));
+    modifyOneExercise({
+      id,
+      index,
+      routines,
+      selectedDay,
+      exerciseName,
+      newValue,
+      makeItCurrent: settedToCurrent && !isCurrent,
+    });
   };
 
   const isValueInvalid = exerciseData.weight === newValue || !newValue;
@@ -109,7 +118,8 @@ const EditExerciseModal = ({
           )}
           <View style={styles.buttonsContainer}>
             <CancelButton onCancel={closeModal} />
-            <AcceptButton onAccept={handleAccept} isDisabled={isButtonDisabled} />
+            <AcceptButton onAccept={handleAccept} isDisabled={false} />
+            {/* <AcceptButton onAccept={handleAccept} isDisabled={isButtonDisabled} /> */}
           </View>
         </View>
       </View>
