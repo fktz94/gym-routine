@@ -6,7 +6,20 @@ export enum ResponseStatus {
 }
 
 export interface RoutineStore extends RoutinesData {
-  getAllRoutinesErrorMessage: string;
-  isGettingAllRoutines: boolean;
   getAllRoutinesStatus: ResponseStatus;
+  isGettingAllRoutines: boolean;
+  getAllRoutinesErrorMessage: string;
+
+  modifyExerciseStatus: ResponseStatus;
+  isModifyingRoutines: boolean;
+  modifyExerciseErrorMessage: string;
+}
+
+export interface ModifyExerciseAsyncThunkProps {
+  routineId: string;
+  selectedDay: number;
+  exerciseName: string;
+  selectedSerie: number;
+  newWeightValue: string | number;
+  makeItCurrent: boolean;
 }

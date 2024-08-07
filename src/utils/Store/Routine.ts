@@ -1,29 +1,28 @@
-import { ModifyOneExerciseProps } from "@/src/types/Utils";
+import { ModifyOneExerciseUtilsProps } from "@/src/types/Utils";
 import { produce } from "immer";
 
 export const modifyOneExercise = ({
-  id,
-  index,
   routines,
+  routineId,
   selectedDay,
   exerciseName,
-  newValue,
+  selectedSerie,
+  newWeightValue,
   makeItCurrent,
-}: ModifyOneExerciseProps) => {
-  // const selectedValue = (dat) =>
-  //   dat.find((el) => el.id === id)?.data[selectedDay].find((el) => el.name === exerciseName)!
-  //     .weightsAndRepetitions[index].weight;
-  // console.log(selectedValue(routines));
-
+}: ModifyOneExerciseUtilsProps) => {
   const nextState = produce(routines, (draft) => {
     draft
-      .find((el) => el.id === id)!
+      .find((el) => el.id === routineId)!
       .data[selectedDay].find((el) => el.name === exerciseName)!.weightsAndRepetitions[
-      index
-    ].weight = newValue;
-  });
+      selectedSerie
+    ].weight = newWeightValue;
 
-  console.log(nextState);
+    if (makeItCurrent) {
+      draft
+        .find((el) => el.id === routineId)!
+        .data[selectedDay].find((el) => el.name === exerciseName)!.current = selectedSerie;
+    }
+  });
 
   return nextState;
 };

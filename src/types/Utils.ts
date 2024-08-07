@@ -1,9 +1,5 @@
-export interface ModifyOneExerciseProps {
-  id: string;
-  index: number;
+import { ModifyExerciseAsyncThunkProps } from "./Store";
+
+export interface ModifyOneExerciseUtilsProps extends ModifyExerciseAsyncThunkProps {
   routines: Routine;
-  selectedDay: number;
-  exerciseName: string;
-  newValue: string | number;
-  makeItCurrent?: boolean;
 }

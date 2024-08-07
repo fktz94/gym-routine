@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getAllRoutines, modifyOneExercise } from "./RoutinesAsyncThunk";
+import { getAllRoutines, modifyExercise } from "./RoutinesAsyncThunk";
 import { ResponseStatus, RoutineStore } from "@/src/types/Store";
 import data from "@/data.json";
 
@@ -10,6 +10,10 @@ const initialState: RoutineStore = {
   getAllRoutinesStatus: ResponseStatus.IDLE,
   getAllRoutinesErrorMessage: "",
   isGettingAllRoutines: false,
+
+  modifyExerciseStatus: ResponseStatus.IDLE,
+  isModifyingRoutines: false,
+  modifyExerciseErrorMessage: "",
 };
 
 export const routinesSlice = createSlice({
@@ -26,6 +30,9 @@ export const routinesSlice = createSlice({
       .addCase(getAllRoutines.fulfilled, (state, { payload }) => {
         state.getAllRoutinesStatus = ResponseStatus.FULFILLED;
         state.isGettingAllRoutines = false;
+        console.log("payload");
+        console.log(payload);
+
         if (payload) {
           state.routines = payload.routines;
           state.currentRoutineName = payload.currentRoutineName;
@@ -36,9 +43,21 @@ export const routinesSlice = createSlice({
         state.isGettingAllRoutines = false;
         state.getAllRoutinesErrorMessage = error.message ?? "Error getting all routines";
       });
-    // .addCase(modifyOneExercise.pending, () => {})
-    // .addCase(modifyOneExercise.fulfilled, () => {})
-    // .addCase(modifyOneExercise.rejected, () => {});
+    builder
+      .addCase(modifyExercise.pending, (state) => {
+        state.modifyExerciseStatus = ResponseStatus.PENDING;
+        state.isModifyingRoutines = true;
+        state.modifyExerciseErrorMessage = "";
+      })
+      .addCase(modifyExercise.fulfilled, (state) => {
+        state.modifyExerciseStatus = ResponseStatus.FULFILLED;
+        state.isModifyingRoutines = false;
+      })
+      .addCase(modifyExercise.rejected, (state, { error }) => {
+        state.modifyExerciseStatus = ResponseStatus.REJECTED;
+        state.isModifyingRoutines = false;
+        state.modifyExerciseErrorMessage = error.message ?? "Error modifying one exercise";
+      });
   },
 });
 

@@ -104,7 +104,7 @@ export const ExerciseItem = ({ name, sets, weightsAndRepetitions, current }: Exe
       {isEditingExercise && (
         <EditExerciseModal
           isCurrent={selectedDropdownItem === current}
-          index={selectedDropdownItem}
+          selectedSerie={selectedDropdownItem}
           closeModal={closeEditModal}
           exerciseData={weightsAndRepetitions[selectedDropdownItem]}
           exerciseName={name}

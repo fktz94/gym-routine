@@ -37,7 +37,7 @@ export interface EditExerciseModalProps {
   closeModal: () => void;
   exerciseData: WeightsAndRepetitions;
   isCurrent: boolean;
-  index: number;
+  selectedSerie: number;
   exerciseName: string;
 }
 
