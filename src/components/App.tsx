@@ -7,45 +7,29 @@ import { StatusBar } from "expo-status-bar";
 import Header from "../components/Header";
 import { useAppDispatch, useAppSelector } from "../hooks/reactReduxHook";
 import { getAllRoutines } from "../store/Routines/RoutinesAsyncThunk";
-import { useEffect } from "react";
 import { ResponseStatus } from "../types/Store";
+import { setIsInitialLoadToFalse } from "../store/Routines/RoutinesSlice";
+import { useEffect } from "react";
 
 export default function App() {
   const { theme } = useThemeContext();
   const styles = appStyles(theme);
-  const dispatch = useAppDispatch();
-  const { isGettingAllRoutines, getAllRoutinesStatus } = useAppSelector((state) => state.routines);
+  const { isGettingAllRoutines, getAllRoutinesStatus, isInitialLoad } = useAppSelector(
+    (state) => state.routines
+  );
 
   const statusBarStyle = theme === "light" ? "dark" : "light";
 
-  useEffect(() => {
-    if (getAllRoutinesStatus === ResponseStatus.IDLE) {
-      dispatch(getAllRoutines());
-    } else {
-      SplashScreen.hideAsync();
-    }
-  }, [getAllRoutinesStatus]);
-
   return (
     <SafeAreaView style={styles.container}>
-      {isGettingAllRoutines ? (
-        <ActivityIndicator
-          size={80}
-          color={Colors[theme].secondary}
-          style={{ marginVertical: "auto" }}
-        />
-      ) : (
-        <>
-          <StatusBar style={statusBarStyle} />
-          <Header />
-          <Stack
-            screenOptions={{ headerShown: false, contentStyle: { backgroundColor: "transparent" } }}
-          >
-            <Stack.Screen name="index" />
-            <Stack.Screen name="routine/[id]" />
-          </Stack>
-        </>
-      )}
+      <StatusBar style={statusBarStyle} />
+      <Header />
+      <Stack
+        screenOptions={{ headerShown: false, contentStyle: { backgroundColor: "transparent" } }}
+      >
+        <Stack.Screen name="index" />
+        <Stack.Screen name="routine/[id]" />
+      </Stack>
     </SafeAreaView>
   );
 }

@@ -32,7 +32,11 @@ export default function RootLayout() {
       setStoredTheme();
       setRoutines(); // Provisory...
     })();
-  }, []);
+
+    if (loaded) {
+      SplashScreen.hideAsync();
+    }
+  }, [loaded]);
 
   if (!loaded) return null;
 

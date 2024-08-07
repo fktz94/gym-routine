@@ -11,16 +11,16 @@ export const modifyOneExercise = ({
   makeItCurrent,
 }: ModifyOneExerciseUtilsProps) => {
   const nextState = produce(routines, (draft) => {
-    draft
-      .find((el) => el.id === routineId)!
-      .data[selectedDay].find((el) => el.name === exerciseName)!.weightsAndRepetitions[
-      selectedSerie
-    ].weight = newWeightValue;
+    const selectedExercise = draft
+      .find((el) => el.id === routineId)
+      ?.data[selectedDay].find((el) => el.name === exerciseName);
+
+    if (!selectedExercise) return;
+
+    selectedExercise.weightsAndRepetitions[selectedSerie].weight = newWeightValue;
 
     if (makeItCurrent) {
-      draft
-        .find((el) => el.id === routineId)!
-        .data[selectedDay].find((el) => el.name === exerciseName)!.current = selectedSerie;
+      selectedExercise.current = selectedSerie;
     }
   });
 

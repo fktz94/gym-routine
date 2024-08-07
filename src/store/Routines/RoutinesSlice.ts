@@ -5,6 +5,7 @@ import { ResponseStatus, RoutineStore } from "@/src/types/Store";
 const initialState: RoutineStore = {
   currentRoutineName: "",
   routines: [],
+  isInitialLoad: true,
 
   getAllRoutinesStatus: ResponseStatus.IDLE,
   isGettingAllRoutines: false,
@@ -23,6 +24,9 @@ export const routinesSlice = createSlice({
       state.modifyExerciseStatus = ResponseStatus.IDLE;
       state.isModifyingRoutines = false;
       state.modifyExerciseErrorMessage = "";
+    },
+    setIsInitialLoadToFalse: (state) => {
+      state.isInitialLoad = false;
     },
   },
   extraReducers: (builder) => {
@@ -63,6 +67,6 @@ export const routinesSlice = createSlice({
   },
 });
 
-export const { resetModifiyExerciseState } = routinesSlice.actions;
+export const { resetModifiyExerciseState, setIsInitialLoadToFalse } = routinesSlice.actions;
 
 export default routinesSlice.reducer;

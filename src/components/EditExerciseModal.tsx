@@ -79,7 +79,13 @@ const EditExerciseModal = ({
       Alert.alert("Error!", modifyExerciseErrorMessage);
     }
 
-    dispatch(resetModifiyExerciseState());
+    if (
+      modifyExerciseStatus === ResponseStatus.REJECTED ||
+      modifyExerciseStatus === ResponseStatus.FULFILLED
+    ) {
+      dispatch(resetModifiyExerciseState());
+      closeModal();
+    }
   }, [modifyExerciseStatus, isLoading]);
 
   return (

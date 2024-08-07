@@ -2,7 +2,6 @@ import { ModifyExerciseAsyncThunkProps, RoutineStore } from "@/src/types/Store";
 import { getRoutines, storeRoutines } from "@/src/utils/AsyncStorage/Routines";
 import { modifyOneExercise } from "@/src/utils/Store/Routine";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { RootState } from "../store";
 
 export const getAllRoutines = createAsyncThunk("routines/getAllRoutines", async () => {
   try {
@@ -40,7 +39,6 @@ export const modifyExercise = createAsyncThunk(
       newWeightValue,
       makeItCurrent,
     });
-
     const payload = { routines: modifiedRoutines, currentRoutineName };
 
     await storeRoutines(payload);
