@@ -1,12 +1,14 @@
-import ThemeProvider from "../contexts/Theme/ThemeProvider";
+import ThemeProvider from "@/src/contexts/Theme/ThemeProvider";
 import { SplashScreen } from "expo-router";
 import { useEffect, useState } from "react";
 import { useFonts } from "expo-font";
-import { getTheme } from "../utils/AsyncStorage/Theme";
+import { getTheme } from "@/src/utils/AsyncStorage/Theme";
 import { useColorScheme } from "react-native";
 import { Provider } from "react-redux";
-import { store } from "../store/store";
-import App from "../components/App";
+import { store } from "@/src/store/store";
+import App from "@/src/components/App";
+import data from "@/data.json";
+import { storeRoutines } from "../utils/AsyncStorage/Routines";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -23,16 +25,16 @@ export default function RootLayout() {
     setInitialTheme(storedTheme ?? colorScheme ?? "light");
   };
 
-  useEffect(() => {
-    (async () => setStoredTheme())();
-    if (loaded) {
-      SplashScreen.hideAsync();
-    }
-  }, [loaded]);
+  const setRoutines = async () => void (await storeRoutines(data)); // Provisory until I create a routine from scratch. Now it's still made of a hardcoded json.
 
-  if (!loaded) {
-    return null;
-  }
+  useEffect(() => {
+    (async () => {
+      setStoredTheme();
+      setRoutines(); // Provisory...
+    })();
+  }, []);
+
+  if (!loaded) return null;
 
   return (
     <ThemeProvider storedTheme={initialTheme}>

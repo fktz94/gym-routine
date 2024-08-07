@@ -1,4 +1,4 @@
-import { ActivityIndicator, Modal, StyleSheet, Text, TextInput, View } from "react-native";
+import { ActivityIndicator, Alert, Modal, StyleSheet, Text, TextInput, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import useThemeContext from "../contexts/Theme/useThemeContext";
 import { Ionicons } from "@expo/vector-icons";
@@ -10,6 +10,8 @@ import { validateWeightInputNumber } from "../utils/Validations/Validations";
 import useRoutineContext from "../contexts/Routine/useRoutineContext";
 import { useAppDispatch, useAppSelector } from "../hooks/reactReduxHook";
 import { modifyExercise } from "../store/Routines/RoutinesAsyncThunk";
+import { ResponseStatus } from "../types/Store";
+import { resetModifiyExerciseState } from "../store/Routines/RoutinesSlice";
 
 const EditExerciseModal = ({
   closeModal,
@@ -30,6 +32,7 @@ const EditExerciseModal = ({
   const {
     isGettingAllRoutines,
     isModifyingRoutines,
+    modifyExerciseStatus,
     getAllRoutinesErrorMessage,
     modifyExerciseErrorMessage,
   } = useAppSelector((state) => state.routines);
@@ -70,8 +73,14 @@ const EditExerciseModal = ({
   const isLoading = isGettingAllRoutines || isModifyingRoutines;
 
   useEffect(() => {
-    // if (...) {...} // -> Handle close modal when finishes fetching data or show error mssg if needed.
-  }, []);
+    if (isLoading || modifyExerciseStatus === ResponseStatus.IDLE) return;
+
+    if (modifyExerciseErrorMessage) {
+      Alert.alert("Error!", modifyExerciseErrorMessage);
+    }
+
+    dispatch(resetModifiyExerciseState());
+  }, [modifyExerciseStatus, isLoading]);
 
   return (
     <Modal animationType="slide" transparent visible>

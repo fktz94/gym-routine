@@ -1,15 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { getAllRoutines, modifyExercise } from "./RoutinesAsyncThunk";
 import { ResponseStatus, RoutineStore } from "@/src/types/Store";
-import data from "@/data.json";
 
 const initialState: RoutineStore = {
-  currentRoutineName: data.currentRoutineName,
-  routines: data.routines,
+  currentRoutineName: "",
+  routines: [],
 
   getAllRoutinesStatus: ResponseStatus.IDLE,
-  getAllRoutinesErrorMessage: "",
   isGettingAllRoutines: false,
+  getAllRoutinesErrorMessage: "",
 
   modifyExerciseStatus: ResponseStatus.IDLE,
   isModifyingRoutines: false,
@@ -19,7 +18,13 @@ const initialState: RoutineStore = {
 export const routinesSlice = createSlice({
   name: "routines",
   initialState,
-  reducers: {},
+  reducers: {
+    resetModifiyExerciseState: (state) => {
+      state.modifyExerciseStatus = ResponseStatus.IDLE;
+      state.isModifyingRoutines = false;
+      state.modifyExerciseErrorMessage = "";
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getAllRoutines.pending, (state) => {
@@ -30,9 +35,6 @@ export const routinesSlice = createSlice({
       .addCase(getAllRoutines.fulfilled, (state, { payload }) => {
         state.getAllRoutinesStatus = ResponseStatus.FULFILLED;
         state.isGettingAllRoutines = false;
-        console.log("payload");
-        console.log(payload);
-
         if (payload) {
           state.routines = payload.routines;
           state.currentRoutineName = payload.currentRoutineName;
@@ -56,11 +58,11 @@ export const routinesSlice = createSlice({
       .addCase(modifyExercise.rejected, (state, { error }) => {
         state.modifyExerciseStatus = ResponseStatus.REJECTED;
         state.isModifyingRoutines = false;
-        state.modifyExerciseErrorMessage = error.message ?? "Error modifying one exercise";
+        state.modifyExerciseErrorMessage = error.message ?? "Error modifying the exercise";
       });
   },
 });
 
-export const {} = routinesSlice.actions;
+export const { resetModifiyExerciseState } = routinesSlice.actions;
 
 export default routinesSlice.reducer;

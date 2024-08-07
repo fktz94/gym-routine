@@ -4,7 +4,7 @@ import useThemeContext from "@/src/contexts/Theme/useThemeContext";
 import { StyleSheet, Text, View } from "react-native";
 import RoutinesList from "@/src/components/RoutinesList";
 import RoutineItemList from "@/src/components/RoutineItemList";
-import useRoutines from "../hooks/useRoutines";
+import useRoutines from "@/src/hooks/useRoutines";
 
 export default function Index() {
   const { theme } = useThemeContext();
@@ -13,6 +13,7 @@ export default function Index() {
   const { currentRoutine, pastRoutines } = useRoutines();
 
   const currentRoutineButton = () => {
+    if (!currentRoutine) return;
     const { id, madeOn, name } = currentRoutine;
     return <RoutineItemList id={id} madeOn={madeOn} routineName={name} isCurrent />;
   };
@@ -22,14 +23,18 @@ export default function Index() {
       <ThemedButton isSecondary onPress={() => {}}>
         New routine
       </ThemedButton>
-      <View style={styles.listContainer}>
-        <Text style={styles.title}>Current routine</Text>
-        {currentRoutineButton()}
-      </View>
-      <View style={styles.listContainer}>
-        <Text style={styles.title}>Past routines</Text>
-        <RoutinesList selectedRoutines={pastRoutines} />
-      </View>
+      {currentRoutine && (
+        <View style={styles.listContainer}>
+          <Text style={styles.title}>Current routine</Text>
+          {currentRoutineButton()}
+        </View>
+      )}
+      {pastRoutines.length > 0 && (
+        <View style={styles.listContainer}>
+          <Text style={styles.title}>Past routines</Text>
+          <RoutinesList selectedRoutines={pastRoutines} />
+        </View>
+      )}
     </View>
   );
 }

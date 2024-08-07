@@ -28,6 +28,8 @@ export default function RoutineScreen() {
     <Text style={styles.emptyDay}>This day is empty! {"\n"} Fill it!</Text>
   );
 
+  if (!routine) return null; // Should redirect to 404 page.
+
   return (
     <RoutineProvider routine={routine} selectedDay={selectedDay}>
       <View style={styles.container}>

@@ -30,7 +30,7 @@ export const modifyExercise = createAsyncThunk(
       routines: { routines, currentRoutineName },
     } = getState(); // Learn how to type AsyncThunk
 
-    // Is done this way because I'm using LocalStorage. It'd be simpler by making API calls with its correspondant paths.
+    // Is done this way because I'm using LocalStorage. It'd be simpler by making API calls to its correspondant paths.
     const modifiedRoutines = modifyOneExercise({
       routines,
       routineId,

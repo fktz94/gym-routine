@@ -1,27 +1,51 @@
-import { StyleSheet } from "react-native";
+import { ActivityIndicator, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Stack } from "expo-router";
+import { SplashScreen, Stack } from "expo-router";
 import useThemeContext from "../contexts/Theme/useThemeContext";
 import { Colors } from "../constants/Colors";
 import { StatusBar } from "expo-status-bar";
 import Header from "../components/Header";
+import { useAppDispatch, useAppSelector } from "../hooks/reactReduxHook";
+import { getAllRoutines } from "../store/Routines/RoutinesAsyncThunk";
+import { useEffect } from "react";
+import { ResponseStatus } from "../types/Store";
 
 export default function App() {
   const { theme } = useThemeContext();
   const styles = appStyles(theme);
+  const dispatch = useAppDispatch();
+  const { isGettingAllRoutines, getAllRoutinesStatus } = useAppSelector((state) => state.routines);
 
   const statusBarStyle = theme === "light" ? "dark" : "light";
 
+  useEffect(() => {
+    if (getAllRoutinesStatus === ResponseStatus.IDLE) {
+      dispatch(getAllRoutines());
+    } else {
+      SplashScreen.hideAsync();
+    }
+  }, [getAllRoutinesStatus]);
+
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar style={statusBarStyle} />
-      <Header />
-      <Stack
-        screenOptions={{ headerShown: false, contentStyle: { backgroundColor: "transparent" } }}
-      >
-        <Stack.Screen name="index" />
-        <Stack.Screen name="routine/[id]" />
-      </Stack>
+      {isGettingAllRoutines ? (
+        <ActivityIndicator
+          size={80}
+          color={Colors[theme].secondary}
+          style={{ marginVertical: "auto" }}
+        />
+      ) : (
+        <>
+          <StatusBar style={statusBarStyle} />
+          <Header />
+          <Stack
+            screenOptions={{ headerShown: false, contentStyle: { backgroundColor: "transparent" } }}
+          >
+            <Stack.Screen name="index" />
+            <Stack.Screen name="routine/[id]" />
+          </Stack>
+        </>
+      )}
     </SafeAreaView>
   );
 }
