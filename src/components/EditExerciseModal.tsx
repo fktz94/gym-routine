@@ -33,7 +33,6 @@ const EditExerciseModal = ({
     isGettingAllRoutines,
     isModifyingRoutines,
     modifyExerciseStatus,
-    getAllRoutinesErrorMessage,
     modifyExerciseErrorMessage,
   } = useAppSelector((state) => state.routines);
 
@@ -71,20 +70,19 @@ const EditExerciseModal = ({
   const isButtonDisabled = isValueInvalid && settedToCurrent === isCurrent;
 
   const isLoading = isGettingAllRoutines || isModifyingRoutines;
+  const hasEndedFetchingModification =
+    modifyExerciseStatus === ResponseStatus.REJECTED ||
+    modifyExerciseStatus === ResponseStatus.FULFILLED;
 
   useEffect(() => {
     if (isLoading || modifyExerciseStatus === ResponseStatus.IDLE) return;
 
-    if (modifyExerciseErrorMessage) {
-      Alert.alert("Error!", modifyExerciseErrorMessage);
-    }
-
-    if (
-      modifyExerciseStatus === ResponseStatus.REJECTED ||
-      modifyExerciseStatus === ResponseStatus.FULFILLED
-    ) {
+    if (hasEndedFetchingModification) {
       dispatch(resetModifiyExerciseState());
       closeModal();
+    }
+    if (modifyExerciseErrorMessage) {
+      Alert.alert("Error!", modifyExerciseErrorMessage);
     }
   }, [modifyExerciseStatus, isLoading]);
 
@@ -137,7 +135,7 @@ const EditExerciseModal = ({
               </View>
               {!isCurrent && (
                 <View style={styles.customContainer}>
-                  <Text style={styles.customText}>Set to current week?</Text>
+                  <Text style={styles.customText}>Set to current week</Text>
                   <BouncyCheckbox
                     size={18}
                     fillColor={Colors.light.primary}

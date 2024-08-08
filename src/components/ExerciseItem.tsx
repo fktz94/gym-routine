@@ -176,6 +176,7 @@ const exerciseItemStyles = (theme: Theme, isTitle: boolean) =>
       color: isTitle ? Colors[theme].background : Colors[theme].text,
       backgroundColor: isTitle ? Colors[theme].text : Colors[theme].background,
       borderBottomWidth: 1,
+      borderBottomColor: Colors[theme].text,
       fontWeight: isTitle ? "bold" : undefined,
       minHeight: 60,
     },

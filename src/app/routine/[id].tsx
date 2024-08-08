@@ -16,7 +16,16 @@ export default function RoutineScreen() {
 
   const daysButtons = () =>
     routine?.data.map((_, i) => (
-      <ThemedButton isSecondary={selectedDay === i} key={i} onPress={() => handleSelectedDay(i)}>
+      <ThemedButton
+        externalButtonStyles={styles.dayButtonView}
+        externalTextStyles={{
+          ...styles.dayButtonText,
+          fontWeight: selectedDay === i ? "bold" : undefined,
+        }}
+        isSecondary={selectedDay === i}
+        key={i}
+        onPress={() => handleSelectedDay(i)}
+      >
         Day {i + 1}
       </ThemedButton>
     ));
@@ -55,9 +64,14 @@ const routineDescriptionStyles = (theme: Theme) =>
     },
     daysButtonsContainer: {
       paddingVertical: 16,
+      paddingHorizontal: 40,
       flexDirection: "row",
       justifyContent: "space-evenly",
+      gap: 6,
+      flexWrap: "wrap",
     },
+    dayButtonView: { flexGrow: 1, maxWidth: 100 },
+    dayButtonText: { textAlign: "center" },
     emptyDay: {
       fontWeight: "bold",
       fontSize: 26,

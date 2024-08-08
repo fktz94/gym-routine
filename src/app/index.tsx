@@ -10,6 +10,7 @@ import { ResponseStatus } from "../types/Store";
 import { getAllRoutines } from "../store/Routines/RoutinesAsyncThunk";
 import { useEffect } from "react";
 import { setIsInitialLoadToFalse } from "../store/Routines/RoutinesSlice";
+import { Link } from "expo-router";
 
 export default function Index() {
   const { theme } = useThemeContext();
@@ -53,9 +54,9 @@ export default function Index() {
         />
       ) : (
         <>
-          <ThemedButton isSecondary onPress={() => {}}>
-            New routine
-          </ThemedButton>
+          <Link href={`/new-routine`} asChild>
+            <ThemedButton isSecondary>New routine</ThemedButton>
+          </Link>
           {currentRoutine && (
             <View style={styles.listContainer}>
               <Text style={styles.title}>Current routine</Text>
