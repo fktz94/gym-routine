@@ -8,17 +8,17 @@ export default function Header() {
   // Executes usePathname so the Header components subscribes to global navigation changes.
   usePathname();
 
-  const { theme, toggleTheme } = useThemeContext();
+  const { theme, toggleTheme, showBackArrowButton } = useThemeContext();
   const iconName = theme === "light" ? "moon" : "sunny";
 
-  const showBackArrowButton = router.canGoBack();
+  const canGoBack = router.canGoBack();
   const goBack = () => router.back();
 
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <Ionicons name={iconName} size={32} color={Colors[theme].text} onPress={toggleTheme} />
-        {showBackArrowButton && (
+        {canGoBack && showBackArrowButton && (
           <Ionicons name="arrow-back" size={32} color={Colors[theme].text} onPress={goBack} />
         )}
       </View>

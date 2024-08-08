@@ -3,6 +3,7 @@ import { useState } from "react";
 
 const useTheme = (storedTheme: Theme) => {
   const [theme, setTheme] = useState(storedTheme);
+  const [showBackArrowButton, setShowBackArrowButton] = useState(true);
 
   const toggleTheme = () => {
     const newTheme = theme === "dark" ? "light" : "dark";
@@ -10,7 +11,11 @@ const useTheme = (storedTheme: Theme) => {
     setTheme(newTheme);
   };
 
-  return { theme, toggleTheme };
+  const toggleShowBackArrowButton = (val: boolean) => {
+    setShowBackArrowButton(val);
+  };
+
+  return { theme, toggleTheme, showBackArrowButton, toggleShowBackArrowButton };
 };
 
 export default useTheme;

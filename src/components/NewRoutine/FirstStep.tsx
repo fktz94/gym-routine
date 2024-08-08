@@ -6,11 +6,11 @@ import SelectDropdown from "react-native-select-dropdown";
 import { FirstStepProps } from "@/src/types/Components";
 import { Ionicons } from "@expo/vector-icons";
 
-const FirstStep = ({ name, handleName, handleDays }: FirstStepProps) => {
+const FirstStep = ({ name, days, handleName, handleDays }: FirstStepProps) => {
   const { theme } = useThemeContext();
   const styles = firstStepStyles(theme);
 
-  const days = new Array(7).fill("").map((_, i) => i + 1);
+  const daysDropdownValues = new Array(7).fill("").map((_, i) => i + 1);
 
   return (
     <View style={styles.mainContainer}>
@@ -22,8 +22,8 @@ const FirstStep = ({ name, handleName, handleDays }: FirstStepProps) => {
       <View style={styles.container}>
         <Text style={styles.title}>Then, select how many days per week will the routine have.</Text>
         <SelectDropdown
-          data={days}
-          defaultValue={days[2]}
+          data={daysDropdownValues}
+          defaultValue={daysDropdownValues[days - 1]}
           onSelect={(el) => handleDays(el)}
           renderButton={(selectedItem, isOpened) => (
             <View style={styles.dropdownButtonStyle}>

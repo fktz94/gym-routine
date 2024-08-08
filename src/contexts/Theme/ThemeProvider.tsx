@@ -7,6 +7,13 @@ type Props = {
 };
 
 export default function ThemeProvider({ children, storedTheme }: Props) {
-  const { theme, toggleTheme } = useTheme(storedTheme);
-  return <ThemeContext.Provider value={{ theme, toggleTheme }}>{children}</ThemeContext.Provider>;
+  const { theme, toggleTheme, showBackArrowButton, toggleShowBackArrowButton } =
+    useTheme(storedTheme);
+  return (
+    <ThemeContext.Provider
+      value={{ theme, toggleTheme, showBackArrowButton, toggleShowBackArrowButton }}
+    >
+      {children}
+    </ThemeContext.Provider>
+  );
 }

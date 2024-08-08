@@ -17,7 +17,7 @@ const ThemedButton = forwardRef(
     ref
   ) => {
     const { theme } = useThemeContext();
-    const styles = themedButtonStyles(isSecondary, theme);
+    const styles = themedButtonStyles(isSecondary, theme, disabled);
 
     return (
       <TouchableOpacity
@@ -67,7 +67,11 @@ const themedButtonStyles = (isSecondary: boolean, theme: Theme, isDisabled = fal
     buttonContainer: {
       paddingHorizontal: 16,
       paddingVertical: 8,
-      backgroundColor: isSecondary ? Colors[theme].primary : Colors[theme].secondary,
+      backgroundColor: isDisabled
+        ? Colors.light.text
+        : isSecondary
+        ? Colors[theme].primary
+        : Colors[theme].secondary,
       borderRadius: 10,
       borderWidth: 1,
       borderColor: `${isSecondary ? Colors[theme].secondary : Colors[theme].primary}99`,
@@ -85,10 +89,11 @@ const themedButtonStyles = (isSecondary: boolean, theme: Theme, isDisabled = fal
       shadowRadius: 1.0,
     },
     text: {
-      color:
-        (theme === "light" && isSecondary) || (theme === "dark" && !isSecondary)
-          ? Colors[theme].background
-          : Colors[theme].text,
+      color: isDisabled
+        ? Colors.light.secondary
+        : (theme === "light" && isSecondary) || (theme === "dark" && !isSecondary)
+        ? Colors[theme].background
+        : Colors[theme].text,
     },
     acceptView: {
       backgroundColor: isDisabled ? Colors.light.text : Colors.acceptBackground,
