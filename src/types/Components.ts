@@ -49,3 +49,10 @@ export interface AcceptButtonProps {
 export interface CancelButtonProps {
   onCancel: () => void;
 }
+
+export interface FirstStepProps {
+  name: string;
+  days: number;
+  handleName: (val: string) => void;
+  handleDays: (val: number) => void;
+}
