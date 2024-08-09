@@ -12,7 +12,7 @@ interface Exercise {
 
 type RoutineDay = Exercise[];
 
-interface RoutineStructure {
+export interface RoutineStructure {
   data: RoutineDay[];
   id: string;
   madeOn: string;
@@ -20,7 +20,7 @@ interface RoutineStructure {
   currentDay: number;
 }
 
-type Routine = RoutineStructure[];
+export type Routine = RoutineStructure[];
 
 export interface RoutinesData {
   currentRoutineName: string;

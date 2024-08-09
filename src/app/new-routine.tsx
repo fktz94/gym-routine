@@ -49,7 +49,7 @@ const NewRoutine = () => {
     <View style={styles.mainContainer}>
       <View style={styles.inputsContainer}>{renderStep()}</View>
       <View style={styles.directionButtonsContainer}>
-        <ThemedButton disabled={isBackBtnDisabled} onPress={() => handleStep({ down: true })}>
+        <ThemedButton disabled={isBackBtnDisabled} onPress={() => handleStep({ goDown: true })}>
           BACK
         </ThemedButton>
         <ThemedButton disabled={isNextBtnDisabled} onPress={() => handleStep({})}>

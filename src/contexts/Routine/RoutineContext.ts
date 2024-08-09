@@ -1,3 +1,4 @@
+import { RoutineStructure } from "@/src/types/Routines";
 import { createContext } from "react";
 
 interface RoutineContextProps extends RoutineStructure {
