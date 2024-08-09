@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 import { TextStyle, ViewStyle } from "react-native";
+import { Routine, WeightsAndRepetitions } from "./Routines";
 
 export interface ThemedButtonProps {
   children: ReactNode;

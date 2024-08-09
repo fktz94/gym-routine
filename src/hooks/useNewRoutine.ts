@@ -1,14 +1,14 @@
-import { useEffect, useState } from "react";
-import { monthsOfTheYear } from "../types/Routines";
+import { useReducer, useState } from "react";
 import useThemeContext from "../contexts/Theme/useThemeContext";
+import { initialState, newRoutineReducers } from "../reducers/NewRoutine/newRoutineReducers";
 
 const useNewRoutine = () => {
-  const currentMonth = monthsOfTheYear[new Date().getMonth()];
+  const [step, setStep] = useState(0);
+  const [hasWarmUpRoutine, setHasWarmUpRoutine] = useState(false); // Still have to create a warm up section and state.
 
   const [days, setDays] = useState(3);
-  const [hasWarmUpRoutine, setHasWarmUpRoutine] = useState(false); // Still have to create a warm up section and state.
-  const [name, setName] = useState(currentMonth);
-  const [step, setStep] = useState(0);
+
+  const [{ name }, dispatch] = useReducer(newRoutineReducers, initialState);
 
   const { toggleShowBackArrowButton } = useThemeContext();
 
@@ -23,8 +23,12 @@ const useNewRoutine = () => {
   };
 
   const handleName = (val: string) => {
-    setName(val);
+    dispatch({
+      type: NewRoutineActionsTypes.SETNAME,
+      payload: val,
+    });
   };
+
   const handleDays = (val: number) => {
     setDays(val);
   };

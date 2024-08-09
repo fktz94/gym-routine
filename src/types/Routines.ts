@@ -1,4 +1,4 @@
-interface WeightsAndRepetitions {
+export interface WeightsAndRepetitions {
   qty: number | string;
   weight: number | string | null;
 }
@@ -10,7 +10,7 @@ interface Exercise {
   current: number;
 }
 
-type RoutineDay = Exercise[];
+export type RoutineDay = Exercise[];
 
 export interface RoutineStructure {
   data: RoutineDay[];
