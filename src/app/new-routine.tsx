@@ -9,17 +9,33 @@ const NewRoutine = () => {
   const { theme } = useThemeContext();
   const styles = newRoutineStyles(theme);
 
-  const { handleName, handleStep, name, step, days, handleDays } = useNewRoutine();
+  const {
+    handleName,
+    handleStep,
+    name,
+    step,
+    days,
+    handleDays,
+    hasWarmUpRoutine,
+    toggleWarmUpRoutine,
+  } = useNewRoutine();
 
   const renderStep = () => {
     switch (step) {
       case 0: {
         return (
-          <FirstStep handleName={handleName} name={name} days={days} handleDays={handleDays} />
+          <FirstStep
+            handleName={handleName}
+            name={name}
+            days={days}
+            handleDays={handleDays}
+            hasWarmUpRoutine={hasWarmUpRoutine}
+            toggleWarmUpRoutine={toggleWarmUpRoutine}
+          />
         );
       }
       case 1:
-        return <SecondStep />;
+        return <SecondStep days={days} />;
 
       default:
         return null;
@@ -56,7 +72,8 @@ const newRoutineStyles = (theme: Theme) =>
     },
     inputsContainer: {
       height: "80%",
-      width: "75%",
+      width: "100%",
+      alignItems: "center",
     },
     directionButtonsContainer: {
       flexDirection: "row",

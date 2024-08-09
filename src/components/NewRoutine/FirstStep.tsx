@@ -5,8 +5,16 @@ import { Colors } from "@/src/constants/Colors";
 import SelectDropdown from "react-native-select-dropdown";
 import { FirstStepProps } from "@/src/types/Components";
 import { Ionicons } from "@expo/vector-icons";
+import BouncyCheckbox from "react-native-bouncy-checkbox";
 
-const FirstStep = ({ name, days, handleName, handleDays }: FirstStepProps) => {
+const FirstStep = ({
+  name,
+  days,
+  handleName,
+  handleDays,
+  hasWarmUpRoutine,
+  toggleWarmUpRoutine,
+}: FirstStepProps) => {
   const { theme } = useThemeContext();
   const styles = firstStepStyles(theme);
 
@@ -59,6 +67,16 @@ const FirstStep = ({ name, days, handleName, handleDays }: FirstStepProps) => {
           dropdownStyle={styles.dropdownMenuStyle}
         />
       </View>
+      <View style={styles.checkboxContainer}>
+        <Text style={styles.checkboxText}>Check if wanna write your everyday warm-up routine.</Text>
+        <BouncyCheckbox
+          size={26}
+          fillColor={Colors.light.primary}
+          innerIconStyle={{ borderWidth: 2 }}
+          onPress={toggleWarmUpRoutine}
+          isChecked={hasWarmUpRoutine}
+        />
+      </View>
     </View>
   );
 };
@@ -71,9 +89,23 @@ const firstStepStyles = (theme: Theme) =>
       paddingTop: 40,
       flex: 1,
       gap: 80,
+      width: "75%",
     },
     container: {
       gap: 25,
+    },
+    checkboxContainer: {
+      flexDirection: "row",
+      justifyContent: "space-around",
+      gap: 60,
+    },
+    checkboxText: {
+      color: Colors[theme].text,
+      fontWeight: "bold",
+      letterSpacing: 1,
+      textAlign: "center",
+      paddingHorizontal: 20,
+      fontSize: 16,
     },
     title: {
       color: Colors[theme].text,

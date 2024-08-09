@@ -55,4 +55,10 @@ export interface FirstStepProps {
   days: number;
   handleName: (val: string) => void;
   handleDays: (val: number) => void;
+  hasWarmUpRoutine: boolean;
+  toggleWarmUpRoutine: () => void;
+}
+
+export interface SecondStepProps {
+  days: number;
 }
