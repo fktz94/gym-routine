@@ -1,15 +1,17 @@
 import { ScrollView, StyleSheet, Text, View } from "react-native";
-import NewExerciseItem from "./NewExerciseItem";
+import NewDayItem from "./NewDayItem";
 import { Colors } from "@/src/constants/Colors";
 import useThemeContext from "@/src/contexts/Theme/useThemeContext";
-import { SecondStepProps } from "@/src/types/Components";
+import useNewRoutineContext from "@/src/contexts/NewRoutine/useNewRoutineContext";
 
-const SecondStep = ({ days }: SecondStepProps) => {
+const SecondStep = () => {
   const { theme } = useThemeContext();
   const styles = secondStepStyles(theme);
 
-  const renderDays = () =>
-    new Array(days).fill("").map((_, i) => <NewExerciseItem key={i} day={i + 1} />);
+  const { newRoutineState } = useNewRoutineContext();
+  const { data } = newRoutineState;
+
+  const renderDays = () => data.map((_, i) => <NewDayItem key={i} dayIndex={i} />);
 
   return (
     <View style={styles.mainContainer}>

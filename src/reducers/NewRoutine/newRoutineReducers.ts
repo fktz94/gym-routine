@@ -1,10 +1,11 @@
-import { monthsOfTheYear, RoutineStructure } from "@/src/types/Routines";
+import { NewRoutineActions, NewRoutineActionsTypes } from "@/src/types/Reducers";
+import { monthsOfTheYear, RoutineDay, RoutineStructure } from "@/src/types/Routines";
 
 const currentMonth = monthsOfTheYear[new Date().getMonth()];
 
 export const initialState: RoutineStructure = {
   currentDay: 0,
-  data: [],
+  data: new Array(3).fill([]),
   id: "",
   madeOn: "",
   name: currentMonth,
@@ -15,10 +16,15 @@ export function newRoutineReducers(
   { type, payload }: NewRoutineActions
 ): RoutineStructure {
   switch (type) {
-    case "setName":
+    case NewRoutineActionsTypes.SETNAME:
       return { ...state, name: payload };
-
+    case NewRoutineActionsTypes.SETDAYS:
+      return { ...state, data: new Array(payload).fill([]) };
+    case NewRoutineActionsTypes.ADDEXERCISE:
+      return { ...state };
     default:
       return state;
   }
 }
+
+function findDayAndAddNewExercise(data: RoutineDay[], newExercise) {}

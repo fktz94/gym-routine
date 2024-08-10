@@ -1,24 +1,21 @@
 import { StyleSheet, Text, TextInput, View } from "react-native";
-import React from "react";
 import useThemeContext from "@/src/contexts/Theme/useThemeContext";
 import { Colors } from "@/src/constants/Colors";
 import SelectDropdown from "react-native-select-dropdown";
-import { FirstStepProps } from "@/src/types/Components";
 import { Ionicons } from "@expo/vector-icons";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
+import useNewRoutineContext from "@/src/contexts/NewRoutine/useNewRoutineContext";
 
-const FirstStep = ({
-  name,
-  days,
-  handleName,
-  handleDays,
-  hasWarmUpRoutine,
-  toggleWarmUpRoutine,
-}: FirstStepProps) => {
+const FirstStep = () => {
   const { theme } = useThemeContext();
   const styles = firstStepStyles(theme);
 
-  const daysDropdownValues = new Array(7).fill("").map((_, i) => i + 1);
+  const { handleName, handleDays, newRoutineState, hasWarmUpRoutine, toggleWarmUpRoutine } =
+    useNewRoutineContext();
+
+  const { name } = newRoutineState;
+
+  const daysDropdownValues = [...Array(7)].map((_, i) => i + 1);
 
   return (
     <View style={styles.mainContainer}>
@@ -31,7 +28,7 @@ const FirstStep = ({
         <Text style={styles.title}>Then, select how many days per week will the routine have.</Text>
         <SelectDropdown
           data={daysDropdownValues}
-          defaultValue={daysDropdownValues[days - 1]}
+          defaultValue={daysDropdownValues[2]}
           onSelect={(el) => handleDays(el)}
           renderButton={(selectedItem, isOpened) => (
             <View style={styles.dropdownButtonStyle}>

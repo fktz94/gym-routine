@@ -1,3 +1,4 @@
+import { RoutineStructure } from "@/src/types/Routines";
 import RoutineContext from "./RoutineContext";
 
 type Props = {

@@ -1,25 +1,28 @@
 import { useReducer, useState } from "react";
 import useThemeContext from "../contexts/Theme/useThemeContext";
 import { initialState, newRoutineReducers } from "../reducers/NewRoutine/newRoutineReducers";
+import { NewRoutineActionsTypes } from "../types/Reducers";
 
 const useNewRoutine = () => {
   const [step, setStep] = useState(0);
   const [hasWarmUpRoutine, setHasWarmUpRoutine] = useState(false); // Still have to create a warm up section and state.
 
-  const [days, setDays] = useState(3);
-
-  const [{ name }, dispatch] = useReducer(newRoutineReducers, initialState);
+  const [newRoutineState, dispatch] = useReducer(newRoutineReducers, initialState);
 
   const { toggleShowBackArrowButton } = useThemeContext();
 
-  const handleStep = ({ goDown = false }) => {
+  const handleStep = ({ direction }: { direction: "up" | "down" }) => {
+    const goUp = direction === "up";
+    const goDown = direction === "down";
+
     if (goDown && step === 0) return;
     if (goDown && step === 1) {
       toggleShowBackArrowButton(true);
-    } else if (step === 0) {
+    } else if (goUp && step === 0) {
       toggleShowBackArrowButton(false);
     }
-    setStep(goDown ? step - 1 : step + 1);
+
+    setStep(goDown ? step - 1 : goUp ? step + 1 : step);
   };
 
   const handleName = (val: string) => {
@@ -30,14 +33,16 @@ const useNewRoutine = () => {
   };
 
   const handleDays = (val: number) => {
-    setDays(val);
+    dispatch({
+      type: NewRoutineActionsTypes.SETDAYS,
+      payload: val,
+    });
   };
 
   const toggleWarmUpRoutine = () => setHasWarmUpRoutine(!hasWarmUpRoutine);
 
   return {
-    days,
-    name,
+    newRoutineState,
     handleDays,
     handleName,
     handleStep,

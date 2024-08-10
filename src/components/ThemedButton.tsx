@@ -33,7 +33,7 @@ const ThemedButton = forwardRef(
 
 export default ThemedButton;
 
-export const AcceptButton = ({ onAccept, isDisabled }: AcceptButtonProps) => {
+export const AcceptButton = ({ onAccept, isDisabled, children }: AcceptButtonProps) => {
   const { theme } = useThemeContext();
   const styles = themedButtonStyles(false, theme, isDisabled);
   return (
@@ -43,12 +43,12 @@ export const AcceptButton = ({ onAccept, isDisabled }: AcceptButtonProps) => {
       onPress={onAccept}
       disabled={isDisabled}
     >
-      Accept
+      {children || "Accept"}
     </ThemedButton>
   );
 };
 
-export const CancelButton = ({ onCancel }: CancelButtonProps) => {
+export const CancelButton = ({ onCancel, children }: CancelButtonProps) => {
   const { theme } = useThemeContext();
   const styles = themedButtonStyles(false, theme);
   return (
@@ -57,7 +57,7 @@ export const CancelButton = ({ onCancel }: CancelButtonProps) => {
       externalTextStyles={styles.cancelText}
       onPress={onCancel}
     >
-      Cancel
+      {children || "Cancel"}
     </ThemedButton>
   );
 };

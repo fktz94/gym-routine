@@ -1,7 +1,10 @@
-enum NewRoutineActionsTypes {
+export enum NewRoutineActionsTypes {
   SETNAME = "setName",
+  SETDAYS = "setDays",
+  ADDEXERCISE = "addExercise",
 }
 
-type NewRoutineActions =
+export type NewRoutineActions =
   | { type: NewRoutineActionsTypes.SETNAME; payload: string }
-  | { type: ""; payload: number };
+  | { type: NewRoutineActionsTypes.SETDAYS; payload: number }
+  | { type: NewRoutineActionsTypes.ADDEXERCISE; payload: number };
