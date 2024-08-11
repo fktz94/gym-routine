@@ -5,6 +5,7 @@ import { Colors } from "@/src/constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
 import useNewRoutineContext from "@/src/contexts/NewRoutine/useNewRoutineContext";
 import { AcceptButton, CancelButton } from "../ThemedButton";
+import CreateExerciseModal from "./CreateExerciseModal";
 
 const NewDayItem = ({ dayIndex }: { dayIndex: number }) => {
   const { theme } = useThemeContext();
@@ -12,6 +13,7 @@ const NewDayItem = ({ dayIndex }: { dayIndex: number }) => {
   const [isShown, setIsShown] = useState(false);
 
   const [isCreating, setIsCreating] = useState(false);
+  const [name, setName] = useState("");
 
   const { newRoutineState } = useNewRoutineContext();
   const { data } = newRoutineState;
@@ -19,6 +21,12 @@ const NewDayItem = ({ dayIndex }: { dayIndex: number }) => {
   const showDayDetails = () => setIsShown(!isShown);
 
   const startCreatingNewExercise = () => setIsCreating(true);
+  const cancelCreatingNewExercise = () => {
+    setIsCreating(false);
+    setName("");
+  };
+
+  const handleNewName = (val: string) => setName(val);
 
   const currentExercises = () =>
     data[dayIndex].map((el) => (
@@ -37,22 +45,10 @@ const NewDayItem = ({ dayIndex }: { dayIndex: number }) => {
       {isShown && (
         <View style={styles.exercises}>
           {isCreating ? (
-            <View style={styles.exerciseItem}>
-              <TextInput
-                placeholder="Exercise's name"
-                style={styles.exercisesTextInput}
-                multiline
-              />
-              <View style={styles.exercisesDetailsContainer}></View>
-              <View style={styles.acceptCancelButtonContainer}>
-                <CancelButton onCancel={() => {}}>
-                  <Ionicons name="close" size={20} />
-                </CancelButton>
-                <AcceptButton isDisabled={false} onAccept={() => {}}>
-                  <Ionicons name="checkmark" size={20} />
-                </AcceptButton>
-              </View>
-            </View>
+            <CreateExerciseModal
+              handleName={handleNewName}
+              closeModal={cancelCreatingNewExercise}
+            />
           ) : (
             <TouchableOpacity onPress={startCreatingNewExercise}>
               <Ionicons name="add-circle-outline" size={40} style={styles.addExerciseIcon} />
@@ -86,7 +82,6 @@ const secondStepStyles = (theme: Theme) =>
     },
     exercises: { backgroundColor: Colors[theme].text, gap: 15, padding: 20 },
     addExerciseIcon: { margin: "auto" },
-    exerciseItem: { borderWidth: 1 },
     exercisesTextInput: {
       color: Colors[theme].text,
       fontSize: 18,
@@ -95,6 +90,7 @@ const secondStepStyles = (theme: Theme) =>
       paddingVertical: 10,
     },
     exercisesDetailsContainer: { borderWidth: 1 },
+    exerciseItem: { borderWidth: 1 },
     acceptCancelButtonContainer: {
       flexDirection: "row",
       justifyContent: "center",

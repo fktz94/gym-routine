@@ -26,8 +26,6 @@ const MainContainer = () => {
     }
   };
 
-  console.log(name);
-
   const isBackBtnDisabled = step === 0;
   const isNextBtnDisabled = step === 0 && !name;
 

@@ -87,7 +87,7 @@ const EditExerciseModal = ({
   }, [modifyExerciseStatus, isLoading]);
 
   return (
-    <Modal animationType="slide" transparent visible>
+    <Modal animationType="slide" transparent>
       <View style={styles.container}>
         {isLoading ? (
           <ActivityIndicator size={80} color={Colors[theme].secondary} />
