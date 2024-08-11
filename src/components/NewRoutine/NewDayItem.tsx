@@ -13,7 +13,6 @@ const NewDayItem = ({ dayIndex }: { dayIndex: number }) => {
   const [isShown, setIsShown] = useState(false);
 
   const [isCreating, setIsCreating] = useState(false);
-  const [name, setName] = useState("");
 
   const { newRoutineState } = useNewRoutineContext();
   const { data } = newRoutineState;
@@ -23,10 +22,7 @@ const NewDayItem = ({ dayIndex }: { dayIndex: number }) => {
   const startCreatingNewExercise = () => setIsCreating(true);
   const cancelCreatingNewExercise = () => {
     setIsCreating(false);
-    setName("");
   };
-
-  const handleNewName = (val: string) => setName(val);
 
   const currentExercises = () =>
     data[dayIndex].map((el) => (
@@ -43,19 +39,16 @@ const NewDayItem = ({ dayIndex }: { dayIndex: number }) => {
         <Ionicons name={isShown ? "chevron-up" : "chevron-down"} />
       </Pressable>
       {isShown && (
-        <View style={styles.exercises}>
-          {isCreating ? (
-            <CreateExerciseModal
-              handleName={handleNewName}
-              closeModal={cancelCreatingNewExercise}
-            />
-          ) : (
+        <>
+          {isCreating && <CreateExerciseModal closeModal={cancelCreatingNewExercise} />}
+          {/* {true && <CreateExerciseModal closeModal={cancelCreatingNewExercise} />} */}
+          <View style={styles.exercises}>
             <TouchableOpacity onPress={startCreatingNewExercise}>
               <Ionicons name="add-circle-outline" size={40} style={styles.addExerciseIcon} />
             </TouchableOpacity>
-          )}
-          {currentExercises()}
-        </View>
+            {currentExercises()}
+          </View>
+        </>
       )}
     </View>
   );

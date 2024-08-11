@@ -44,7 +44,6 @@ export interface EditExerciseModalProps {
 
 export interface CreateExerciseModalProps {
   closeModal: () => void;
-  handleName: (val: string) => void;
 }
 
 export interface AcceptButtonProps {

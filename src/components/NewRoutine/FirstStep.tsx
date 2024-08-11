@@ -13,9 +13,11 @@ const FirstStep = () => {
   const { handleName, handleDays, newRoutineState, hasWarmUpRoutine, toggleWarmUpRoutine } =
     useNewRoutineContext();
 
-  const { name } = newRoutineState;
+  const { name, data } = newRoutineState;
 
   const daysDropdownValues = [...Array(7)].map((_, i) => i + 1);
+
+  const defaultValue = daysDropdownValues[data.length - 1];
 
   return (
     <View style={styles.mainContainer}>
@@ -28,8 +30,8 @@ const FirstStep = () => {
         <Text style={styles.title}>Then, select how many days per week will the routine have.</Text>
         <SelectDropdown
           data={daysDropdownValues}
-          defaultValue={daysDropdownValues[2]}
-          onSelect={(el) => handleDays(el)}
+          defaultValue={defaultValue}
+          onSelect={handleDays}
           renderButton={(selectedItem, isOpened) => (
             <View style={styles.dropdownButtonStyle}>
               <Text style={styles.dropdownButtonTxtStyle}>{selectedItem}</Text>
