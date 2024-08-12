@@ -3,7 +3,7 @@ export interface WeightsAndRepetitions {
   weight: number | string | null;
 }
 
-interface Exercise {
+export interface Exercise {
   name: string;
   sets: number;
   weightsAndRepetitions: WeightsAndRepetitions[];

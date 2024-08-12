@@ -7,6 +7,8 @@ import { RepetitionsButtonProps } from "../types/Components";
 import { useState } from "react";
 import ThemedButton from "./ThemedButton";
 import EditExerciseModal from "./EditExerciseModal";
+import CustomSelectDropdown from "./CustomSelectDropdown";
+import { Exercise } from "../types/Routines";
 
 export const ExerciseItemTitle = () => {
   const { theme } = useThemeContext();
@@ -40,62 +42,26 @@ export const ExerciseItem = ({ name, sets, weightsAndRepetitions, current }: Exe
   const openEditModal = () => setIsEditingExercise(true);
   const closeEditModal = () => setIsEditingExercise(false);
 
-  const repetitionsButton = ({
-    selectedItem,
-    isUnique = false,
-    isOpened,
-  }: RepetitionsButtonProps) => {
-    return (
-      <View style={styles.dropdownButtonStyle}>
-        <Text style={styles.dropdownButtonTxtStyle}>{selectedItem}</Text>
-        {!isUnique && (
-          <Ionicons
-            style={styles.dropdownButtonArrowStyle}
-            name={isOpened ? "chevron-up" : "chevron-down"}
-          />
-        )}
-      </View>
-    );
-  };
-
   const repetitionsSelect = (data: (string | number)[]) => {
+    if (data.length === 0) return null;
+
     const mappedData = data.map((rep, i) => ({ rep, i }));
 
     return data.length > 1 ? (
-      <SelectDropdown
+      <CustomSelectDropdown
         data={mappedData}
         defaultValue={mappedData[current]}
-        onSelect={(el, i) => handleDropdownItem(i)}
-        renderButton={(selectedItem, isOpened) =>
-          repetitionsButton({ selectedItem: selectedItem?.rep, isOpened })
-        }
-        renderItem={(item, index, isSelected) => (
-          <View
-            style={{
-              ...styles.dropdownItemStyle,
-              ...(isSelected && {
-                backgroundColor: theme === "light" ? Colors[theme].primary : Colors[theme].text,
-              }),
-            }}
-          >
-            <Text
-              style={{
-                ...styles.dropdownItemTxtStyle,
-                ...(isSelected && {
-                  color: theme === "light" ? Colors[theme].background : Colors[theme].primary,
-                }),
-                ...(current === index && { color: "red" }),
-              }}
-            >
-              {item?.rep}
-            </Text>
-          </View>
-        )}
-        showsVerticalScrollIndicator={false}
-        dropdownStyle={styles.dropdownMenuStyle}
+        onSelect={(_, i) => handleDropdownItem(i)}
+        isExerciseItem
+        current={current}
+        btnStyle={styles.dropdownButtonStyle}
+        btnTextStyle={styles.dropdownButtonTxtStyle}
+        itemTextStyle={styles.dropdownItemTxtStyle}
       />
     ) : (
-      repetitionsButton({ selectedItem: data[0], isUnique: true })
+      <View style={styles.uniqueButtonStyle}>
+        <Text style={styles.uniqueButtonTxtStyle}>{data[0]}</Text>
+      </View>
     );
   };
 
@@ -220,9 +186,11 @@ const exerciseItemStyles = (theme: Theme, isTitle: boolean) =>
     },
     editButtonIcon: {},
     //
-    dropdownButtonStyle: {
+    uniqueButtonStyle: {
       flex: 2,
       height: "75%",
+      width: "30%",
+      margin: "auto",
       backgroundColor: Colors[theme].secondaryTransparent,
       borderRadius: 12,
       flexDirection: "row",
@@ -230,71 +198,23 @@ const exerciseItemStyles = (theme: Theme, isTitle: boolean) =>
       alignItems: "center",
       paddingHorizontal: 12,
     },
-    dropdownButtonTxtStyle: {
+    uniqueButtonTxtStyle: {
       flexGrow: 1,
       fontSize: 16,
       fontWeight: "500",
       color: Colors[theme].text,
+      textAlign: "center",
     },
-    dropdownButtonArrowStyle: {
-      color: Colors[theme].text,
+    dropdownButtonStyle: {
+      flex: 2,
+      height: "75%",
+      paddingVertical: 0,
     },
-    dropdownMenuStyle: {
-      backgroundColor: Colors[theme].secondary,
-      borderRadius: 8,
-    },
-    dropdownItemStyle: {
-      width: "100%",
-      flexDirection: "row",
-      paddingHorizontal: 12,
-      justifyContent: "center",
-      alignItems: "center",
-      paddingVertical: 8,
+    dropdownButtonTxtStyle: {
+      fontSize: 16,
+      textAlign: "center",
     },
     dropdownItemTxtStyle: {
-      flex: 1,
       fontSize: 16,
-      fontWeight: "500",
-      color: Colors[theme].text,
     },
   });
-
-// {
-//   "name": "Remo al mentón",
-//   "sets": 3,
-//   "current": 0,
-//   "weightsAndRepetitions": [{ "qty": 10, "weight": 10 }]
-// },
-// {
-//   "name": "Sillón de cuádriceps",
-//   "sets": 3,
-//   "current": 0,
-//   "weightsAndRepetitions": [{ "qty": 14, "weight": 45 }]
-// },
-// {
-//   "name": "Frog pump c/ banda circular",
-//   "sets": 3,
-//   "current": 1,
-//   "weightsAndRepetitions": [
-//     { "qty": 12, "weight": 30 },
-//     { "qty": 15, "weight": 20 }
-//   ]
-// },
-// {
-//   "name": "Vuelos laterales completos",
-//   "sets": 3,
-//   "current": 0,
-//   "weightsAndRepetitions": [{ "qty": 10, "weight": 5 }]
-// },
-// {
-//   "name": "Plancha lateral dinámica",
-//   "sets": 3,
-//   "current": 0,
-//   "weightsAndRepetitions": [{ "qty": "10\"", "weight": "N/A" }]
-// },
-// {
-//   "name": "Sit up + rotación",
-//   "sets": 3,
-//   "current": 0,
-//   "weightsAndRepetitions": [{ "qty": "8 c/l", "weight": "N/A" }]
-// }

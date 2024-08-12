@@ -7,6 +7,7 @@ import { useAppDispatch } from "@/src/hooks/reactReduxHook";
 import { AcceptButton, CancelButton } from "../ThemedButton";
 import { useState } from "react";
 import SelectDropdown from "react-native-select-dropdown";
+import CustomSelectDropdown from "../CustomSelectDropdown";
 
 const CreateExerciseModal = ({ closeModal }: CreateExerciseModalProps) => {
   const { theme } = useThemeContext();
@@ -17,6 +18,8 @@ const CreateExerciseModal = ({ closeModal }: CreateExerciseModalProps) => {
   const [sets, setSets] = useState(3);
   const [hasWeeksVariations, setHasWeeksVariations] = useState(false);
   const [isCustomRepetitions, setIsCustomRepetitions] = useState(false);
+
+  const [weeksVariations, setWeeksVariations] = useState([]);
 
   const handleName = (val: string) => setName(val);
   const handleSets = (val: number) => setSets(val);
@@ -57,45 +60,15 @@ const CreateExerciseModal = ({ closeModal }: CreateExerciseModalProps) => {
               </View>
               <View style={styles.setsInputContainer}>
                 <Text style={styles.setsText}>How many sets are you doing?</Text>
-                <SelectDropdown
+                {/*  */}
+                <CustomSelectDropdown
                   data={setsDropdownValues}
                   defaultValue={setsDropdownValues[2]}
                   onSelect={handleSets}
-                  renderButton={(selectedItem, isOpened) => (
-                    <View style={styles.dropdownButtonStyle}>
-                      <Text style={styles.dropdownButtonTxtStyle}>{selectedItem}</Text>
-                      <Ionicons
-                        style={styles.dropdownButtonArrowStyle}
-                        name={isOpened ? "chevron-up" : "chevron-down"}
-                      />
-                    </View>
-                  )}
-                  renderItem={(el, _, isSelected) => (
-                    <View
-                      style={{
-                        ...styles.dropdownItemStyle,
-                        ...(isSelected && {
-                          backgroundColor:
-                            theme === "light" ? Colors[theme].primary : Colors[theme].text,
-                        }),
-                      }}
-                    >
-                      <Text
-                        style={{
-                          ...styles.dropdownItemTxtStyle,
-                          ...(isSelected && {
-                            color:
-                              theme === "light" ? Colors[theme].background : Colors[theme].primary,
-                          }),
-                        }}
-                      >
-                        {el}
-                      </Text>
-                    </View>
-                  )}
-                  showsVerticalScrollIndicator={false}
-                  dropdownStyle={styles.dropdownMenuStyle}
+                  btnStyle={styles.dropdownButtonStyle}
+                  btnTextStyle={styles.dropdownButtonTxtStyle}
                 />
+                {/*  */}
               </View>
               <View>{variations()}</View>
               <View style={styles.buttonsContainer}>
@@ -170,41 +143,12 @@ const createExerciseModalStyles = (theme: Theme) =>
     setsText: { textAlignVertical: "center", color: Colors[theme].text, fontSize: 14 },
     dropdownButtonStyle: {
       gap: 12,
-      margin: "auto",
-      backgroundColor: Colors[theme].secondaryTransparent,
-      borderRadius: 12,
-      flexDirection: "row",
-      alignItems: "center",
       paddingHorizontal: 16,
       paddingVertical: 10,
+      width: undefined,
     },
     dropdownButtonTxtStyle: {
-      flexGrow: 1,
       fontSize: 18,
-      fontWeight: "500",
-      color: Colors[theme].text,
-      textAlign: "center",
-    },
-    dropdownButtonArrowStyle: {
-      color: Colors[theme].text,
-    },
-    dropdownMenuStyle: {
-      backgroundColor: Colors[theme].secondary,
-      borderRadius: 8,
-    },
-    dropdownItemStyle: {
-      width: "100%",
-      flexDirection: "row",
-      paddingHorizontal: 12,
-      justifyContent: "center",
-      alignItems: "center",
-      paddingVertical: 8,
-    },
-    dropdownItemTxtStyle: {
-      flex: 1,
-      fontSize: 18,
-      fontWeight: "500",
-      color: Colors[theme].text,
     },
     checkboxContainer: { flexDirection: "row", gap: 12, justifyContent: "flex-end" },
     checkboxText: { textAlignVertical: "center", color: Colors[theme].text, fontSize: 12 },

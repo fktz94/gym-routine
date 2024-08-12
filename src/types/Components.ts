@@ -57,15 +57,18 @@ export interface CancelButtonProps {
   children?: ReactNode | string;
 }
 
-// export interface FirstStepProps {
-//   data: RoutineDay[];
-//   name: string;
-//   handleName: (val: string) => void;
-//   handleDays: (val: number) => void;
-//   hasWarmUpRoutine: boolean;
-//   toggleWarmUpRoutine: () => void;
-// } // UNUSED...
+type CustomSelectDataProps = number | { rep: string | number; i: number };
 
-// export interface SecondStepProps {
-//   data: RoutineDay[];
-// } // UNUSED...
+export interface CustomSelectDropdownProps {
+  data: CustomSelectDataProps[];
+  defaultValue: CustomSelectDataProps;
+  onSelect: (val: number, i: number) => void;
+  isExerciseItem?: boolean;
+  current?: number;
+  btnStyle?: ViewStyle;
+  btnTextStyle?: TextStyle;
+  btnArrowStyle?: TextStyle;
+  itemStyle?: ViewStyle;
+  itemTextStyle?: TextStyle;
+  menuStyle?: ViewStyle;
+}
