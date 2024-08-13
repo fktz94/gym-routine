@@ -5,32 +5,69 @@ import { Colors } from "@/src/constants/Colors";
 import { CreateExerciseModalProps } from "@/src/types/Components";
 import { useAppDispatch } from "@/src/hooks/reactReduxHook";
 import { AcceptButton, CancelButton } from "../ThemedButton";
+import BouncyCheckbox from "react-native-bouncy-checkbox";
 import { useState } from "react";
-import SelectDropdown from "react-native-select-dropdown";
 import CustomSelectDropdown from "../CustomSelectDropdown";
+import { WeightsAndRepetitions } from "@/src/types/Routines";
 
 const CreateExerciseModal = ({ closeModal }: CreateExerciseModalProps) => {
   const { theme } = useThemeContext();
-  const styles = createExerciseModalStyles(theme);
   const dispatch = useAppDispatch();
 
   const [name, setName] = useState("");
   const [sets, setSets] = useState(3);
+
   const [hasWeeksVariations, setHasWeeksVariations] = useState(false);
   const [isCustomRepetitions, setIsCustomRepetitions] = useState(false);
 
-  const [weeksVariations, setWeeksVariations] = useState([]);
+  const styles = createExerciseModalStyles(theme, hasWeeksVariations);
+
+  const [weeksVariations, setWeeksVariations] = useState(1);
 
   const handleName = (val: string) => setName(val);
   const handleSets = (val: number) => setSets(val);
-
-  const variations = () => {
-    // write logic for variations , dropdowns, checkboxes,  items
-    return null;
+  const toggleHasWeeksVariations = () => {
+    if (!hasWeeksVariations) {
+      setWeeksVariations(4);
+    } else {
+      setWeeksVariations(1);
+    }
+    setHasWeeksVariations(!hasWeeksVariations);
   };
 
-  const setsDropdownValues = [...Array(10)].map((_, i) => i + 1);
+  const toggleCustomRepetitions = () => setIsCustomRepetitions(!isCustomRepetitions);
 
+  const handleWeeksVariations = (val: number) => setWeeksVariations(val);
+
+  const variations = [...Array(weeksVariations).fill({ qty: undefined, weight: undefined })];
+
+  const handleRepetitions = () => {};
+
+  const repetitionsInputs = () => {
+    return (
+      <View style={styles.repetitionsInputsContainer}>
+        {variations.map((el, i) => (
+          <View
+            style={{
+              ...styles.repetitionsInputsInnerContainer,
+              ...(variations.length === 1 && { width: "auto", maxWidth: "100%" }),
+            }}
+          >
+            <TextInput
+              keyboardType={isCustomRepetitions ? "default" : "number-pad"}
+              style={styles.repetitionsTextInput}
+              multiline
+            />
+            {i !== variations.length - 1 && (
+              <Text style={[styles.baseText, styles.repetitionsTextSlash]}>/</Text>
+            )}
+          </View>
+        ))}
+      </View>
+    );
+  };
+
+  const dropdownValues = [...Array(10)].map((_, i) => i + 1);
   const isButtonDisabled = !name;
 
   return (
@@ -48,29 +85,76 @@ const CreateExerciseModal = ({ closeModal }: CreateExerciseModalProps) => {
               onPress={closeModal}
             />
             <View style={styles.exerciseContainer}>
-              <View style={styles.nameInputContainer}>
+              <View style={[styles.innerContainer, styles.nameInputContainer]}>
                 <TextInput
                   onChangeText={handleName}
-                  style={styles.nameTextInput}
+                  style={[styles.baseText, styles.nameTextInput]}
                   value={name}
                   placeholder="Exercise's name"
                   placeholderTextColor={Colors[theme].secondary}
                   multiline
                 />
               </View>
-              <View style={styles.setsInputContainer}>
-                <Text style={styles.setsText}>How many sets are you doing?</Text>
-                {/*  */}
+              <View style={styles.innerContainer}>
+                <View style={styles.innerTextContainer}>
+                  <Text style={styles.baseText}>How many sets are you doing?</Text>
+                </View>
                 <CustomSelectDropdown
-                  data={setsDropdownValues}
-                  defaultValue={setsDropdownValues[2]}
+                  data={dropdownValues}
+                  defaultValue={dropdownValues[2]}
                   onSelect={handleSets}
                   btnStyle={styles.dropdownButtonStyle}
                   btnTextStyle={styles.dropdownButtonTxtStyle}
                 />
-                {/*  */}
               </View>
-              <View>{variations()}</View>
+              <View style={styles.innerContainer}>
+                <View style={styles.innerTextContainer}>
+                  <Text style={styles.baseText}>
+                    Check if it has repetition variations along the weeks.
+                  </Text>
+                </View>
+                <BouncyCheckbox
+                  size={18}
+                  fillColor={Colors.light.primary}
+                  innerIconStyle={{ borderWidth: 2 }}
+                  onPress={toggleHasWeeksVariations}
+                  isChecked={hasWeeksVariations}
+                />
+              </View>
+              {hasWeeksVariations && (
+                <View style={styles.innerContainer}>
+                  <View style={styles.innerTextContainer}>
+                    <Text style={styles.baseText}>How many variations?</Text>
+                  </View>
+                  <CustomSelectDropdown
+                    data={dropdownValues.slice(1)}
+                    defaultValue={dropdownValues.find((el) => el === weeksVariations)!}
+                    onSelect={handleWeeksVariations} //
+                    btnStyle={styles.dropdownButtonStyle}
+                    btnTextStyle={styles.dropdownButtonTxtStyle}
+                  />
+                </View>
+              )}
+              <View style={[styles.innerContainer, styles.repetitionsContainer]}>
+                <View style={styles.innerTextContainer}>
+                  <Text style={styles.baseText}>Repetitions:</Text>
+                </View>
+                {repetitionsInputs()}
+              </View>
+              <View style={styles.innerContainer}>
+                <View style={styles.innerTextContainer}>
+                  <Text style={styles.customizeCheckboxText}>
+                    Need to customize the text instead of just numbers?
+                  </Text>
+                </View>
+                <BouncyCheckbox
+                  size={18}
+                  fillColor={Colors.light.primary}
+                  innerIconStyle={{ borderWidth: 2 }}
+                  onPress={toggleCustomRepetitions}
+                  isChecked={isCustomRepetitions}
+                />
+              </View>
               <View style={styles.buttonsContainer}>
                 <CancelButton onCancel={closeModal}>
                   <Ionicons name="close" size={20} />
@@ -89,7 +173,7 @@ const CreateExerciseModal = ({ closeModal }: CreateExerciseModalProps) => {
 
 export default CreateExerciseModal;
 
-const createExerciseModalStyles = (theme: Theme) =>
+const createExerciseModalStyles = (theme: Theme, multipleRepetitions: boolean) =>
   StyleSheet.create({
     closeIconBtn: {
       position: "absolute",
@@ -105,9 +189,8 @@ const createExerciseModalStyles = (theme: Theme) =>
       backgroundColor: Colors[theme].modalBackground,
     },
     exerciseContainer: {
-      minWidth: "75%",
-      maxWidth: "90%",
-      padding: 20,
+      width: "80%",
+      padding: 30,
       backgroundColor: Colors[theme].background,
       borderRadius: 10,
       gap: 40,
@@ -119,38 +202,81 @@ const createExerciseModalStyles = (theme: Theme) =>
       shadowOpacity: 0.18,
       shadowRadius: 1.0,
     },
-    nameInputContainer: {
+    innerContainer: {
+      width: "100%",
       flexDirection: "row",
-      gap: 10,
-      width: "75%",
+      justifyContent: "space-between",
+    },
+    innerTextContainer: {
+      maxWidth: "80%",
+      flexGrow: 1,
+    },
+    baseText: {
+      color: Colors[theme].text,
+      fontSize: 14,
+      textAlignVertical: "center",
+      flexGrow: 1,
+    },
+    nameInputContainer: {
+      width: "80%",
       margin: "auto",
     },
     nameTextInput: {
-      color: Colors[theme].text,
       textAlign: "center",
       fontSize: 18,
-      borderBottomWidth: 0.9,
       padding: 10,
+      borderBottomWidth: 0.9,
       borderColor: Colors[theme].text,
-      width: "90%",
     },
-    setsInputContainer: {
-      flexDirection: "row",
-      gap: 20,
-      margin: "auto",
-      paddingHorizontal: 10,
-    },
-    setsText: { textAlignVertical: "center", color: Colors[theme].text, fontSize: 14 },
     dropdownButtonStyle: {
-      gap: 12,
-      paddingHorizontal: 16,
-      paddingVertical: 10,
+      gap: 8,
+      paddingHorizontal: 14,
+      paddingVertical: 8,
       width: undefined,
     },
     dropdownButtonTxtStyle: {
       fontSize: 18,
     },
-    checkboxContainer: { flexDirection: "row", gap: 12, justifyContent: "flex-end" },
-    checkboxText: { textAlignVertical: "center", color: Colors[theme].text, fontSize: 12 },
+    repetitionsContainer: {
+      flexDirection: multipleRepetitions ? "column" : "row",
+    },
+    repetitionsInputsContainer: {
+      flexDirection: "row",
+      margin: "auto",
+      flexWrap: "wrap",
+      paddingTop: multipleRepetitions ? 20 : undefined,
+    },
+    repetitionsInputsInnerContainer: {
+      flexDirection: "row",
+      width: "25%",
+    },
+    repetitionsTextInput: {
+      color: Colors[theme].text,
+      textAlign: "center",
+      fontSize: 16,
+      paddingHorizontal: 10,
+      paddingVertical: 4,
+      borderBottomWidth: 0.9,
+      borderColor: Colors[theme].text,
+      flexWrap: "wrap",
+      flexGrow: 1,
+      height: multipleRepetitions ? 60 : undefined,
+    },
+    repetitionsTextSlash: { flexGrow: 0, borderBottomWidth: 0.9, borderColor: Colors[theme].text },
+    customizeCheckboxContainer: {
+      flexDirection: "row",
+      gap: 20,
+      margin: "auto",
+      paddingHorizontal: 10,
+      borderWidth: 1,
+      justifyContent: "space-around",
+    },
+    customizeCheckboxText: {
+      color: Colors[theme].text,
+      fontSize: 14,
+      width: "auto",
+    },
+    //
+
     buttonsContainer: { flexDirection: "row", gap: 20, justifyContent: "center" },
   });
