@@ -8,7 +8,6 @@ import { AcceptButton, CancelButton } from "../ThemedButton";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import { useState } from "react";
 import CustomSelectDropdown from "../CustomSelectDropdown";
-import { WeightsAndRepetitions } from "@/src/types/Routines";
 
 const CreateExerciseModal = ({ closeModal }: CreateExerciseModalProps) => {
   const { theme } = useThemeContext();
