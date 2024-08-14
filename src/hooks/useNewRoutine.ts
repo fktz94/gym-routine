@@ -1,7 +1,8 @@
 import { useReducer, useState } from "react";
 import useThemeContext from "../contexts/Theme/useThemeContext";
 import { initialState, newRoutineReducers } from "../reducers/NewRoutine/newRoutineReducers";
-import { NewRoutineActionsTypes } from "../types/Reducers";
+import { AddExercisePayloadType, NewRoutineActionsTypes } from "../types/Reducers";
+import { Exercise } from "../types/Routines";
 
 const useNewRoutine = () => {
   const [step, setStep] = useState(0);
@@ -39,10 +40,18 @@ const useNewRoutine = () => {
     });
   };
 
+  const handleAddOneExercise = ({ exerciseData, dayIndex }: AddExercisePayloadType) => {
+    dispatch({
+      type: NewRoutineActionsTypes.ADDEXERCISE,
+      payload: { dayIndex, exerciseData },
+    });
+  };
+
   const toggleWarmUpRoutine = () => setHasWarmUpRoutine(!hasWarmUpRoutine);
 
   return {
     newRoutineState,
+    handleAddOneExercise,
     handleDays,
     handleName,
     handleStep,

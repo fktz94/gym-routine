@@ -96,5 +96,6 @@ const firstStepStyles = (theme: Theme) =>
       color: Colors[theme].text,
       borderWidth: 1,
       borderColor: Colors[theme].primary,
+      textAlign: "center",
     },
   });

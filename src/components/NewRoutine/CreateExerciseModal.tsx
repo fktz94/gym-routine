@@ -6,12 +6,14 @@ import { CreateExerciseModalProps } from "@/src/types/Components";
 import { useAppDispatch } from "@/src/hooks/reactReduxHook";
 import { AcceptButton, CancelButton } from "../ThemedButton";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CustomSelectDropdown from "../CustomSelectDropdown";
+import { Exercise, WeightsAndRepetitions } from "@/src/types/Routines";
+import useNewRoutineContext from "@/src/contexts/NewRoutine/useNewRoutineContext";
 
-const CreateExerciseModal = ({ closeModal }: CreateExerciseModalProps) => {
+const CreateExerciseModal = ({ closeModal, dayIndex }: CreateExerciseModalProps) => {
   const { theme } = useThemeContext();
-  const dispatch = useAppDispatch();
+  const { handleAddOneExercise } = useNewRoutineContext();
 
   const [name, setName] = useState("");
   const [sets, setSets] = useState(3);
@@ -21,32 +23,49 @@ const CreateExerciseModal = ({ closeModal }: CreateExerciseModalProps) => {
 
   const styles = createExerciseModalStyles(theme, hasWeeksVariations);
 
-  const [weeksVariations, setWeeksVariations] = useState(1);
+  const [variations, setVariations] = useState<WeightsAndRepetitions[]>([
+    { qty: undefined, weight: undefined },
+  ]);
 
   const handleName = (val: string) => setName(val);
   const handleSets = (val: number) => setSets(val);
   const toggleHasWeeksVariations = () => {
     if (!hasWeeksVariations) {
-      setWeeksVariations(4);
+      setVariations((prev) => [...prev, ...Array(3).fill({ qty: undefined, weight: undefined })]);
     } else {
-      setWeeksVariations(1);
+      setVariations((prev) => prev.slice(0, 1));
     }
     setHasWeeksVariations(!hasWeeksVariations);
   };
 
   const toggleCustomRepetitions = () => setIsCustomRepetitions(!isCustomRepetitions);
 
-  const handleWeeksVariations = (val: number) => setWeeksVariations(val);
+  const currentVariations = variations.length;
 
-  const variations = [...Array(weeksVariations).fill({ qty: undefined, weight: undefined })];
+  const handleWeeksVariations = (val: number) => {
+    if (val === currentVariations) return;
+    if (val > currentVariations) {
+      const variationsToAdd = val - currentVariations;
+      setVariations((prev) => [
+        ...prev,
+        ...Array(variationsToAdd).fill({ qty: undefined, weight: undefined }),
+      ]);
+    }
+    if (val < currentVariations) {
+      setVariations((prev) => prev.slice(0, val));
+    }
+  };
 
-  const handleRepetitions = () => {};
+  const handleRepetitionValues = (val: string, i: number) => {
+    setVariations((prev) => prev.map((el, index) => (index === i ? { ...el, qty: val } : el)));
+  };
 
   const repetitionsInputs = () => {
     return (
       <View style={styles.repetitionsInputsContainer}>
         {variations.map((el, i) => (
           <View
+            key={i}
             style={{
               ...styles.repetitionsInputsInnerContainer,
               ...(variations.length === 1 && { width: "auto", maxWidth: "100%" }),
@@ -56,6 +75,8 @@ const CreateExerciseModal = ({ closeModal }: CreateExerciseModalProps) => {
               keyboardType={isCustomRepetitions ? "default" : "number-pad"}
               style={styles.repetitionsTextInput}
               multiline
+              onChangeText={(val) => handleRepetitionValues(val, i)}
+              value={el.qty?.toString()}
             />
             {i !== variations.length - 1 && (
               <Text style={[styles.baseText, styles.repetitionsTextSlash]}>/</Text>
@@ -67,104 +88,116 @@ const CreateExerciseModal = ({ closeModal }: CreateExerciseModalProps) => {
   };
 
   const dropdownValues = [...Array(10)].map((_, i) => i + 1);
-  const isButtonDisabled = !name;
+
+  const areUncompletedRepetitions = variations.findIndex(({ qty }) => !qty);
+
+  const isButtonDisabled = !name || areUncompletedRepetitions !== -1;
+
+  const handleAccept = () => {
+    const payload: Exercise = {
+      name,
+      sets,
+      current: 0,
+      weightsAndRepetitions: variations,
+    };
+    handleAddOneExercise({ dayIndex, exerciseData: payload });
+    closeModal();
+  };
+
+  useEffect(() => {}, []);
 
   return (
     <Modal animationType="slide" transparent>
       <View style={styles.container}>
-        {false ? ( ///////////////////////////////////////////////////////// this should render while it's loading after submitting new data
-          <ActivityIndicator size={80} color={Colors[theme].secondary} /> // this should render while it's loading after submitting new data
-        ) : (
-          <>
-            <Ionicons
-              style={styles.closeIconBtn}
-              name="close"
-              color={Colors[theme].text}
-              size={30}
-              onPress={closeModal}
-            />
-            <View style={styles.exerciseContainer}>
-              <View style={[styles.innerContainer, styles.nameInputContainer]}>
-                <TextInput
-                  onChangeText={handleName}
-                  style={[styles.baseText, styles.nameTextInput]}
-                  value={name}
-                  placeholder="Exercise's name"
-                  placeholderTextColor={Colors[theme].secondary}
-                  multiline
-                />
+        <>
+          <Ionicons
+            style={styles.closeIconBtn}
+            name="close"
+            color={Colors[theme].text}
+            size={30}
+            onPress={closeModal}
+          />
+          <View style={styles.exerciseContainer}>
+            <View style={[styles.innerContainer, styles.nameInputContainer]}>
+              <TextInput
+                onChangeText={handleName}
+                style={[styles.baseText, styles.nameTextInput]}
+                value={name}
+                placeholder="Exercise's name"
+                placeholderTextColor={Colors[theme].secondary}
+                multiline
+              />
+            </View>
+            <View style={styles.innerContainer}>
+              <View style={styles.innerTextContainer}>
+                <Text style={styles.baseText}>How many sets are you doing?</Text>
               </View>
+              <CustomSelectDropdown
+                data={dropdownValues}
+                defaultValue={dropdownValues[2]}
+                onSelect={handleSets}
+                btnStyle={styles.dropdownButtonStyle}
+                btnTextStyle={styles.dropdownButtonTxtStyle}
+              />
+            </View>
+            <View style={styles.innerContainer}>
+              <View style={styles.innerTextContainer}>
+                <Text style={styles.baseText}>
+                  Check if it has repetition variations along the weeks.
+                </Text>
+              </View>
+              <BouncyCheckbox
+                size={18}
+                fillColor={Colors.light.primary}
+                innerIconStyle={{ borderWidth: 2 }}
+                onPress={toggleHasWeeksVariations}
+                isChecked={hasWeeksVariations}
+              />
+            </View>
+            {hasWeeksVariations && (
               <View style={styles.innerContainer}>
                 <View style={styles.innerTextContainer}>
-                  <Text style={styles.baseText}>How many sets are you doing?</Text>
+                  <Text style={styles.baseText}>How many variations?</Text>
                 </View>
                 <CustomSelectDropdown
-                  data={dropdownValues}
-                  defaultValue={dropdownValues[2]}
-                  onSelect={handleSets}
+                  data={dropdownValues.slice(1)}
+                  defaultValue={dropdownValues.find((el) => el === currentVariations)!}
+                  onSelect={handleWeeksVariations} //
                   btnStyle={styles.dropdownButtonStyle}
                   btnTextStyle={styles.dropdownButtonTxtStyle}
                 />
               </View>
-              <View style={styles.innerContainer}>
-                <View style={styles.innerTextContainer}>
-                  <Text style={styles.baseText}>
-                    Check if it has repetition variations along the weeks.
-                  </Text>
-                </View>
-                <BouncyCheckbox
-                  size={18}
-                  fillColor={Colors.light.primary}
-                  innerIconStyle={{ borderWidth: 2 }}
-                  onPress={toggleHasWeeksVariations}
-                  isChecked={hasWeeksVariations}
-                />
+            )}
+            <View style={[styles.innerContainer, styles.repetitionsContainer]}>
+              <View style={styles.innerTextContainer}>
+                <Text style={styles.baseText}>Repetitions:</Text>
               </View>
-              {hasWeeksVariations && (
-                <View style={styles.innerContainer}>
-                  <View style={styles.innerTextContainer}>
-                    <Text style={styles.baseText}>How many variations?</Text>
-                  </View>
-                  <CustomSelectDropdown
-                    data={dropdownValues.slice(1)}
-                    defaultValue={dropdownValues.find((el) => el === weeksVariations)!}
-                    onSelect={handleWeeksVariations} //
-                    btnStyle={styles.dropdownButtonStyle}
-                    btnTextStyle={styles.dropdownButtonTxtStyle}
-                  />
-                </View>
-              )}
-              <View style={[styles.innerContainer, styles.repetitionsContainer]}>
-                <View style={styles.innerTextContainer}>
-                  <Text style={styles.baseText}>Repetitions:</Text>
-                </View>
-                {repetitionsInputs()}
-              </View>
-              <View style={styles.innerContainer}>
-                <View style={styles.innerTextContainer}>
-                  <Text style={styles.customizeCheckboxText}>
-                    Need to customize the text instead of just numbers?
-                  </Text>
-                </View>
-                <BouncyCheckbox
-                  size={18}
-                  fillColor={Colors.light.primary}
-                  innerIconStyle={{ borderWidth: 2 }}
-                  onPress={toggleCustomRepetitions}
-                  isChecked={isCustomRepetitions}
-                />
-              </View>
-              <View style={styles.buttonsContainer}>
-                <CancelButton onCancel={closeModal}>
-                  <Ionicons name="close" size={20} />
-                </CancelButton>
-                <AcceptButton isDisabled={isButtonDisabled} onAccept={closeModal}>
-                  <Ionicons name="checkmark" size={20} />
-                </AcceptButton>
-              </View>
+              {repetitionsInputs()}
             </View>
-          </>
-        )}
+            <View style={styles.innerContainer}>
+              <View style={styles.innerTextContainer}>
+                <Text style={styles.customizeCheckboxText}>
+                  Need to customize the text instead of just numbers?
+                </Text>
+              </View>
+              <BouncyCheckbox
+                size={18}
+                fillColor={Colors.light.primary}
+                innerIconStyle={{ borderWidth: 2 }}
+                onPress={toggleCustomRepetitions}
+                isChecked={isCustomRepetitions}
+              />
+            </View>
+            <View style={styles.buttonsContainer}>
+              <CancelButton onCancel={closeModal}>
+                <Ionicons name="close" size={20} />
+              </CancelButton>
+              <AcceptButton isDisabled={isButtonDisabled} onAccept={handleAccept}>
+                <Ionicons name="checkmark" size={20} />
+              </AcceptButton>
+            </View>
+          </View>
+        </>
       </View>
     </Modal>
   );

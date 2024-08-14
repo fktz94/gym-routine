@@ -44,6 +44,7 @@ export interface EditExerciseModalProps {
 
 export interface CreateExerciseModalProps {
   closeModal: () => void;
+  dayIndex: number;
 }
 
 export interface AcceptButtonProps {

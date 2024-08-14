@@ -14,6 +14,7 @@ export default function NewRoutineProvider({ children }: Props) {
     hasWarmUpRoutine,
     toggleWarmUpRoutine,
     newRoutineState,
+    handleAddOneExercise,
   } = useNewRoutine();
 
   return (
@@ -26,6 +27,7 @@ export default function NewRoutineProvider({ children }: Props) {
         hasWarmUpRoutine,
         toggleWarmUpRoutine,
         newRoutineState,
+        handleAddOneExercise,
       }}
     >
       {children}

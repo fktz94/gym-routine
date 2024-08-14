@@ -27,7 +27,7 @@ export const ExerciseItem = ({ name, sets, weightsAndRepetitions, current }: Exe
   const { theme } = useThemeContext();
   const styles = exerciseItemStyles(theme, false);
 
-  const repetitions = weightsAndRepetitions.map((el) => el.qty);
+  const repetitions = weightsAndRepetitions.map((el) => el.qty || "N/A");
 
   const prevWeight = weightsAndRepetitions.at(current - 1);
   const currentWeight = weightsAndRepetitions[current].weight;

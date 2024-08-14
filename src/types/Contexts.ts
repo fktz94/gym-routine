@@ -1,3 +1,4 @@
+import { AddExercisePayloadType } from "./Reducers";
 import { RoutineStructure } from "./Routines";
 
 export interface NewRoutineContextProps {
@@ -8,4 +9,5 @@ export interface NewRoutineContextProps {
   hasWarmUpRoutine: boolean;
   toggleWarmUpRoutine: () => void;
   newRoutineState: RoutineStructure;
+  handleAddOneExercise: ({ dayIndex, exerciseData }: AddExercisePayloadType) => void;
 }

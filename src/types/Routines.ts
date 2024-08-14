@@ -1,6 +1,6 @@
 export interface WeightsAndRepetitions {
-  qty: number | string;
-  weight: number | string | null;
+  qty: number | string | undefined;
+  weight: number | string | null | undefined;
 }
 
 export interface Exercise {

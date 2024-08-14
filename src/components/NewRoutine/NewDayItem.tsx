@@ -4,7 +4,6 @@ import useThemeContext from "@/src/contexts/Theme/useThemeContext";
 import { Colors } from "@/src/constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
 import useNewRoutineContext from "@/src/contexts/NewRoutine/useNewRoutineContext";
-import { AcceptButton, CancelButton } from "../ThemedButton";
 import CreateExerciseModal from "./CreateExerciseModal";
 
 const NewDayItem = ({ dayIndex }: { dayIndex: number }) => {
@@ -24,13 +23,19 @@ const NewDayItem = ({ dayIndex }: { dayIndex: number }) => {
     setIsCreating(false);
   };
 
+  /////////////////////////////////////////////
+  // TODO - Correctly display created exercises
   const currentExercises = () =>
-    data[dayIndex].map((el) => (
-      <View style={styles.exerciseItem}>
+    data[dayIndex].map((el, i) => (
+      <View style={styles.exerciseItem} key={i}>
         <TextInput style={styles.exercisesTextInput} />
-        <View style={styles.exercisesDetailsContainer}></View>
+        <View style={styles.exercisesDetailsContainer}>
+          <Text>{el.name}</Text>
+        </View>
       </View>
     ));
+  // TODO - Correctly display created exercises
+  /////////////////////////////////////////////
 
   return (
     <View style={styles.dayContainer}>
@@ -40,13 +45,14 @@ const NewDayItem = ({ dayIndex }: { dayIndex: number }) => {
       </Pressable>
       {isShown && (
         <>
-          {isCreating && <CreateExerciseModal closeModal={cancelCreatingNewExercise} />}
-          {/* {true && <CreateExerciseModal closeModal={cancelCreatingNewExercise} />} */}
+          {isCreating && (
+            <CreateExerciseModal closeModal={cancelCreatingNewExercise} dayIndex={dayIndex} />
+          )}
           <View style={styles.exercises}>
+            {currentExercises()}
             <TouchableOpacity onPress={startCreatingNewExercise}>
               <Ionicons name="add-circle-outline" size={40} style={styles.addExerciseIcon} />
             </TouchableOpacity>
-            {currentExercises()}
           </View>
         </>
       )}
