@@ -58,7 +58,7 @@ const newRoutineStyles = (theme: Theme) =>
       gap: 10,
     },
     inputsContainer: {
-      height: "80%",
+      height: "90%",
       width: "100%",
       alignItems: "center",
     },

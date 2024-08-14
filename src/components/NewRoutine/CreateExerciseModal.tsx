@@ -104,8 +104,6 @@ const CreateExerciseModal = ({ closeModal, dayIndex }: CreateExerciseModalProps)
     closeModal();
   };
 
-  useEffect(() => {}, []);
-
   return (
     <Modal animationType="slide" transparent>
       <View style={styles.container}>

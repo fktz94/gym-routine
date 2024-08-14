@@ -1,9 +1,10 @@
 import {
   AddExercisePayloadType,
+  DeleteExercisePayloadType,
   NewRoutineActions,
   NewRoutineActionsTypes,
 } from "@/src/types/Reducers";
-import { Exercise, monthsOfTheYear, RoutineDay, RoutineStructure } from "@/src/types/Routines";
+import { monthsOfTheYear, RoutineDay, RoutineStructure } from "@/src/types/Routines";
 
 const currentMonth = monthsOfTheYear[new Date().getMonth()];
 
@@ -26,6 +27,8 @@ export function newRoutineReducers(
       return { ...state, data: new Array(payload).fill([]) };
     case NewRoutineActionsTypes.ADDEXERCISE:
       return { ...state, data: findDayAndAddNewExercise(state.data, payload) };
+    case NewRoutineActionsTypes.DELETEEXERCISE:
+      return { ...state, data: findDayAndDeleteExercise(state.data, payload) };
     default:
       return state;
   }
@@ -36,4 +39,12 @@ function findDayAndAddNewExercise(
   { dayIndex, exerciseData }: AddExercisePayloadType
 ) {
   return data.map((routine, index) => (index === dayIndex ? [...routine, exerciseData] : routine));
+}
+function findDayAndDeleteExercise(
+  data: RoutineDay[],
+  { dayIndex, exerciseIndex }: DeleteExercisePayloadType
+) {
+  return data.map((routine, index) =>
+    index === dayIndex ? routine.filter((_, i) => i !== exerciseIndex) : routine
+  );
 }

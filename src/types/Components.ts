@@ -73,3 +73,13 @@ export interface CustomSelectDropdownProps {
   itemTextStyle?: TextStyle;
   menuStyle?: ViewStyle;
 }
+
+export interface ExerciseItemProps {
+  name: string;
+  sets: string | number;
+  exerciseRepetitions: string;
+  isTitle?: boolean;
+  style?: ViewStyle;
+  id?: number;
+  dayIndex?: number;
+}

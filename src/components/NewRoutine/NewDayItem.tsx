@@ -5,6 +5,7 @@ import { Colors } from "@/src/constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
 import useNewRoutineContext from "@/src/contexts/NewRoutine/useNewRoutineContext";
 import CreateExerciseModal from "./CreateExerciseModal";
+import NewExerciseItem from "./NewExerciseItem";
 
 const NewDayItem = ({ dayIndex }: { dayIndex: number }) => {
   const { theme } = useThemeContext();
@@ -23,19 +24,21 @@ const NewDayItem = ({ dayIndex }: { dayIndex: number }) => {
     setIsCreating(false);
   };
 
-  /////////////////////////////////////////////
-  // TODO - Correctly display created exercises
   const currentExercises = () =>
-    data[dayIndex].map((el, i) => (
-      <View style={styles.exerciseItem} key={i}>
-        <TextInput style={styles.exercisesTextInput} />
-        <View style={styles.exercisesDetailsContainer}>
-          <Text>{el.name}</Text>
-        </View>
-      </View>
-    ));
-  // TODO - Correctly display created exercises
-  /////////////////////////////////////////////
+    data[dayIndex].map(({ name, sets, weightsAndRepetitions }, i) => {
+      const exerciseRepetitions = weightsAndRepetitions.map((el) => el.qty).join(" / ");
+      const isLastElement = i === data[dayIndex].length - 1;
+      return (
+        <NewExerciseItem
+          exerciseRepetitions={exerciseRepetitions}
+          name={name}
+          sets={sets}
+          id={i}
+          dayIndex={dayIndex}
+          style={isLastElement ? { borderBottomWidth: 1 } : undefined}
+        />
+      );
+    });
 
   return (
     <View style={styles.dayContainer}>
@@ -49,7 +52,17 @@ const NewDayItem = ({ dayIndex }: { dayIndex: number }) => {
             <CreateExerciseModal closeModal={cancelCreatingNewExercise} dayIndex={dayIndex} />
           )}
           <View style={styles.exercises}>
-            {currentExercises()}
+            {data[dayIndex].length > 0 && (
+              <View>
+                <NewExerciseItem
+                  name="Exercise"
+                  sets="Sets"
+                  exerciseRepetitions="Repetitions"
+                  isTitle
+                />
+                {currentExercises()}
+              </View>
+            )}
             <TouchableOpacity onPress={startCreatingNewExercise}>
               <Ionicons name="add-circle-outline" size={40} style={styles.addExerciseIcon} />
             </TouchableOpacity>
@@ -81,15 +94,7 @@ const secondStepStyles = (theme: Theme) =>
     },
     exercises: { backgroundColor: Colors[theme].text, gap: 15, padding: 20 },
     addExerciseIcon: { margin: "auto" },
-    exercisesTextInput: {
-      color: Colors[theme].text,
-      fontSize: 18,
-      backgroundColor: Colors[theme].background,
-      paddingHorizontal: 20,
-      paddingVertical: 10,
-    },
-    exercisesDetailsContainer: { borderWidth: 1 },
-    exerciseItem: { borderWidth: 1 },
+
     acceptCancelButtonContainer: {
       flexDirection: "row",
       justifyContent: "center",

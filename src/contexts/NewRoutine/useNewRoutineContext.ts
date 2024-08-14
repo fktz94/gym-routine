@@ -13,6 +13,7 @@ export default function useNewRoutineContext() {
     step,
     toggleWarmUpRoutine,
     handleAddOneExercise,
+    handleDeleteOneExercise,
   } = routineContext;
   return {
     newRoutineState,
@@ -23,5 +24,6 @@ export default function useNewRoutineContext() {
     step,
     toggleWarmUpRoutine,
     handleAddOneExercise,
+    handleDeleteOneExercise,
   };
 }

@@ -1,8 +1,11 @@
 import { useReducer, useState } from "react";
 import useThemeContext from "../contexts/Theme/useThemeContext";
 import { initialState, newRoutineReducers } from "../reducers/NewRoutine/newRoutineReducers";
-import { AddExercisePayloadType, NewRoutineActionsTypes } from "../types/Reducers";
-import { Exercise } from "../types/Routines";
+import {
+  AddExercisePayloadType,
+  DeleteExercisePayloadType,
+  NewRoutineActionsTypes,
+} from "../types/Reducers";
 
 const useNewRoutine = () => {
   const [step, setStep] = useState(0);
@@ -47,6 +50,13 @@ const useNewRoutine = () => {
     });
   };
 
+  const handleDeleteOneExercise = ({ exerciseIndex, dayIndex }: DeleteExercisePayloadType) => {
+    dispatch({
+      type: NewRoutineActionsTypes.DELETEEXERCISE,
+      payload: { dayIndex, exerciseIndex },
+    });
+  };
+
   const toggleWarmUpRoutine = () => setHasWarmUpRoutine(!hasWarmUpRoutine);
 
   return {
@@ -58,6 +68,7 @@ const useNewRoutine = () => {
     step,
     hasWarmUpRoutine,
     toggleWarmUpRoutine,
+    handleDeleteOneExercise,
   };
 };
 
