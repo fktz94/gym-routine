@@ -1,11 +1,11 @@
-import { Pressable, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Pressable, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React, { useState } from "react";
 import useThemeContext from "@/src/contexts/Theme/useThemeContext";
 import { Colors } from "@/src/constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
 import useNewRoutineContext from "@/src/contexts/NewRoutine/useNewRoutineContext";
 import CreateExerciseModal from "./CreateExerciseModal";
-import NewExerciseItem from "./NewExerciseItem";
+import { NewExerciseItemTitle, NewExerciseItem } from "./NewExerciseItem";
 
 const NewDayItem = ({ dayIndex }: { dayIndex: number }) => {
   const { theme } = useThemeContext();
@@ -33,6 +33,7 @@ const NewDayItem = ({ dayIndex }: { dayIndex: number }) => {
           exerciseRepetitions={exerciseRepetitions}
           name={name}
           sets={sets}
+          key={i}
           id={i}
           dayIndex={dayIndex}
           style={isLastElement ? { borderBottomWidth: 1 } : undefined}
@@ -54,12 +55,7 @@ const NewDayItem = ({ dayIndex }: { dayIndex: number }) => {
           <View style={styles.exercises}>
             {data[dayIndex].length > 0 && (
               <View>
-                <NewExerciseItem
-                  name="Exercise"
-                  sets="Sets"
-                  exerciseRepetitions="Repetitions"
-                  isTitle
-                />
+                <NewExerciseItemTitle key="title" />
                 {currentExercises()}
               </View>
             )}
