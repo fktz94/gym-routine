@@ -1,4 +1,11 @@
-import { Pressable, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  LayoutChangeEvent,
+  Pressable,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import React, { useState } from "react";
 import useThemeContext from "@/src/contexts/Theme/useThemeContext";
 import { Colors } from "@/src/constants/Colors";
@@ -6,6 +13,7 @@ import { Ionicons } from "@expo/vector-icons";
 import useNewRoutineContext from "@/src/contexts/NewRoutine/useNewRoutineContext";
 import CreateExerciseModal from "./CreateExerciseModal";
 import { NewExerciseItemTitle, NewExerciseItem } from "./NewExerciseItem";
+import Animated, { useAnimatedStyle, withTiming } from "react-native-reanimated";
 
 const NewDayItem = ({ dayIndex }: { dayIndex: number }) => {
   const { theme } = useThemeContext();
@@ -23,6 +31,24 @@ const NewDayItem = ({ dayIndex }: { dayIndex: number }) => {
   const cancelCreatingNewExercise = () => {
     setIsCreating(false);
   };
+  const [height, setHeight] = useState(0);
+
+  const onLayout = (event: LayoutChangeEvent) => {
+    const layoutHeight = event.nativeEvent.layout.height;
+    console.log(layoutHeight);
+
+    if (layoutHeight > 0 && height !== layoutHeight) {
+      setHeight(layoutHeight);
+    }
+  };
+
+  const animatedStyle = useAnimatedStyle(() => {
+    const animatedHeight = isShown ? withTiming(height) : withTiming(0);
+    return {
+      height: animatedHeight,
+      overflow: "hidden",
+    };
+  });
 
   const currentExercises = () =>
     data[dayIndex].map(({ name, sets, weightsAndRepetitions }, i) => {
@@ -47,8 +73,9 @@ const NewDayItem = ({ dayIndex }: { dayIndex: number }) => {
         <Text style={styles.dayButtonText}>DAY {dayIndex + 1}</Text>
         <Ionicons name={isShown ? "chevron-up" : "chevron-down"} />
       </Pressable>
-      {isShown && (
-        <>
+
+      <Animated.View style={animatedStyle}>
+        <View onLayout={onLayout} style={{ position: "absolute" }}>
           {isCreating && (
             <CreateExerciseModal closeModal={cancelCreatingNewExercise} dayIndex={dayIndex} />
           )}
@@ -59,12 +86,15 @@ const NewDayItem = ({ dayIndex }: { dayIndex: number }) => {
                 {currentExercises()}
               </View>
             )}
-            <TouchableOpacity onPress={startCreatingNewExercise}>
+            <TouchableOpacity
+              onPress={startCreatingNewExercise}
+              style={styles.addExerciseIconContainer}
+            >
               <Ionicons name="add-circle-outline" size={40} style={styles.addExerciseIcon} />
             </TouchableOpacity>
           </View>
-        </>
-      )}
+        </View>
+      </Animated.View>
     </View>
   );
 };
@@ -89,8 +119,8 @@ const secondStepStyles = (theme: Theme) =>
       fontSize: 16,
     },
     exercises: { backgroundColor: Colors[theme].text, gap: 15, padding: 20 },
+    addExerciseIconContainer: { flexDirection: "row", width: "100%" },
     addExerciseIcon: { margin: "auto" },
-
     acceptCancelButtonContainer: {
       flexDirection: "row",
       justifyContent: "center",

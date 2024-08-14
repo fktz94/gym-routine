@@ -1,14 +1,5 @@
-import {
-  Button,
-  StyleSheet,
-  Text,
-  View,
-  PanResponder,
-  Touchable,
-  TouchableOpacity,
-  Animated,
-} from "react-native";
-import React, { useRef } from "react";
+import { StyleSheet, Text, View, PanResponder, TouchableOpacity, Animated } from "react-native";
+import { useRef } from "react";
 import { ExerciseItemProps } from "@/src/types/Components";
 import useThemeContext from "@/src/contexts/Theme/useThemeContext";
 import { Colors } from "@/src/constants/Colors";
