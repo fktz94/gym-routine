@@ -1,3 +1,5 @@
+import { RoutinesData } from "./Routines";
+
 export enum ResponseStatus {
   IDLE,
   PENDING,

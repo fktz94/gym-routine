@@ -1,3 +1,4 @@
+import { RoutinesData } from "@/src/types/Routines";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const storeRoutines = async (value: RoutinesData) => {
