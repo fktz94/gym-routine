@@ -22,6 +22,7 @@ export default function App() {
         <Stack.Screen name="index" />
         <Stack.Screen name="new-routine" />
         <Stack.Screen name="routine/[id]" />
+        <Stack.Screen name="edit-routine/[id]" />
       </Stack>
     </SafeAreaView>
   );
