@@ -40,6 +40,7 @@ const ConfirmCreateNewExerciseModal = ({ closeModal }: ConfirmCreateNewExerciseM
 
     if (createRoutineErrorMessage) {
       Alert.alert("Error!", createRoutineErrorMessage);
+      dispatch(resetCreateRoutineState());
     }
   }, [createRoutineStatus, isLoading]);
 
@@ -61,7 +62,10 @@ const ConfirmCreateNewExerciseModal = ({ closeModal }: ConfirmCreateNewExerciseM
               <View style={styles.innerContainer}>
                 <View style={styles.innerTextContainer}>
                   <Text style={styles.baseText}>Great! You're almost done!</Text>
-                  <Text style={styles.baseText}>Procceed?</Text>
+                  <Text style={styles.baseText}>Confirm?</Text>
+                  <Text style={[styles.baseText, { fontSize: 14 }]}>
+                    (You can modify it later anyway)
+                  </Text>
                 </View>
                 <View style={styles.buttonsContainer}>
                   <CancelButton onCancel={closeModal} />

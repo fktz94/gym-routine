@@ -29,14 +29,16 @@ const MainContainer = () => {
     }
   };
 
-  const isBackBtnDisabled = step === 0;
-  const isNextBtnDisabled = step === 0 && !name;
+  const isFirstStep = step === 0;
+  const isLastStep = step === 1;
+
+  const isNextBtnDisabled = isFirstStep && !name;
 
   const openModal = () => setIsCreating(true);
   const closeModal = () => setIsCreating(false);
 
   const nextBtnFunction = () => {
-    if (step === 1) {
+    if (isLastStep) {
       openModal();
     } else {
       handleStep({ direction: "up" });
@@ -49,14 +51,11 @@ const MainContainer = () => {
       <View style={styles.mainContainer}>
         <View style={styles.inputsContainer}>{renderStep()}</View>
         <View style={styles.directionButtonsContainer}>
-          <ThemedButton
-            disabled={isBackBtnDisabled}
-            onPress={() => handleStep({ direction: "down" })}
-          >
+          <ThemedButton disabled={isFirstStep} onPress={() => handleStep({ direction: "down" })}>
             BACK
           </ThemedButton>
           <ThemedButton disabled={isNextBtnDisabled} onPress={nextBtnFunction}>
-            NEXT
+            {isLastStep ? "FINISH" : "NEXT"}
           </ThemedButton>
         </View>
       </View>

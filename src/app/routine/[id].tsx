@@ -34,10 +34,18 @@ export default function RoutineScreen() {
   const isDayEmpty = !day || day?.length === 0;
 
   const emptyDayText = () => (
-    <Text style={styles.emptyDay}>This day is empty! {"\n"} Fill it!</Text>
+    <View style={styles.emptyDayContainer}>
+      <Text style={styles.emptyDayText}>This day is empty!</Text>
+      <ThemedButton
+        externalButtonStyles={styles.emptyDayBtnContainer}
+        externalTextStyles={styles.emptyDayBtnText}
+      >
+        Fill it
+      </ThemedButton>
+    </View>
   );
 
-  if (!routine) return null; // Should redirect to 404 page.
+  if (!routine) return null; // Should redirect to 404 page?
 
   return (
     <RoutineProvider routine={routine} selectedDay={selectedDay}>
@@ -72,7 +80,12 @@ const routineDescriptionStyles = (theme: Theme) =>
     },
     dayButtonView: { flexGrow: 1, maxWidth: 100 },
     dayButtonText: { textAlign: "center" },
-    emptyDay: {
+    emptyDayContainer: {
+      width: "80%",
+      marginHorizontal: "auto",
+      gap: 20,
+    },
+    emptyDayText: {
       fontWeight: "bold",
       fontSize: 26,
       color: Colors[theme].text,
@@ -80,6 +93,8 @@ const routineDescriptionStyles = (theme: Theme) =>
       paddingTop: 32,
       lineHeight: 64,
     },
+    emptyDayBtnContainer: { width: "50%", margin: "auto" },
+    emptyDayBtnText: { fontSize: 18, letterSpacing: 2, fontWeight: "bold", textAlign: "center" },
     routineContainer: { flex: 1 },
     routineName: {
       fontWeight: "bold",
