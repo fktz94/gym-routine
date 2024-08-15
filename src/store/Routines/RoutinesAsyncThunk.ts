@@ -1,6 +1,6 @@
-import { ModifyExerciseAsyncThunkProps, RoutineStore } from "@/src/types/Store";
+import { CreateNewRoutineAsyncThunkProps, ModifyExerciseAsyncThunkProps } from "@/src/types/Store";
 import { getRoutines, storeRoutines } from "@/src/utils/AsyncStorage/Routines";
-import { modifyOneExercise } from "@/src/utils/Store/Routine";
+import { addNewRoutine, modifyOneExercise } from "@/src/utils/Store/Routine";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const getAllRoutines = createAsyncThunk("routines/getAllRoutines", async () => {
@@ -29,7 +29,7 @@ export const modifyExercise = createAsyncThunk(
       routines: { routines, currentRoutineName },
     } = getState(); // Learn how to type AsyncThunk
 
-    // Is done this way because I'm using LocalStorage. It'd be simpler by making API calls to its correspondant paths.
+    // It's done this way because I'm using LocalStorage. It'd be simpler by making API calls to its correspondant paths.
     const modifiedRoutines = modifyOneExercise({
       routines,
       routineId,
@@ -39,10 +39,36 @@ export const modifyExercise = createAsyncThunk(
       newWeightValue,
       makeItCurrent,
     });
+
     const payload = { routines: modifiedRoutines, currentRoutineName };
 
-    await storeRoutines(payload);
+    try {
+      await storeRoutines(payload);
+      dispatch(getAllRoutines());
+    } catch (error) {
+      throw error;
+    }
+  }
+);
 
-    dispatch(getAllRoutines());
+export const createNewRoutine = createAsyncThunk(
+  "routines/createNewRoutine",
+  async ({ routineData, routineName }: CreateNewRoutineAsyncThunkProps, { getState, dispatch }) => {
+    const {
+      routines: { routines, currentRoutineName },
+    } = getState(); // Learn how to type AsyncThunk
+
+    const updatedRoutines = addNewRoutine({
+      routineData,
+      routineName,
+      prevRoutinesData: { routines, currentRoutineName },
+    });
+
+    try {
+      await storeRoutines(updatedRoutines);
+      dispatch(getAllRoutines());
+    } catch (error) {
+      throw error;
+    }
   }
 );

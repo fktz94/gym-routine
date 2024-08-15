@@ -1,4 +1,4 @@
-import { RoutinesData } from "./Routines";
+import { RoutineDay, RoutinesData } from "./Routines";
 
 export enum ResponseStatus {
   IDLE,
@@ -17,6 +17,10 @@ export interface RoutineStore extends RoutinesData {
   modifyExerciseStatus: ResponseStatus;
   isModifyingRoutines: boolean;
   modifyExerciseErrorMessage: string;
+
+  createRoutineStatus: ResponseStatus;
+  isCreatingRoutine: boolean;
+  createRoutineErrorMessage: string;
 }
 
 export interface ModifyExerciseAsyncThunkProps {
@@ -26,4 +30,9 @@ export interface ModifyExerciseAsyncThunkProps {
   selectedSerie: number;
   newWeightValue: string | number;
   makeItCurrent: boolean;
+}
+
+export interface CreateNewRoutineAsyncThunkProps {
+  routineData: RoutineDay[];
+  routineName: string;
 }

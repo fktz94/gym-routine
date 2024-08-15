@@ -87,3 +87,7 @@ export interface QuitCreatingNewExerciseModalProps {
   accept: () => void;
   cancel: () => void;
 }
+
+export interface ConfirmCreateNewExerciseModalProps {
+  closeModal: () => void;
+}

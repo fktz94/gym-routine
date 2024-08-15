@@ -1,10 +1,11 @@
 import { StyleSheet, Text, View } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import ThemedButton from "../ThemedButton";
 import useNewRoutineContext from "@/src/contexts/NewRoutine/useNewRoutineContext";
 import useThemeContext from "@/src/contexts/Theme/useThemeContext";
 import FirstStep from "./FirstStep";
 import SecondStep from "./SecondStep";
+import ConfirmCreateNewExerciseModal from "./ConfirmCreateNewExerciseModal";
 
 const MainContainer = () => {
   const { theme } = useThemeContext();
@@ -12,6 +13,8 @@ const MainContainer = () => {
 
   const { handleStep, newRoutineState, step } = useNewRoutineContext();
   const { name } = newRoutineState;
+
+  const [isCreating, setIsCreating] = useState(false);
 
   const renderStep = () => {
     switch (step) {
@@ -29,29 +32,35 @@ const MainContainer = () => {
   const isBackBtnDisabled = step === 0;
   const isNextBtnDisabled = step === 0 && !name;
 
+  const openModal = () => setIsCreating(true);
+  const closeModal = () => setIsCreating(false);
+
   const nextBtnFunction = () => {
     if (step === 1) {
-      console.log(newRoutineState);
-      return;
+      openModal();
+    } else {
+      handleStep({ direction: "up" });
     }
-    handleStep({ direction: "up" });
   };
 
   return (
-    <View style={styles.mainContainer}>
-      <View style={styles.inputsContainer}>{renderStep()}</View>
-      <View style={styles.directionButtonsContainer}>
-        <ThemedButton
-          disabled={isBackBtnDisabled}
-          onPress={() => handleStep({ direction: "down" })}
-        >
-          BACK
-        </ThemedButton>
-        <ThemedButton disabled={isNextBtnDisabled} onPress={nextBtnFunction}>
-          NEXT
-        </ThemedButton>
+    <>
+      {isCreating && <ConfirmCreateNewExerciseModal closeModal={closeModal} />}
+      <View style={styles.mainContainer}>
+        <View style={styles.inputsContainer}>{renderStep()}</View>
+        <View style={styles.directionButtonsContainer}>
+          <ThemedButton
+            disabled={isBackBtnDisabled}
+            onPress={() => handleStep({ direction: "down" })}
+          >
+            BACK
+          </ThemedButton>
+          <ThemedButton disabled={isNextBtnDisabled} onPress={nextBtnFunction}>
+            NEXT
+          </ThemedButton>
+        </View>
       </View>
-    </View>
+    </>
   );
 };
 
