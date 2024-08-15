@@ -34,7 +34,7 @@ export default function Index() {
     }
   }, [isInitialLoad, isGettingAllRoutines, dataIsNotFetchedYet]);
 
-  const { currentRoutine, pastRoutines } = useRoutines();
+  const { currentRoutine, pastRoutines, noRoutines } = useRoutines();
 
   const currentRoutineButton = () => {
     if (!currentRoutine) return;
@@ -69,6 +69,13 @@ export default function Index() {
               <RoutinesList selectedRoutines={pastRoutines} />
             </View>
           )}
+          {noRoutines && (
+            <View style={styles.listContainer}>
+              <Text style={[styles.title, styles.noRoutines]}>
+                It seems you haven't write routines yet.{"\n"}Write the first one and go training!
+              </Text>
+            </View>
+          )}
         </>
       )}
     </View>
@@ -89,4 +96,5 @@ const indexStyles = (theme: Theme) =>
       width: "100%",
     },
     title: { fontWeight: "bold", fontSize: 24, color: Colors[theme].text, textAlign: "center" },
+    noRoutines: { letterSpacing: 2, padding: 60, lineHeight: 35 },
   });

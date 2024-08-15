@@ -13,7 +13,7 @@ import { ResponseStatus } from "@/src/types/Store";
 import { router } from "expo-router";
 
 const ConfirmCreateNewExerciseModal = ({ closeModal }: ConfirmCreateNewExerciseModalProps) => {
-  const { theme } = useThemeContext();
+  const { theme, toggleShowBackArrowButton } = useThemeContext();
   const styles = quitCreatingModalStyles(theme);
   const dispatch = useAppDispatch();
   const { isCreatingRoutine, createRoutineErrorMessage, createRoutineStatus } = useAppSelector(
@@ -34,6 +34,7 @@ const ConfirmCreateNewExerciseModal = ({ closeModal }: ConfirmCreateNewExerciseM
     if (createRoutineStatus === ResponseStatus.FULFILLED) {
       dispatch(resetCreateRoutineState());
       closeModal();
+      toggleShowBackArrowButton(true);
       router.navigate("/");
     }
 

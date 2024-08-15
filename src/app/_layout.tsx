@@ -7,8 +7,6 @@ import { useColorScheme } from "react-native";
 import { Provider } from "react-redux";
 import { store } from "@/src/store/store";
 import App from "@/src/components/App";
-import data from "@/data.json";
-import { storeRoutines } from "../utils/AsyncStorage/Routines";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -25,14 +23,8 @@ export default function RootLayout() {
     setInitialTheme(storedTheme ?? colorScheme ?? "light");
   };
 
-  const setRoutines = async () => void (await storeRoutines(data)); // Provisory until I create a routine from scratch. Now it's still made of a hardcoded json.
-
   useEffect(() => {
-    (async () => {
-      setStoredTheme();
-      setRoutines(); // Provisory...
-    })();
-
+    (async () => void setStoredTheme())();
     if (loaded) {
       SplashScreen.hideAsync();
     }

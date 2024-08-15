@@ -1,9 +1,5 @@
 import { RoutinesData, RoutineStructure } from "@/src/types/Routines";
-import {
-  AddNewRoutineUtilsProps,
-  CreateNewRoutineUtilsProps,
-  ModifyOneExerciseUtilsProps,
-} from "@/src/types/Utils";
+import { AddNewRoutineUtilsProps, ModifyOneExerciseUtilsProps } from "@/src/types/Utils";
 import { produce } from "immer";
 import * as Crypto from "expo-crypto";
 
@@ -39,17 +35,17 @@ export const addNewRoutine = ({
   routineName,
 }: AddNewRoutineUtilsProps) => {
   const madeOn = new Date().toDateString().split(" ").slice(1).join(" ");
-
+  const routineId = Crypto.randomUUID();
   const payload: RoutineStructure = {
     currentDay: 0,
     data: routineData,
-    id: Crypto.randomUUID(),
+    id: routineId,
     madeOn,
     name: routineName,
   };
 
   const nextState = produce(prevRoutinesData, (draft: RoutinesData) => {
-    draft.currentRoutineName = routineName;
+    draft.currentRoutineId = routineId;
     draft.routines.reverse().push(payload);
     draft.routines.reverse();
   });

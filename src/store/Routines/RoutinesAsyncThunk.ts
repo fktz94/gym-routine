@@ -26,7 +26,7 @@ export const modifyExercise = createAsyncThunk(
     { getState, dispatch }
   ) => {
     const {
-      routines: { routines, currentRoutineName },
+      routines: { routines, currentRoutineId },
     } = getState(); // Learn how to type AsyncThunk
 
     // It's done this way because I'm using LocalStorage. It'd be simpler by making API calls to its correspondant paths.
@@ -40,7 +40,7 @@ export const modifyExercise = createAsyncThunk(
       makeItCurrent,
     });
 
-    const payload = { routines: modifiedRoutines, currentRoutineName };
+    const payload = { routines: modifiedRoutines, currentRoutineId };
 
     try {
       await storeRoutines(payload);
@@ -55,13 +55,13 @@ export const createNewRoutine = createAsyncThunk(
   "routines/createNewRoutine",
   async ({ routineData, routineName }: CreateNewRoutineAsyncThunkProps, { getState, dispatch }) => {
     const {
-      routines: { routines, currentRoutineName },
+      routines: { routines, currentRoutineId },
     } = getState(); // Learn how to type AsyncThunk
 
     const updatedRoutines = addNewRoutine({
       routineData,
       routineName,
-      prevRoutinesData: { routines, currentRoutineName },
+      prevRoutinesData: { routines, currentRoutineId },
     });
 
     try {

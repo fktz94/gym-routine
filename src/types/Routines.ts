@@ -23,7 +23,7 @@ export interface RoutineStructure {
 export type Routine = RoutineStructure[];
 
 export interface RoutinesData {
-  currentRoutineName: string;
+  currentRoutineId: string;
   routines: Routine;
 }
 

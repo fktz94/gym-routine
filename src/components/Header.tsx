@@ -15,10 +15,12 @@ export default function Header() {
   const iconName = theme === "light" ? "moon" : "sunny";
 
   const canGoBack = router.canGoBack();
+
   const goBack = () => {
     if (path === "/new-routine") {
       setShowQuitModal(true);
-      return;
+    } else {
+      router.back();
     }
   };
 
@@ -32,9 +34,11 @@ export default function Header() {
 
   return (
     <>
+      {/* THIS MODAL SHOULDN'T BE HERE - IT SHOULD BE ON ITS RESPECTIVE SCREEN */}
       {showQuitModal && (
         <QuitCreatingNewExerciseModal accept={acceptQuitModal} cancel={cancelQuitModal} />
       )}
+      {/* THIS MODAL SHOULDN'T BE HERE - IT SHOULD BE ON ITS RESPECTIVE SCREEN */}
       <View style={styles.container}>
         <View style={styles.header}>
           <Ionicons name={iconName} size={32} color={Colors[theme].text} onPress={toggleTheme} />

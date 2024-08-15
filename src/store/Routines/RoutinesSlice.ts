@@ -3,7 +3,7 @@ import { createNewRoutine, getAllRoutines, modifyExercise } from "./RoutinesAsyn
 import { ResponseStatus, RoutineStore } from "@/src/types/Store";
 
 const initialState: RoutineStore = {
-  currentRoutineName: "",
+  currentRoutineId: "",
   routines: [],
   isInitialLoad: true,
 
@@ -50,7 +50,7 @@ export const routinesSlice = createSlice({
         state.isGettingAllRoutines = false;
         if (payload) {
           state.routines = payload.routines;
-          state.currentRoutineName = payload.currentRoutineName;
+          state.currentRoutineId = payload.currentRoutineId;
         }
       })
       .addCase(getAllRoutines.rejected, (state, { error }) => {
