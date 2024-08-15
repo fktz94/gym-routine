@@ -12,3 +12,8 @@ export interface NewRoutineContextProps {
   handleAddOneExercise: ({ dayIndex, exerciseData }: AddExercisePayloadType) => void;
   handleDeleteOneExercise: ({ dayIndex, exerciseIndex }: DeleteExercisePayloadType) => void;
 }
+
+export interface EditRoutineContextProps {
+  selectedRoutine: RoutineStructure;
+  selectedDay: string;
+}

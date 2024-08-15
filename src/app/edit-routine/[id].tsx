@@ -1,14 +1,15 @@
-import { StyleSheet, Text, View } from "react-native";
-import React from "react";
+import { useLocalSearchParams } from "expo-router";
+import EditRoutineProvider from "@/src/contexts/EditRoutine/EditRoutineProvider";
+import EditRoutine from "@/src/components/EditRoutine/EditRoutine";
 
 const EditRoutineScreen = () => {
+  const { id, selectedDay } = useLocalSearchParams<{ id: string; selectedDay: string }>();
+
   return (
-    <View>
-      <Text>EditRoutineScreen</Text>
-    </View>
+    <EditRoutineProvider routineId={id} selectedDay={selectedDay}>
+      <EditRoutine />
+    </EditRoutineProvider>
   );
 };
 
 export default EditRoutineScreen;
-
-const styles = StyleSheet.create({});

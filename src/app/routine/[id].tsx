@@ -4,7 +4,7 @@ import { Colors } from "@/src/constants/Colors";
 import RoutineProvider from "@/src/contexts/Routine/RoutineProvider";
 import useThemeContext from "@/src/contexts/Theme/useThemeContext";
 import useRoutineDescription from "@/src/hooks/useRoutineDescription";
-import { Link, useLocalSearchParams } from "expo-router";
+import { Link, router, useLocalSearchParams } from "expo-router";
 import { View, Text, StyleSheet } from "react-native";
 
 export default function RoutineScreen() {
@@ -36,7 +36,7 @@ export default function RoutineScreen() {
   const emptyDayText = () => (
     <View style={styles.emptyDayContainer}>
       <Text style={styles.emptyDayText}>This day is empty!</Text>
-      <Link href={`/edit-routine/${id}`} asChild>
+      <Link href={{ pathname: `/edit-routine/[id]`, params: { id, selectedDay } }} asChild>
         <ThemedButton
           externalButtonStyles={styles.emptyDayBtnContainer}
           externalTextStyles={styles.emptyDayBtnText}
