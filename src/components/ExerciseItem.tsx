@@ -1,9 +1,7 @@
 import { StyleSheet, Text, TextInput, View } from "react-native";
 import useThemeContext from "../contexts/Theme/useThemeContext";
 import { Colors } from "../constants/Colors";
-import SelectDropdown from "react-native-select-dropdown";
 import { Ionicons } from "@expo/vector-icons";
-import { RepetitionsButtonProps } from "../types/Components";
 import { useState } from "react";
 import ThemedButton from "./ThemedButton";
 import EditExerciseModal from "./EditExerciseModal";

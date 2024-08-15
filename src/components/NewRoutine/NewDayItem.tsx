@@ -58,8 +58,8 @@ const NewDayItem = ({ dayIndex }: { dayIndex: number }) => {
           exerciseRepetitions={exerciseRepetitions}
           name={name}
           sets={sets}
-          key={i}
-          id={i}
+          key={name} // find another way to key without making a mess with the delete animation
+          exerciseIndex={i}
           dayIndex={dayIndex}
           style={isLastElement ? { borderBottomWidth: 1 } : undefined}
         />

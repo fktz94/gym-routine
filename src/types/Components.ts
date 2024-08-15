@@ -79,6 +79,6 @@ export interface ExerciseItemProps {
   sets: string | number;
   exerciseRepetitions: string;
   style?: ViewStyle;
-  id?: number;
+  exerciseIndex?: number;
   dayIndex?: number;
 }

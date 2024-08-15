@@ -11,7 +11,7 @@ export const NewExerciseItem = ({
   exerciseRepetitions,
   style,
   dayIndex,
-  id,
+  exerciseIndex,
 }: ExerciseItemProps) => {
   const { theme } = useThemeContext();
   const styles = newExerciseItemStyles(theme);
@@ -19,8 +19,8 @@ export const NewExerciseItem = ({
   const { handleDeleteOneExercise } = useNewRoutineContext();
 
   const deleteExercise = () => {
-    if ((dayIndex !== 0 && !dayIndex) || (id !== 0 && !id)) return;
-    handleDeleteOneExercise({ dayIndex, exerciseIndex: id });
+    if ((dayIndex !== 0 && !dayIndex) || (exerciseIndex !== 0 && !exerciseIndex)) return;
+    handleDeleteOneExercise({ dayIndex, exerciseIndex });
   };
 
   const translateX = useRef(new Animated.Value(0)).current;
@@ -57,7 +57,7 @@ export const NewExerciseItem = ({
   );
 
   return (
-    <View style={[styles.exerciseItem, style]} key={id} {...panResponder.panHandlers}>
+    <View style={[styles.exerciseItem, style]} {...panResponder.panHandlers}>
       <Animated.View
         style={{
           flex: 1,
