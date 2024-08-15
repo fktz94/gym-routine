@@ -33,7 +33,7 @@ const ThemedButton = forwardRef(
 
 export default ThemedButton;
 
-export const AcceptButton = ({ onAccept, isDisabled, children }: AcceptButtonProps) => {
+export const AcceptButton = ({ onAccept, isDisabled = false, children }: AcceptButtonProps) => {
   const { theme } = useThemeContext();
   const styles = themedButtonStyles(false, theme, isDisabled);
   return (

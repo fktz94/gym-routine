@@ -1,12 +1,11 @@
-import { ActivityIndicator, Modal, StyleSheet, Text, TextInput, View } from "react-native";
+import { Modal, StyleSheet, Text, TextInput, View } from "react-native";
 import useThemeContext from "@/src/contexts/Theme/useThemeContext";
 import { Ionicons } from "@expo/vector-icons";
 import { Colors } from "@/src/constants/Colors";
 import { CreateExerciseModalProps } from "@/src/types/Components";
-import { useAppDispatch } from "@/src/hooks/reactReduxHook";
 import { AcceptButton, CancelButton } from "../ThemedButton";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import CustomSelectDropdown from "../CustomSelectDropdown";
 import { Exercise, WeightsAndRepetitions } from "@/src/types/Routines";
 import useNewRoutineContext from "@/src/contexts/NewRoutine/useNewRoutineContext";

@@ -48,7 +48,7 @@ export interface CreateExerciseModalProps {
 }
 
 export interface AcceptButtonProps {
-  isDisabled: boolean;
+  isDisabled?: boolean;
   onAccept: () => void;
   children?: ReactNode | string;
 }
@@ -81,4 +81,9 @@ export interface ExerciseItemProps {
   style?: ViewStyle;
   exerciseIndex?: number;
   dayIndex?: number;
+}
+
+export interface QuitCreatingNewExerciseModalProps {
+  accept: () => void;
+  cancel: () => void;
 }

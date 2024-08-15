@@ -29,6 +29,14 @@ const MainContainer = () => {
   const isBackBtnDisabled = step === 0;
   const isNextBtnDisabled = step === 0 && !name;
 
+  const nextBtnFunction = () => {
+    if (step === 1) {
+      console.log(newRoutineState);
+      return;
+    }
+    handleStep({ direction: "up" });
+  };
+
   return (
     <View style={styles.mainContainer}>
       <View style={styles.inputsContainer}>{renderStep()}</View>
@@ -39,7 +47,7 @@ const MainContainer = () => {
         >
           BACK
         </ThemedButton>
-        <ThemedButton disabled={isNextBtnDisabled} onPress={() => handleStep({ direction: "up" })}>
+        <ThemedButton disabled={isNextBtnDisabled} onPress={nextBtnFunction}>
           NEXT
         </ThemedButton>
       </View>
