@@ -1,15 +1,17 @@
 import { ScrollView, StyleSheet, Text, View } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import useThemeContext from "@/src/contexts/Theme/useThemeContext";
 import EachDayItem from "./EachDayItem";
 import { Colors } from "@/src/constants/Colors";
 import useEditRoutineContext from "@/src/contexts/EditRoutine/useEditRoutineContext";
 import ThemedButton from "../ThemedButton";
 import { isEqual } from "lodash";
+import ConfirmEditRoutineModal from "./ConfirmEditRoutineModal";
 
 const EditRoutine = () => {
   const { theme } = useThemeContext();
   const styles = editRoutineStyles(theme);
+  const [isCreating, setIsCreating] = useState(false);
 
   const {
     selectedRoutine: { data },
@@ -20,25 +22,31 @@ const EditRoutine = () => {
 
   const handleSaveChanges = () => {
     if (!hasChanges) return;
+    setIsCreating(true);
   };
+
+  const closeModal = () => setIsCreating(false);
 
   const renderDays = () => data.map((_, i) => <EachDayItem key={i} dayIndex={i} />);
 
   return (
-    <View style={styles.mainContainer}>
-      <View style={styles.container}>
-        <Text style={styles.title}>Let's update this routine!</Text>
+    <>
+      {isCreating && <ConfirmEditRoutineModal closeModal={closeModal} />}
+      <View style={styles.mainContainer}>
+        <View style={styles.container}>
+          <Text style={styles.title}>Let's update this routine!</Text>
+        </View>
+        <ScrollView contentContainerStyle={styles.scrollViewContainer}>{renderDays()}</ScrollView>
+        <ThemedButton
+          externalButtonStyles={styles.modifyRoutineBtnContainer}
+          externalTextStyles={styles.modifyRoutineBtnText}
+          onPress={handleSaveChanges}
+          disabled={!hasChanges}
+        >
+          Save changes!
+        </ThemedButton>
       </View>
-      <ScrollView contentContainerStyle={styles.scrollViewContainer}>{renderDays()}</ScrollView>
-      <ThemedButton
-        externalButtonStyles={styles.modifyRoutineBtnContainer}
-        externalTextStyles={styles.modifyRoutineBtnText}
-        onPress={handleSaveChanges}
-        disabled={!hasChanges}
-      >
-        Save changes!
-      </ThemedButton>
-    </View>
+    </>
   );
 };
 

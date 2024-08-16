@@ -1,5 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { createNewRoutine, getAllRoutines, modifyExercise } from "./RoutinesAsyncThunk";
+import {
+  createNewRoutine,
+  editRoutine,
+  getAllRoutines,
+  modifyExercise,
+} from "./RoutinesAsyncThunk";
 import { ResponseStatus, RoutineStore } from "@/src/types/Store";
 
 const initialState: RoutineStore = {
@@ -18,6 +23,10 @@ const initialState: RoutineStore = {
   createRoutineStatus: ResponseStatus.IDLE,
   isCreatingRoutine: false,
   createRoutineErrorMessage: "",
+
+  editRoutineStatus: ResponseStatus.IDLE,
+  isEditingRoutine: false,
+  editRoutineErrorMessage: "",
 };
 
 export const routinesSlice = createSlice({
@@ -33,6 +42,11 @@ export const routinesSlice = createSlice({
       state.createRoutineStatus = ResponseStatus.IDLE;
       state.isCreatingRoutine = false;
       state.createRoutineErrorMessage = "";
+    },
+    resetEditRoutineState: (state) => {
+      state.editRoutineStatus = ResponseStatus.IDLE;
+      state.isEditingRoutine = false;
+      state.editRoutineErrorMessage = "";
     },
     setIsInitialLoadToFalse: (state) => {
       state.isInitialLoad = false;
@@ -88,10 +102,29 @@ export const routinesSlice = createSlice({
         state.isCreatingRoutine = false;
         state.createRoutineErrorMessage = error.message ?? "Error creating the routine";
       });
+    builder
+      .addCase(editRoutine.pending, (state) => {
+        state.editRoutineStatus = ResponseStatus.PENDING;
+        state.isEditingRoutine = true;
+        state.editRoutineErrorMessage = "";
+      })
+      .addCase(editRoutine.fulfilled, (state) => {
+        state.editRoutineStatus = ResponseStatus.FULFILLED;
+        state.isEditingRoutine = false;
+      })
+      .addCase(editRoutine.rejected, (state, { error }) => {
+        state.editRoutineStatus = ResponseStatus.REJECTED;
+        state.isEditingRoutine = false;
+        state.editRoutineErrorMessage = error.message ?? "Error editing the routine";
+      });
   },
 });
 
-export const { resetModifiyExerciseState, setIsInitialLoadToFalse, resetCreateRoutineState } =
-  routinesSlice.actions;
+export const {
+  resetModifiyExerciseState,
+  setIsInitialLoadToFalse,
+  resetCreateRoutineState,
+  resetEditRoutineState,
+} = routinesSlice.actions;
 
 export default routinesSlice.reducer;

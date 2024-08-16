@@ -22,6 +22,6 @@ export enum EditRoutineActionsTypes {
   DELETEEXERCISE = "deleteExercise",
 }
 export type EditRoutineActions =
-  | { type: EditRoutineActionsTypes.SETINITIALSTATE; payload: RoutineStructure }
+  | { type: EditRoutineActionsTypes.SETINITIALSTATE; payload: RoutineStructure | undefined }
   | { type: EditRoutineActionsTypes.ADDEXERCISE; payload: AddExercisePayloadType }
   | { type: EditRoutineActionsTypes.DELETEEXERCISE; payload: DeleteExercisePayloadType };

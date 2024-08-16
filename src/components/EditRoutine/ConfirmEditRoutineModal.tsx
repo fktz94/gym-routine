@@ -8,39 +8,44 @@ import { Colors } from "@/src/constants/Colors";
 import { useAppDispatch, useAppSelector } from "@/src/hooks/reactReduxHook";
 import { ResponseStatus } from "@/src/types/Store";
 import { router } from "expo-router";
+import { editRoutine } from "@/src/store/Routines/RoutinesAsyncThunk";
+import { resetEditRoutineState } from "@/src/store/Routines/RoutinesSlice";
+import useEditRoutineContext from "@/src/contexts/EditRoutine/useEditRoutineContext";
 
-const ConfirmCreateNewExerciseModal = ({ closeModal }: ConfirmCreateNewExerciseModalProps) => {
-  const { theme, toggleShowBackArrowButton } = useThemeContext();
+const ConfirmEditRoutineModal = ({ closeModal }: ConfirmCreateNewExerciseModalProps) => {
+  const { theme } = useThemeContext();
   const styles = quitCreatingModalStyles(theme);
   const dispatch = useAppDispatch();
-  const {} = useAppSelector((state) => state.routines);
+  const { isEditingRoutine, editRoutineErrorMessage, editRoutineStatus } = useAppSelector(
+    (state) => state.routines
+  );
+  const { selectedRoutine } = useEditRoutineContext();
 
   const handleCreateRoutine = () => {
-    dispatch(createNewRoutine({ routineData: data, routineName: name }));
+    dispatch(editRoutine({ routineData: selectedRoutine }));
   };
 
-  const isLoading = createRoutineStatus !== ResponseStatus.IDLE && isCreatingRoutine;
+  const isLoading = editRoutineStatus !== ResponseStatus.IDLE && isEditingRoutine;
 
   useEffect(() => {
     if (isLoading) return;
 
-    if (createRoutineStatus === ResponseStatus.FULFILLED) {
-      dispatch(resetCreateRoutineState());
+    if (editRoutineStatus === ResponseStatus.FULFILLED) {
+      dispatch(resetEditRoutineState());
       closeModal();
-      toggleShowBackArrowButton(true);
-      router.navigate("/");
+      router.navigate(`/routine/${selectedRoutine.id}`);
     }
 
-    if (createRoutineErrorMessage) {
-      Alert.alert("Error!", createRoutineErrorMessage);
-      dispatch(resetCreateRoutineState());
+    if (editRoutineErrorMessage) {
+      Alert.alert("Error!", editRoutineErrorMessage);
+      dispatch(resetEditRoutineState());
     }
-  }, [createRoutineStatus, isLoading]);
+  }, [editRoutineStatus, isLoading]);
 
   return (
     <Modal animationType="slide" transparent>
       <View style={styles.container}>
-        {isCreatingRoutine ? (
+        {isEditingRoutine ? (
           <ActivityIndicator size={80} color={Colors[theme].secondary} />
         ) : (
           <>
@@ -70,7 +75,7 @@ const ConfirmCreateNewExerciseModal = ({ closeModal }: ConfirmCreateNewExerciseM
   );
 };
 
-export default ConfirmCreateNewExerciseModal;
+export default ConfirmEditRoutineModal;
 
 const quitCreatingModalStyles = (theme: Theme) =>
   StyleSheet.create({

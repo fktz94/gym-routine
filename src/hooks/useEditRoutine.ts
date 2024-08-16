@@ -6,14 +6,15 @@ import {
   DeleteExercisePayloadType,
   EditRoutineActionsTypes,
 } from "../types/Reducers";
+import useRoutineDescription from "./useRoutineDescription";
 
 const useEditRoutine = ({ routineId }: { routineId: string }) => {
-  const { selectedRoutine } = useRoutines({ selectedRoutineId: routineId });
-  const data = selectedRoutine[0];
+  const { routine } = useRoutineDescription({ id: routineId });
+
   const [editRoutineState, dispatch] = useReducer(editRoutineReducers, initialState);
 
   const setState = () => {
-    dispatch({ type: EditRoutineActionsTypes.SETINITIALSTATE, payload: data });
+    dispatch({ type: EditRoutineActionsTypes.SETINITIALSTATE, payload: routine });
   };
 
   useEffect(setState, []);
@@ -30,7 +31,7 @@ const useEditRoutine = ({ routineId }: { routineId: string }) => {
     editRoutineState,
     handleAddOneExercise,
     handleDeleteOneExercise,
-    originalRoutine: data,
+    originalRoutine: routine,
   };
 };
 

@@ -20,7 +20,7 @@ export function editRoutineReducers(
 ): RoutineStructure {
   switch (type) {
     case EditRoutineActionsTypes.SETINITIALSTATE:
-      return { ...payload };
+      return payload ? { ...payload } : { ...state };
     case EditRoutineActionsTypes.ADDEXERCISE:
       return { ...state, data: findDayAndAddNewExercise(state.data, payload) };
     case EditRoutineActionsTypes.DELETEEXERCISE:

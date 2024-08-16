@@ -1,5 +1,9 @@
-import { RoutinesData, RoutineStructure } from "@/src/types/Routines";
-import { AddNewRoutineUtilsProps, ModifyOneExerciseUtilsProps } from "@/src/types/Utils";
+import { Routine, RoutinesData, RoutineStructure } from "@/src/types/Routines";
+import {
+  AddNewRoutineUtilsProps,
+  EditRoutineUtilsProps,
+  ModifyOneExerciseUtilsProps,
+} from "@/src/types/Utils";
 import { produce } from "immer";
 import * as Crypto from "expo-crypto";
 
@@ -50,5 +54,13 @@ export const addNewRoutine = ({
     draft.routines.reverse();
   });
 
+  return nextState;
+};
+
+export const editOldRoutine = ({ routineData, prevRoutinesData }: EditRoutineUtilsProps) => {
+  const nextState = produce(prevRoutinesData, (draft: Routine) => {
+    const routineIndex = draft.findIndex((el) => el.id === routineData.id);
+    draft[routineIndex] = routineData;
+  });
   return nextState;
 };
