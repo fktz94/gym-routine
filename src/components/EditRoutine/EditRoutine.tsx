@@ -5,6 +5,7 @@ import EachDayItem from "./EachDayItem";
 import { Colors } from "@/src/constants/Colors";
 import useEditRoutineContext from "@/src/contexts/EditRoutine/useEditRoutineContext";
 import ThemedButton from "../ThemedButton";
+import { isEqual } from "lodash";
 
 const EditRoutine = () => {
   const { theme } = useThemeContext();
@@ -12,7 +13,14 @@ const EditRoutine = () => {
 
   const {
     selectedRoutine: { data },
+    originalRoutine: { data: originalData },
   } = useEditRoutineContext();
+
+  const hasChanges = !isEqual(data, originalData);
+
+  const handleSaveChanges = () => {
+    if (!hasChanges) return;
+  };
 
   const renderDays = () => data.map((_, i) => <EachDayItem key={i} dayIndex={i} />);
 
@@ -25,6 +33,8 @@ const EditRoutine = () => {
       <ThemedButton
         externalButtonStyles={styles.modifyRoutineBtnContainer}
         externalTextStyles={styles.modifyRoutineBtnText}
+        onPress={handleSaveChanges}
+        disabled={!hasChanges}
       >
         Save changes!
       </ThemedButton>

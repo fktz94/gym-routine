@@ -26,7 +26,12 @@ const useEditRoutine = ({ routineId }: { routineId: string }) => {
     dispatch({ type: EditRoutineActionsTypes.DELETEEXERCISE, payload });
   };
 
-  return { editRoutineState, handleAddOneExercise, handleDeleteOneExercise };
+  return {
+    editRoutineState,
+    handleAddOneExercise,
+    handleDeleteOneExercise,
+    originalRoutine: data,
+  };
 };
 
 export default useEditRoutine;
