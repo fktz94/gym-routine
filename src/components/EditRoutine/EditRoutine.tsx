@@ -4,6 +4,7 @@ import useThemeContext from "@/src/contexts/Theme/useThemeContext";
 import EachDayItem from "./EachDayItem";
 import { Colors } from "@/src/constants/Colors";
 import useEditRoutineContext from "@/src/contexts/EditRoutine/useEditRoutineContext";
+import ThemedButton from "../ThemedButton";
 
 const EditRoutine = () => {
   const { theme } = useThemeContext();
@@ -21,6 +22,12 @@ const EditRoutine = () => {
         <Text style={styles.title}>Let's update this routine!</Text>
       </View>
       <ScrollView contentContainerStyle={styles.scrollViewContainer}>{renderDays()}</ScrollView>
+      <ThemedButton
+        externalButtonStyles={styles.modifyRoutineBtnContainer}
+        externalTextStyles={styles.modifyRoutineBtnText}
+      >
+        Update!
+      </ThemedButton>
     </View>
   );
 };
@@ -55,5 +62,13 @@ const editRoutineStyles = (theme: Theme) =>
       letterSpacing: 0.5,
       textAlign: "center",
       marginTop: -20,
+    },
+    modifyRoutineBtnContainer: { width: "40%", margin: "auto", marginTop: 15, marginBottom: 30 },
+    modifyRoutineBtnText: {
+      fontSize: 14,
+      letterSpacing: 2,
+      fontWeight: "bold",
+      textAlign: "center",
+      paddingVertical: 6,
     },
   });

@@ -17,7 +17,7 @@ export default function Header() {
   const canGoBack = router.canGoBack();
 
   const goBack = () => {
-    if (path === "/new-routine") {
+    if (path === "/new-routine" || path.includes("edit-routine")) {
       setShowQuitModal(true);
     } else {
       router.back();

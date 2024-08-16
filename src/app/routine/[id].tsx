@@ -112,11 +112,12 @@ const routineDescriptionStyles = (theme: Theme) =>
       color: Colors[theme].text,
       textAlign: "center",
     },
-    modifyRoutineBtnContainer: { width: "40%", margin: "auto", marginVertical: 15 },
+    modifyRoutineBtnContainer: { width: "40%", margin: "auto", marginTop: 15, marginBottom: 30 },
     modifyRoutineBtnText: {
       fontSize: 14,
       letterSpacing: 2,
       fontWeight: "bold",
       textAlign: "center",
+      paddingVertical: 6,
     },
   });

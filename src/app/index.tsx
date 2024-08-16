@@ -72,7 +72,7 @@ export default function Index() {
           {noRoutines && (
             <View style={styles.listContainer}>
               <Text style={[styles.title, styles.noRoutines]}>
-                It seems you haven't write routines yet.{"\n"}Write the first one and go training!
+                It seems you haven't wrote any routine yet.{"\n\n"}Go ahead and start training!
               </Text>
             </View>
           )}
