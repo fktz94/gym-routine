@@ -16,11 +16,11 @@ export const EditExerciseItem = ({
   const { theme } = useThemeContext();
   const styles = editExerciseItemStyles(theme);
 
-  const {} = useEditRoutineContext();
+  const { handleDeleteOneExercise } = useEditRoutineContext();
 
   const deleteExercise = () => {
     if ((dayIndex !== 0 && !dayIndex) || (exerciseIndex !== 0 && !exerciseIndex)) return;
-    console.log("hola");
+    handleDeleteOneExercise({ dayIndex, exerciseIndex });
   };
 
   const translateX = useRef(new Animated.Value(0)).current;

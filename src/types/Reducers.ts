@@ -1,4 +1,4 @@
-import { Exercise } from "./Routines";
+import { Exercise, RoutineStructure } from "./Routines";
 
 export enum NewRoutineActionsTypes {
   SETNAME = "setName",
@@ -15,3 +15,13 @@ export type NewRoutineActions =
   | { type: NewRoutineActionsTypes.SETDAYS; payload: number }
   | { type: NewRoutineActionsTypes.ADDEXERCISE; payload: AddExercisePayloadType }
   | { type: NewRoutineActionsTypes.DELETEEXERCISE; payload: DeleteExercisePayloadType };
+
+export enum EditRoutineActionsTypes {
+  SETINITIALSTATE = "setInitialState",
+  ADDEXERCISE = "addExercise",
+  DELETEEXERCISE = "deleteExercise",
+}
+export type EditRoutineActions =
+  | { type: EditRoutineActionsTypes.SETINITIALSTATE; payload: RoutineStructure }
+  | { type: EditRoutineActionsTypes.ADDEXERCISE; payload: AddExercisePayloadType }
+  | { type: EditRoutineActionsTypes.DELETEEXERCISE; payload: DeleteExercisePayloadType };

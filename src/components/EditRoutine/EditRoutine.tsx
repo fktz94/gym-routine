@@ -26,7 +26,7 @@ const EditRoutine = () => {
         externalButtonStyles={styles.modifyRoutineBtnContainer}
         externalTextStyles={styles.modifyRoutineBtnText}
       >
-        Update!
+        Save changes!
       </ThemedButton>
     </View>
   );

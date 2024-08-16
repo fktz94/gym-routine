@@ -8,6 +8,7 @@ import BouncyCheckbox from "react-native-bouncy-checkbox";
 import { useState } from "react";
 import CustomSelectDropdown from "../CustomSelectDropdown";
 import { Exercise, WeightsAndRepetitions } from "@/src/types/Routines";
+import useEditRoutineContext from "@/src/contexts/EditRoutine/useEditRoutineContext";
 
 const CreateExerciseModal = ({ closeModal, dayIndex }: CreateExerciseModalProps) => {
   const { theme } = useThemeContext();
@@ -19,6 +20,8 @@ const CreateExerciseModal = ({ closeModal, dayIndex }: CreateExerciseModalProps)
   const [isCustomRepetitions, setIsCustomRepetitions] = useState(false);
 
   const styles = createExerciseModalStyles(theme, hasWeeksVariations);
+
+  const { handleAddOneExercise } = useEditRoutineContext();
 
   const [variations, setVariations] = useState<WeightsAndRepetitions[]>([
     { qty: undefined, weight: undefined },
@@ -98,7 +101,7 @@ const CreateExerciseModal = ({ closeModal, dayIndex }: CreateExerciseModalProps)
       weightsAndRepetitions: variations,
     };
 
-    // handleAddOneExercise({ dayIndex, exerciseData: payload });
+    handleAddOneExercise({ dayIndex, exerciseData: payload });
     closeModal();
   };
 

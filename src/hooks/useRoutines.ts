@@ -1,6 +1,6 @@
 import { useAppSelector } from "./reactReduxHook";
 
-export default function useRoutines(props: { selectedRoutineId: string } | undefined) {
+export default function useRoutines(props?: { selectedRoutineId: string }) {
   const { currentRoutineId, routines } = useAppSelector(({ routines }) => routines);
 
   const currentRoutine = routines.find((el) => el.id === currentRoutineId);
