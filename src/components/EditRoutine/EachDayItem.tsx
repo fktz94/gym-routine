@@ -10,10 +10,10 @@ import { useState } from "react";
 import useThemeContext from "@/src/contexts/Theme/useThemeContext";
 import { Colors } from "@/src/constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
-import CreateExerciseModal from "../NewRoutine/CreateExerciseModal";
-import { NewExerciseItemTitle, NewExerciseItem } from "../NewRoutine/NewExerciseItem";
 import Animated, { useAnimatedStyle, withTiming } from "react-native-reanimated";
 import useEditRoutineContext from "@/src/contexts/EditRoutine/useEditRoutineContext";
+import { EditExerciseItem, EditExerciseItemTitle } from "./ExerciseListItem";
+import CreateExerciseModal from "./CreateExerciseModal";
 
 const EachDayItem = ({ dayIndex }: { dayIndex: number }) => {
   const { theme } = useThemeContext();
@@ -55,7 +55,7 @@ const EachDayItem = ({ dayIndex }: { dayIndex: number }) => {
       const exerciseRepetitions = weightsAndRepetitions.map((el) => el.qty).join(" / ");
       const isLastElement = i === data[dayIndex].length - 1;
       return (
-        <NewExerciseItem
+        <EditExerciseItem
           exerciseRepetitions={exerciseRepetitions}
           name={name}
           sets={sets}
@@ -82,7 +82,7 @@ const EachDayItem = ({ dayIndex }: { dayIndex: number }) => {
           <View style={styles.exercises}>
             {data[dayIndex].length > 0 && (
               <View>
-                <NewExerciseItemTitle key="title" />
+                <EditExerciseItemTitle key="title" />
                 {currentExercises()}
               </View>
             )}

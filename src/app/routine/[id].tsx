@@ -4,7 +4,7 @@ import { Colors } from "@/src/constants/Colors";
 import RoutineProvider from "@/src/contexts/Routine/RoutineProvider";
 import useThemeContext from "@/src/contexts/Theme/useThemeContext";
 import useRoutineDescription from "@/src/hooks/useRoutineDescription";
-import { Link, router, useLocalSearchParams } from "expo-router";
+import { Link, useLocalSearchParams } from "expo-router";
 import { View, Text, StyleSheet } from "react-native";
 
 export default function RoutineScreen() {
@@ -59,6 +59,14 @@ export default function RoutineScreen() {
         ) : (
           <View style={styles.routineContainer}>
             <RoutineDetails routineDay={routine?.data[selectedDay]} />
+            <Link href={{ pathname: `/edit-routine/[id]`, params: { id, selectedDay } }} asChild>
+              <ThemedButton
+                externalButtonStyles={styles.modifyRoutineBtnContainer}
+                externalTextStyles={styles.modifyRoutineBtnText}
+              >
+                Modify routine
+              </ThemedButton>
+            </Link>
           </View>
         )}
       </View>
@@ -102,6 +110,13 @@ const routineDescriptionStyles = (theme: Theme) =>
       fontWeight: "bold",
       fontSize: 32,
       color: Colors[theme].text,
+      textAlign: "center",
+    },
+    modifyRoutineBtnContainer: { width: "40%", margin: "auto", marginVertical: 15 },
+    modifyRoutineBtnText: {
+      fontSize: 14,
+      letterSpacing: 2,
+      fontWeight: "bold",
       textAlign: "center",
     },
   });
