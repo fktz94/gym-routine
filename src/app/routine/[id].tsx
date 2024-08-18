@@ -3,16 +3,23 @@ import ThemedButton from "@/src/components/ThemedButton";
 import { Colors } from "@/src/constants/Colors";
 import RoutineProvider from "@/src/contexts/Routine/RoutineProvider";
 import useThemeContext from "@/src/contexts/Theme/useThemeContext";
+import { useAppSelector } from "@/src/hooks/reactReduxHook";
 import useRoutineDescription from "@/src/hooks/useRoutineDescription";
+import { useIsFocused } from "@react-navigation/native";
 import { Link, useLocalSearchParams } from "expo-router";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, ActivityIndicator } from "react-native";
 
 export default function RoutineScreen() {
   const { theme } = useThemeContext();
   const styles = routineDescriptionStyles(theme);
 
   const { id } = useLocalSearchParams<{ id: string }>();
+  const { isGettingAllRoutines } = useAppSelector(({ routines }) => routines);
   const { routine, selectedDay, handleSelectedDay } = useRoutineDescription({ id });
+
+  const isFocused = useIsFocused();
+
+  const isLoading = isFocused && isGettingAllRoutines;
 
   const daysButtons = () =>
     routine?.data.map((_, i) => (
@@ -54,7 +61,9 @@ export default function RoutineScreen() {
       <View style={styles.container}>
         <Text style={styles.routineName}>{routine?.name}</Text>
         <View style={styles.daysButtonsContainer}>{daysButtons()}</View>
-        {isDayEmpty ? (
+        {isLoading ? (
+          <ActivityIndicator style={{ marginTop: 100 }} size={80} color={Colors[theme].secondary} />
+        ) : isDayEmpty ? (
           emptyDayText()
         ) : (
           <View style={styles.routineContainer}>

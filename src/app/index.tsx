@@ -11,6 +11,7 @@ import { getAllRoutines } from "../store/Routines/RoutinesAsyncThunk";
 import { useEffect } from "react";
 import { setIsInitialLoadToFalse } from "../store/Routines/RoutinesSlice";
 import { Link } from "expo-router";
+import { useIsFocused } from "@react-navigation/native";
 
 export default function Index() {
   const { theme } = useThemeContext();
@@ -22,6 +23,10 @@ export default function Index() {
   );
 
   const dataIsNotFetchedYet = getAllRoutinesStatus === ResponseStatus.IDLE;
+
+  const isFocused = useIsFocused();
+
+  const isLoading = isFocused && isGettingAllRoutines;
 
   if (dataIsNotFetchedYet) {
     dispatch(getAllRoutines());
@@ -42,7 +47,7 @@ export default function Index() {
     return <RoutineItemList id={id} madeOn={madeOn} routineName={name} isCurrent />;
   };
 
-  const renderLoader = dataIsNotFetchedYet || (isInitialLoad && isGettingAllRoutines);
+  const renderLoader = dataIsNotFetchedYet || (isInitialLoad && isGettingAllRoutines) || isLoading;
 
   return (
     <View style={styles.mainContainer}>
