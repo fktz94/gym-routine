@@ -19,10 +19,10 @@ const ConfirmEditRoutineModal = ({ closeModal }: ConfirmCreateNewExerciseModalPr
   const { isEditingRoutine, editRoutineErrorMessage, editRoutineStatus } = useAppSelector(
     (state) => state.routines
   );
-  const { selectedRoutine } = useEditRoutineContext();
+  const { selectedRoutine, toCurrent } = useEditRoutineContext();
 
   const handleCreateRoutine = () => {
-    dispatch(editRoutine({ routineData: selectedRoutine }));
+    dispatch(editRoutine({ routineData: selectedRoutine, setToCurrentRoutine: toCurrent }));
   };
 
   const isLoading = editRoutineStatus !== ResponseStatus.IDLE && isEditingRoutine;

@@ -8,10 +8,15 @@ type Props = {
 };
 
 export default function EditRoutineProvider({ children, routineId, selectedDay }: Props) {
-  const { editRoutineState, handleAddOneExercise, handleDeleteOneExercise, originalRoutine } =
-    useEditRoutine({
-      routineId,
-    });
+  const {
+    editRoutineState,
+    handleAddOneExercise,
+    handleDeleteOneExercise,
+    originalRoutine,
+    isCurrent,
+    handleSetToCurrent,
+    toCurrent,
+  } = useEditRoutine({ routineId });
 
   return (
     <EditRoutineContext.Provider
@@ -21,6 +26,9 @@ export default function EditRoutineProvider({ children, routineId, selectedDay }
         handleAddOneExercise,
         handleDeleteOneExercise,
         originalRoutine,
+        isCurrent,
+        handleSetToCurrent,
+        toCurrent,
       }}
     >
       {children}

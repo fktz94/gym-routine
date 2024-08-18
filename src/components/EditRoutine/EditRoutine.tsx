@@ -1,4 +1,5 @@
 import { ScrollView, StyleSheet, Text, View } from "react-native";
+import BouncyCheckbox from "react-native-bouncy-checkbox";
 import React, { useState } from "react";
 import useThemeContext from "@/src/contexts/Theme/useThemeContext";
 import EachDayItem from "./EachDayItem";
@@ -15,13 +16,22 @@ const EditRoutine = () => {
 
   const {
     selectedRoutine: { data },
-    originalRoutine: { data: originalData },
+    originalRoutine,
+    isCurrent,
+    handleSetToCurrent,
+    toCurrent,
   } = useEditRoutineContext();
+
+  if (!originalRoutine) return null;
+
+  const { data: originalData } = originalRoutine;
 
   const hasChanges = !isEqual(data, originalData);
 
+  const isButtonDisabled = !hasChanges && isCurrent === toCurrent;
+
   const handleSaveChanges = () => {
-    if (!hasChanges) return;
+    if (isButtonDisabled) return;
     setIsCreating(true);
   };
 
@@ -36,12 +46,24 @@ const EditRoutine = () => {
         <View style={styles.container}>
           <Text style={styles.title}>Let's update this routine!</Text>
         </View>
+        {!isCurrent && (
+          <View style={[styles.container, styles.checkboxContainer]}>
+            <Text style={styles.baseText}>Set to current routine</Text>
+            <BouncyCheckbox
+              size={18}
+              fillColor={Colors.light.primary}
+              innerIconStyle={{ borderWidth: 2 }}
+              onPress={handleSetToCurrent}
+              isChecked={toCurrent}
+            />
+          </View>
+        )}
         <ScrollView contentContainerStyle={styles.scrollViewContainer}>{renderDays()}</ScrollView>
         <ThemedButton
           externalButtonStyles={styles.modifyRoutineBtnContainer}
           externalTextStyles={styles.modifyRoutineBtnText}
           onPress={handleSaveChanges}
-          disabled={!hasChanges}
+          disabled={isButtonDisabled}
         >
           Save changes!
         </ThemedButton>
@@ -67,6 +89,7 @@ const editRoutineStyles = (theme: Theme) =>
       margin: "auto",
     },
     scrollViewContainer: { gap: 40, width: "100%" },
+    checkboxContainer: { flexDirection: "row" },
     title: {
       color: Colors[theme].text,
       fontWeight: "bold",
@@ -88,5 +111,11 @@ const editRoutineStyles = (theme: Theme) =>
       fontWeight: "bold",
       textAlign: "center",
       paddingVertical: 6,
+    },
+    baseText: {
+      color: Colors[theme].text,
+      fontSize: 14,
+      textAlignVertical: "center",
+      flexGrow: 1,
     },
   });

@@ -80,15 +80,20 @@ export const createNewRoutine = createAsyncThunk(
 
 export const editRoutine = createAsyncThunk(
   "routines/editRoutine",
-  async ({ routineData }: EditRoutineAsyncThunkProps, { getState, dispatch }) => {
+  async (
+    { routineData, setToCurrentRoutine }: EditRoutineAsyncThunkProps,
+    { getState, dispatch }
+  ) => {
     const {
       routines: { routines, currentRoutineId },
     } = getState(); // Learn how to type AsyncThunk
 
+    console.log({ setToCurrentRoutine });
+
     const updatedRoutines = editOldRoutine({ routineData, prevRoutinesData: routines });
 
     const payload: RoutinesData = {
-      currentRoutineId,
+      currentRoutineId: setToCurrentRoutine ? routineData.id : currentRoutineId,
       routines: updatedRoutines,
     };
 

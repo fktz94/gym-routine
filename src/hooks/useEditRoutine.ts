@@ -1,4 +1,4 @@
-import { useEffect, useReducer } from "react";
+import { useEffect, useReducer, useState } from "react";
 import useRoutines from "./useRoutines";
 import { editRoutineReducers, initialState } from "../reducers/EditRoutine/editRoutineReducers";
 import {
@@ -9,15 +9,15 @@ import {
 import useRoutineDescription from "./useRoutineDescription";
 
 const useEditRoutine = ({ routineId }: { routineId: string }) => {
-  const { routine } = useRoutineDescription({ id: routineId });
+  const { routine, isCurrent } = useRoutineDescription({ id: routineId });
+
+  const [toCurrent, setToCurrent] = useState(false);
 
   const [editRoutineState, dispatch] = useReducer(editRoutineReducers, initialState);
 
   const setState = () => {
     dispatch({ type: EditRoutineActionsTypes.SETINITIALSTATE, payload: routine });
   };
-
-  useEffect(setState, []);
 
   const handleAddOneExercise = (payload: AddExercisePayloadType) => {
     dispatch({ type: EditRoutineActionsTypes.ADDEXERCISE, payload });
@@ -27,11 +27,20 @@ const useEditRoutine = ({ routineId }: { routineId: string }) => {
     dispatch({ type: EditRoutineActionsTypes.DELETEEXERCISE, payload });
   };
 
+  const handleSetToCurrent = () => {
+    setToCurrent(!toCurrent);
+  };
+
+  useEffect(setState, []);
+
   return {
     editRoutineState,
     handleAddOneExercise,
     handleDeleteOneExercise,
     originalRoutine: routine,
+    isCurrent,
+    handleSetToCurrent,
+    toCurrent,
   };
 };
 

@@ -43,4 +43,5 @@ export interface CreateNewRoutineAsyncThunkProps {
 
 export interface EditRoutineAsyncThunkProps {
   routineData: RoutineStructure;
+  setToCurrentRoutine?: boolean;
 }

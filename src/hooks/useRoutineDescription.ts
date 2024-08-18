@@ -14,7 +14,7 @@ const useRoutineDescription = ({ id }: UseRoutineDescription) => {
     setSelectedDay(n);
   };
 
-  return { handleSelectedDay, routine, selectedDay };
+  return { handleSelectedDay, routine, selectedDay, isCurrent };
 };
 
 export default useRoutineDescription;

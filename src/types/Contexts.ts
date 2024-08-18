@@ -15,8 +15,11 @@ export interface NewRoutineContextProps {
 
 export interface EditRoutineContextProps {
   selectedRoutine: RoutineStructure;
-  originalRoutine: RoutineStructure;
+  originalRoutine: RoutineStructure | undefined;
   selectedDay: string;
   handleAddOneExercise: ({ dayIndex, exerciseData }: AddExercisePayloadType) => void;
   handleDeleteOneExercise: ({ dayIndex, exerciseIndex }: DeleteExercisePayloadType) => void;
+  handleSetToCurrent: () => void;
+  toCurrent: boolean;
+  isCurrent: boolean;
 }
