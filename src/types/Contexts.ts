@@ -22,4 +22,5 @@ export interface EditRoutineContextProps {
   handleSetToCurrent: () => void;
   toCurrent: boolean;
   isCurrent: boolean;
+  handleName: (val: string) => void;
 }

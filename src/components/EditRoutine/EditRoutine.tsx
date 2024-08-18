@@ -1,4 +1,4 @@
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { Pressable, ScrollView, StyleSheet, Text, View, TextInput } from "react-native";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import React, { useState } from "react";
 import useThemeContext from "@/src/contexts/Theme/useThemeContext";
@@ -13,20 +13,22 @@ const EditRoutine = () => {
   const { theme } = useThemeContext();
   const styles = editRoutineStyles(theme);
   const [isCreating, setIsCreating] = useState(false);
+  const [isChangingName, setIsChangingName] = useState(false);
 
   const {
-    selectedRoutine: { data },
+    selectedRoutine: { data, name },
     originalRoutine,
     isCurrent,
     handleSetToCurrent,
     toCurrent,
+    handleName,
   } = useEditRoutineContext();
 
   if (!originalRoutine) return null;
 
   const { data: originalData } = originalRoutine;
 
-  const hasChanges = !isEqual(data, originalData);
+  const hasChanges = !isEqual(data, originalData) || originalRoutine.name !== name;
 
   const isButtonDisabled = !hasChanges && isCurrent === toCurrent;
 
@@ -36,6 +38,13 @@ const EditRoutine = () => {
   };
 
   const closeModal = () => setIsCreating(false);
+
+  const toggleChangingName = () => {
+    if (isChangingName) {
+      handleName(originalRoutine.name);
+    }
+    setIsChangingName(!isChangingName);
+  };
 
   const renderDays = () => data.map((_, i) => <EachDayItem key={i} dayIndex={i} />);
 
@@ -56,6 +65,27 @@ const EditRoutine = () => {
               onPress={handleSetToCurrent}
               isChecked={toCurrent}
             />
+          </View>
+        )}
+        <View style={[styles.container, styles.checkboxContainer]}>
+          <Text style={styles.baseText}>Change name?</Text>
+          <BouncyCheckbox
+            size={18}
+            fillColor={Colors.light.primary}
+            innerIconStyle={{ borderWidth: 2 }}
+            onPress={toggleChangingName}
+            isChecked={isChangingName}
+          />
+        </View>
+        {isChangingName && (
+          <View
+            style={[
+              styles.container,
+              styles.checkboxContainer,
+              styles.changeNameTextInputContainer,
+            ]}
+          >
+            <TextInput value={name} onChangeText={handleName} style={styles.textInput} />
           </View>
         )}
         <ScrollView contentContainerStyle={styles.scrollViewContainer}>{renderDays()}</ScrollView>
@@ -90,6 +120,18 @@ const editRoutineStyles = (theme: Theme) =>
     },
     scrollViewContainer: { gap: 40, width: "100%" },
     checkboxContainer: { flexDirection: "row" },
+    changeNameTextInputContainer: { marginTop: -30 },
+    textInput: {
+      color: Colors[theme].text,
+      textAlign: "center",
+      fontSize: 16,
+      borderBottomWidth: 0.9,
+      minWidth: "50%",
+      maxWidth: "100%",
+      margin: "auto",
+      padding: 6,
+      borderColor: Colors[theme].text,
+    },
     title: {
       color: Colors[theme].text,
       fontWeight: "bold",

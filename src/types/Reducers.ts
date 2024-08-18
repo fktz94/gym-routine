@@ -20,8 +20,10 @@ export enum EditRoutineActionsTypes {
   SETINITIALSTATE = "setInitialState",
   ADDEXERCISE = "addExercise",
   DELETEEXERCISE = "deleteExercise",
+  CHANGENAME = "changeName",
 }
 export type EditRoutineActions =
   | { type: EditRoutineActionsTypes.SETINITIALSTATE; payload: RoutineStructure | undefined }
   | { type: EditRoutineActionsTypes.ADDEXERCISE; payload: AddExercisePayloadType }
-  | { type: EditRoutineActionsTypes.DELETEEXERCISE; payload: DeleteExercisePayloadType };
+  | { type: EditRoutineActionsTypes.DELETEEXERCISE; payload: DeleteExercisePayloadType }
+  | { type: EditRoutineActionsTypes.CHANGENAME; payload: string };

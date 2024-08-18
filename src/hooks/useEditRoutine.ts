@@ -31,6 +31,10 @@ const useEditRoutine = ({ routineId }: { routineId: string }) => {
     setToCurrent(!toCurrent);
   };
 
+  const handleName = (payload: string) => {
+    dispatch({ type: EditRoutineActionsTypes.CHANGENAME, payload });
+  };
+
   useEffect(setState, []);
 
   return {
@@ -41,6 +45,7 @@ const useEditRoutine = ({ routineId }: { routineId: string }) => {
     isCurrent,
     handleSetToCurrent,
     toCurrent,
+    handleName,
   };
 };
 

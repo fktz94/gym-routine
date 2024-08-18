@@ -25,6 +25,8 @@ export function editRoutineReducers(
       return { ...state, data: findDayAndAddNewExercise(state.data, payload) };
     case EditRoutineActionsTypes.DELETEEXERCISE:
       return { ...state, data: findDayAndDeleteExercise(state.data, payload) };
+    case EditRoutineActionsTypes.CHANGENAME:
+      return { ...state, name: payload };
     default:
       return state;
   }
