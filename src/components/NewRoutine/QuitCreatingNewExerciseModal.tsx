@@ -23,7 +23,7 @@ const QuitCreatingNewExerciseModal = ({ accept, cancel }: QuitCreatingNewExercis
         <View style={styles.exerciseContainer}>
           <View style={styles.innerContainer}>
             <View style={styles.innerTextContainer}>
-              <Text style={styles.baseText}>Any change will be lost.</Text>
+              <Text style={styles.baseText}>Any changes will be lost.</Text>
               <Text style={styles.baseText}>Procceed?</Text>
             </View>
             <View style={styles.buttonsContainer}>

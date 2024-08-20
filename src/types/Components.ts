@@ -91,3 +91,8 @@ export interface QuitCreatingNewExerciseModalProps {
 export interface ConfirmCreateNewExerciseModalProps {
   closeModal: () => void;
 }
+export interface ConfirmDeleteRoutineModalProps {
+  closeModal: () => void;
+  id: string;
+  name: string;
+}

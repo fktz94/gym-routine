@@ -20,6 +20,10 @@ const EachDayItem = ({ dayIndex }: { dayIndex: number }) => {
   const styles = secondStepStyles(theme);
 
   const [isCreating, setIsCreating] = useState(false);
+  const startCreatingNewExercise = () => setIsCreating(true);
+  const cancelCreatingNewExercise = () => {
+    setIsCreating(false);
+  };
 
   const { selectedRoutine, selectedDay } = useEditRoutineContext();
   const { data } = selectedRoutine;
@@ -28,14 +32,10 @@ const EachDayItem = ({ dayIndex }: { dayIndex: number }) => {
 
   const showDayDetails = () => setIsShown(!isShown);
 
-  const startCreatingNewExercise = () => setIsCreating(true);
-  const cancelCreatingNewExercise = () => {
-    setIsCreating(false);
-  };
   const [height, setHeight] = useState(0);
 
-  const onLayout = (event: LayoutChangeEvent) => {
-    const layoutHeight = event.nativeEvent.layout.height;
+  const onLayout = ({ nativeEvent: { layout } }: LayoutChangeEvent) => {
+    const layoutHeight = layout.height;
 
     if (layoutHeight > 0 && height !== layoutHeight) {
       setHeight(layoutHeight);

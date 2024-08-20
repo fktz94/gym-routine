@@ -5,7 +5,12 @@ import {
   ModifyExerciseAsyncThunkProps,
 } from "@/src/types/Store";
 import { getRoutines, storeRoutines } from "@/src/utils/AsyncStorage/Routines";
-import { addNewRoutine, editOldRoutine, modifyOneExercise } from "@/src/utils/Store/Routine";
+import {
+  addNewRoutine,
+  deleteSelectedRoutine,
+  editOldRoutine,
+  modifyOneExercise,
+} from "@/src/utils/Store/Routine";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const getAllRoutines = createAsyncThunk("routines/getAllRoutines", async () => {
@@ -88,12 +93,34 @@ export const editRoutine = createAsyncThunk(
       routines: { routines, currentRoutineId },
     } = getState(); // Learn how to type AsyncThunk
 
-    console.log({ setToCurrentRoutine });
-
     const updatedRoutines = editOldRoutine({ routineData, prevRoutinesData: routines });
 
     const payload: RoutinesData = {
       currentRoutineId: setToCurrentRoutine ? routineData.id : currentRoutineId,
+      routines: updatedRoutines,
+    };
+
+    try {
+      await storeRoutines(payload);
+      dispatch(getAllRoutines());
+    } catch (error) {
+      throw error;
+    }
+  }
+);
+
+export const deleteRoutine = createAsyncThunk(
+  "routines/deleteRoutine",
+  async ({ routineId }: { routineId: string }, { getState, dispatch }) => {
+    const {
+      routines: { routines, currentRoutineId },
+    } = getState(); // Learn how to type AsyncThunk
+    const updatedRoutines = deleteSelectedRoutine({ routineId, prevRoutinesData: routines });
+
+    const isCurrentRoutine = currentRoutineId === routineId;
+
+    const payload = {
+      currentRoutineId: isCurrentRoutine ? undefined : currentRoutineId,
       routines: updatedRoutines,
     };
 

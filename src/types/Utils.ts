@@ -16,3 +16,8 @@ export interface AddNewRoutineUtilsProps extends CreateNewRoutineAsyncThunkProps
 export interface EditRoutineUtilsProps extends EditRoutineAsyncThunkProps {
   prevRoutinesData: Routine;
 }
+
+export interface DeleteRoutineUtilsProps {
+  routineId: string;
+  prevRoutinesData: Routine;
+}

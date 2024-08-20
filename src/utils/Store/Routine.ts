@@ -1,10 +1,11 @@
 import { Routine, RoutinesData, RoutineStructure } from "@/src/types/Routines";
 import {
   AddNewRoutineUtilsProps,
+  DeleteRoutineUtilsProps,
   EditRoutineUtilsProps,
   ModifyOneExerciseUtilsProps,
 } from "@/src/types/Utils";
-import { produce } from "immer";
+import { isDraft, produce } from "immer";
 import * as Crypto from "expo-crypto";
 
 export const modifyOneExercise = ({
@@ -62,5 +63,12 @@ export const editOldRoutine = ({ routineData, prevRoutinesData }: EditRoutineUti
     const routineIndex = draft.findIndex((el) => el.id === routineData.id);
     draft[routineIndex] = routineData;
   });
+  return nextState;
+};
+
+export const deleteSelectedRoutine = ({ routineId, prevRoutinesData }: DeleteRoutineUtilsProps) => {
+  const nextState = produce(prevRoutinesData, (draft: Routine) =>
+    draft.filter((el) => el.id !== routineId)
+  );
   return nextState;
 };

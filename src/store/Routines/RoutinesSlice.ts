@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
   createNewRoutine,
+  deleteRoutine,
   editRoutine,
   getAllRoutines,
   modifyExercise,
@@ -27,6 +28,10 @@ const initialState: RoutineStore = {
   editRoutineStatus: ResponseStatus.IDLE,
   isEditingRoutine: false,
   editRoutineErrorMessage: "",
+
+  deleteRoutineStatus: ResponseStatus.IDLE,
+  isDeletingRoutine: false,
+  deleteRoutineErrorMessage: "",
 };
 
 export const routinesSlice = createSlice({
@@ -47,6 +52,11 @@ export const routinesSlice = createSlice({
       state.editRoutineStatus = ResponseStatus.IDLE;
       state.isEditingRoutine = false;
       state.editRoutineErrorMessage = "";
+    },
+    resetDeleteRoutineState: (state) => {
+      state.deleteRoutineStatus = ResponseStatus.IDLE;
+      state.isDeletingRoutine = false;
+      state.deleteRoutineErrorMessage = "";
     },
     setIsInitialLoadToFalse: (state) => {
       state.isInitialLoad = false;
@@ -117,6 +127,21 @@ export const routinesSlice = createSlice({
         state.isEditingRoutine = false;
         state.editRoutineErrorMessage = error.message ?? "Error editing the routine";
       });
+    builder
+      .addCase(deleteRoutine.pending, (state) => {
+        state.deleteRoutineStatus = ResponseStatus.PENDING;
+        state.isDeletingRoutine = true;
+        state.deleteRoutineErrorMessage = "";
+      })
+      .addCase(deleteRoutine.fulfilled, (state) => {
+        state.deleteRoutineStatus = ResponseStatus.FULFILLED;
+        state.isDeletingRoutine = false;
+      })
+      .addCase(deleteRoutine.rejected, (state, { error }) => {
+        state.deleteRoutineStatus = ResponseStatus.REJECTED;
+        state.isDeletingRoutine = false;
+        state.deleteRoutineErrorMessage = error.message ?? "Error deleting the routine";
+      });
   },
 });
 
@@ -125,6 +150,7 @@ export const {
   setIsInitialLoadToFalse,
   resetCreateRoutineState,
   resetEditRoutineState,
+  resetDeleteRoutineState,
 } = routinesSlice.actions;
 
 export default routinesSlice.reducer;

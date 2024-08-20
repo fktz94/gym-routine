@@ -25,6 +25,10 @@ export interface RoutineStore extends RoutinesData {
   editRoutineStatus: ResponseStatus;
   isEditingRoutine: boolean;
   editRoutineErrorMessage: string;
+
+  deleteRoutineStatus: ResponseStatus;
+  isDeletingRoutine: boolean;
+  deleteRoutineErrorMessage: string;
 }
 
 export interface ModifyExerciseAsyncThunkProps {
