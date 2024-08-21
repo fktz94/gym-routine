@@ -118,7 +118,7 @@ const EditExerciseModal = ({
                   keyboardType={customValue ? "default" : "decimal-pad"}
                   onChangeText={handleNewValue}
                   value={newWeightValue?.toString()}
-                  placeholder={customValue ? '100 kg c/l - 45" - fallo' : "12,5"}
+                  placeholder={customValue ? '100 kg c/l - 45"- RIR 2' : "12,5"}
                   placeholderTextColor={Colors.greyText}
                 />
                 {!customValue && <Text style={styles.kgText}>kg</Text>}

@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { TextStyle, ViewStyle } from "react-native";
-import { Routine, WeightsAndRepetitions } from "./Routines";
+import { Exercise, Routine, WeightsAndRepetitions } from "./Routines";
 
 export interface ThemedButtonProps {
   children: ReactNode;
@@ -47,6 +47,10 @@ export interface CreateExerciseModalProps {
   dayIndex: number;
 }
 
+export interface EditCreatedExerciseModalProps extends CreateExerciseModalProps {
+  exerciseName: string;
+}
+
 export interface AcceptButtonProps {
   isDisabled?: boolean;
   onAccept: () => void;
@@ -80,7 +84,7 @@ export interface ExerciseItemProps {
   exerciseRepetitions: string;
   style?: ViewStyle;
   exerciseIndex?: number;
-  dayIndex?: number;
+  dayIndex: number;
 }
 
 export interface QuitCreatingNewExerciseModalProps {

@@ -18,6 +18,7 @@ export interface EditRoutineContextProps {
   originalRoutine: RoutineStructure | undefined;
   selectedDay: string;
   handleAddOneExercise: ({ dayIndex, exerciseData }: AddExercisePayloadType) => void;
+  handleEditOneExercise: ({ dayIndex, exerciseData }: AddExercisePayloadType) => void;
   handleDeleteOneExercise: ({ dayIndex, exerciseIndex }: DeleteExercisePayloadType) => void;
   handleSetToCurrent: () => void;
   toCurrent: boolean;

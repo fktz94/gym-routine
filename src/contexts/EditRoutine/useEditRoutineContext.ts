@@ -14,6 +14,7 @@ export default function useEditRoutineContext() {
     handleSetToCurrent,
     toCurrent,
     handleName,
+    handleEditOneExercise,
   } = routineContext;
   return {
     isCurrent,
@@ -25,5 +26,6 @@ export default function useEditRoutineContext() {
     handleSetToCurrent,
     toCurrent,
     handleName,
+    handleEditOneExercise,
   };
 }

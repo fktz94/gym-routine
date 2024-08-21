@@ -4,6 +4,7 @@ import { editRoutineReducers, initialState } from "../reducers/EditRoutine/editR
 import {
   AddExercisePayloadType,
   DeleteExercisePayloadType,
+  EditExercisePayloadType,
   EditRoutineActionsTypes,
 } from "../types/Reducers";
 import useRoutineDescription from "./useRoutineDescription";
@@ -21,6 +22,10 @@ const useEditRoutine = ({ routineId }: { routineId: string }) => {
 
   const handleAddOneExercise = (payload: AddExercisePayloadType) => {
     dispatch({ type: EditRoutineActionsTypes.ADDEXERCISE, payload });
+  };
+
+  const handleEditOneExercise = (payload: EditExercisePayloadType) => {
+    dispatch({ type: EditRoutineActionsTypes.EDITEXERCISE, payload });
   };
 
   const handleDeleteOneExercise = (payload: DeleteExercisePayloadType) => {
@@ -46,6 +51,7 @@ const useEditRoutine = ({ routineId }: { routineId: string }) => {
     handleSetToCurrent,
     toCurrent,
     handleName,
+    handleEditOneExercise,
   };
 };
 

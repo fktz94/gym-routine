@@ -17,6 +17,7 @@ export default function EditRoutineProvider({ children, routineId, selectedDay }
     handleSetToCurrent,
     toCurrent,
     handleName,
+    handleEditOneExercise,
   } = useEditRoutine({ routineId });
 
   return (
@@ -31,6 +32,7 @@ export default function EditRoutineProvider({ children, routineId, selectedDay }
         handleSetToCurrent,
         toCurrent,
         handleName,
+        handleEditOneExercise,
       }}
     >
       {children}

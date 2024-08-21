@@ -1,9 +1,10 @@
 import { StyleSheet, Text, View, PanResponder, TouchableOpacity, Animated } from "react-native";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { ExerciseItemProps } from "@/src/types/Components";
 import useThemeContext from "@/src/contexts/Theme/useThemeContext";
 import { Colors } from "@/src/constants/Colors";
 import useEditRoutineContext from "@/src/contexts/EditRoutine/useEditRoutineContext";
+import EditExerciseModal from "./EditExerciseModal";
 
 export const EditExerciseItem = ({
   name,
@@ -15,6 +16,11 @@ export const EditExerciseItem = ({
 }: ExerciseItemProps) => {
   const { theme } = useThemeContext();
   const styles = editExerciseItemStyles(theme);
+
+  const [isEditing, setIsEditing] = useState(false);
+
+  const openEditExerciseModal = () => setIsEditing(true);
+  const closeEditExerciseModal = () => setIsEditing(false);
 
   const { handleDeleteOneExercise } = useEditRoutineContext();
 
@@ -57,26 +63,36 @@ export const EditExerciseItem = ({
   );
 
   return (
-    <View style={[styles.exerciseItem, style]} {...panResponder.panHandlers}>
-      <Animated.View
-        style={{
-          flex: 1,
-          flexDirection: "row",
-          transform: [{ translateX }],
-        }}
-      >
-        <Text style={[styles.exerciseItemText, styles.exerciseName, styles.exerciseElement]}>
-          {name}
-        </Text>
-        <Text style={[styles.exerciseItemText, styles.exerciseSets, styles.exerciseElement]}>
-          {sets}
-        </Text>
-        <Text style={[styles.exerciseItemText, styles.exerciseRepetitions, styles.exerciseElement]}>
-          {exerciseRepetitions}
-        </Text>
-        {deleteButton()}
-      </Animated.View>
-    </View>
+    <>
+      {isEditing && (
+        <EditExerciseModal
+          closeModal={closeEditExerciseModal}
+          dayIndex={dayIndex}
+          exerciseName={name}
+        />
+      )}
+      <View style={[styles.exerciseItem, style]} {...panResponder.panHandlers}>
+        <Animated.View style={{ transform: [{ translateX }] }}>
+          <TouchableOpacity
+            style={{ flex: 1, flexDirection: "row" }}
+            onPress={openEditExerciseModal}
+          >
+            <Text style={[styles.exerciseItemText, styles.exerciseName, styles.exerciseElement]}>
+              {name}
+            </Text>
+            <Text style={[styles.exerciseItemText, styles.exerciseSets, styles.exerciseElement]}>
+              {sets}
+            </Text>
+            <Text
+              style={[styles.exerciseItemText, styles.exerciseRepetitions, styles.exerciseElement]}
+            >
+              {exerciseRepetitions}
+            </Text>
+          </TouchableOpacity>
+          {deleteButton()}
+        </Animated.View>
+      </View>
+    </>
   );
 };
 
