@@ -16,6 +16,7 @@ export default function NewRoutineProvider({ children }: Props) {
     newRoutineState,
     handleAddOneExercise,
     handleDeleteOneExercise,
+    handleEditOneExercise,
   } = useNewRoutine();
 
   return (
@@ -30,6 +31,7 @@ export default function NewRoutineProvider({ children }: Props) {
         newRoutineState,
         handleAddOneExercise,
         handleDeleteOneExercise,
+        handleEditOneExercise,
       }}
     >
       {children}

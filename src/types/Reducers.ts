@@ -4,6 +4,7 @@ export enum NewRoutineActionsTypes {
   SETNAME = "setName",
   SETDAYS = "setDays",
   ADDEXERCISE = "addExercise",
+  EDITEXERCISE = "editExercise",
   DELETEEXERCISE = "deleteExercise",
 }
 
@@ -19,6 +20,7 @@ export type NewRoutineActions =
   | { type: NewRoutineActionsTypes.SETNAME; payload: string }
   | { type: NewRoutineActionsTypes.SETDAYS; payload: number }
   | { type: NewRoutineActionsTypes.ADDEXERCISE; payload: AddExercisePayloadType }
+  | { type: NewRoutineActionsTypes.EDITEXERCISE; payload: EditExercisePayloadType }
   | { type: NewRoutineActionsTypes.DELETEEXERCISE; payload: DeleteExercisePayloadType };
 
 export enum EditRoutineActionsTypes {

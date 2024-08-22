@@ -4,6 +4,7 @@ import { initialState, newRoutineReducers } from "../reducers/NewRoutine/newRout
 import {
   AddExercisePayloadType,
   DeleteExercisePayloadType,
+  EditExercisePayloadType,
   NewRoutineActionsTypes,
 } from "../types/Reducers";
 
@@ -50,6 +51,13 @@ const useNewRoutine = () => {
     });
   };
 
+  const handleEditOneExercise = ({ exerciseData, dayIndex, prevName }: EditExercisePayloadType) => {
+    dispatch({
+      type: NewRoutineActionsTypes.EDITEXERCISE,
+      payload: { dayIndex, exerciseData, prevName },
+    });
+  };
+
   const handleDeleteOneExercise = ({ exerciseIndex, dayIndex }: DeleteExercisePayloadType) => {
     dispatch({
       type: NewRoutineActionsTypes.DELETEEXERCISE,
@@ -65,6 +73,7 @@ const useNewRoutine = () => {
     handleDays,
     handleName,
     handleStep,
+    handleEditOneExercise,
     step,
     hasWarmUpRoutine,
     toggleWarmUpRoutine,

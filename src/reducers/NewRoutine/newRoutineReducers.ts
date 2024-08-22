@@ -1,6 +1,7 @@
 import {
   AddExercisePayloadType,
   DeleteExercisePayloadType,
+  EditExercisePayloadType,
   NewRoutineActions,
   NewRoutineActionsTypes,
 } from "@/src/types/Reducers";
@@ -27,6 +28,8 @@ export function newRoutineReducers(
       return { ...state, data: new Array(payload).fill([]) };
     case NewRoutineActionsTypes.ADDEXERCISE:
       return { ...state, data: findDayAndAddNewExercise(state.data, payload) };
+    case NewRoutineActionsTypes.EDITEXERCISE:
+      return { ...state, data: findDayAndEditExercise(state.data, payload) };
     case NewRoutineActionsTypes.DELETEEXERCISE:
       return { ...state, data: findDayAndDeleteExercise(state.data, payload) };
     default:
@@ -39,6 +42,17 @@ function findDayAndAddNewExercise(
   { dayIndex, exerciseData }: AddExercisePayloadType
 ) {
   return data.map((routine, index) => (index === dayIndex ? [...routine, exerciseData] : routine));
+}
+
+function findDayAndEditExercise(
+  data: RoutineDay[],
+  { dayIndex, exerciseData, prevName }: EditExercisePayloadType
+) {
+  return data.map((routine, index) =>
+    index === dayIndex
+      ? routine.map((exercise) => (exercise.name === prevName ? exerciseData : exercise))
+      : routine
+  );
 }
 function findDayAndDeleteExercise(
   data: RoutineDay[],
