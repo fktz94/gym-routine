@@ -55,6 +55,8 @@ export interface AcceptButtonProps {
   isDisabled?: boolean;
   onAccept: () => void;
   children?: ReactNode | string;
+  viewStyle?: ViewStyle;
+  textStyle?: TextStyle;
 }
 
 export interface CancelButtonProps {

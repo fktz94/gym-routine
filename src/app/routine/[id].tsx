@@ -1,5 +1,5 @@
 import RoutineDetails from "@/src/components/RoutineDetails";
-import ThemedButton from "@/src/components/ThemedButton";
+import ThemedButton, { AcceptButton } from "@/src/components/ThemedButton";
 import { Colors } from "@/src/constants/Colors";
 import RoutineProvider from "@/src/contexts/Routine/RoutineProvider";
 import useThemeContext from "@/src/contexts/Theme/useThemeContext";
@@ -56,6 +56,8 @@ export default function RoutineScreen() {
 
   if (!routine) return null; // Should redirect to 404 page?
 
+  const handleRoutineDone = () => {};
+
   return (
     <RoutineProvider routine={routine} selectedDay={selectedDay}>
       <View style={styles.container}>
@@ -68,14 +70,16 @@ export default function RoutineScreen() {
         ) : (
           <View style={styles.routineContainer}>
             <RoutineDetails routineDay={routine?.data[selectedDay]} />
-            <Link href={{ pathname: `/edit-routine/[id]`, params: { id, selectedDay } }} asChild>
-              <ThemedButton
-                externalButtonStyles={styles.modifyRoutineBtnContainer}
-                externalTextStyles={styles.modifyRoutineBtnText}
-              >
-                Modify routine
-              </ThemedButton>
-            </Link>
+            <View style={styles.buttonsContainer}>
+              <Link href={{ pathname: `/edit-routine/[id]`, params: { id, selectedDay } }} asChild>
+                <ThemedButton externalTextStyles={styles.modifyRoutineBtnText}>
+                  Modify routine
+                </ThemedButton>
+              </Link>
+              <AcceptButton textStyle={styles.modifyRoutineBtnText} onAccept={handleRoutineDone}>
+                Routine done!
+              </AcceptButton>
+            </View>
           </View>
         )}
       </View>
@@ -121,7 +125,13 @@ const routineDescriptionStyles = (theme: Theme) =>
       color: Colors[theme].text,
       textAlign: "center",
     },
-    modifyRoutineBtnContainer: { width: "40%", margin: "auto", marginTop: 15, marginBottom: 30 },
+    buttonsContainer: {
+      flexDirection: "row",
+      marginTop: 15,
+      marginBottom: 30,
+      margin: "auto",
+      gap: 40,
+    },
     modifyRoutineBtnText: {
       fontSize: 14,
       letterSpacing: 2,

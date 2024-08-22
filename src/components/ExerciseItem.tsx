@@ -64,7 +64,7 @@ export const ExerciseItem = ({ name, sets, weightsAndRepetitions, current }: Exe
   };
 
   return (
-    <View style={styles.container}>
+    <>
       {isEditingExercise && (
         <EditExerciseModal
           isCurrent={selectedDropdownItem === current}
@@ -74,54 +74,50 @@ export const ExerciseItem = ({ name, sets, weightsAndRepetitions, current }: Exe
           exerciseName={name}
         />
       )}
-      <Text style={styles.inputContainer}>{name}</Text>
-      <Text style={[styles.inputContainer, styles.sets]}>{sets}</Text>
-      <View style={styles.inputContainer}>
-        {!currentWeight ? (
-          <Text style={styles.prevText}>Add today's weight!</Text>
-        ) : (
-          weightsAndRepetitions.length > 1 && (
-            <>
-              <Text style={styles.prevText}>
-                Today: {weightsAndRepetitions[current].qty}r -{currentWeight}
-                {typeof currentWeight === "number" && " kg"}
-              </Text>
-              {prevWeight?.weight && (
+      <View style={styles.container}>
+        <Text style={styles.inputContainer}>{name}</Text>
+        <Text style={[styles.inputContainer, styles.sets]}>{sets}</Text>
+        <View style={styles.inputContainer}>
+          {!currentWeight ? (
+            <Text style={styles.prevText}>Add today's weight!</Text>
+          ) : (
+            weightsAndRepetitions.length > 1 && (
+              <>
                 <Text style={styles.prevText}>
-                  Prev: {prevWeight.qty}r - {prevWeight.weight}
-                  {typeof prevWeight.weight === "number" && " kg"}
+                  Today: {weightsAndRepetitions[current].qty}r -{currentWeight}
+                  {typeof currentWeight === "number" && " kg"}
                 </Text>
-              )}
-            </>
-          )
-        )}
+                {prevWeight?.weight && (
+                  <Text style={styles.prevText}>
+                    Prev: {prevWeight.qty}r - {prevWeight.weight}
+                    {typeof prevWeight.weight === "number" && " kg"}
+                  </Text>
+                )}
+              </>
+            )
+          )}
 
-        <View style={styles.weightAndRepetitionsView}>
-          {repetitionsSelect(repetitions)}
-          <TextInput
-            style={styles.weightText}
-            defaultValue={
-              typeof weight === "number" ? `${weight?.toString()} kg` : weight ?? undefined
-            }
-            multiline
-            scrollEnabled
-            readOnly
-          />
-        </View>
+          <View style={styles.weightAndRepetitionsView}>
+            {repetitionsSelect(repetitions)}
+            <TextInput
+              style={styles.weightText}
+              defaultValue={
+                typeof weight === "number" ? `${weight?.toString()} kg` : weight ?? undefined
+              }
+              multiline
+              scrollEnabled
+              readOnly
+            />
+          </View>
 
-        <View style={styles.themedButtonContainer}>
-          <ThemedButton
-            externalButtonStyles={styles.finishedButtonView}
-            externalTextStyles={styles.finishedButtonText}
-          >
-            Done!
-          </ThemedButton>
-          <ThemedButton externalButtonStyles={styles.editButtonView} onPress={openEditModal}>
-            <Ionicons color={Colors[theme].background} name="pencil" />
-          </ThemedButton>
+          <View style={styles.themedButtonContainer}>
+            <ThemedButton externalButtonStyles={styles.editButtonView} onPress={openEditModal}>
+              <Ionicons color={Colors[theme].background} name="pencil" />
+            </ThemedButton>
+          </View>
         </View>
       </View>
-    </View>
+    </>
   );
 };
 
@@ -143,6 +139,7 @@ const exerciseItemStyles = (theme: Theme, isTitle: boolean) =>
       borderBottomColor: Colors[theme].text,
       fontWeight: isTitle ? "bold" : undefined,
       minHeight: 60,
+      overlayColor: "red",
     },
     sets: { fontSize: 16 },
     weightAndRepetitionsView: {
@@ -167,19 +164,18 @@ const exerciseItemStyles = (theme: Theme, isTitle: boolean) =>
       color: Colors[theme].text,
       height: "100%",
     },
-    themedButtonContainer: { flexDirection: "row", paddingTop: 6, paddingBottom: 12, gap: 2 },
-    finishedButtonView: {
-      paddingVertical: 6,
-      backgroundColor: theme === "light" ? Colors.light.secondary : Colors.light.primary,
-      flex: 1,
-      flexGrow: 3,
+    themedButtonContainer: {
+      flexDirection: "row",
+      paddingTop: 6,
+      paddingBottom: 12,
+      justifyContent: "flex-end",
     },
-    finishedButtonText: { textAlign: "center", fontSize: 12, fontWeight: "bold" },
     editButtonView: {
       backgroundColor: Colors[theme].text,
       paddingHorizontal: 2,
       flex: 1,
-      flexGrow: 1,
+      flexGrow: 0.35,
+      marginRight: 10,
       alignItems: "center",
     },
     editButtonIcon: {},

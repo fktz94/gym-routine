@@ -33,13 +33,19 @@ const ThemedButton = forwardRef(
 
 export default ThemedButton;
 
-export const AcceptButton = ({ onAccept, isDisabled = false, children }: AcceptButtonProps) => {
+export const AcceptButton = ({
+  onAccept,
+  isDisabled = false,
+  children,
+  viewStyle,
+  textStyle,
+}: AcceptButtonProps) => {
   const { theme } = useThemeContext();
   const styles = themedButtonStyles(false, theme, isDisabled);
   return (
     <ThemedButton
-      externalButtonStyles={styles.acceptView}
-      externalTextStyles={styles.acceptText}
+      externalButtonStyles={{ ...styles.acceptView, ...viewStyle }}
+      externalTextStyles={{ ...styles.acceptText, ...textStyle }}
       onPress={onAccept}
       disabled={isDisabled}
     >
@@ -97,6 +103,7 @@ const themedButtonStyles = (isSecondary: boolean, theme: Theme, isDisabled = fal
     },
     acceptView: {
       backgroundColor: isDisabled ? Colors.light.text : Colors.acceptBackground,
+      justifyContent: "center",
     },
     acceptText: {
       color: isDisabled ? Colors.light.secondary : Colors.dark.text,
