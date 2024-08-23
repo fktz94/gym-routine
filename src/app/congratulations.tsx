@@ -9,12 +9,6 @@ import { Colors } from "../constants/Colors";
 const Congratulations = () => {
   const { theme, toggleShowBackArrowButton } = useThemeContext();
   const styles = congratulationsStyles(theme);
-  const confettiRef = useRef<ConfettiCannon>(null);
-  useEffect(() => {
-    if (confettiRef.current) {
-      confettiRef.current?.start();
-    }
-  }, [confettiRef.current]);
 
   const goHome = () => {
     router.navigate("/");
@@ -23,11 +17,12 @@ const Congratulations = () => {
 
   return (
     <>
-      <ConfettiCannon count={200} origin={{ x: -10, y: 0 }} autoStart={false} ref={confettiRef} />
+      <ConfettiCannon count={200} origin={{ x: -10, y: 0 }} />
       <View style={styles.container}>
         <View style={styles.textContainer}>
           <Text style={[styles.customText, styles.title]}>Congratulations!</Text>
           <Text style={styles.customText}>You've succeedeed on your daily objective!</Text>
+          <Text style={styles.customText}>Today's been a gained day</Text>
           <Text style={styles.customText}>Keep going!</Text>
         </View>
         <ThemedButton
