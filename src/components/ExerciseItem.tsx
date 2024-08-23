@@ -33,7 +33,7 @@ export const ExerciseItem = ({ name, sets, weightsAndRepetitions, current }: Exe
   const [isEditingExercise, setIsEditingExercise] = useState(false);
 
   const [selectedDropdownItem, setSelectedDropdownItem] = useState(current);
-  const weight = weightsAndRepetitions[selectedDropdownItem].weight;
+  const weight = weightsAndRepetitions[selectedDropdownItem]?.weight;
 
   const handleDropdownItem = (i: number) => setSelectedDropdownItem(i);
 

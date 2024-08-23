@@ -8,19 +8,22 @@ import useRoutines from "@/src/hooks/useRoutines";
 import { useAppDispatch, useAppSelector } from "../hooks/reactReduxHook";
 import { ResponseStatus } from "../types/Store";
 import { getAllRoutines } from "../store/Routines/RoutinesAsyncThunk";
-import { useEffect } from "react";
-import { setIsInitialLoadToFalse } from "../store/Routines/RoutinesSlice";
+import { useEffect, useRef } from "react";
+import {
+  resetConcludeExerciseState,
+  setIsInitialLoadToFalse,
+} from "../store/Routines/RoutinesSlice";
 import { Link } from "expo-router";
 import { useIsFocused } from "@react-navigation/native";
+import ConcludedExerciseModal from "../components/ConcludedExerciseModal";
 
 export default function Index() {
   const { theme } = useThemeContext();
   const styles = indexStyles(theme);
   const dispatch = useAppDispatch();
 
-  const { getAllRoutinesStatus, isGettingAllRoutines, isInitialLoad } = useAppSelector(
-    (state) => state.routines
-  );
+  const { getAllRoutinesStatus, isGettingAllRoutines, isInitialLoad, concludeExerciseStatus } =
+    useAppSelector(({ routines }) => routines);
 
   const dataIsNotFetchedYet = getAllRoutinesStatus === ResponseStatus.IDLE;
 

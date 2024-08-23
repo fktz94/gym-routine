@@ -21,3 +21,9 @@ export interface DeleteRoutineUtilsProps {
   routineId: string;
   prevRoutinesData: Routine;
 }
+
+export interface ConcludeDayRoutineUtilsProps {
+  routineId: string;
+  dayIndex: number;
+  prevRoutinesData: Routine;
+}

@@ -23,8 +23,6 @@ export const NewExerciseItem = ({
 
   const { handleDeleteOneExercise } = useNewRoutineContext();
 
-  console.log({ name });
-
   const deleteExercise = () => {
     if ((dayIndex !== 0 && !dayIndex) || (exerciseIndex !== 0 && !exerciseIndex)) return;
     handleDeleteOneExercise({ dayIndex, exerciseIndex });

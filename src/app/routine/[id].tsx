@@ -3,23 +3,32 @@ import ThemedButton, { AcceptButton } from "@/src/components/ThemedButton";
 import { Colors } from "@/src/constants/Colors";
 import RoutineProvider from "@/src/contexts/Routine/RoutineProvider";
 import useThemeContext from "@/src/contexts/Theme/useThemeContext";
-import { useAppSelector } from "@/src/hooks/reactReduxHook";
+import { useAppDispatch, useAppSelector } from "@/src/hooks/reactReduxHook";
 import useRoutineDescription from "@/src/hooks/useRoutineDescription";
+import { concludeRoutineDay } from "@/src/store/Routines/RoutinesAsyncThunk";
+import { resetConcludeExerciseState } from "@/src/store/Routines/RoutinesSlice";
+import { ResponseStatus } from "@/src/types/Store";
 import { useIsFocused } from "@react-navigation/native";
-import { Link, useLocalSearchParams } from "expo-router";
-import { View, Text, StyleSheet, ActivityIndicator } from "react-native";
+import { Link, router, useLocalSearchParams } from "expo-router";
+import { useEffect } from "react";
+import { View, Text, StyleSheet, ActivityIndicator, Alert } from "react-native";
 
 export default function RoutineScreen() {
-  const { theme } = useThemeContext();
+  const { theme, toggleShowBackArrowButton } = useThemeContext();
   const styles = routineDescriptionStyles(theme);
 
   const { id } = useLocalSearchParams<{ id: string }>();
-  const { isGettingAllRoutines } = useAppSelector(({ routines }) => routines);
+  const {
+    isGettingAllRoutines,
+    concludeExerciseStatus,
+    isConcludingExerciseRoutine,
+    concludeExerciseErrorMessage,
+  } = useAppSelector(({ routines }) => routines);
   const { routine, selectedDay, handleSelectedDay } = useRoutineDescription({ id });
 
-  const isFocused = useIsFocused();
+  const dispatch = useAppDispatch();
 
-  const isLoading = isFocused && isGettingAllRoutines;
+  const isFocused = useIsFocused();
 
   const daysButtons = () =>
     routine?.data.map((_, i) => (
@@ -56,7 +65,26 @@ export default function RoutineScreen() {
 
   if (!routine) return null; // Should redirect to 404 page?
 
-  const handleRoutineDone = () => {};
+  const isLoading = (isFocused && isGettingAllRoutines) || isConcludingExerciseRoutine;
+
+  useEffect(() => {
+    if (isConcludingExerciseRoutine) return;
+
+    if (concludeExerciseStatus === ResponseStatus.FULFILLED) {
+      router.navigate("/congratulations");
+      dispatch(resetConcludeExerciseState());
+      toggleShowBackArrowButton(false);
+    }
+
+    if (concludeExerciseErrorMessage) {
+      Alert.alert("Error!", concludeExerciseErrorMessage);
+      dispatch(resetConcludeExerciseState());
+    }
+  }, [concludeExerciseStatus, isConcludingExerciseRoutine]);
+
+  const handleRoutineDone = () => {
+    dispatch(concludeRoutineDay({ dayIndex: selectedDay, routineId: id }));
+  };
 
   return (
     <RoutineProvider routine={routine} selectedDay={selectedDay}>

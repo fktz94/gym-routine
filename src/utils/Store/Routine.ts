@@ -1,11 +1,12 @@
 import { Routine, RoutinesData, RoutineStructure } from "@/src/types/Routines";
 import {
   AddNewRoutineUtilsProps,
+  ConcludeDayRoutineUtilsProps,
   DeleteRoutineUtilsProps,
   EditRoutineUtilsProps,
   ModifyOneExerciseUtilsProps,
 } from "@/src/types/Utils";
-import { isDraft, produce } from "immer";
+import { produce } from "immer";
 import * as Crypto from "expo-crypto";
 
 export const modifyOneExercise = ({
@@ -70,5 +71,33 @@ export const deleteSelectedRoutine = ({ routineId, prevRoutinesData }: DeleteRou
   const nextState = produce(prevRoutinesData, (draft: Routine) =>
     draft.filter((el) => el.id !== routineId)
   );
+  return nextState;
+};
+
+export const concludeDaySelectedRoutine = ({
+  routineId,
+  dayIndex,
+  prevRoutinesData,
+}: ConcludeDayRoutineUtilsProps) => {
+  const nextState = produce(prevRoutinesData, (draft: Routine) =>
+    draft.map((el) => {
+      if (el.id === routineId) {
+        const lastDay = el.data.length - 1;
+        const nextDay = dayIndex === lastDay ? 0 : dayIndex + 1;
+        const updatedExercisesDays = el.data.map((el) => {
+          return el.map((el) => {
+            if (el.weightsAndRepetitions.length === 1) return el;
+            const lastDay = el.weightsAndRepetitions.length - 1;
+            const nextDay = el.current === lastDay ? 0 : el.current + 1;
+            return { ...el, current: nextDay };
+          });
+        });
+        return { ...el, data: updatedExercisesDays, currentDay: nextDay };
+      } else {
+        return el;
+      }
+    })
+  );
+
   return nextState;
 };

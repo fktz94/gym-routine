@@ -7,6 +7,7 @@ import {
 import { getRoutines, storeRoutines } from "@/src/utils/AsyncStorage/Routines";
 import {
   addNewRoutine,
+  concludeDaySelectedRoutine,
   deleteSelectedRoutine,
   editOldRoutine,
   modifyOneExercise,
@@ -122,6 +123,36 @@ export const deleteRoutine = createAsyncThunk(
     const payload = {
       currentRoutineId: isCurrentRoutine ? undefined : currentRoutineId,
       routines: updatedRoutines,
+    };
+
+    try {
+      await storeRoutines(payload);
+      dispatch(getAllRoutines());
+    } catch (error) {
+      throw error;
+    }
+  }
+);
+
+export const concludeRoutineDay = createAsyncThunk(
+  "routines/concludeRoutineDay",
+  async (
+    { routineId, dayIndex }: { routineId: string; dayIndex: number },
+    { getState, dispatch }
+  ) => {
+    const {
+      routines: { routines, currentRoutineId },
+    } = getState(); // Learn how to type AsyncThunk
+
+    const updatedExercises = concludeDaySelectedRoutine({
+      dayIndex,
+      prevRoutinesData: routines,
+      routineId,
+    });
+
+    const payload = {
+      currentRoutineId: currentRoutineId,
+      routines: updatedExercises,
     };
 
     try {

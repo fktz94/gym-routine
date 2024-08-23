@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
+  concludeRoutineDay,
   createNewRoutine,
   deleteRoutine,
   editRoutine,
@@ -32,6 +33,10 @@ const initialState: RoutineStore = {
   deleteRoutineStatus: ResponseStatus.IDLE,
   isDeletingRoutine: false,
   deleteRoutineErrorMessage: "",
+
+  concludeExerciseStatus: ResponseStatus.IDLE,
+  isConcludingExerciseRoutine: false,
+  concludeExerciseErrorMessage: "",
 };
 
 export const routinesSlice = createSlice({
@@ -57,6 +62,11 @@ export const routinesSlice = createSlice({
       state.deleteRoutineStatus = ResponseStatus.IDLE;
       state.isDeletingRoutine = false;
       state.deleteRoutineErrorMessage = "";
+    },
+    resetConcludeExerciseState: (state) => {
+      state.concludeExerciseStatus = ResponseStatus.IDLE;
+      state.isConcludingExerciseRoutine = false;
+      state.concludeExerciseErrorMessage = "";
     },
     setIsInitialLoadToFalse: (state) => {
       state.isInitialLoad = false;
@@ -142,6 +152,21 @@ export const routinesSlice = createSlice({
         state.isDeletingRoutine = false;
         state.deleteRoutineErrorMessage = error.message ?? "Error deleting the routine";
       });
+    builder
+      .addCase(concludeRoutineDay.pending, (state) => {
+        state.concludeExerciseStatus = ResponseStatus.PENDING;
+        state.isConcludingExerciseRoutine = true;
+        state.concludeExerciseErrorMessage = "";
+      })
+      .addCase(concludeRoutineDay.fulfilled, (state) => {
+        state.concludeExerciseStatus = ResponseStatus.FULFILLED;
+        state.isConcludingExerciseRoutine = false;
+      })
+      .addCase(concludeRoutineDay.rejected, (state, { error }) => {
+        state.concludeExerciseStatus = ResponseStatus.REJECTED;
+        state.isConcludingExerciseRoutine = false;
+        state.concludeExerciseErrorMessage = error.message ?? "Error concluding the day";
+      });
   },
 });
 
@@ -151,6 +176,7 @@ export const {
   resetCreateRoutineState,
   resetEditRoutineState,
   resetDeleteRoutineState,
+  resetConcludeExerciseState,
 } = routinesSlice.actions;
 
 export default routinesSlice.reducer;
