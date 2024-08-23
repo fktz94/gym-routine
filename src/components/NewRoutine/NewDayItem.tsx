@@ -33,8 +33,8 @@ const NewDayItem = ({ dayIndex }: { dayIndex: number }) => {
   };
   const [height, setHeight] = useState(0);
 
-  const onLayout = (event: LayoutChangeEvent) => {
-    const layoutHeight = event.nativeEvent.layout.height;
+  const onLayout = ({ nativeEvent: { layout } }: LayoutChangeEvent) => {
+    const layoutHeight = layout.height;
 
     if (layoutHeight > 0 && height !== layoutHeight) {
       setHeight(layoutHeight);

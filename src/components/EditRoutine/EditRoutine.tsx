@@ -30,7 +30,9 @@ const EditRoutine = () => {
 
   const hasChanges = !isEqual(data, originalData) || originalRoutine.name !== name;
 
-  const isButtonDisabled = !hasChanges && isCurrent === toCurrent;
+  const setToCurrent = !isCurrent && toCurrent;
+
+  const isButtonDisabled = !hasChanges && !setToCurrent;
 
   const handleSaveChanges = () => {
     if (isButtonDisabled) return;

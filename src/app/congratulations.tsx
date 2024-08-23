@@ -1,6 +1,5 @@
 import { StyleSheet, Text, View } from "react-native";
 import ConfettiCannon from "react-native-confetti-cannon";
-import { useEffect, useRef } from "react";
 import ThemedButton from "../components/ThemedButton";
 import useThemeContext from "../contexts/Theme/useThemeContext";
 import { router } from "expo-router";
@@ -22,7 +21,7 @@ const Congratulations = () => {
         <View style={styles.textContainer}>
           <Text style={[styles.customText, styles.title]}>Congratulations!</Text>
           <Text style={styles.customText}>You've succeedeed on your daily objective!</Text>
-          <Text style={styles.customText}>Today's been a gained day</Text>
+          <Text style={styles.customText}>Today's been a gained day, good job!</Text>
           <Text style={styles.customText}>Keep going!</Text>
         </View>
         <ThemedButton
@@ -30,7 +29,7 @@ const Congratulations = () => {
           externalButtonStyles={styles.buttonContainer}
           externalTextStyles={styles.buttonText}
         >
-          Back to home
+          Back home
         </ThemedButton>
       </View>
     </>
