@@ -30,14 +30,16 @@ const ThemedModal = ({
               size={30}
               onPress={closeModal}
             />
-            <View style={styles.childrenContainer}>{children}</View>
-            <View style={styles.buttonsContainer}>
-              <CancelButton onCancel={closeModal} isIcon={buttonsAreIcons} />
-              <AcceptButton
-                onAccept={handleAccept}
-                isDisabled={isAcceptBtnDisabled}
-                isIcon={buttonsAreIcons}
-              />
+            <View style={styles.childrenContainer}>
+              {children}
+              <View style={styles.buttonsContainer}>
+                <CancelButton onCancel={closeModal} isIcon={buttonsAreIcons} />
+                <AcceptButton
+                  onAccept={handleAccept}
+                  isDisabled={isAcceptBtnDisabled}
+                  isIcon={buttonsAreIcons}
+                />
+              </View>
             </View>
           </>
         )}

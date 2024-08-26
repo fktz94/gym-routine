@@ -15,7 +15,7 @@ const ThemedButton = forwardRef(
       onPress,
       disabled = false,
     }: ThemedButtonProps,
-    ref
+    _
   ) => {
     const { theme } = useThemeContext();
     const styles = themedButtonStyles(isSecondary, theme, disabled);

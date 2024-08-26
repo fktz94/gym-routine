@@ -9,6 +9,7 @@ import { useAppDispatch, useAppSelector } from "@/src/hooks/reactReduxHook";
 import { deleteRoutine } from "@/src/store/Routines/RoutinesAsyncThunk";
 import { resetDeleteRoutineState } from "@/src/store/Routines/RoutinesSlice";
 import { ResponseStatus } from "@/src/types/Store";
+import ThemedModal from "./ThemedModal";
 
 const ConfirmDeleteRoutineModal = ({ closeModal, id, name }: ConfirmDeleteRoutineModalProps) => {
   const { theme } = useThemeContext();
@@ -24,57 +25,29 @@ const ConfirmDeleteRoutineModal = ({ closeModal, id, name }: ConfirmDeleteRoutin
 
   useEffect(() => {
     if (isDeletingRoutine) return;
-
     if (deleteRoutineStatus === ResponseStatus.FULFILLED) {
       dispatch(resetDeleteRoutineState());
       closeModal();
-    }
-
-    if (deleteRoutineErrorMessage) {
-      Alert.alert("Error!", deleteRoutineErrorMessage);
+    } else if (deleteRoutineStatus === ResponseStatus.REJECTED) {
       dispatch(resetDeleteRoutineState());
+      Alert.alert("Error!", deleteRoutineErrorMessage);
     }
   }, [deleteRoutineStatus]);
 
   return (
-    <Modal animationType="slide" transparent>
-      <View style={styles.container}>
-        {isDeletingRoutine ? (
-          <ActivityIndicator size={80} color={Colors[theme].secondary} />
-        ) : (
-          <>
-            <Ionicons
-              style={styles.closeIconBtn}
-              name="close"
-              color={Colors[theme].text}
-              size={30}
-              onPress={closeModal}
-            />
-            <View style={styles.exerciseContainer}>
-              <View style={styles.innerContainer}>
-                <View style={styles.innerTextContainer}>
-                  <Text style={styles.baseText}>
-                    Are you sure you want to delete this routine:{" "}
-                    <Text style={styles.routineName}>
-                      {"\n"}
-                      {name}
-                    </Text>
-                    ?
-                  </Text>
-                  <Text style={[styles.baseText, { fontSize: 14 }]}>
-                    (This change cannot be undone)
-                  </Text>
-                </View>
-                <View style={styles.buttonsContainer}>
-                  <CancelButton onCancel={closeModal} />
-                  <AcceptButton onAccept={handleDeleteRoutine} />
-                </View>
-              </View>
-            </View>
-          </>
-        )}
+    <ThemedModal
+      isLoading={isDeletingRoutine}
+      closeModal={closeModal}
+      handleAccept={handleDeleteRoutine}
+    >
+      <View style={styles.innerContainer}>
+        <Text style={styles.baseText}>
+          Are you sure you want to delete this routine: {"\n"}
+          <Text style={styles.routineName}>{name}</Text>?
+        </Text>
+        <Text style={[styles.baseText, { fontSize: 14 }]}>(This change cannot be undone)</Text>
       </View>
-    </Modal>
+    </ThemedModal>
   );
 };
 
@@ -82,38 +55,7 @@ export default ConfirmDeleteRoutineModal;
 
 const confirmDeletingModalStyles = (theme: Theme) =>
   StyleSheet.create({
-    closeIconBtn: {
-      position: "absolute",
-      right: 0,
-      top: 0,
-      padding: 10,
-      color: Colors[theme].background,
-    },
-    container: {
-      flex: 1,
-      alignItems: "center",
-      justifyContent: "center",
-      backgroundColor: Colors[theme].modalBackground,
-    },
-    exerciseContainer: {
-      width: "80%",
-      padding: 30,
-      backgroundColor: Colors[theme].background,
-      borderRadius: 10,
-      gap: 40,
-      elevation: 1,
-      shadowOffset: {
-        width: 0,
-        height: 1,
-      },
-      shadowOpacity: 0.18,
-      shadowRadius: 1.0,
-    },
     innerContainer: {
-      gap: 40,
-      paddingVertical: 20,
-    },
-    innerTextContainer: {
       margin: "auto",
       gap: 16,
     },
@@ -124,5 +66,4 @@ const confirmDeletingModalStyles = (theme: Theme) =>
       letterSpacing: 1,
     },
     routineName: { fontWeight: "bold", fontSize: 24 },
-    buttonsContainer: { flexDirection: "row", gap: 20, justifyContent: "center" },
   });
