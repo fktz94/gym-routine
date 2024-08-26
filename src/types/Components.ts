@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { PropsWithChildren, ReactNode } from "react";
 import { TextStyle, ViewStyle } from "react-native";
 import { Exercise, Routine, WeightsAndRepetitions } from "./Routines";
 
@@ -101,4 +101,9 @@ export interface ConfirmDeleteRoutineModalProps {
   closeModal: () => void;
   id: string;
   name: string;
+}
+
+export interface ThemedModalProps extends PropsWithChildren {
+  isLoading?: boolean;
+  closeModal: () => void;
 }
