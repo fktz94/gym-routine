@@ -1,22 +1,14 @@
 import { ActivityIndicator, Alert, Modal, StyleSheet, Text, View } from "react-native";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { AcceptButton, CancelButton } from "./ThemedButton";
 import { Ionicons } from "@expo/vector-icons";
 import useThemeContext from "@/src/contexts/Theme/useThemeContext";
-import {
-  ConfirmCreateNewExerciseModalProps,
-  ConfirmDeleteRoutineModalProps,
-} from "@/src/types/Components";
+import { ConfirmDeleteRoutineModalProps } from "@/src/types/Components";
 import { Colors } from "@/src/constants/Colors";
-import useNewRoutineContext from "@/src/contexts/NewRoutine/useNewRoutineContext";
 import { useAppDispatch, useAppSelector } from "@/src/hooks/reactReduxHook";
-import { createNewRoutine, deleteRoutine } from "@/src/store/Routines/RoutinesAsyncThunk";
-import {
-  resetCreateRoutineState,
-  resetDeleteRoutineState,
-} from "@/src/store/Routines/RoutinesSlice";
+import { deleteRoutine } from "@/src/store/Routines/RoutinesAsyncThunk";
+import { resetDeleteRoutineState } from "@/src/store/Routines/RoutinesSlice";
 import { ResponseStatus } from "@/src/types/Store";
-import { router } from "expo-router";
 
 const ConfirmDeleteRoutineModal = ({ closeModal, id, name }: ConfirmDeleteRoutineModalProps) => {
   const { theme } = useThemeContext();

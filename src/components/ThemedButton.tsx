@@ -1,3 +1,4 @@
+import { Ionicons } from "@expo/vector-icons";
 import { Colors } from "../constants/Colors";
 import useThemeContext from "../contexts/Theme/useThemeContext";
 import { AcceptButtonProps, CancelButtonProps, ThemedButtonProps } from "../types/Components";
@@ -36,9 +37,10 @@ export default ThemedButton;
 export const AcceptButton = ({
   onAccept,
   isDisabled = false,
-  children,
   viewStyle,
   textStyle,
+  isIcon = false,
+  text,
 }: AcceptButtonProps) => {
   const { theme } = useThemeContext();
   const styles = themedButtonStyles(false, theme, isDisabled);
@@ -49,12 +51,12 @@ export const AcceptButton = ({
       onPress={onAccept}
       disabled={isDisabled}
     >
-      {children || "Accept"}
+      {isIcon ? <Ionicons name="checkmark" size={20} /> : text ? text : "Accept"}
     </ThemedButton>
   );
 };
 
-export const CancelButton = ({ onCancel, children }: CancelButtonProps) => {
+export const CancelButton = ({ onCancel, isIcon = false, text }: CancelButtonProps) => {
   const { theme } = useThemeContext();
   const styles = themedButtonStyles(false, theme);
   return (
@@ -63,7 +65,7 @@ export const CancelButton = ({ onCancel, children }: CancelButtonProps) => {
       externalTextStyles={styles.cancelText}
       onPress={onCancel}
     >
-      {children || "Cancel"}
+      {isIcon ? <Ionicons name="close" size={20} /> : text ? text : "Cancel"}
     </ThemedButton>
   );
 };

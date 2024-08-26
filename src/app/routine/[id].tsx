@@ -104,9 +104,11 @@ export default function RoutineScreen() {
                   Modify routine
                 </ThemedButton>
               </Link>
-              <AcceptButton textStyle={styles.modifyRoutineBtnText} onAccept={handleRoutineDone}>
-                Routine done!
-              </AcceptButton>
+              <AcceptButton
+                textStyle={styles.modifyRoutineBtnText}
+                onAccept={handleRoutineDone}
+                text="Routine done!"
+              />
             </View>
           </View>
         )}

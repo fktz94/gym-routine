@@ -3,8 +3,16 @@ import useThemeContext from "../contexts/Theme/useThemeContext";
 import { Colors } from "../constants/Colors";
 import { ThemedModalProps } from "../types/Components";
 import { Ionicons } from "@expo/vector-icons";
+import { AcceptButton, CancelButton } from "./ThemedButton";
 
-const ThemedModal = ({ isLoading = false, closeModal, children }: ThemedModalProps) => {
+const ThemedModal = ({
+  isLoading = false,
+  closeModal,
+  children,
+  handleAccept,
+  isAcceptBtnDisabled,
+  buttonsAreIcons = false,
+}: ThemedModalProps) => {
   const { theme } = useThemeContext();
   const styles = themedModalStyles(theme);
 
@@ -23,6 +31,14 @@ const ThemedModal = ({ isLoading = false, closeModal, children }: ThemedModalPro
               onPress={closeModal}
             />
             <View style={styles.childrenContainer}>{children}</View>
+            <View style={styles.buttonsContainer}>
+              <CancelButton onCancel={closeModal} isIcon={buttonsAreIcons} />
+              <AcceptButton
+                onAccept={handleAccept}
+                isDisabled={isAcceptBtnDisabled}
+                isIcon={buttonsAreIcons}
+              />
+            </View>
           </>
         )}
       </View>
@@ -60,5 +76,10 @@ const themedModalStyles = (theme: Theme) =>
       },
       shadowOpacity: 0.18,
       shadowRadius: 1.0,
+    },
+    buttonsContainer: {
+      flexDirection: "row",
+      gap: 20,
+      justifyContent: "center",
     },
   });

@@ -54,14 +54,16 @@ export interface EditCreatedExerciseModalProps extends CreateExerciseModalProps 
 export interface AcceptButtonProps {
   isDisabled?: boolean;
   onAccept: () => void;
-  children?: ReactNode | string;
+  isIcon?: boolean;
   viewStyle?: ViewStyle;
   textStyle?: TextStyle;
+  text?: string;
 }
 
 export interface CancelButtonProps {
   onCancel: () => void;
-  children?: ReactNode | string;
+  isIcon?: boolean;
+  text?: string;
 }
 
 type CustomSelectDataProps = number | { rep: string | number; i: number };
@@ -106,4 +108,7 @@ export interface ConfirmDeleteRoutineModalProps {
 export interface ThemedModalProps extends PropsWithChildren {
   isLoading?: boolean;
   closeModal: () => void;
+  handleAccept: () => void;
+  isAcceptBtnDisabled?: boolean;
+  buttonsAreIcons?: boolean;
 }

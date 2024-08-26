@@ -198,12 +198,8 @@ const EditExerciseModal = ({
               />
             </View>
             <View style={styles.buttonsContainer}>
-              <CancelButton onCancel={closeModal}>
-                <Ionicons name="close" size={20} />
-              </CancelButton>
-              <AcceptButton isDisabled={isButtonDisabled} onAccept={handleAccept}>
-                <Ionicons name="checkmark" size={20} />
-              </AcceptButton>
+              <CancelButton onCancel={closeModal} isIcon />
+              <AcceptButton isDisabled={isButtonDisabled} onAccept={handleAccept} isIcon />
             </View>
           </View>
         </>
