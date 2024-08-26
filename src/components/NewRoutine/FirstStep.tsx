@@ -1,8 +1,6 @@
 import { StyleSheet, Text, TextInput, View } from "react-native";
 import useThemeContext from "@/src/contexts/Theme/useThemeContext";
 import { Colors } from "@/src/constants/Colors";
-import SelectDropdown from "react-native-select-dropdown";
-import { Ionicons } from "@expo/vector-icons";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import useNewRoutineContext from "@/src/contexts/NewRoutine/useNewRoutineContext";
 import CustomSelectDropdown from "../CustomSelectDropdown";

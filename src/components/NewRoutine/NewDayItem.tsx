@@ -6,14 +6,16 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import React, { useState } from "react";
+import { useState } from "react";
 import useThemeContext from "@/src/contexts/Theme/useThemeContext";
 import { Colors } from "@/src/constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
 import useNewRoutineContext from "@/src/contexts/NewRoutine/useNewRoutineContext";
-import CreateExerciseModal from "./CreateExerciseModal";
 import { NewExerciseItemTitle, NewExerciseItem } from "./NewExerciseItem";
 import Animated, { useAnimatedStyle, withTiming } from "react-native-reanimated";
+import CreateOrEditExerciseModal from "../CreateOrEditExerciseModal/CreateOrEditExerciseModal";
+
+// CONTINUE WORKING ON USING THIS COMPONENT ON EDIT ROUTINES AN EVERYWHERE AS POSSIBLE
 
 const NewDayItem = ({ dayIndex }: { dayIndex: number }) => {
   const { theme } = useThemeContext();
@@ -76,7 +78,7 @@ const NewDayItem = ({ dayIndex }: { dayIndex: number }) => {
       <Animated.View style={animatedStyle}>
         <View onLayout={onLayout} style={{ position: "absolute" }}>
           {isCreating && (
-            <CreateExerciseModal closeModal={cancelCreatingNewExercise} dayIndex={dayIndex} />
+            <CreateOrEditExerciseModal closeModal={cancelCreatingNewExercise} dayIndex={dayIndex} />
           )}
           <View style={styles.exercises}>
             {data[dayIndex].length > 0 && (

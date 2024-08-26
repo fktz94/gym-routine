@@ -112,3 +112,12 @@ export interface ThemedModalProps extends PropsWithChildren {
   isAcceptBtnDisabled?: boolean;
   buttonsAreIcons?: boolean;
 }
+
+export interface RepetitionInputProps {
+  index: number;
+  el: WeightsAndRepetitions;
+  variations: WeightsAndRepetitions[];
+  isCustomRepetitions: boolean;
+  handleRepetitionValues: (val: string, i: number) => void;
+  hasWeeksVariations: boolean;
+}
