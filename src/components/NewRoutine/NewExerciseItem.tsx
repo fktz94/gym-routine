@@ -4,12 +4,10 @@ import { ExerciseItemProps } from "@/src/types/Components";
 import useThemeContext from "@/src/contexts/Theme/useThemeContext";
 import { Colors } from "@/src/constants/Colors";
 import useNewRoutineContext from "@/src/contexts/NewRoutine/useNewRoutineContext";
-import EditExerciseModal from "./EditExerciseModal";
+import CreateOrEditExerciseModal from "../CreateOrEditExerciseModal/CreateOrEditExerciseModal";
 
 export const NewExerciseItem = ({
-  name,
-  sets,
-  exerciseRepetitions,
+  exerciseData,
   style,
   dayIndex,
   exerciseIndex,
@@ -17,17 +15,21 @@ export const NewExerciseItem = ({
   const { theme } = useThemeContext();
   const styles = newExerciseItemStyles(theme);
 
+  const { name, sets, weightsAndRepetitions } = exerciseData;
+  const exerciseRepetitions = weightsAndRepetitions.map((el) => el.qty).join(" / ");
+
   const [isEditing, setIsEditing] = useState(false);
   const openEditExerciseModal = () => setIsEditing(true);
   const closeEditExerciseModal = () => setIsEditing(false);
 
-  const { handleDeleteOneExercise } = useNewRoutineContext();
+  const { handleDeleteOneExercise, handleEditOneExercise } = useNewRoutineContext();
 
   const deleteExercise = () => {
     if ((dayIndex !== 0 && !dayIndex) || (exerciseIndex !== 0 && !exerciseIndex)) return;
     handleDeleteOneExercise({ dayIndex, exerciseIndex });
   };
 
+  // create custom hook for this
   const translateX = useRef(new Animated.Value(0)).current;
 
   const panResponder = useRef(
@@ -64,10 +66,11 @@ export const NewExerciseItem = ({
   return (
     <>
       {isEditing && (
-        <EditExerciseModal
+        <CreateOrEditExerciseModal
           closeModal={closeEditExerciseModal}
           dayIndex={dayIndex}
-          exerciseName={name}
+          exerciseToEdit={exerciseData}
+          handleOnAccept={handleEditOneExercise} // check how to solve this type error
         />
       )}
       <View style={[styles.exerciseItem, style]} {...panResponder.panHandlers}>

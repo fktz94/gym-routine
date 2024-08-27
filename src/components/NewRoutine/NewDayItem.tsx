@@ -52,15 +52,12 @@ const NewDayItem = ({ dayIndex }: { dayIndex: number }) => {
   });
 
   const currentExercises = () =>
-    data[dayIndex].map(({ name, sets, weightsAndRepetitions }, i) => {
-      const exerciseRepetitions = weightsAndRepetitions.map((el) => el.qty).join(" / ");
+    data[dayIndex].map((exercise, i) => {
       const isLastElement = i === data[dayIndex].length - 1;
       return (
         <NewExerciseItem
-          exerciseRepetitions={exerciseRepetitions}
-          name={name}
-          sets={sets}
-          key={name} // find another way to make a proper key without making a mess with the delete animation
+          exerciseData={exercise}
+          key={exercise.name} // find another way to make a proper key without making a mess with the delete animation
           exerciseIndex={i}
           dayIndex={dayIndex}
           style={isLastElement ? { borderBottomWidth: 1 } : undefined}

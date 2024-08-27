@@ -4,19 +4,20 @@ import { ExerciseItemProps } from "@/src/types/Components";
 import useThemeContext from "@/src/contexts/Theme/useThemeContext";
 import { Colors } from "@/src/constants/Colors";
 import useEditRoutineContext from "@/src/contexts/EditRoutine/useEditRoutineContext";
-import EditExerciseModal from "./EditExerciseModal";
 import CreateOrEditExerciseModal from "../CreateOrEditExerciseModal/CreateOrEditExerciseModal";
 
 export const EditExerciseItem = ({
-  name,
-  sets,
-  exerciseRepetitions,
+  exerciseData,
   style,
   dayIndex,
   exerciseIndex,
 }: ExerciseItemProps) => {
+  // create custom hook for this logic
   const { theme } = useThemeContext();
   const styles = editExerciseItemStyles(theme);
+
+  const { name, sets, weightsAndRepetitions } = exerciseData;
+  const exerciseRepetitions = weightsAndRepetitions.map((el) => el.qty).join(" / ");
 
   const [isEditing, setIsEditing] = useState(false);
 
@@ -74,7 +75,7 @@ export const EditExerciseItem = ({
         <CreateOrEditExerciseModal
           closeModal={closeEditExerciseModal}
           dayIndex={dayIndex}
-          handleOnAccept={handleEditOneExercise}
+          handleOnAccept={handleEditOneExercise} // chech how to solve this type error
           exerciseToEdit={selectedExercise}
         />
       )}

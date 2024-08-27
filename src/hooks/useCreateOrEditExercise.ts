@@ -53,8 +53,12 @@ const useCreateOrEditExercise = (props?: UseCreateOrEditExerciseObj) => {
   const dropdownValues = [...Array(10)].map((_, i) => i + 1);
 
   const areUncompletedRepetitions = variations.findIndex(({ qty }) => !qty);
-  const unchangedName = exerciseToEdit?.name === name;
-  const isButtonDisabled = !name || unchangedName || areUncompletedRepetitions !== -1;
+
+  // check how to solve this implementation correctly
+  // const unchangedName = exerciseToEdit?.name === name;
+  // const isButtonDisabled = !name || unchangedName || areUncompletedRepetitions !== -1; ---> not correct like this
+  const isButtonDisabled = !name || areUncompletedRepetitions !== -1;
+  // check how to solve this implementation correctly
 
   return {
     currentVariations,

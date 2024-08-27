@@ -1,5 +1,5 @@
 import { ScrollView, StyleSheet } from "react-native";
-import { ExerciseItem, ExerciseItemTitle } from "./ExerciseItem";
+import { ExerciseItem, ExerciseItemTitle } from "./Routine/ExerciseItem";
 import { RoutineDay } from "../types/Routines";
 
 const RoutineDetails = ({ routineDay }: { routineDay: RoutineDay }) => {

@@ -1,12 +1,12 @@
 import { StyleSheet, Text, TextInput, View } from "react-native";
-import useThemeContext from "../contexts/Theme/useThemeContext";
-import { Colors } from "../constants/Colors";
+import useThemeContext from "@/src/contexts/Theme/useThemeContext";
+import { Colors } from "@/src/constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
-import ThemedButton from "./ThemedButton";
-import EditExerciseModal from "./EditExerciseModal";
-import CustomSelectDropdown from "./CustomSelectDropdown";
-import { Exercise } from "../types/Routines";
+import ThemedButton from "../ThemedButton";
+import CustomSelectDropdown from "../CustomSelectDropdown";
+import { Exercise } from "@/src/types/Routines";
+import EditWeightModal from "./EditWeightModal";
 
 export const ExerciseItemTitle = () => {
   const { theme } = useThemeContext();
@@ -66,7 +66,7 @@ export const ExerciseItem = ({ name, sets, weightsAndRepetitions, current }: Exe
   return (
     <>
       {isEditingExercise && (
-        <EditExerciseModal
+        <EditWeightModal
           isCurrent={selectedDropdownItem === current}
           selectedSerie={selectedDropdownItem}
           closeModal={closeEditModal}

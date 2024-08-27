@@ -93,9 +93,7 @@ export interface CustomSelectDropdownProps {
 }
 
 export interface ExerciseItemProps {
-  name: string;
-  sets: string | number;
-  exerciseRepetitions: string;
+  exerciseData: Exercise;
   style?: ViewStyle;
   exerciseIndex?: number;
   dayIndex: number;

@@ -13,7 +13,7 @@ import { Ionicons } from "@expo/vector-icons";
 import Animated, { useAnimatedStyle, withTiming } from "react-native-reanimated";
 import useEditRoutineContext from "@/src/contexts/EditRoutine/useEditRoutineContext";
 import { EditExerciseItem, EditExerciseItemTitle } from "./ExerciseListItem";
-import CreateExerciseModal from "./CreateExerciseModal";
+import CreateOrEditExerciseModal from "../CreateOrEditExerciseModal/CreateOrEditExerciseModal";
 
 const EachDayItem = ({ dayIndex }: { dayIndex: number }) => {
   const { theme } = useThemeContext();
@@ -25,7 +25,8 @@ const EachDayItem = ({ dayIndex }: { dayIndex: number }) => {
     setIsCreating(false);
   };
 
-  const { selectedRoutine, selectedDay } = useEditRoutineContext();
+  const { selectedRoutine, selectedDay, handleAddOneExercise } = useEditRoutineContext();
+
   const { data } = selectedRoutine;
 
   const [isShown, setIsShown] = useState(selectedDay === dayIndex.toString());
@@ -51,15 +52,12 @@ const EachDayItem = ({ dayIndex }: { dayIndex: number }) => {
   });
 
   const currentExercises = () =>
-    data[dayIndex].map(({ name, sets, weightsAndRepetitions }, i) => {
-      const exerciseRepetitions = weightsAndRepetitions.map((el) => el.qty).join(" / ");
+    data[dayIndex].map((exercise, i) => {
       const isLastElement = i === data[dayIndex].length - 1;
       return (
         <EditExerciseItem
-          exerciseRepetitions={exerciseRepetitions}
-          name={name}
-          sets={sets}
-          key={name} // find another way to make a proper key without making a mess with the delete animation
+          exerciseData={exercise}
+          key={exercise.name} // find another way to make a proper key without making a mess with the delete animation
           exerciseIndex={i}
           dayIndex={dayIndex}
           style={isLastElement ? { borderBottomWidth: 1 } : undefined}
@@ -77,7 +75,11 @@ const EachDayItem = ({ dayIndex }: { dayIndex: number }) => {
       <Animated.View style={animatedStyle}>
         <View onLayout={onLayout} style={{ position: "absolute" }}>
           {isCreating && (
-            <CreateExerciseModal closeModal={cancelCreatingNewExercise} dayIndex={dayIndex} />
+            <CreateOrEditExerciseModal
+              closeModal={cancelCreatingNewExercise}
+              dayIndex={dayIndex}
+              handleOnAccept={handleAddOneExercise}
+            />
           )}
           <View style={styles.exercises}>
             {data[dayIndex].length > 0 && (
