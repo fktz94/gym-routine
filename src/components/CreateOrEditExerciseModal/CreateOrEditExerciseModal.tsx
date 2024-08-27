@@ -1,19 +1,22 @@
-import { StyleSheet, Text, TextInput, View } from "react-native";
+import { StyleSheet, TextInput, View } from "react-native";
 import useThemeContext from "@/src/contexts/Theme/useThemeContext";
 import { Colors } from "@/src/constants/Colors";
 import { CreateExerciseModalProps } from "@/src/types/Components";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import { Exercise } from "@/src/types/Routines";
-import useNewRoutineContext from "@/src/contexts/NewRoutine/useNewRoutineContext";
 import CustomText from "./CustomText";
-import useCreateOrEditNewExercise from "@/src/hooks/useCreateOrEditNewExercise";
 import RepetitionInput from "./RepetitionInput";
 import ThemedModal from "../ThemedModal";
 import CustomSelectDropdown from "../CustomSelectDropdown";
+import useCreateOrEditExercise from "@/src/hooks/useCreateOrEditExercise";
 
-const CreateOrEditExerciseModal = ({ closeModal, dayIndex }: CreateExerciseModalProps) => {
+const CreateOrEditExerciseModal = ({
+  closeModal,
+  dayIndex,
+  exerciseToEdit,
+  handleOnAccept,
+}: CreateExerciseModalProps) => {
   const { theme } = useThemeContext();
-  const { handleAddOneExercise } = useNewRoutineContext();
 
   // CONTINUE WORKING ON USING THIS COMPONENT ON EDIT ROUTINES AN EVERYWHERE AS POSSIBLE
 
@@ -32,7 +35,7 @@ const CreateOrEditExerciseModal = ({ closeModal, dayIndex }: CreateExerciseModal
     toggleCustomRepetitions,
     toggleHasWeeksVariations,
     variations,
-  } = useCreateOrEditNewExercise();
+  } = useCreateOrEditExercise({ exerciseToEdit });
 
   const styles = createOrEditExerciseModalStyles(theme, hasWeeksVariations);
 
@@ -58,10 +61,10 @@ const CreateOrEditExerciseModal = ({ closeModal, dayIndex }: CreateExerciseModal
     const payload: Exercise = {
       name,
       sets,
-      current: 0,
+      current: exerciseToEdit?.current || 0,
       weightsAndRepetitions: variations,
     };
-    handleAddOneExercise({ dayIndex, exerciseData: payload });
+    handleOnAccept({ dayIndex, exerciseData: payload, prevName: exerciseToEdit?.name });
     closeModal();
   };
 

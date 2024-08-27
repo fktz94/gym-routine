@@ -1,11 +1,11 @@
-import { StyleSheet, Text, View } from "react-native";
-import React, { useState } from "react";
+import { StyleSheet, View } from "react-native";
+import { useState } from "react";
 import ThemedButton from "../ThemedButton";
 import useNewRoutineContext from "@/src/contexts/NewRoutine/useNewRoutineContext";
 import useThemeContext from "@/src/contexts/Theme/useThemeContext";
 import FirstStep from "./FirstStep";
 import SecondStep from "./SecondStep";
-import ConfirmCreateNewExerciseModal from "./ConfirmCreateNewExerciseModal";
+import ConfirmCreateNewRoutineModal from "./ConfirmCreateNewRoutineModal";
 
 const MainContainer = () => {
   const { theme } = useThemeContext();
@@ -47,7 +47,7 @@ const MainContainer = () => {
 
   return (
     <>
-      {isCreating && <ConfirmCreateNewExerciseModal closeModal={closeModal} />}
+      {isCreating && <ConfirmCreateNewRoutineModal closeModal={closeModal} />}
       <View style={styles.mainContainer}>
         <View style={styles.inputsContainer}>{renderStep()}</View>
         <View style={styles.directionButtonsContainer}>

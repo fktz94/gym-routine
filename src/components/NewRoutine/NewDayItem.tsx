@@ -15,7 +15,7 @@ import { NewExerciseItemTitle, NewExerciseItem } from "./NewExerciseItem";
 import Animated, { useAnimatedStyle, withTiming } from "react-native-reanimated";
 import CreateOrEditExerciseModal from "../CreateOrEditExerciseModal/CreateOrEditExerciseModal";
 
-// CONTINUE WORKING ON USING THIS COMPONENT ON EDIT ROUTINES AN EVERYWHERE AS POSSIBLE
+// CREATE NEW DAY ITEM COMPONENT AND HOOK
 
 const NewDayItem = ({ dayIndex }: { dayIndex: number }) => {
   const { theme } = useThemeContext();
@@ -24,7 +24,7 @@ const NewDayItem = ({ dayIndex }: { dayIndex: number }) => {
 
   const [isCreating, setIsCreating] = useState(false);
 
-  const { newRoutineState } = useNewRoutineContext();
+  const { newRoutineState, handleAddOneExercise } = useNewRoutineContext();
   const { data } = newRoutineState;
 
   const showDayDetails = () => setIsShown(!isShown);
@@ -78,7 +78,11 @@ const NewDayItem = ({ dayIndex }: { dayIndex: number }) => {
       <Animated.View style={animatedStyle}>
         <View onLayout={onLayout} style={{ position: "absolute" }}>
           {isCreating && (
-            <CreateOrEditExerciseModal closeModal={cancelCreatingNewExercise} dayIndex={dayIndex} />
+            <CreateOrEditExerciseModal
+              closeModal={cancelCreatingNewExercise}
+              dayIndex={dayIndex}
+              handleOnAccept={handleAddOneExercise}
+            />
           )}
           <View style={styles.exercises}>
             {data[dayIndex].length > 0 && (

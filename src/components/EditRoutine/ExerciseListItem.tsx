@@ -5,6 +5,7 @@ import useThemeContext from "@/src/contexts/Theme/useThemeContext";
 import { Colors } from "@/src/constants/Colors";
 import useEditRoutineContext from "@/src/contexts/EditRoutine/useEditRoutineContext";
 import EditExerciseModal from "./EditExerciseModal";
+import CreateOrEditExerciseModal from "../CreateOrEditExerciseModal/CreateOrEditExerciseModal";
 
 export const EditExerciseItem = ({
   name,
@@ -22,7 +23,12 @@ export const EditExerciseItem = ({
   const openEditExerciseModal = () => setIsEditing(true);
   const closeEditExerciseModal = () => setIsEditing(false);
 
-  const { handleDeleteOneExercise } = useEditRoutineContext();
+  const { handleDeleteOneExercise, handleEditOneExercise, selectedRoutine } =
+    useEditRoutineContext();
+
+  const selectedExercise = selectedRoutine.data[dayIndex].find((el) => el.name === name);
+
+  if (!selectedExercise) return null;
 
   const deleteExercise = () => {
     if ((dayIndex !== 0 && !dayIndex) || (exerciseIndex !== 0 && !exerciseIndex)) return;
@@ -65,10 +71,11 @@ export const EditExerciseItem = ({
   return (
     <>
       {isEditing && (
-        <EditExerciseModal
+        <CreateOrEditExerciseModal
           closeModal={closeEditExerciseModal}
           dayIndex={dayIndex}
-          exerciseName={name}
+          handleOnAccept={handleEditOneExercise}
+          exerciseToEdit={selectedExercise}
         />
       )}
       <View style={[styles.exerciseItem, style]} {...panResponder.panHandlers}>

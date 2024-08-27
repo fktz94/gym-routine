@@ -1,14 +1,21 @@
 import { useState } from "react";
 import { WeightsAndRepetitions } from "../types/Routines";
+import { UseCreateOrEditExerciseObj } from "../types/Hooks";
 
-const useCreateOrEditNewExercise = () => {
-  const [name, setName] = useState("");
-  const [hasWeeksVariations, setHasWeeksVariations] = useState(false);
+const useCreateOrEditExercise = (props?: UseCreateOrEditExerciseObj) => {
+  const exerciseToEdit = props?.exerciseToEdit;
+
+  const [name, setName] = useState(exerciseToEdit?.name || "");
+  const [sets, setSets] = useState(exerciseToEdit?.sets || 3);
+  const [hasWeeksVariations, setHasWeeksVariations] = useState(
+    exerciseToEdit?.weightsAndRepetitions
+      ? exerciseToEdit?.weightsAndRepetitions?.length > 1
+      : false
+  );
   const [isCustomRepetitions, setIsCustomRepetitions] = useState(false);
-  const [sets, setSets] = useState(3);
-  const [variations, setVariations] = useState<WeightsAndRepetitions[]>([
-    { qty: undefined, weight: undefined },
-  ]);
+  const [variations, setVariations] = useState<WeightsAndRepetitions[]>(
+    exerciseToEdit?.weightsAndRepetitions || [{ qty: undefined, weight: undefined }]
+  );
 
   const handleName = (val: string) => setName(val);
   const handleSets = (val: number) => setSets(val);
@@ -46,7 +53,8 @@ const useCreateOrEditNewExercise = () => {
   const dropdownValues = [...Array(10)].map((_, i) => i + 1);
 
   const areUncompletedRepetitions = variations.findIndex(({ qty }) => !qty);
-  const isButtonDisabled = !name || areUncompletedRepetitions !== -1;
+  const unchangedName = exerciseToEdit?.name === name;
+  const isButtonDisabled = !name || unchangedName || areUncompletedRepetitions !== -1;
 
   return {
     currentVariations,
@@ -66,4 +74,4 @@ const useCreateOrEditNewExercise = () => {
   };
 };
 
-export default useCreateOrEditNewExercise;
+export default useCreateOrEditExercise;

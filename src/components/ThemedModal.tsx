@@ -68,6 +68,7 @@ const themedModalStyles = (theme: Theme) =>
     childrenContainer: {
       width: "80%",
       padding: 30,
+      paddingVertical: 40,
       backgroundColor: Colors[theme].background,
       borderRadius: 10,
       gap: 40,
