@@ -2,7 +2,7 @@ import { StyleSheet, Text, View } from "react-native";
 import { Link } from "expo-router";
 import CustomLoader from "@/src/components/CustomLoader";
 import CurrentRoutineButton from "@/src/components/Index/CurrentRoutineButton";
-import RoutinesList from "@/src/components/RoutinesList";
+import RoutinesList from "@/src/components/Index/RoutinesList";
 import ThemedButton from "@/src/components/Buttons/ThemedButton";
 import { Colors } from "@/src/constants/Colors";
 import useThemeContext from "@/src/contexts/Theme/useThemeContext";

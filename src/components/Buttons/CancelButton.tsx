@@ -1,8 +1,8 @@
 import { StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import ThemedButton from "./ThemedButton";
 import { Colors } from "@/src/constants/Colors";
 import { CancelButtonProps } from "@/src/types/Components";
-import ThemedButton from "./ThemedButton";
 
 const styles = StyleSheet.create({
   cancelView: { backgroundColor: Colors.cancelBackground },

@@ -1,13 +1,13 @@
+import { useRef, useState } from "react";
 import { View, Text, StyleSheet, PanResponder, Animated, TouchableOpacity } from "react-native";
-import React, { useRef, useState } from "react";
-import useThemeContext from "../contexts/Theme/useThemeContext";
 import { Link } from "expo-router";
-import CurrentThemedButton from "./Buttons/CurrentThemedButton";
-import ThemedButton from "./Buttons/ThemedButton";
-import { RoutinesItemListProps } from "../types/Components";
-import { Colors } from "../constants/Colors";
 import ConfirmDeleteRoutineModal from "./ConfirmDeleteRoutineModal";
-import { Theme } from "../types/Contexts";
+import CurrentThemedButton from "../Buttons/CurrentThemedButton";
+import ThemedButton from "../Buttons/ThemedButton";
+import { Colors } from "@/src/constants/Colors";
+import useThemeContext from "@/src/contexts/Theme/useThemeContext";
+import { RoutinesItemListProps } from "@/src/types/Components";
+import { Theme } from "@/src/types/Contexts";
 
 export default function RoutineItemList({
   routineName,

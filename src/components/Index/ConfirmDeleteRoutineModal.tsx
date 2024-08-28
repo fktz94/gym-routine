@@ -7,8 +7,8 @@ import { useAppDispatch, useAppSelector } from "@/src/hooks/reactReduxHook";
 import { deleteRoutine } from "@/src/store/Routines/RoutinesAsyncThunk";
 import { resetDeleteRoutineState } from "@/src/store/Routines/RoutinesSlice";
 import { ResponseStatus } from "@/src/types/Store";
-import ThemedModal from "./ThemedModal";
-import { Theme } from "../types/Contexts";
+import ThemedModal from "../ThemedModal";
+import { Theme } from "../../types/Contexts";
 
 const ConfirmDeleteRoutineModal = ({ closeModal, id, name }: ConfirmDeleteRoutineModalProps) => {
   const { theme } = useThemeContext();

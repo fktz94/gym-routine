@@ -1,8 +1,8 @@
 import { StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import ThemedButton from "./ThemedButton";
 import { Colors } from "@/src/constants/Colors";
 import { AcceptButtonProps } from "@/src/types/Components";
-import ThemedButton from "./ThemedButton";
 
 export const AcceptButton = ({
   onAccept,

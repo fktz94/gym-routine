@@ -1,4 +1,4 @@
-import RoutineItemList from "../RoutineItemList";
+import RoutineItemList from "./RoutineItemList";
 import { RoutineStructure } from "@/src/types/Routines";
 
 const CurrentRoutineButton = ({ currentRoutine }: { currentRoutine: RoutineStructure }) => {
