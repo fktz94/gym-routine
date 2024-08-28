@@ -2,8 +2,8 @@ import { View, Text, StyleSheet, PanResponder, Animated, TouchableOpacity } from
 import React, { useRef, useState } from "react";
 import useThemeContext from "../contexts/Theme/useThemeContext";
 import { Link } from "expo-router";
-import CurrentThemedButton from "./CurrentThemedButton";
-import ThemedButton from "./ThemedButton";
+import CurrentThemedButton from "./Buttons/CurrentThemedButton";
+import ThemedButton from "./Buttons/ThemedButton";
 import { RoutinesItemListProps } from "../types/Components";
 import { Colors } from "../constants/Colors";
 import ConfirmDeleteRoutineModal from "./ConfirmDeleteRoutineModal";

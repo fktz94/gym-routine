@@ -1,14 +1,14 @@
-import ThemedButton from "@/src/components/ThemedButton";
+import { StyleSheet, Text, View } from "react-native";
+import { Link } from "expo-router";
+import CustomLoader from "@/src/components/CustomLoader";
+import CurrentRoutineButton from "@/src/components/Index/CurrentRoutineButton";
+import RoutinesList from "@/src/components/RoutinesList";
+import ThemedButton from "@/src/components/Buttons/ThemedButton";
 import { Colors } from "@/src/constants/Colors";
 import useThemeContext from "@/src/contexts/Theme/useThemeContext";
-import { StyleSheet, Text, View } from "react-native";
-import RoutinesList from "@/src/components/RoutinesList";
+import useIndex from "@/src/hooks/useIndex";
 import useRoutines from "@/src/hooks/useRoutines";
-import { Link } from "expo-router";
-import CustomLoader from "../components/CustomLoader";
-import CurrentRoutineButton from "../components/Index/CurrentRoutineButton";
-import { Theme } from "../types/Contexts";
-import useIndex from "../hooks/useIndex";
+import { Theme } from "@/src/types/Contexts";
 
 export default function Index() {
   const { theme } = useThemeContext();

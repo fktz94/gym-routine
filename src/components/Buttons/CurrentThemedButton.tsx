@@ -1,7 +1,7 @@
+import { forwardRef } from "react";
 import { StyleSheet } from "react-native";
 import ThemedButton from "./ThemedButton";
-import { CurrentThemedButtonProps } from "../types/Components";
-import { forwardRef } from "react";
+import { CurrentThemedButtonProps } from "@/src/types/Components";
 
 const CurrentThemedButton = forwardRef(({ routineName, onPress }: CurrentThemedButtonProps, _) => {
   return (

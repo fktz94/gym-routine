@@ -1,11 +1,9 @@
-import { View, Text } from "react-native";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "./reactReduxHook";
 import { ResponseStatus } from "../types/Store";
 import { useIsFocused } from "@react-navigation/native";
 import { getAllRoutines } from "../store/Routines/RoutinesAsyncThunk";
 import { setIsInitialLoadToFalse } from "../store/Routines/RoutinesSlice";
-import useRoutines from "./useRoutines";
 
 const useIndex = () => {
   const dispatch = useAppDispatch();

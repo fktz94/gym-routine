@@ -1,6 +1,6 @@
 import { StyleSheet, View } from "react-native";
 import { useState } from "react";
-import ThemedButton from "../ThemedButton";
+import ThemedButton from "../Buttons/ThemedButton";
 import useNewRoutineContext from "@/src/contexts/NewRoutine/useNewRoutineContext";
 import useThemeContext from "@/src/contexts/Theme/useThemeContext";
 import FirstStep from "./FirstStep";

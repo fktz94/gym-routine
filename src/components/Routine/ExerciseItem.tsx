@@ -3,7 +3,7 @@ import useThemeContext from "@/src/contexts/Theme/useThemeContext";
 import { Colors } from "@/src/constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
-import ThemedButton from "../ThemedButton";
+import ThemedButton from "../Buttons/ThemedButton";
 import CustomSelectDropdown from "../CustomSelectDropdown";
 import { Exercise } from "@/src/types/Routines";
 import EditWeightModal from "./EditWeightModal";

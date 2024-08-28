@@ -3,9 +3,10 @@ import useThemeContext from "../contexts/Theme/useThemeContext";
 import { Colors } from "../constants/Colors";
 import { ThemedModalProps } from "../types/Components";
 import { Ionicons } from "@expo/vector-icons";
-import { AcceptButton, CancelButton } from "./ThemedButton";
 import CustomLoader from "./CustomLoader";
 import { Theme } from "../types/Contexts";
+import { CancelButton } from "./Buttons/CancelButton";
+import { AcceptButton } from "./Buttons/AcceptButton";
 
 const ThemedModal = ({
   isLoading = false,

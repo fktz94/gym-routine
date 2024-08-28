@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from "react-native";
 import ConfettiCannon from "react-native-confetti-cannon";
-import ThemedButton from "../components/ThemedButton";
+import ThemedButton from "../components/Buttons/ThemedButton";
 import useThemeContext from "../contexts/Theme/useThemeContext";
 import { router } from "expo-router";
 import { Colors } from "../constants/Colors";

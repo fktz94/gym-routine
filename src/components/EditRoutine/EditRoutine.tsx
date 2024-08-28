@@ -5,7 +5,7 @@ import useThemeContext from "@/src/contexts/Theme/useThemeContext";
 import EachDayItem from "./EachDayItem";
 import { Colors } from "@/src/constants/Colors";
 import useEditRoutineContext from "@/src/contexts/EditRoutine/useEditRoutineContext";
-import ThemedButton from "../ThemedButton";
+import ThemedButton from "../Buttons/ThemedButton";
 import { isEqual } from "lodash";
 import ConfirmEditRoutineModal from "./ConfirmEditRoutineModal";
 import { Theme } from "@/src/types/Contexts";

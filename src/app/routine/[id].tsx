@@ -1,6 +1,6 @@
 import CustomLoader from "@/src/components/CustomLoader";
 import RoutineDetails from "@/src/components/RoutineDetails";
-import ThemedButton, { AcceptButton } from "@/src/components/ThemedButton";
+import ThemedButton from "@/src/components/Buttons/ThemedButton";
 import { Colors } from "@/src/constants/Colors";
 import useHeaderContext from "@/src/contexts/Header/useHeaderContext";
 import RoutineProvider from "@/src/contexts/Routine/RoutineProvider";
@@ -15,6 +15,7 @@ import { useIsFocused } from "@react-navigation/native";
 import { Link, router, useLocalSearchParams } from "expo-router";
 import { useEffect } from "react";
 import { View, Text, StyleSheet, Alert } from "react-native";
+import { AcceptButton } from "@/src/components/Buttons/AcceptButton";
 
 export default function RoutineScreen() {
   const { toggleShowBackArrowButton } = useHeaderContext();
