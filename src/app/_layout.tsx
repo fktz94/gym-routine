@@ -36,11 +36,11 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider storedTheme={initialTheme}>
-      <HeaderProvider>
-        <Provider store={store}>
+      <Provider store={store}>
+        <HeaderProvider>
           <App />
-        </Provider>
-      </HeaderProvider>
+        </HeaderProvider>
+      </Provider>
     </ThemeProvider>
   );
 }

@@ -4,46 +4,19 @@ import useThemeContext from "@/src/contexts/Theme/useThemeContext";
 import { StyleSheet, Text, View } from "react-native";
 import RoutinesList from "@/src/components/RoutinesList";
 import useRoutines from "@/src/hooks/useRoutines";
-import { useAppDispatch, useAppSelector } from "../hooks/reactReduxHook";
-import { ResponseStatus } from "../types/Store";
-import { getAllRoutines } from "../store/Routines/RoutinesAsyncThunk";
-import { useEffect } from "react";
-import { setIsInitialLoadToFalse } from "../store/Routines/RoutinesSlice";
 import { Link } from "expo-router";
-import { useIsFocused } from "@react-navigation/native";
 import CustomLoader from "../components/CustomLoader";
 import CurrentRoutineButton from "../components/Index/CurrentRoutineButton";
 import { Theme } from "../types/Contexts";
+import useIndex from "../hooks/useIndex";
 
 export default function Index() {
   const { theme } = useThemeContext();
   const styles = indexStyles(theme);
-  const dispatch = useAppDispatch();
-
-  const { getAllRoutinesStatus, isGettingAllRoutines, isInitialLoad } = useAppSelector(
-    ({ routines }) => routines
-  );
-
-  const dataIsNotFetchedYet = getAllRoutinesStatus === ResponseStatus.IDLE;
-
-  const isFocused = useIsFocused();
-
-  const isLoading = isFocused && isGettingAllRoutines;
-
-  if (dataIsNotFetchedYet) {
-    dispatch(getAllRoutines());
-  }
-
-  useEffect(() => {
-    // This isInitialLoad logic is because of the whole stored data being fetched again instead having a DB hosted in a server an make proper API calls.
-    if (isInitialLoad && !isGettingAllRoutines && !dataIsNotFetchedYet) {
-      dispatch(setIsInitialLoadToFalse());
-    }
-  }, [isInitialLoad, isGettingAllRoutines, dataIsNotFetchedYet]);
 
   const { currentRoutine, pastRoutines, noRoutines } = useRoutines();
 
-  const renderLoader = dataIsNotFetchedYet || (isInitialLoad && isGettingAllRoutines) || isLoading;
+  const { renderLoader } = useIndex();
 
   return (
     <View style={styles.mainContainer}>
