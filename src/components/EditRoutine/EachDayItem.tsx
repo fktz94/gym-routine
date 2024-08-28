@@ -19,6 +19,8 @@ const EachDayItem = ({ dayIndex }: { dayIndex: number }) => {
   const { theme } = useThemeContext();
   const styles = secondStepStyles(theme);
 
+  // CREATE CUSTOM HOOK
+
   const [isCreating, setIsCreating] = useState(false);
   const startCreatingNewExercise = () => setIsCreating(true);
   const cancelCreatingNewExercise = () => {

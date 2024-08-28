@@ -16,10 +16,7 @@ const CreateOrEditExerciseModal = ({
   exerciseToEdit,
   handleOnAccept,
 }: CreateExerciseModalProps) => {
-  const { theme } = useThemeContext();
-
   // CONTINUE WORKING ON USING THIS COMPONENT ON EDIT ROUTINES AN EVERYWHERE AS POSSIBLE
-
   const {
     currentVariations,
     dropdownValues,
@@ -37,6 +34,7 @@ const CreateOrEditExerciseModal = ({
     variations,
   } = useCreateOrEditExercise({ exerciseToEdit });
 
+  const { theme } = useThemeContext();
   const styles = createOrEditExerciseModalStyles(theme, hasWeeksVariations);
 
   const repetitionsInputs = () => {

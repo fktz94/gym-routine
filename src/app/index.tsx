@@ -13,6 +13,7 @@ import { setIsInitialLoadToFalse } from "../store/Routines/RoutinesSlice";
 import { Link } from "expo-router";
 import { useIsFocused } from "@react-navigation/native";
 import CustomLoader from "../components/CustomLoader";
+import CurrentRoutineButton from "../components/Index/CurrentRoutineButton";
 
 export default function Index() {
   const { theme } = useThemeContext();
@@ -42,12 +43,6 @@ export default function Index() {
 
   const { currentRoutine, pastRoutines, noRoutines } = useRoutines();
 
-  const currentRoutineButton = () => {
-    if (!currentRoutine) return;
-    const { id, madeOn, name } = currentRoutine;
-    return <RoutineItemList id={id} madeOn={madeOn} routineName={name} isCurrent />;
-  };
-
   const renderLoader = dataIsNotFetchedYet || (isInitialLoad && isGettingAllRoutines) || isLoading;
 
   return (
@@ -62,7 +57,7 @@ export default function Index() {
           {currentRoutine && (
             <View style={styles.listContainer}>
               <Text style={styles.title}>Current routine</Text>
-              {currentRoutineButton()}
+              <CurrentRoutineButton currentRoutine={currentRoutine} />
             </View>
           )}
           {pastRoutines.length > 0 && (

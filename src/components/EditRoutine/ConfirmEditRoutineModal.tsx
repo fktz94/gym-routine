@@ -1,7 +1,5 @@
-import { Alert, Modal, StyleSheet, Text, View } from "react-native";
-import React, { useEffect } from "react";
-import { AcceptButton, CancelButton } from "../ThemedButton";
-import { Ionicons } from "@expo/vector-icons";
+import { Alert, StyleSheet, Text, View } from "react-native";
+import { useEffect } from "react";
 import useThemeContext from "@/src/contexts/Theme/useThemeContext";
 import { ConfirmCreateNewExerciseModalProps } from "@/src/types/Components";
 import { Colors } from "@/src/constants/Colors";
@@ -11,9 +9,11 @@ import { router } from "expo-router";
 import { editRoutine } from "@/src/store/Routines/RoutinesAsyncThunk";
 import { resetEditRoutineState } from "@/src/store/Routines/RoutinesSlice";
 import useEditRoutineContext from "@/src/contexts/EditRoutine/useEditRoutineContext";
-import CustomLoader from "../CustomLoader";
+import ThemedModal from "../ThemedModal";
 
 const ConfirmEditRoutineModal = ({ closeModal }: ConfirmCreateNewExerciseModalProps) => {
+  // CREATE CUSTOM HOOK
+
   const { theme } = useThemeContext();
   const styles = quitCreatingModalStyles(theme);
   const dispatch = useAppDispatch();
@@ -28,51 +28,33 @@ const ConfirmEditRoutineModal = ({ closeModal }: ConfirmCreateNewExerciseModalPr
 
   const isLoading = editRoutineStatus !== ResponseStatus.IDLE && isEditingRoutine;
 
+  const finishEdit = () => {
+    dispatch(resetEditRoutineState());
+    closeModal();
+    router.navigate(`/routine/${selectedRoutine.id}`);
+  };
+
   useEffect(() => {
     if (isLoading) return;
-
     if (editRoutineStatus === ResponseStatus.FULFILLED) {
-      dispatch(resetEditRoutineState());
-      closeModal();
-      router.navigate(`/routine/${selectedRoutine.id}`);
-    }
-
-    if (editRoutineErrorMessage) {
+      finishEdit();
+    } else if (editRoutineErrorMessage) {
       Alert.alert("Error!", editRoutineErrorMessage);
-      dispatch(resetEditRoutineState());
+      finishEdit();
     }
   }, [editRoutineStatus, isLoading]);
 
   return (
-    <Modal animationType="slide" transparent>
-      <View style={styles.container}>
-        {isEditingRoutine ? (
-          <CustomLoader />
-        ) : (
-          <>
-            <Ionicons
-              style={styles.closeIconBtn}
-              name="close"
-              color={Colors[theme].text}
-              size={30}
-              onPress={closeModal}
-            />
-            <View style={styles.exerciseContainer}>
-              <View style={styles.innerContainer}>
-                <View style={styles.innerTextContainer}>
-                  <Text style={styles.baseText}>Great! You're almost done!</Text>
-                  <Text style={styles.baseText}>Confirm modifications?</Text>
-                </View>
-                <View style={styles.buttonsContainer}>
-                  <CancelButton onCancel={closeModal} />
-                  <AcceptButton onAccept={handleCreateRoutine} />
-                </View>
-              </View>
-            </View>
-          </>
-        )}
+    <ThemedModal
+      closeModal={closeModal}
+      handleAccept={handleCreateRoutine}
+      isLoading={isEditingRoutine}
+    >
+      <View style={styles.innerTextContainer}>
+        <Text style={styles.baseText}>Great! You're almost done!</Text>
+        <Text style={styles.baseText}>Confirm modifications?</Text>
       </View>
-    </Modal>
+    </ThemedModal>
   );
 };
 
@@ -80,37 +62,6 @@ export default ConfirmEditRoutineModal;
 
 const quitCreatingModalStyles = (theme: Theme) =>
   StyleSheet.create({
-    closeIconBtn: {
-      position: "absolute",
-      right: 0,
-      top: 0,
-      padding: 10,
-      color: Colors[theme].background,
-    },
-    container: {
-      flex: 1,
-      alignItems: "center",
-      justifyContent: "center",
-      backgroundColor: Colors[theme].modalBackground,
-    },
-    exerciseContainer: {
-      width: "80%",
-      padding: 30,
-      backgroundColor: Colors[theme].background,
-      borderRadius: 10,
-      gap: 40,
-      elevation: 1,
-      shadowOffset: {
-        width: 0,
-        height: 1,
-      },
-      shadowOpacity: 0.18,
-      shadowRadius: 1.0,
-    },
-    innerContainer: {
-      gap: 40,
-      paddingVertical: 20,
-    },
     innerTextContainer: {
       margin: "auto",
       gap: 16,
@@ -121,5 +72,4 @@ const quitCreatingModalStyles = (theme: Theme) =>
       textAlign: "center",
       letterSpacing: 1,
     },
-    buttonsContainer: { flexDirection: "row", gap: 20, justifyContent: "center" },
   });
