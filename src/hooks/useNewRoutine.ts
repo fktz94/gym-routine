@@ -1,5 +1,4 @@
 import { useReducer, useState } from "react";
-import useThemeContext from "../contexts/Theme/useThemeContext";
 import { initialState, newRoutineReducers } from "../reducers/NewRoutine/newRoutineReducers";
 import {
   AddExercisePayloadType,
@@ -7,6 +6,7 @@ import {
   EditExercisePayloadType,
   NewRoutineActionsTypes,
 } from "../types/Reducers";
+import useHeaderContext from "../contexts/Header/useHeaderContext";
 
 const useNewRoutine = () => {
   const [step, setStep] = useState(0);
@@ -14,7 +14,7 @@ const useNewRoutine = () => {
 
   const [newRoutineState, dispatch] = useReducer(newRoutineReducers, initialState);
 
-  const { toggleShowBackArrowButton } = useThemeContext();
+  const { toggleShowBackArrowButton } = useHeaderContext();
 
   const handleStep = ({ direction }: { direction: "up" | "down" }) => {
     const goUp = direction === "up";

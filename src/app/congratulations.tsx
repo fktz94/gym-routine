@@ -5,9 +5,11 @@ import useThemeContext from "../contexts/Theme/useThemeContext";
 import { router } from "expo-router";
 import { Colors } from "../constants/Colors";
 import { Theme } from "../types/Contexts";
+import useHeaderContext from "../contexts/Header/useHeaderContext";
 
 const Congratulations = () => {
-  const { theme, toggleShowBackArrowButton } = useThemeContext();
+  const { toggleShowBackArrowButton } = useHeaderContext();
+  const { theme } = useThemeContext();
   const styles = congratulationsStyles(theme);
 
   const goHome = () => {

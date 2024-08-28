@@ -5,12 +5,14 @@ import { Colors } from "../constants/Colors";
 import { router, usePathname } from "expo-router";
 import QuitCreatingNewExerciseModal from "./NewRoutine/QuitCreatingNewExerciseModal";
 import { useState } from "react";
+import useHeaderContext from "../contexts/Header/useHeaderContext";
 
 export default function Header() {
   // Executes usePathname so the Header components subscribes to global navigation changes.
   const path = usePathname();
   const [showQuitModal, setShowQuitModal] = useState(false);
 
+  const { showBackArrowButton } = useHeaderContext();
   const { theme, toggleTheme } = useThemeContext();
   const iconName = theme === "light" ? "moon" : "sunny";
 

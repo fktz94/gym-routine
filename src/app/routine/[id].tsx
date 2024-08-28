@@ -2,6 +2,7 @@ import CustomLoader from "@/src/components/CustomLoader";
 import RoutineDetails from "@/src/components/RoutineDetails";
 import ThemedButton, { AcceptButton } from "@/src/components/ThemedButton";
 import { Colors } from "@/src/constants/Colors";
+import useHeaderContext from "@/src/contexts/Header/useHeaderContext";
 import RoutineProvider from "@/src/contexts/Routine/RoutineProvider";
 import useThemeContext from "@/src/contexts/Theme/useThemeContext";
 import { useAppDispatch, useAppSelector } from "@/src/hooks/reactReduxHook";
@@ -16,7 +17,8 @@ import { useEffect } from "react";
 import { View, Text, StyleSheet, Alert } from "react-native";
 
 export default function RoutineScreen() {
-  const { theme, toggleShowBackArrowButton } = useThemeContext();
+  const { toggleShowBackArrowButton } = useHeaderContext();
+  const { theme } = useThemeContext();
   const styles = routineDescriptionStyles(theme);
 
   const { id } = useLocalSearchParams<{ id: string }>();

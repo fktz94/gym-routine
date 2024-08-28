@@ -11,9 +11,11 @@ import { ResponseStatus } from "@/src/types/Store";
 import { router } from "expo-router";
 import ThemedModal from "../ThemedModal";
 import { Theme } from "@/src/types/Contexts";
+import useHeaderContext from "@/src/contexts/Header/useHeaderContext";
 
 const ConfirmCreateNewRoutineModal = ({ closeModal }: ConfirmCreateNewExerciseModalProps) => {
-  const { theme, toggleShowBackArrowButton } = useThemeContext();
+  const { toggleShowBackArrowButton } = useHeaderContext();
+  const { theme } = useThemeContext();
   const styles = confirmCreateNewRoutineModalStyle(theme);
 
   const dispatch = useAppDispatch();

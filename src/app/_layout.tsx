@@ -7,6 +7,8 @@ import { useColorScheme } from "react-native";
 import { Provider } from "react-redux";
 import { store } from "@/src/store/store";
 import App from "@/src/components/App";
+import HeaderProvider from "../contexts/Header/HeaderProvider";
+import { Theme } from "../types/Contexts";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -34,9 +36,11 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider storedTheme={initialTheme}>
-      <Provider store={store}>
-        <App />
-      </Provider>
+      <HeaderProvider>
+        <Provider store={store}>
+          <App />
+        </Provider>
+      </HeaderProvider>
     </ThemeProvider>
   );
 }
