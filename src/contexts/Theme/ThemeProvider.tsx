@@ -1,5 +1,6 @@
 import useTheme from "@/src/hooks/useTheme";
 import ThemeContext from "./ThemeContext";
+import { Theme } from "@/src/types/Contexts";
 
 type Props = {
   storedTheme: Theme;
@@ -7,13 +8,6 @@ type Props = {
 };
 
 export default function ThemeProvider({ children, storedTheme }: Props) {
-  const { theme, toggleTheme, showBackArrowButton, toggleShowBackArrowButton } =
-    useTheme(storedTheme);
-  return (
-    <ThemeContext.Provider
-      value={{ theme, toggleTheme, showBackArrowButton, toggleShowBackArrowButton }}
-    >
-      {children}
-    </ThemeContext.Provider>
-  );
+  const { theme, toggleTheme } = useTheme(storedTheme);
+  return <ThemeContext.Provider value={{ theme, toggleTheme }}>{children}</ThemeContext.Provider>;
 }

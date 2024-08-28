@@ -3,6 +3,7 @@ import NewDayItem from "./NewDayItem";
 import { Colors } from "@/src/constants/Colors";
 import useThemeContext from "@/src/contexts/Theme/useThemeContext";
 import useNewRoutineContext from "@/src/contexts/NewRoutine/useNewRoutineContext";
+import { Theme } from "@/src/types/Contexts";
 
 const SecondStep = () => {
   const { theme } = useThemeContext();

@@ -1,9 +1,9 @@
 import { storeTheme } from "@/src/utils/AsyncStorage/Theme";
 import { useState } from "react";
+import { Theme } from "../types/Contexts";
 
 const useTheme = (storedTheme: Theme) => {
   const [theme, setTheme] = useState(storedTheme);
-  const [showBackArrowButton, setShowBackArrowButton] = useState(true);
 
   const toggleTheme = () => {
     const newTheme = theme === "dark" ? "light" : "dark";
@@ -11,11 +11,7 @@ const useTheme = (storedTheme: Theme) => {
     setTheme(newTheme);
   };
 
-  const toggleShowBackArrowButton = (val: boolean) => {
-    setShowBackArrowButton(val);
-  };
-
-  return { theme, toggleTheme, showBackArrowButton, toggleShowBackArrowButton };
+  return { theme, toggleTheme };
 };
 
 export default useTheme;

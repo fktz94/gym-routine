@@ -11,6 +11,7 @@ import { ResponseStatus } from "@/src/types/Store";
 import { resetModifiyExerciseState } from "@/src/store/Routines/RoutinesSlice";
 import useThemeContext from "@/src/contexts/Theme/useThemeContext";
 import ThemedModal from "../ThemedModal";
+import { Theme } from "@/src/types/Contexts";
 
 const EditWeightModal = ({
   closeModal,

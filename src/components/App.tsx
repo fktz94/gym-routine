@@ -5,6 +5,7 @@ import useThemeContext from "@/src/contexts/Theme/useThemeContext";
 import { Colors } from "@/src/constants/Colors";
 import { StatusBar } from "expo-status-bar";
 import Header from "@/src/components/Header";
+import { Theme } from "../types/Contexts";
 
 export default function App() {
   const { theme } = useThemeContext();

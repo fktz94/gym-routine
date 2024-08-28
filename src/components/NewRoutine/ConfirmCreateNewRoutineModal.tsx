@@ -10,6 +10,7 @@ import { resetCreateRoutineState } from "@/src/store/Routines/RoutinesSlice";
 import { ResponseStatus } from "@/src/types/Store";
 import { router } from "expo-router";
 import ThemedModal from "../ThemedModal";
+import { Theme } from "@/src/types/Contexts";
 
 const ConfirmCreateNewRoutineModal = ({ closeModal }: ConfirmCreateNewExerciseModalProps) => {
   const { theme, toggleShowBackArrowButton } = useThemeContext();

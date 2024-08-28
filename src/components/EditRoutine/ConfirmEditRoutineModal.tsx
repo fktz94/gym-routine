@@ -10,6 +10,7 @@ import { editRoutine } from "@/src/store/Routines/RoutinesAsyncThunk";
 import { resetEditRoutineState } from "@/src/store/Routines/RoutinesSlice";
 import useEditRoutineContext from "@/src/contexts/EditRoutine/useEditRoutineContext";
 import ThemedModal from "../ThemedModal";
+import { Theme } from "@/src/types/Contexts";
 
 const ConfirmEditRoutineModal = ({ closeModal }: ConfirmCreateNewExerciseModalProps) => {
   // CREATE CUSTOM HOOK

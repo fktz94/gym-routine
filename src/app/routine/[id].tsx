@@ -8,6 +8,7 @@ import { useAppDispatch, useAppSelector } from "@/src/hooks/reactReduxHook";
 import useRoutineDescription from "@/src/hooks/useRoutineDescription";
 import { concludeRoutineDay } from "@/src/store/Routines/RoutinesAsyncThunk";
 import { resetConcludeExerciseState } from "@/src/store/Routines/RoutinesSlice";
+import { Theme } from "@/src/types/Contexts";
 import { ResponseStatus } from "@/src/types/Store";
 import { useIsFocused } from "@react-navigation/native";
 import { Link, router, useLocalSearchParams } from "expo-router";

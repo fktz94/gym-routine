@@ -9,6 +9,7 @@ import RepetitionInput from "./RepetitionInput";
 import ThemedModal from "../ThemedModal";
 import CustomSelectDropdown from "../CustomSelectDropdown";
 import useCreateOrEditExercise from "@/src/hooks/useCreateOrEditExercise";
+import { Theme } from "@/src/types/Contexts";
 
 const CreateOrEditExerciseModal = ({
   closeModal,

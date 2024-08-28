@@ -8,6 +8,7 @@ import useEditRoutineContext from "@/src/contexts/EditRoutine/useEditRoutineCont
 import ThemedButton from "../ThemedButton";
 import { isEqual } from "lodash";
 import ConfirmEditRoutineModal from "./ConfirmEditRoutineModal";
+import { Theme } from "@/src/types/Contexts";
 
 const EditRoutine = () => {
   const { theme } = useThemeContext();

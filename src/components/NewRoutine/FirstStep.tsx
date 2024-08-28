@@ -4,6 +4,7 @@ import { Colors } from "@/src/constants/Colors";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import useNewRoutineContext from "@/src/contexts/NewRoutine/useNewRoutineContext";
 import CustomSelectDropdown from "../CustomSelectDropdown";
+import { Theme } from "@/src/types/Contexts";
 
 const FirstStep = () => {
   const { theme } = useThemeContext();

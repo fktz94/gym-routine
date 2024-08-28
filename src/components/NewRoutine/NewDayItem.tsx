@@ -14,6 +14,7 @@ import useNewRoutineContext from "@/src/contexts/NewRoutine/useNewRoutineContext
 import { NewExerciseItemTitle, NewExerciseItem } from "./NewExerciseItem";
 import Animated, { useAnimatedStyle, withTiming } from "react-native-reanimated";
 import CreateOrEditExerciseModal from "../CreateOrEditExerciseModal/CreateOrEditExerciseModal";
+import { Theme } from "@/src/types/Contexts";
 
 // CREATE NEW DAY ITEM COMPONENT AND HOOK
 

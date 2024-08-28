@@ -3,6 +3,7 @@ import useThemeContext from "@/src/contexts/Theme/useThemeContext";
 import { QuitCreatingNewExerciseModalProps } from "@/src/types/Components";
 import { Colors } from "@/src/constants/Colors";
 import ThemedModal from "../ThemedModal";
+import { Theme } from "@/src/types/Contexts";
 
 const QuitCreatingNewExerciseModal = ({ accept, cancel }: QuitCreatingNewExerciseModalProps) => {
   const { theme } = useThemeContext();

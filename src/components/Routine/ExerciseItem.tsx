@@ -7,6 +7,7 @@ import ThemedButton from "../ThemedButton";
 import CustomSelectDropdown from "../CustomSelectDropdown";
 import { Exercise } from "@/src/types/Routines";
 import EditWeightModal from "./EditWeightModal";
+import { Theme } from "@/src/types/Contexts";
 
 export const ExerciseItemTitle = () => {
   const { theme } = useThemeContext();

@@ -14,6 +14,7 @@ import Animated, { useAnimatedStyle, withTiming } from "react-native-reanimated"
 import useEditRoutineContext from "@/src/contexts/EditRoutine/useEditRoutineContext";
 import { EditExerciseItem, EditExerciseItemTitle } from "./ExerciseListItem";
 import CreateOrEditExerciseModal from "../CreateOrEditExerciseModal/CreateOrEditExerciseModal";
+import { Theme } from "@/src/types/Contexts";
 
 const EachDayItem = ({ dayIndex }: { dayIndex: number }) => {
   const { theme } = useThemeContext();

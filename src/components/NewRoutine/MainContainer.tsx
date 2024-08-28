@@ -6,6 +6,7 @@ import useThemeContext from "@/src/contexts/Theme/useThemeContext";
 import FirstStep from "./FirstStep";
 import SecondStep from "./SecondStep";
 import ConfirmCreateNewRoutineModal from "./ConfirmCreateNewRoutineModal";
+import { Theme } from "@/src/types/Contexts";
 
 const MainContainer = () => {
   const { theme } = useThemeContext();

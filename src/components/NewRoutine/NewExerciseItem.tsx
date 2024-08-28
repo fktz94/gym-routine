@@ -5,6 +5,7 @@ import useThemeContext from "@/src/contexts/Theme/useThemeContext";
 import { Colors } from "@/src/constants/Colors";
 import useNewRoutineContext from "@/src/contexts/NewRoutine/useNewRoutineContext";
 import CreateOrEditExerciseModal from "../CreateOrEditExerciseModal/CreateOrEditExerciseModal";
+import { Theme } from "@/src/types/Contexts";
 
 export const NewExerciseItem = ({
   exerciseData,

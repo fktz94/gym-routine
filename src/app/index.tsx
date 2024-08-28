@@ -3,7 +3,6 @@ import { Colors } from "@/src/constants/Colors";
 import useThemeContext from "@/src/contexts/Theme/useThemeContext";
 import { StyleSheet, Text, View } from "react-native";
 import RoutinesList from "@/src/components/RoutinesList";
-import RoutineItemList from "@/src/components/RoutineItemList";
 import useRoutines from "@/src/hooks/useRoutines";
 import { useAppDispatch, useAppSelector } from "../hooks/reactReduxHook";
 import { ResponseStatus } from "../types/Store";
@@ -14,6 +13,7 @@ import { Link } from "expo-router";
 import { useIsFocused } from "@react-navigation/native";
 import CustomLoader from "../components/CustomLoader";
 import CurrentRoutineButton from "../components/Index/CurrentRoutineButton";
+import { Theme } from "../types/Contexts";
 
 export default function Index() {
   const { theme } = useThemeContext();

@@ -4,6 +4,7 @@ import useThemeContext from "../contexts/Theme/useThemeContext";
 import { AcceptButtonProps, CancelButtonProps, ThemedButtonProps } from "../types/Components";
 import { forwardRef } from "react";
 import { Text, TouchableOpacity, StyleSheet } from "react-native";
+import { Theme } from "../types/Contexts";
 
 const ThemedButton = forwardRef(
   (

@@ -11,7 +11,7 @@ export default function Header() {
   const path = usePathname();
   const [showQuitModal, setShowQuitModal] = useState(false);
 
-  const { theme, toggleTheme, showBackArrowButton } = useThemeContext();
+  const { theme, toggleTheme } = useThemeContext();
   const iconName = theme === "light" ? "moon" : "sunny";
 
   const canGoBack = router.canGoBack();

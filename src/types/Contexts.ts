@@ -30,3 +30,15 @@ export interface EditRoutineContextProps {
   isCurrent: boolean;
   handleName: (val: string) => void;
 }
+
+export type Theme = "light" | "dark";
+
+export type ThemeValueType = {
+  theme: Theme;
+  toggleTheme: () => void;
+} | null;
+
+export type HeaderContextType = {
+  showBackArrowButton: boolean;
+  toggleShowBackArrowButton: (val: boolean) => void;
+} | null;

@@ -4,6 +4,7 @@ import ThemedButton from "../components/ThemedButton";
 import useThemeContext from "../contexts/Theme/useThemeContext";
 import { router } from "expo-router";
 import { Colors } from "../constants/Colors";
+import { Theme } from "../types/Contexts";
 
 const Congratulations = () => {
   const { theme, toggleShowBackArrowButton } = useThemeContext();

@@ -7,6 +7,7 @@ import ThemedButton from "./ThemedButton";
 import { RoutinesItemListProps } from "../types/Components";
 import { Colors } from "../constants/Colors";
 import ConfirmDeleteRoutineModal from "./ConfirmDeleteRoutineModal";
+import { Theme } from "../types/Contexts";
 
 export default function RoutineItemList({
   routineName,

@@ -4,6 +4,7 @@ import SelectDropdown from "react-native-select-dropdown";
 import { CustomSelectDropdownProps } from "../types/Components";
 import useThemeContext from "../contexts/Theme/useThemeContext";
 import { Colors } from "../constants/Colors";
+import { Theme } from "../types/Contexts";
 
 const CustomSelectDropdown = ({
   data,
