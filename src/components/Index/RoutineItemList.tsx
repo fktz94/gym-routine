@@ -1,5 +1,5 @@
-import { useRef, useState } from "react";
-import { View, Text, StyleSheet, PanResponder, Animated, TouchableOpacity } from "react-native";
+import { useState } from "react";
+import { Text, StyleSheet } from "react-native";
 import { Link } from "expo-router";
 import ConfirmDeleteRoutineModal from "./ConfirmDeleteRoutineModal";
 import CurrentThemedButton from "../Buttons/CurrentThemedButton";
@@ -8,6 +8,8 @@ import { Colors } from "@/src/constants/Colors";
 import useThemeContext from "@/src/contexts/Theme/useThemeContext";
 import { RoutinesItemListProps } from "@/src/types/Components";
 import { Theme } from "@/src/types/Contexts";
+import DeleteAnimation from "../Animations/DeleteAnimation";
+import useDeleteAnimation from "@/src/hooks/useDeleteAnimation";
 
 export default function RoutineItemList({
   routineName,
@@ -18,64 +20,39 @@ export default function RoutineItemList({
   const { theme } = useThemeContext();
   const styles = routinesListStyles(theme, isCurrent);
 
+  const { panResponder, translateX, animateBackToTheBeginning } = useDeleteAnimation();
+
   const [isDeleting, setIsDeleting] = useState(false);
+  const handleOpenModal = () => setIsDeleting(true);
   const handleCloseModal = () => {
-    Animated.spring(translateX, {
-      toValue: 0,
-      useNativeDriver: true,
-    }).start();
+    animateBackToTheBeginning();
     setIsDeleting(false);
   };
-  const handleOpenModal = () => setIsDeleting(true);
-
-  const translateX = useRef(new Animated.Value(0)).current;
-  const panResponder = useRef(
-    PanResponder.create({
-      onStartShouldSetPanResponder: () => true,
-      onMoveShouldSetPanResponder: () => true,
-      onPanResponderMove: (_, gestureState) => {
-        if (gestureState.dx < 0 && gestureState.dx > -70) {
-          translateX.setValue(gestureState.dx);
-        }
-      },
-      onPanResponderRelease: (_, gestureState) => {
-        if (gestureState.dx < -30) {
-          Animated.spring(translateX, {
-            toValue: -70,
-            useNativeDriver: true,
-          }).start();
-        } else {
-          Animated.spring(translateX, {
-            toValue: 0,
-            useNativeDriver: true,
-          }).start();
-        }
-      },
-    })
-  ).current;
 
   return (
     <>
       {isDeleting && (
         <ConfirmDeleteRoutineModal id={id} name={routineName} closeModal={handleCloseModal} />
       )}
-      <View style={styles.itemList} {...panResponder.panHandlers}>
-        <Animated.View style={{ transform: [{ translateX }] }}>
-          <Link href={`/routine/${id}`} asChild>
-            {isCurrent ? (
-              <CurrentThemedButton routineName={routineName} />
-            ) : (
-              <ThemedButton>{routineName}</ThemedButton>
-            )}
-          </Link>
-          <Text style={styles.madeOnText}>
-            Made on <Text style={styles.bold}>{madeOn}</Text>
-          </Text>
-          <TouchableOpacity style={styles.deleteButton} onPress={handleOpenModal}>
-            <Text style={styles.deleteButtonText}>Delete</Text>
-          </TouchableOpacity>
-        </Animated.View>
-      </View>
+      <DeleteAnimation
+        containerViewStyles={styles.itemList}
+        isCurrent={isCurrent}
+        isRoutine
+        onDelete={handleOpenModal}
+        panResponder={panResponder}
+        translateX={translateX}
+      >
+        <Link href={`/routine/${id}`} asChild>
+          {isCurrent ? (
+            <CurrentThemedButton routineName={routineName} />
+          ) : (
+            <ThemedButton>{routineName}</ThemedButton>
+          )}
+        </Link>
+        <Text style={styles.madeOnText}>
+          Made on <Text style={styles.bold}>{madeOn}</Text>
+        </Text>
+      </DeleteAnimation>
     </>
   );
 }

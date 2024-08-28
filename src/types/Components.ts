@@ -1,5 +1,5 @@
 import { PropsWithChildren, ReactNode } from "react";
-import { TextStyle, ViewStyle } from "react-native";
+import { Animated, PanResponderInstance, TextStyle, ViewProps, ViewStyle } from "react-native";
 import { Exercise, Routine, WeightsAndRepetitions } from "./Routines";
 
 export interface ThemedButtonProps {
@@ -128,4 +128,17 @@ export interface RepetitionInputProps {
   isCustomRepetitions: boolean;
   handleRepetitionValues: (val: string, i: number) => void;
   hasWeeksVariations: boolean;
+}
+
+export interface DeleteButtonProps {
+  onDelete: () => void;
+  isRoutine?: boolean;
+  isCurrent?: boolean;
+}
+
+export interface DeleteAnimationProps extends PropsWithChildren, DeleteButtonProps {
+  containerViewStyles?: ViewStyle;
+  animatedViewStyles?: ViewStyle;
+  panResponder: PanResponderInstance;
+  translateX: Animated.Value;
 }

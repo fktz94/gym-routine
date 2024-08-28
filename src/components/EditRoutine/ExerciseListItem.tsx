@@ -1,11 +1,13 @@
-import { StyleSheet, Text, View, PanResponder, TouchableOpacity, Animated } from "react-native";
-import { useRef, useState } from "react";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { useState } from "react";
 import { ExerciseItemProps } from "@/src/types/Components";
 import useThemeContext from "@/src/contexts/Theme/useThemeContext";
 import { Colors } from "@/src/constants/Colors";
 import useEditRoutineContext from "@/src/contexts/EditRoutine/useEditRoutineContext";
 import CreateOrEditExerciseModal from "../CreateOrEditExerciseModal/CreateOrEditExerciseModal";
 import { Theme } from "@/src/types/Contexts";
+import DeleteAnimation from "../Animations/DeleteAnimation";
+import useDeleteAnimation from "@/src/hooks/useDeleteAnimation";
 
 export const EditExerciseItem = ({
   exerciseData,
@@ -21,7 +23,6 @@ export const EditExerciseItem = ({
   const exerciseRepetitions = weightsAndRepetitions.map((el) => el.qty).join(" / ");
 
   const [isEditing, setIsEditing] = useState(false);
-
   const openEditExerciseModal = () => setIsEditing(true);
   const closeEditExerciseModal = () => setIsEditing(false);
 
@@ -32,43 +33,12 @@ export const EditExerciseItem = ({
 
   if (!selectedExercise) return null;
 
+  const { panResponder, translateX } = useDeleteAnimation();
+
   const deleteExercise = () => {
     if ((dayIndex !== 0 && !dayIndex) || (exerciseIndex !== 0 && !exerciseIndex)) return;
     handleDeleteOneExercise({ dayIndex, exerciseIndex });
   };
-
-  const translateX = useRef(new Animated.Value(0)).current;
-
-  const panResponder = useRef(
-    PanResponder.create({
-      onStartShouldSetPanResponder: () => true,
-      onMoveShouldSetPanResponder: () => true,
-      onPanResponderMove: (_, gestureState) => {
-        if (gestureState.dx < 0 && gestureState.dx > -70) {
-          translateX.setValue(gestureState.dx);
-        }
-      },
-      onPanResponderRelease: (_, gestureState) => {
-        if (gestureState.dx < -30) {
-          Animated.spring(translateX, {
-            toValue: -70,
-            useNativeDriver: true,
-          }).start();
-        } else {
-          Animated.spring(translateX, {
-            toValue: 0,
-            useNativeDriver: true,
-          }).start();
-        }
-      },
-    })
-  ).current;
-
-  const deleteButton = () => (
-    <TouchableOpacity style={styles.deleteButton} onPress={deleteExercise}>
-      <Text style={styles.deleteButtonText}>Delete</Text>
-    </TouchableOpacity>
-  );
 
   return (
     <>
@@ -80,27 +50,26 @@ export const EditExerciseItem = ({
           exerciseToEdit={selectedExercise}
         />
       )}
-      <View style={[styles.exerciseItem, style]} {...panResponder.panHandlers}>
-        <Animated.View style={{ transform: [{ translateX }] }}>
-          <TouchableOpacity
-            style={{ flex: 1, flexDirection: "row" }}
-            onPress={openEditExerciseModal}
+      <DeleteAnimation
+        onDelete={deleteExercise}
+        panResponder={panResponder}
+        translateX={translateX}
+        containerViewStyles={{ ...styles.exerciseItem, ...style }}
+      >
+        <TouchableOpacity style={{ flex: 1, flexDirection: "row" }} onPress={openEditExerciseModal}>
+          <Text style={[styles.exerciseItemText, styles.exerciseName, styles.exerciseElement]}>
+            {name}
+          </Text>
+          <Text style={[styles.exerciseItemText, styles.exerciseSets, styles.exerciseElement]}>
+            {sets}
+          </Text>
+          <Text
+            style={[styles.exerciseItemText, styles.exerciseRepetitions, styles.exerciseElement]}
           >
-            <Text style={[styles.exerciseItemText, styles.exerciseName, styles.exerciseElement]}>
-              {name}
-            </Text>
-            <Text style={[styles.exerciseItemText, styles.exerciseSets, styles.exerciseElement]}>
-              {sets}
-            </Text>
-            <Text
-              style={[styles.exerciseItemText, styles.exerciseRepetitions, styles.exerciseElement]}
-            >
-              {exerciseRepetitions}
-            </Text>
-          </TouchableOpacity>
-          {deleteButton()}
-        </Animated.View>
-      </View>
+            {exerciseRepetitions}
+          </Text>
+        </TouchableOpacity>
+      </DeleteAnimation>
     </>
   );
 };
@@ -147,20 +116,5 @@ const editExerciseItemStyles = (theme: Theme) =>
       color: Colors[theme].primary,
       textAlignVertical: "center",
       paddingVertical: 10,
-    },
-    deleteButton: {
-      backgroundColor: Colors.cancelBackground,
-      justifyContent: "center",
-      position: "absolute",
-      width: 70,
-      height: "100%",
-      right: -70,
-    },
-    deleteButtonText: {
-      textAlign: "center",
-      fontSize: 14,
-      fontWeight: "bold",
-      letterSpacing: 1,
-      color: Colors.light.background,
     },
   });
