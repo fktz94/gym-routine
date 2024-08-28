@@ -1,4 +1,4 @@
-import { ActivityIndicator, Alert, Modal, StyleSheet, Text, View } from "react-native";
+import { Alert, Modal, StyleSheet, Text, View } from "react-native";
 import React, { useEffect } from "react";
 import { AcceptButton, CancelButton } from "../ThemedButton";
 import { Ionicons } from "@expo/vector-icons";
@@ -11,13 +11,14 @@ import { router } from "expo-router";
 import { editRoutine } from "@/src/store/Routines/RoutinesAsyncThunk";
 import { resetEditRoutineState } from "@/src/store/Routines/RoutinesSlice";
 import useEditRoutineContext from "@/src/contexts/EditRoutine/useEditRoutineContext";
+import CustomLoader from "../CustomLoader";
 
 const ConfirmEditRoutineModal = ({ closeModal }: ConfirmCreateNewExerciseModalProps) => {
   const { theme } = useThemeContext();
   const styles = quitCreatingModalStyles(theme);
   const dispatch = useAppDispatch();
   const { isEditingRoutine, editRoutineErrorMessage, editRoutineStatus } = useAppSelector(
-    (state) => state.routines
+    ({ routines }) => routines
   );
   const { selectedRoutine, toCurrent } = useEditRoutineContext();
 
@@ -46,7 +47,7 @@ const ConfirmEditRoutineModal = ({ closeModal }: ConfirmCreateNewExerciseModalPr
     <Modal animationType="slide" transparent>
       <View style={styles.container}>
         {isEditingRoutine ? (
-          <ActivityIndicator size={80} color={Colors[theme].secondary} />
+          <CustomLoader />
         ) : (
           <>
             <Ionicons

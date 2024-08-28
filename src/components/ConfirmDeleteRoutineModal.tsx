@@ -1,7 +1,5 @@
-import { ActivityIndicator, Alert, Modal, StyleSheet, Text, View } from "react-native";
+import { Alert, StyleSheet, Text, View } from "react-native";
 import { useEffect } from "react";
-import { AcceptButton, CancelButton } from "./ThemedButton";
-import { Ionicons } from "@expo/vector-icons";
 import useThemeContext from "@/src/contexts/Theme/useThemeContext";
 import { ConfirmDeleteRoutineModalProps } from "@/src/types/Components";
 import { Colors } from "@/src/constants/Colors";

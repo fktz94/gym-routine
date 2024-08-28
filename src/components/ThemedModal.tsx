@@ -1,9 +1,10 @@
-import { ActivityIndicator, Modal, StyleSheet, Text, View } from "react-native";
+import { Modal, StyleSheet, View } from "react-native";
 import useThemeContext from "../contexts/Theme/useThemeContext";
 import { Colors } from "../constants/Colors";
 import { ThemedModalProps } from "../types/Components";
 import { Ionicons } from "@expo/vector-icons";
 import { AcceptButton, CancelButton } from "./ThemedButton";
+import CustomLoader from "./CustomLoader";
 
 const ThemedModal = ({
   isLoading = false,
@@ -20,7 +21,7 @@ const ThemedModal = ({
     <Modal animationType="slide" transparent>
       <View style={styles.container}>
         {isLoading ? (
-          <ActivityIndicator size={80} color={Colors[theme].secondary} />
+          <CustomLoader />
         ) : (
           <>
             <Ionicons

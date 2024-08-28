@@ -1,7 +1,7 @@
 import ThemedButton from "@/src/components/ThemedButton";
 import { Colors } from "@/src/constants/Colors";
 import useThemeContext from "@/src/contexts/Theme/useThemeContext";
-import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import RoutinesList from "@/src/components/RoutinesList";
 import RoutineItemList from "@/src/components/RoutineItemList";
 import useRoutines from "@/src/hooks/useRoutines";
@@ -12,6 +12,7 @@ import { useEffect } from "react";
 import { setIsInitialLoadToFalse } from "../store/Routines/RoutinesSlice";
 import { Link } from "expo-router";
 import { useIsFocused } from "@react-navigation/native";
+import CustomLoader from "../components/CustomLoader";
 
 export default function Index() {
   const { theme } = useThemeContext();
@@ -52,11 +53,7 @@ export default function Index() {
   return (
     <View style={styles.mainContainer}>
       {renderLoader ? (
-        <ActivityIndicator
-          size={80}
-          color={Colors[theme].secondary}
-          style={{ marginVertical: "auto" }}
-        />
+        <CustomLoader style={{ marginVertical: "auto" }} />
       ) : (
         <>
           <Link href={`/new-routine`} asChild>

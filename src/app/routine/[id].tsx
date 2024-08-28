@@ -1,3 +1,4 @@
+import CustomLoader from "@/src/components/CustomLoader";
 import RoutineDetails from "@/src/components/RoutineDetails";
 import ThemedButton, { AcceptButton } from "@/src/components/ThemedButton";
 import { Colors } from "@/src/constants/Colors";
@@ -11,7 +12,7 @@ import { ResponseStatus } from "@/src/types/Store";
 import { useIsFocused } from "@react-navigation/native";
 import { Link, router, useLocalSearchParams } from "expo-router";
 import { useEffect } from "react";
-import { View, Text, StyleSheet, ActivityIndicator, Alert } from "react-native";
+import { View, Text, StyleSheet, Alert } from "react-native";
 
 export default function RoutineScreen() {
   const { theme, toggleShowBackArrowButton } = useThemeContext();
@@ -92,7 +93,7 @@ export default function RoutineScreen() {
         <Text style={styles.routineName}>{routine?.name}</Text>
         <View style={styles.daysButtonsContainer}>{daysButtons()}</View>
         {isLoading ? (
-          <ActivityIndicator style={{ marginTop: 100 }} size={80} color={Colors[theme].secondary} />
+          <CustomLoader style={{ marginTop: 100 }} />
         ) : isDayEmpty ? (
           emptyDayText()
         ) : (
