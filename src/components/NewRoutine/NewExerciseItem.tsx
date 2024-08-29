@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import DeleteAnimation from "../Animations/DeleteAnimation";
 import CreateOrEditExerciseModal from "../CreateOrEditExerciseModal/CreateOrEditExerciseModal";
@@ -6,6 +5,7 @@ import { Colors } from "@/src/constants/Colors";
 import useNewRoutineContext from "@/src/contexts/NewRoutine/useNewRoutineContext";
 import useThemeContext from "@/src/contexts/Theme/useThemeContext";
 import useDeleteAnimation from "@/src/hooks/useDeleteAnimation";
+import useModal from "@/src/hooks/useModal";
 import { ExerciseItemProps } from "@/src/types/Components";
 import { Theme } from "@/src/types/Contexts";
 
@@ -21,9 +21,7 @@ export const NewExerciseItem = ({
   const { name, sets, weightsAndRepetitions } = exerciseData;
   const exerciseRepetitions = weightsAndRepetitions.map((el) => el.qty).join(" / ");
 
-  const [isEditing, setIsEditing] = useState(false);
-  const openEditExerciseModal = () => setIsEditing(true);
-  const closeEditExerciseModal = () => setIsEditing(false);
+  const { closeModal, isModalOpen: isEditing, openModal } = useModal();
 
   const { handleDeleteOneExercise, handleEditOneExercise } = useNewRoutineContext();
 
@@ -38,7 +36,7 @@ export const NewExerciseItem = ({
     <>
       {isEditing && (
         <CreateOrEditExerciseModal
-          closeModal={closeEditExerciseModal}
+          closeModal={closeModal}
           dayIndex={dayIndex}
           exerciseToEdit={exerciseData}
           handleOnAccept={handleEditOneExercise} // check how to solve this type error
@@ -52,7 +50,7 @@ export const NewExerciseItem = ({
         animatedViewStyles={{ flex: 1, flexDirection: "row" }}
         onDelete={deleteExercise}
       >
-        <TouchableOpacity style={{ flex: 1, flexDirection: "row" }} onPress={openEditExerciseModal}>
+        <TouchableOpacity style={{ flex: 1, flexDirection: "row" }} onPress={openModal}>
           <Text style={[styles.exerciseItemText, styles.exerciseName, styles.exerciseElement]}>
             {name}
           </Text>

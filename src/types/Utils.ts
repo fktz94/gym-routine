@@ -27,3 +27,8 @@ export interface ConcludeDayRoutineUtilsProps {
   dayIndex: number;
   prevRoutinesData: Routine;
 }
+
+export enum Path {
+  NEWROUTINE = "/new-routine",
+  EDITROUTINE = "/edit-routine",
+}

@@ -1,14 +1,18 @@
 import { StyleSheet, Text, TextInput, View } from "react-native";
-import useThemeContext from "@/src/contexts/Theme/useThemeContext";
-import { Colors } from "@/src/constants/Colors";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
-import useNewRoutineContext from "@/src/contexts/NewRoutine/useNewRoutineContext";
+import ProcceedQuittingModal from "../ProcceedQuittingModal";
 import CustomSelectDropdown from "../CustomSelectDropdown";
+import { Colors } from "@/src/constants/Colors";
+import useHeaderContext from "@/src/contexts/Header/useHeaderContext";
+import useNewRoutineContext from "@/src/contexts/NewRoutine/useNewRoutineContext";
+import useThemeContext from "@/src/contexts/Theme/useThemeContext";
 import { Theme } from "@/src/types/Contexts";
 
 const FirstStep = () => {
   const { theme } = useThemeContext();
   const styles = firstStepStyles(theme);
+
+  const { showQuitModal } = useHeaderContext();
 
   const { handleName, handleDays, newRoutineState, hasWarmUpRoutine, toggleWarmUpRoutine } =
     useNewRoutineContext();
@@ -20,31 +24,38 @@ const FirstStep = () => {
   const defaultValue = daysDropdownValues[data.length - 1];
 
   return (
-    <View style={styles.mainContainer}>
-      <View style={styles.container}>
-        <Text style={styles.title}>First, give it a name.</Text>
-        <Text style={styles.subtitle}>(Normally, the month's name)</Text>
-        <TextInput value={name} onChangeText={handleName} style={styles.textInput} />
+    <>
+      {showQuitModal && <ProcceedQuittingModal />}
+      <View style={styles.mainContainer}>
+        <View style={styles.container}>
+          <Text style={styles.title}>First, give it a name.</Text>
+          <Text style={styles.subtitle}>(Normally, the month's name)</Text>
+          <TextInput value={name} onChangeText={handleName} style={styles.textInput} />
+        </View>
+        <View style={styles.container}>
+          <Text style={styles.title}>
+            Then, select how many days per week will the routine have.
+          </Text>
+          <CustomSelectDropdown
+            data={daysDropdownValues}
+            defaultValue={defaultValue}
+            onSelect={handleDays}
+          />
+        </View>
+        <View style={styles.checkboxContainer}>
+          <Text style={styles.checkboxText}>
+            Check if wanna write your everyday warm-up routine.
+          </Text>
+          <BouncyCheckbox
+            size={26}
+            fillColor={Colors.light.primary}
+            innerIconStyle={{ borderWidth: 2 }}
+            onPress={toggleWarmUpRoutine}
+            isChecked={hasWarmUpRoutine}
+          />
+        </View>
       </View>
-      <View style={styles.container}>
-        <Text style={styles.title}>Then, select how many days per week will the routine have.</Text>
-        <CustomSelectDropdown
-          data={daysDropdownValues}
-          defaultValue={defaultValue}
-          onSelect={handleDays}
-        />
-      </View>
-      <View style={styles.checkboxContainer}>
-        <Text style={styles.checkboxText}>Check if wanna write your everyday warm-up routine.</Text>
-        <BouncyCheckbox
-          size={26}
-          fillColor={Colors.light.primary}
-          innerIconStyle={{ borderWidth: 2 }}
-          onPress={toggleWarmUpRoutine}
-          isChecked={hasWarmUpRoutine}
-        />
-      </View>
-    </View>
+    </>
   );
 };
 

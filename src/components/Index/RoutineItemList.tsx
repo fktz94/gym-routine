@@ -1,15 +1,15 @@
-import { useState } from "react";
 import { Text, StyleSheet } from "react-native";
 import { Link } from "expo-router";
 import ConfirmDeleteRoutineModal from "./ConfirmDeleteRoutineModal";
+import DeleteAnimation from "../Animations/DeleteAnimation";
 import CurrentThemedButton from "../Buttons/CurrentThemedButton";
 import ThemedButton from "../Buttons/ThemedButton";
 import { Colors } from "@/src/constants/Colors";
 import useThemeContext from "@/src/contexts/Theme/useThemeContext";
+import useDeleteAnimation from "@/src/hooks/useDeleteAnimation";
+import useModal from "@/src/hooks/useModal";
 import { RoutinesItemListProps } from "@/src/types/Components";
 import { Theme } from "@/src/types/Contexts";
-import DeleteAnimation from "../Animations/DeleteAnimation";
-import useDeleteAnimation from "@/src/hooks/useDeleteAnimation";
 
 export default function RoutineItemList({
   routineName,
@@ -22,11 +22,11 @@ export default function RoutineItemList({
 
   const { panResponder, translateX, animateBackToTheBeginning } = useDeleteAnimation();
 
-  const [isDeleting, setIsDeleting] = useState(false);
-  const handleOpenModal = () => setIsDeleting(true);
+  const { isModalOpen: isDeleting, openModal: handleOpenModal, closeModal } = useModal();
+
   const handleCloseModal = () => {
     animateBackToTheBeginning();
-    setIsDeleting(false);
+    closeModal();
   };
 
   return (

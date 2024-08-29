@@ -1,55 +1,38 @@
 import { StyleSheet, View } from "react-native";
-import Ionicons from "@expo/vector-icons/Ionicons";
-import useThemeContext from "../contexts/Theme/useThemeContext";
-import { Colors } from "../constants/Colors";
 import { router, usePathname } from "expo-router";
-import QuitCreatingNewExerciseModal from "./NewRoutine/QuitCreatingNewExerciseModal";
-import { useState } from "react";
-import useHeaderContext from "../contexts/Header/useHeaderContext";
+import Ionicons from "@expo/vector-icons/Ionicons";
+import { Colors } from "@/src/constants/Colors";
+import useHeaderContext from "@/src/contexts/Header/useHeaderContext";
+import useThemeContext from "@/src/contexts/Theme/useThemeContext";
+import { Path } from "@/src/types/Utils";
 
 export default function Header() {
-  // Executes usePathname so the Header components subscribes to global navigation changes.
   const path = usePathname();
-  const [showQuitModal, setShowQuitModal] = useState(false);
 
-  const { showBackArrowButton } = useHeaderContext();
   const { theme, toggleTheme } = useThemeContext();
   const iconName = theme === "light" ? "moon" : "sunny";
+
+  const { showBackArrowButton, toggleShowQuitModal } = useHeaderContext();
 
   const canGoBack = router.canGoBack();
 
   const goBack = () => {
-    if (path === "/new-routine" || path.includes("edit-routine")) {
-      setShowQuitModal(true);
+    if (path === Path.NEWROUTINE || path.includes(Path.EDITROUTINE)) {
+      toggleShowQuitModal(true);
     } else {
       router.back();
     }
   };
 
-  const acceptQuitModal = () => {
-    setShowQuitModal(false);
-    router.back();
-  };
-  const cancelQuitModal = () => {
-    setShowQuitModal(false);
-  };
-
   return (
-    <>
-      {/* THIS MODAL SHOULDN'T BE HERE - IT SHOULD BE ON ITS RESPECTIVE SCREEN */}
-      {showQuitModal && (
-        <QuitCreatingNewExerciseModal accept={acceptQuitModal} cancel={cancelQuitModal} />
-      )}
-      {/* THIS MODAL SHOULDN'T BE HERE - IT SHOULD BE ON ITS RESPECTIVE SCREEN */}
-      <View style={styles.container}>
-        <View style={styles.header}>
-          <Ionicons name={iconName} size={32} color={Colors[theme].text} onPress={toggleTheme} />
-          {canGoBack && showBackArrowButton && (
-            <Ionicons name="arrow-back" size={32} color={Colors[theme].text} onPress={goBack} />
-          )}
-        </View>
+    <View style={styles.container}>
+      <View style={styles.header}>
+        <Ionicons name={iconName} size={32} color={Colors[theme].text} onPress={toggleTheme} />
+        {canGoBack && showBackArrowButton && (
+          <Ionicons name="arrow-back" size={32} color={Colors[theme].text} onPress={goBack} />
+        )}
       </View>
-    </>
+    </View>
   );
 }
 

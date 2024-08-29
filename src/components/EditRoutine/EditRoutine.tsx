@@ -9,6 +9,8 @@ import ThemedButton from "../Buttons/ThemedButton";
 import { isEqual } from "lodash";
 import ConfirmEditRoutineModal from "./ConfirmEditRoutineModal";
 import { Theme } from "@/src/types/Contexts";
+import ProcceedQuittingModal from "../ProcceedQuittingModal";
+import useHeaderContext from "@/src/contexts/Header/useHeaderContext";
 
 const EditRoutine = () => {
   const { theme } = useThemeContext();
@@ -24,6 +26,8 @@ const EditRoutine = () => {
     toCurrent,
     handleName,
   } = useEditRoutineContext();
+
+  const { showQuitModal } = useHeaderContext();
 
   if (!originalRoutine) return null;
 
@@ -53,6 +57,7 @@ const EditRoutine = () => {
 
   return (
     <>
+      {showQuitModal && <ProcceedQuittingModal />}
       {isCreating && <ConfirmEditRoutineModal closeModal={closeModal} />}
       <View style={styles.mainContainer}>
         <View style={styles.container}>

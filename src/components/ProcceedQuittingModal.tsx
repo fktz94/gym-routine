@@ -1,13 +1,24 @@
 import { StyleSheet, Text, View } from "react-native";
-import useThemeContext from "@/src/contexts/Theme/useThemeContext";
-import { QuitCreatingNewExerciseModalProps } from "@/src/types/Components";
+import { router } from "expo-router";
+import ThemedModal from "./ThemedModal";
 import { Colors } from "@/src/constants/Colors";
-import ThemedModal from "../ThemedModal";
+import useHeaderContext from "@/src/contexts/Header/useHeaderContext";
+import useThemeContext from "@/src/contexts/Theme/useThemeContext";
 import { Theme } from "@/src/types/Contexts";
 
-const QuitCreatingNewExerciseModal = ({ accept, cancel }: QuitCreatingNewExerciseModalProps) => {
+const ProcceedQuittingModal = () => {
   const { theme } = useThemeContext();
   const styles = quitCreatingModalStyles(theme);
+
+  const { toggleShowQuitModal } = useHeaderContext();
+
+  const accept = () => {
+    toggleShowQuitModal(false);
+    router.back();
+  };
+  const cancel = () => {
+    toggleShowQuitModal(false);
+  };
 
   return (
     <ThemedModal closeModal={cancel} handleAccept={accept}>
@@ -19,7 +30,7 @@ const QuitCreatingNewExerciseModal = ({ accept, cancel }: QuitCreatingNewExercis
   );
 };
 
-export default QuitCreatingNewExerciseModal;
+export default ProcceedQuittingModal;
 
 const quitCreatingModalStyles = (theme: Theme) =>
   StyleSheet.create({
