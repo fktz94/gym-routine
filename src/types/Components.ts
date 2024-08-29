@@ -21,7 +21,7 @@ export interface RoutinesListProps {
   isCurrent?: boolean;
 }
 
-export interface RoutinesItemListProps {
+export interface RoutinesListItemProps {
   routineName: string;
   madeOn: string;
   id: string;

@@ -1,12 +1,12 @@
 import { Modal, StyleSheet, View } from "react-native";
-import useThemeContext from "../contexts/Theme/useThemeContext";
-import { Colors } from "../constants/Colors";
-import { ThemedModalProps } from "../types/Components";
 import { Ionicons } from "@expo/vector-icons";
 import CustomLoader from "./CustomLoader";
-import { Theme } from "../types/Contexts";
 import { CancelButton } from "./Buttons/CancelButton";
 import { AcceptButton } from "./Buttons/AcceptButton";
+import { Colors } from "../constants/Colors";
+import useThemeContext from "../contexts/Theme/useThemeContext";
+import { ThemedModalProps } from "../types/Components";
+import { Theme } from "../types/Contexts";
 
 const ThemedModal = ({
   isLoading = false,

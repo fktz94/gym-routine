@@ -1,14 +1,14 @@
-import { Alert, StyleSheet, Text, View } from "react-native";
 import { useEffect } from "react";
-import useThemeContext from "@/src/contexts/Theme/useThemeContext";
-import { ConfirmDeleteRoutineModalProps } from "@/src/types/Components";
+import { Alert, StyleSheet, Text, View } from "react-native";
+import ThemedModal from "../ThemedModal";
 import { Colors } from "@/src/constants/Colors";
+import useThemeContext from "@/src/contexts/Theme/useThemeContext";
 import { useAppDispatch, useAppSelector } from "@/src/hooks/reactReduxHook";
 import { deleteRoutine } from "@/src/store/Routines/RoutinesAsyncThunk";
 import { resetDeleteRoutineState } from "@/src/store/Routines/RoutinesSlice";
+import { ConfirmDeleteRoutineModalProps } from "@/src/types/Components";
+import { Theme } from "@/src/types/Contexts";
 import { ResponseStatus } from "@/src/types/Store";
-import ThemedModal from "../ThemedModal";
-import { Theme } from "../../types/Contexts";
 
 const ConfirmDeleteRoutineModal = ({ closeModal, id, name }: ConfirmDeleteRoutineModalProps) => {
   const { theme } = useThemeContext();
@@ -22,13 +22,17 @@ const ConfirmDeleteRoutineModal = ({ closeModal, id, name }: ConfirmDeleteRoutin
     dispatch(deleteRoutine({ routineId: id }));
   };
 
+  const finishDeleting = () => {
+    dispatch(resetDeleteRoutineState());
+    closeModal();
+  };
+
   useEffect(() => {
     if (isDeletingRoutine) return;
     if (deleteRoutineStatus === ResponseStatus.FULFILLED) {
-      dispatch(resetDeleteRoutineState());
-      closeModal();
+      finishDeleting();
     } else if (deleteRoutineStatus === ResponseStatus.REJECTED) {
-      dispatch(resetDeleteRoutineState());
+      finishDeleting();
       Alert.alert("Error!", deleteRoutineErrorMessage);
     }
   }, [deleteRoutineStatus]);

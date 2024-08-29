@@ -1,22 +1,22 @@
 import { Text, StyleSheet } from "react-native";
 import { Link } from "expo-router";
 import ConfirmDeleteRoutineModal from "./ConfirmDeleteRoutineModal";
-import DeleteAnimation from "../Animations/DeleteAnimation";
 import CurrentThemedButton from "../Buttons/CurrentThemedButton";
+import DeleteAnimation from "../Animations/DeleteAnimation";
 import ThemedButton from "../Buttons/ThemedButton";
 import { Colors } from "@/src/constants/Colors";
 import useThemeContext from "@/src/contexts/Theme/useThemeContext";
 import useDeleteAnimation from "@/src/hooks/useDeleteAnimation";
 import useModal from "@/src/hooks/useModal";
-import { RoutinesItemListProps } from "@/src/types/Components";
+import { RoutinesListItemProps } from "@/src/types/Components";
 import { Theme } from "@/src/types/Contexts";
 
-export default function RoutineItemList({
+export default function RoutineListItem({
   routineName,
   madeOn,
   id,
   isCurrent = false,
-}: RoutinesItemListProps) {
+}: RoutinesListItemProps) {
   const { theme } = useThemeContext();
   const styles = routinesListStyles(theme, isCurrent);
 
@@ -62,20 +62,4 @@ const routinesListStyles = (theme: Theme, isCurrent: boolean) =>
     bold: { fontWeight: "bold" },
     itemList: { gap: 4, width: "50%", margin: "auto", overflow: "hidden" },
     madeOnText: { color: Colors[theme].text, fontSize: 12 },
-    deleteButton: {
-      backgroundColor: Colors.cancelBackground,
-      justifyContent: "center",
-      position: "absolute",
-      width: 70,
-      height: isCurrent ? "78%" : "71%",
-      right: -70,
-      borderRadius: 11,
-    },
-    deleteButtonText: {
-      textAlign: "center",
-      fontSize: 14,
-      fontWeight: "bold",
-      letterSpacing: 1,
-      color: Colors.light.background,
-    },
   });

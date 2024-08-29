@@ -1,5 +1,5 @@
 import { View, FlatList, StyleSheet } from "react-native";
-import RoutineItemList from "./RoutineItemList";
+import RoutineItemList from "./RoutineListItem";
 import { RoutinesListProps } from "@/src/types/Components";
 
 export default function RoutinesList({ selectedRoutines }: RoutinesListProps) {

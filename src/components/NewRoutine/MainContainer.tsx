@@ -1,48 +1,30 @@
 import { StyleSheet, View } from "react-native";
-import { useState } from "react";
-import ThemedButton from "../Buttons/ThemedButton";
-import useNewRoutineContext from "@/src/contexts/NewRoutine/useNewRoutineContext";
-import useThemeContext from "@/src/contexts/Theme/useThemeContext";
+import ConfirmCreateNewRoutineModal from "./ConfirmCreateNewRoutineModal";
 import FirstStep from "./FirstStep";
 import SecondStep from "./SecondStep";
-import ConfirmCreateNewRoutineModal from "./ConfirmCreateNewRoutineModal";
-import { Theme } from "@/src/types/Contexts";
+import ThemedButton from "../Buttons/ThemedButton";
+import useMainContainerNewRoutine from "@/src/hooks/useMainContainerNewRoutine";
 
 const MainContainer = () => {
-  const { theme } = useThemeContext();
-  const styles = newRoutineStyles(theme);
-
-  const { handleStep, newRoutineState, step } = useNewRoutineContext();
-  const { name } = newRoutineState;
-
-  const [isCreating, setIsCreating] = useState(false);
+  const {
+    step,
+    isCreating,
+    closeModal,
+    isFirstStep,
+    backBtnFn,
+    isNextBtnDisabled,
+    nextBtnFn,
+    isLastStep,
+  } = useMainContainerNewRoutine();
 
   const renderStep = () => {
     switch (step) {
-      case 0: {
+      case 0:
         return <FirstStep />;
-      }
       case 1:
         return <SecondStep />;
-
       default:
         return null;
-    }
-  };
-
-  const isFirstStep = step === 0;
-  const isLastStep = step === 1;
-
-  const isNextBtnDisabled = isFirstStep && !name;
-
-  const openModal = () => setIsCreating(true);
-  const closeModal = () => setIsCreating(false);
-
-  const nextBtnFunction = () => {
-    if (isLastStep) {
-      openModal();
-    } else {
-      handleStep({ direction: "up" });
     }
   };
 
@@ -52,10 +34,10 @@ const MainContainer = () => {
       <View style={styles.mainContainer}>
         <View style={styles.inputsContainer}>{renderStep()}</View>
         <View style={styles.directionButtonsContainer}>
-          <ThemedButton disabled={isFirstStep} onPress={() => handleStep({ direction: "down" })}>
+          <ThemedButton disabled={isFirstStep} onPress={backBtnFn}>
             BACK
           </ThemedButton>
-          <ThemedButton disabled={isNextBtnDisabled} onPress={nextBtnFunction}>
+          <ThemedButton disabled={isNextBtnDisabled} onPress={nextBtnFn}>
             {isLastStep ? "FINISH" : "NEXT"}
           </ThemedButton>
         </View>
@@ -66,23 +48,22 @@ const MainContainer = () => {
 
 export default MainContainer;
 
-const newRoutineStyles = (theme: Theme) =>
-  StyleSheet.create({
-    mainContainer: {
-      flex: 1,
-      flexGrow: 1,
-      alignItems: "center",
-      gap: 10,
-    },
-    inputsContainer: {
-      height: "90%",
-      width: "100%",
-      alignItems: "center",
-    },
-    directionButtonsContainer: {
-      flexDirection: "row",
-      width: "75%",
-      justifyContent: "center",
-      gap: 20,
-    },
-  });
+const styles = StyleSheet.create({
+  mainContainer: {
+    flex: 1,
+    flexGrow: 1,
+    alignItems: "center",
+    gap: 10,
+  },
+  inputsContainer: {
+    height: "90%",
+    width: "100%",
+    alignItems: "center",
+  },
+  directionButtonsContainer: {
+    flexDirection: "row",
+    width: "75%",
+    justifyContent: "center",
+    gap: 20,
+  },
+});
