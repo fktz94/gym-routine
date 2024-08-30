@@ -1,67 +1,44 @@
-import {
-  LayoutChangeEvent,
-  Pressable,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
-import { useState } from "react";
-import useThemeContext from "@/src/contexts/Theme/useThemeContext";
-import { Colors } from "@/src/constants/Colors";
+import { Pressable, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import Animated from "react-native-reanimated";
 import { Ionicons } from "@expo/vector-icons";
-import useNewRoutineContext from "@/src/contexts/NewRoutine/useNewRoutineContext";
-import { NewExerciseItemTitle, NewExerciseItem } from "./NewExerciseItem";
-import Animated, { useAnimatedStyle, withTiming } from "react-native-reanimated";
+import ExerciseListItem from "./ExerciseListItem";
+import ExerciseListTitle from "./ExerciseListTitle";
 import CreateOrEditExerciseModal from "../CreateOrEditExerciseModal/CreateOrEditExerciseModal";
+import { Colors } from "@/src/constants/Colors";
+import useThemeContext from "@/src/contexts/Theme/useThemeContext";
+import useExerciseListDay from "@/src/hooks/useExerciseListDay";
+import useModal from "@/src/hooks/useModal";
+import { ExerciseListDayProps } from "@/src/types/Components";
 import { Theme } from "@/src/types/Contexts";
 
-// CREATE NEW DAY ITEM COMPONENT AND HOOK
-
-const NewDayItem = ({ dayIndex }: { dayIndex: number }) => {
+const ExerciseListDay = ({
+  data,
+  dayHasToBeShown = false,
+  dayIndex,
+  handleDeleteExercise,
+  handleEditExercise,
+  handleAddExercise,
+}: ExerciseListDayProps) => {
   const { theme } = useThemeContext();
-  const styles = secondStepStyles(theme);
-  const [isShown, setIsShown] = useState(false);
+  const styles = exerciseListDayStyles(theme);
 
-  const [isCreating, setIsCreating] = useState(false);
-
-  const { newRoutineState, handleAddOneExercise } = useNewRoutineContext();
-  const { data } = newRoutineState;
-
-  const showDayDetails = () => setIsShown(!isShown);
-
-  const startCreatingNewExercise = () => setIsCreating(true);
-  const cancelCreatingNewExercise = () => {
-    setIsCreating(false);
-  };
-  const [height, setHeight] = useState(0);
-
-  const onLayout = ({ nativeEvent: { layout } }: LayoutChangeEvent) => {
-    const layoutHeight = layout.height;
-
-    if (layoutHeight > 0 && height !== layoutHeight) {
-      setHeight(layoutHeight);
-    }
-  };
-
-  const animatedStyle = useAnimatedStyle(() => {
-    const animatedHeight = isShown ? withTiming(height) : withTiming(0);
-    return {
-      height: animatedHeight,
-      overflow: "hidden",
-    };
+  const { closeModal, isModalOpen: isCreating, openModal } = useModal();
+  const { animatedStyle, isShown, onLayout, showDayDetails } = useExerciseListDay({
+    dayHasToBeShown,
   });
 
   const currentExercises = () =>
     data[dayIndex].map((exercise, i) => {
       const isLastElement = i === data[dayIndex].length - 1;
       return (
-        <NewExerciseItem
-          exerciseData={exercise}
-          key={exercise.name} // find another way to make a proper key without making a mess with the delete animation
-          exerciseIndex={i}
+        <ExerciseListItem
           dayIndex={dayIndex}
-          style={isLastElement ? { borderBottomWidth: 1 } : undefined}
+          exerciseData={exercise}
+          exerciseIndex={i}
+          handleDeleteExercise={handleDeleteExercise}
+          handleEditExercise={handleEditExercise}
+          key={exercise.name} // find another way to make a proper key without making a mess with the delete animation
+          isLastElement={isLastElement}
         />
       );
     });
@@ -72,27 +49,23 @@ const NewDayItem = ({ dayIndex }: { dayIndex: number }) => {
         <Text style={styles.dayButtonText}>DAY {dayIndex + 1}</Text>
         <Ionicons name={isShown ? "chevron-up" : "chevron-down"} />
       </Pressable>
-
       <Animated.View style={animatedStyle}>
         <View onLayout={onLayout} style={{ position: "absolute" }}>
           {isCreating && (
             <CreateOrEditExerciseModal
-              closeModal={cancelCreatingNewExercise}
+              closeModal={closeModal}
               dayIndex={dayIndex}
-              handleOnAccept={handleAddOneExercise}
+              handleOnAccept={handleAddExercise}
             />
           )}
           <View style={styles.exercises}>
             {data[dayIndex].length > 0 && (
               <View>
-                <NewExerciseItemTitle key="title" />
+                <ExerciseListTitle />
                 {currentExercises()}
               </View>
             )}
-            <TouchableOpacity
-              onPress={startCreatingNewExercise}
-              style={styles.addExerciseIconContainer}
-            >
+            <TouchableOpacity onPress={openModal} style={styles.addExerciseIconContainer}>
               <Ionicons name="add-circle-outline" size={40} style={styles.addExerciseIcon} />
             </TouchableOpacity>
           </View>
@@ -102,9 +75,9 @@ const NewDayItem = ({ dayIndex }: { dayIndex: number }) => {
   );
 };
 
-export default NewDayItem;
+export default ExerciseListDay;
 
-const secondStepStyles = (theme: Theme) =>
+const exerciseListDayStyles = (theme: Theme) =>
   StyleSheet.create({
     dayContainer: { flex: 1, width: "75%", margin: "auto" },
     dayButton: {

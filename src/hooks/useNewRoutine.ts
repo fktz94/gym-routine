@@ -1,4 +1,5 @@
 import { useReducer, useState } from "react";
+import useHeaderContext from "../contexts/Header/useHeaderContext";
 import { initialState, newRoutineReducers } from "../reducers/NewRoutine/newRoutineReducers";
 import {
   AddExercisePayloadType,
@@ -6,7 +7,6 @@ import {
   EditExercisePayloadType,
   NewRoutineActionsTypes,
 } from "../types/Reducers";
-import useHeaderContext from "../contexts/Header/useHeaderContext";
 
 const useNewRoutine = () => {
   const [step, setStep] = useState(0);
@@ -68,16 +68,16 @@ const useNewRoutine = () => {
   const toggleWarmUpRoutine = () => setHasWarmUpRoutine(!hasWarmUpRoutine);
 
   return {
-    newRoutineState,
     handleAddOneExercise,
     handleDays,
+    handleDeleteOneExercise,
+    handleEditOneExercise,
     handleName,
     handleStep,
-    handleEditOneExercise,
-    step,
     hasWarmUpRoutine,
+    newRoutineState,
+    step,
     toggleWarmUpRoutine,
-    handleDeleteOneExercise,
   };
 };
 

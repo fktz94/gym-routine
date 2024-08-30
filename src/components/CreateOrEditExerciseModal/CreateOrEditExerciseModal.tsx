@@ -17,7 +17,6 @@ const CreateOrEditExerciseModal = ({
   exerciseToEdit,
   handleOnAccept,
 }: CreateExerciseModalProps) => {
-  // CONTINUE WORKING ON USING THIS COMPONENT ON EDIT ROUTINES AN EVERYWHERE AS POSSIBLE
   const {
     currentVariations,
     dropdownValues,

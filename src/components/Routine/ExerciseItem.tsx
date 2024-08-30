@@ -22,6 +22,12 @@ export const ExerciseItemTitle = () => {
   );
 };
 
+// WORK HERE
+// WORK HERE
+// WORK HERE
+// WORK HERE
+// WORK HERE
+
 export const ExerciseItem = ({ name, sets, weightsAndRepetitions, current }: Exercise) => {
   const { theme } = useThemeContext();
   const styles = exerciseItemStyles(theme, false);

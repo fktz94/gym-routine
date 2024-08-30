@@ -1,33 +1,33 @@
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import DeleteAnimation from "../Animations/DeleteAnimation";
 import CreateOrEditExerciseModal from "../CreateOrEditExerciseModal/CreateOrEditExerciseModal";
 import { Colors } from "@/src/constants/Colors";
-import useNewRoutineContext from "@/src/contexts/NewRoutine/useNewRoutineContext";
 import useThemeContext from "@/src/contexts/Theme/useThemeContext";
 import useDeleteAnimation from "@/src/hooks/useDeleteAnimation";
 import useModal from "@/src/hooks/useModal";
-import { ExerciseItemProps } from "@/src/types/Components";
+import { ExerciseListItemProps } from "@/src/types/Components";
 import { Theme } from "@/src/types/Contexts";
 
-export const NewExerciseItem = ({
-  exerciseData,
-  style,
+const ExerciseListItem = ({
   dayIndex,
+  exerciseData,
   exerciseIndex,
-}: ExerciseItemProps) => {
+  handleDeleteExercise,
+  handleEditExercise,
+  isLastElement,
+  style,
+}: ExerciseListItemProps) => {
   const { theme } = useThemeContext();
-  const styles = newExerciseItemStyles(theme);
+  const styles = exerciseListItemStyles(theme);
 
   const { name, sets, weightsAndRepetitions } = exerciseData;
   const exerciseRepetitions = weightsAndRepetitions.map((el) => el.qty).join(" / ");
 
   const { closeModal, isModalOpen: isEditing, openModal } = useModal();
 
-  const { handleDeleteOneExercise, handleEditOneExercise } = useNewRoutineContext();
-
   const deleteExercise = () => {
     if ((dayIndex !== 0 && !dayIndex) || (exerciseIndex !== 0 && !exerciseIndex)) return;
-    handleDeleteOneExercise({ dayIndex, exerciseIndex });
+    handleDeleteExercise({ dayIndex, exerciseIndex });
   };
 
   const { panResponder, translateX } = useDeleteAnimation();
@@ -39,14 +39,17 @@ export const NewExerciseItem = ({
           closeModal={closeModal}
           dayIndex={dayIndex}
           exerciseToEdit={exerciseData}
-          handleOnAccept={handleEditOneExercise} // check how to solve this type error
+          handleOnAccept={handleEditExercise} // check how to solve this type error
         />
       )}
-
       <DeleteAnimation
         panResponder={panResponder}
         translateX={translateX}
-        containerViewStyles={{ ...styles.exerciseItem, ...style }}
+        containerViewStyles={{
+          ...styles.exerciseItem,
+          ...style,
+          ...(isLastElement && { borderBottomWidth: 1 }),
+        }}
         animatedViewStyles={{ flex: 1, flexDirection: "row" }}
         onDelete={deleteExercise}
       >
@@ -68,23 +71,9 @@ export const NewExerciseItem = ({
   );
 };
 
-export const NewExerciseItemTitle = () => {
-  const { theme } = useThemeContext();
-  const styles = newExerciseItemStyles(theme);
-  return (
-    <View style={styles.exerciseItem}>
-      <Text style={[styles.exerciseItemText, styles.exerciseName, styles.exerciseTitle]}>
-        Exercise
-      </Text>
-      <Text style={[styles.exerciseItemText, styles.exerciseSets, styles.exerciseTitle]}>Sets</Text>
-      <Text style={[styles.exerciseItemText, styles.exerciseRepetitions, styles.exerciseTitle]}>
-        Repetitions
-      </Text>
-    </View>
-  );
-};
+export default ExerciseListItem;
 
-const newExerciseItemStyles = (theme: Theme) =>
+const exerciseListItemStyles = (theme: Theme) =>
   StyleSheet.create({
     exerciseItem: {
       flexDirection: "row",
@@ -101,10 +90,6 @@ const newExerciseItemStyles = (theme: Theme) =>
     exerciseName: { width: "40%" },
     exerciseSets: { width: "20%" },
     exerciseRepetitions: { width: "40%" },
-    exerciseTitle: {
-      backgroundColor: Colors[theme].modalBackground,
-      color: Colors[theme].text,
-    },
     exerciseElement: {
       backgroundColor: Colors[theme].secondary,
       color: Colors[theme].primary,

@@ -5,27 +5,27 @@ export default function useNewRoutineContext() {
   const routineContext = useContext(NewRoutineContext);
   if (!routineContext) throw new Error("Failed to load NewRoutineContext");
   const {
+    handleAddOneExercise,
     handleDays,
+    handleDeleteOneExercise,
+    handleEditOneExercise,
     handleName,
     handleStep,
     hasWarmUpRoutine,
     newRoutineState,
     step,
     toggleWarmUpRoutine,
-    handleAddOneExercise,
-    handleDeleteOneExercise,
-    handleEditOneExercise,
   } = routineContext;
   return {
-    newRoutineState,
+    handleAddOneExercise,
     handleDays,
+    handleDeleteOneExercise,
+    handleEditOneExercise,
     handleName,
     handleStep,
     hasWarmUpRoutine,
+    newRoutineState,
     step,
     toggleWarmUpRoutine,
-    handleAddOneExercise,
-    handleDeleteOneExercise,
-    handleEditOneExercise,
   };
 }

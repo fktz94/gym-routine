@@ -1,59 +1,65 @@
-import { Pressable, ScrollView, StyleSheet, Text, View, TextInput } from "react-native";
+import { useState } from "react";
+import { ScrollView, StyleSheet, Text, View, TextInput } from "react-native";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
-import React, { useState } from "react";
-import useThemeContext from "@/src/contexts/Theme/useThemeContext";
-import EachDayItem from "./EachDayItem";
+import ConfirmEditRoutineModal from "./ConfirmEditRoutineModal";
+import ThemedButton from "../Buttons/ThemedButton";
+import ProcceedQuittingModal from "../ProcceedQuittingModal";
+import ExerciseListDay from "../ExerciseList/ExerciseListDay";
 import { Colors } from "@/src/constants/Colors";
 import useEditRoutineContext from "@/src/contexts/EditRoutine/useEditRoutineContext";
-import ThemedButton from "../Buttons/ThemedButton";
-import { isEqual } from "lodash";
-import ConfirmEditRoutineModal from "./ConfirmEditRoutineModal";
-import { Theme } from "@/src/types/Contexts";
-import ProcceedQuittingModal from "../ProcceedQuittingModal";
 import useHeaderContext from "@/src/contexts/Header/useHeaderContext";
+import useThemeContext from "@/src/contexts/Theme/useThemeContext";
+import useEditRoutineChanges from "@/src/hooks/useEditRoutineChanges";
+import useModal from "@/src/hooks/useModal";
+import { Theme } from "@/src/types/Contexts";
 
 const EditRoutine = () => {
   const { theme } = useThemeContext();
   const styles = editRoutineStyles(theme);
-  const [isCreating, setIsCreating] = useState(false);
+
   const [isChangingName, setIsChangingName] = useState(false);
 
-  const {
-    selectedRoutine: { data, name },
-    originalRoutine,
-    isCurrent,
-    handleSetToCurrent,
-    toCurrent,
-    handleName,
-  } = useEditRoutineContext();
-
   const { showQuitModal } = useHeaderContext();
+  const { closeModal, isModalOpen: isCreating, openModal } = useModal();
+  const {
+    handleAddOneExercise,
+    handleDeleteOneExercise,
+    handleEditOneExercise,
+    handleName,
+    handleSetToCurrent,
+    isCurrent,
+    originalRoutine,
+    selectedDay,
+    selectedRoutine: { data, name },
+    toCurrent,
+  } = useEditRoutineContext();
 
   if (!originalRoutine) return null;
 
-  const { data: originalData } = originalRoutine;
+  const { toggleChangingName, handleSaveChanges, isButtonDisabled } = useEditRoutineChanges({
+    data,
+    handleName,
+    isChangingName,
+    isCurrent,
+    name,
+    openModal,
+    originalRoutine,
+    setIsChangingName,
+    toCurrent,
+  });
 
-  const hasChanges = !isEqual(data, originalData) || originalRoutine.name !== name;
-
-  const setToCurrent = !isCurrent && toCurrent;
-
-  const isButtonDisabled = !hasChanges && !setToCurrent;
-
-  const handleSaveChanges = () => {
-    if (isButtonDisabled) return;
-    setIsCreating(true);
-  };
-
-  const closeModal = () => setIsCreating(false);
-
-  const toggleChangingName = () => {
-    if (isChangingName) {
-      handleName(originalRoutine.name);
-    }
-    setIsChangingName(!isChangingName);
-  };
-
-  const renderDays = () => data.map((_, i) => <EachDayItem key={i} dayIndex={i} />);
+  const renderDays = () =>
+    data.map((_, i) => (
+      <ExerciseListDay
+        data={data}
+        dayHasToBeShown={selectedDay === i.toString()}
+        dayIndex={i}
+        handleAddExercise={handleAddOneExercise}
+        handleDeleteExercise={handleDeleteOneExercise}
+        handleEditExercise={handleEditOneExercise}
+        key={i}
+      />
+    ));
 
   return (
     <>
