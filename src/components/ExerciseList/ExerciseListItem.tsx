@@ -1,6 +1,6 @@
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
-import DeleteAnimation from "../Animations/DeleteAnimation";
 import CreateOrEditExerciseModal from "../CreateOrEditExerciseModal/CreateOrEditExerciseModal";
+import DeleteAnimation from "../DeleteAnimatedButton/DeleteAnimation";
 import { Colors } from "@/src/constants/Colors";
 import useThemeContext from "@/src/contexts/Theme/useThemeContext";
 import useDeleteAnimation from "@/src/hooks/useDeleteAnimation";

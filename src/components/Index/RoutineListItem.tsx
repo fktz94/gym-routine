@@ -2,7 +2,7 @@ import { Text, StyleSheet } from "react-native";
 import { Link } from "expo-router";
 import ConfirmDeleteRoutineModal from "./ConfirmDeleteRoutineModal";
 import CurrentThemedButton from "../Buttons/CurrentThemedButton";
-import DeleteAnimation from "../Animations/DeleteAnimation";
+import DeleteAnimation from "../DeleteAnimatedButton/DeleteAnimation";
 import ThemedButton from "../Buttons/ThemedButton";
 import { Colors } from "@/src/constants/Colors";
 import useThemeContext from "@/src/contexts/Theme/useThemeContext";

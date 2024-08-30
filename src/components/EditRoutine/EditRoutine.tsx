@@ -19,8 +19,8 @@ const EditRoutine = () => {
 
   const [isChangingName, setIsChangingName] = useState(false);
 
-  const { showQuitModal } = useHeaderContext();
   const { closeModal, isModalOpen: isCreating, openModal } = useModal();
+  const { showQuitModal } = useHeaderContext();
   const {
     handleAddOneExercise,
     handleDeleteOneExercise,
