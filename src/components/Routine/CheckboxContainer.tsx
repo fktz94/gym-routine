@@ -2,17 +2,10 @@ import { StyleSheet, Text, View } from "react-native";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import { Colors } from "@/src/constants/Colors";
 import useThemeContext from "@/src/contexts/Theme/useThemeContext";
+import { CheckboxContainerProps } from "@/src/types/Components";
 import { Theme } from "@/src/types/Contexts";
 
-const CheckboxContainer = ({
-  isChecked,
-  onPress,
-  text,
-}: {
-  isChecked: boolean;
-  onPress: (val: boolean) => void;
-  text: string;
-}) => {
+const CheckboxContainer = ({ isChecked, onPress, text }: CheckboxContainerProps) => {
   const { theme } = useThemeContext();
   const styles = checkboxContainerStyles(theme);
   return (

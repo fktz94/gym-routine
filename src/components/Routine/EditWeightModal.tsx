@@ -1,18 +1,11 @@
-import { Alert, StyleSheet, Text, TextInput, View } from "react-native";
-import { useEffect, useState } from "react";
-import { Colors } from "@/src/constants/Colors";
-import { EditExerciseModalProps } from "@/src/types/Components";
-import BouncyCheckbox from "react-native-bouncy-checkbox";
-import { validateWeightInputNumber } from "@/src/utils/Validations/Validations";
-import useRoutineContext from "@/src/contexts/Routine/useRoutineContext";
-import { useAppDispatch, useAppSelector } from "@/src/hooks/reactReduxHook";
-import { modifyExercise } from "@/src/store/Routines/RoutinesAsyncThunk";
-import { ResponseStatus } from "@/src/types/Store";
-import { resetModifiyExerciseState } from "@/src/store/Routines/RoutinesSlice";
-import useThemeContext from "@/src/contexts/Theme/useThemeContext";
-import ThemedModal from "../ThemedModal";
-import { Theme } from "@/src/types/Contexts";
+import { StyleSheet, Text, TextInput, View } from "react-native";
 import CheckboxContainer from "./CheckboxContainer";
+import ThemedModal from "../ThemedModal";
+import { Colors } from "@/src/constants/Colors";
+import useThemeContext from "@/src/contexts/Theme/useThemeContext";
+import useEditWeightModal from "@/src/hooks/useEditWeightModal";
+import { EditExerciseModalProps } from "@/src/types/Components";
+import { Theme } from "@/src/types/Contexts";
 
 const EditWeightModal = ({
   closeModal,
@@ -21,73 +14,26 @@ const EditWeightModal = ({
   selectedSerie,
   exerciseName,
 }: EditExerciseModalProps) => {
-  const [newWeightValue, setNewValue] = useState(exerciseData.weight);
-  const [customValue, setCustomValue] = useState(
-    Number.isNaN(exerciseData.weight && +exerciseData.weight)
-  );
-  const [settedToCurrent, setSettedToCurrent] = useState(isCurrent);
+  const {
+    customValue,
+    handleAccept,
+    handleCustomCheckbox,
+    handleCurrentCheckbox,
+    handleNewValue,
+    isButtonDisabled,
+    isLoading,
+    newWeightValue,
+    settedToCurrent,
+  } = useEditWeightModal({
+    exerciseData,
+    isCurrent,
+    selectedSerie,
+    exerciseName,
+    closeModal,
+  });
+
   const { theme } = useThemeContext();
   const styles = editExerciseModalStyles(theme, customValue);
-  const dispatch = useAppDispatch();
-
-  // create custom hook for all this
-
-  const {
-    isGettingAllRoutines,
-    isModifyingRoutines,
-    modifyExerciseStatus,
-    modifyExerciseErrorMessage,
-  } = useAppSelector(({ routines }) => routines);
-
-  const { routineId, selectedDay } = useRoutineContext();
-
-  const handleCustomCheckbox = () => {
-    setNewValue("");
-    setCustomValue(!customValue);
-  };
-
-  const handleCurrentCheckbox = () => setSettedToCurrent(!settedToCurrent);
-
-  const handleNewValue = (input: number | string) => {
-    const isNotNumber = Number.isNaN(+input);
-    const newVal = isNotNumber || input === "" ? input : +input;
-    if (!customValue && validateWeightInputNumber(newVal)) return;
-    setNewValue(newVal.toString());
-  };
-
-  const handleAccept = () => {
-    if (!newWeightValue) return;
-    const payload = {
-      routineId,
-      selectedDay,
-      exerciseName,
-      selectedSerie,
-      newWeightValue,
-      makeItCurrent: settedToCurrent && !isCurrent,
-    };
-
-    dispatch(modifyExercise(payload));
-  };
-
-  const isValueInvalid = exerciseData.weight === newWeightValue || !newWeightValue;
-  const isButtonDisabled = isValueInvalid && settedToCurrent === isCurrent;
-
-  const isLoading = isGettingAllRoutines || isModifyingRoutines;
-  const hasEndedFetchingModification =
-    modifyExerciseStatus === ResponseStatus.REJECTED ||
-    modifyExerciseStatus === ResponseStatus.FULFILLED;
-
-  useEffect(() => {
-    if (isLoading || modifyExerciseStatus === ResponseStatus.IDLE) return;
-
-    if (hasEndedFetchingModification) {
-      dispatch(resetModifiyExerciseState());
-      closeModal();
-    }
-    if (modifyExerciseErrorMessage) {
-      Alert.alert("Error!", modifyExerciseErrorMessage);
-    }
-  }, [modifyExerciseStatus, isLoading]);
 
   return (
     <ThemedModal

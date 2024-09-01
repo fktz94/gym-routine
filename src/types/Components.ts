@@ -154,3 +154,9 @@ export interface DeleteAnimationProps extends PropsWithChildren, DeleteButtonPro
   panResponder: PanResponderInstance;
   translateX: Animated.Value;
 }
+
+export interface CheckboxContainerProps {
+  isChecked: boolean;
+  onPress: (val: boolean) => void;
+  text: string;
+}

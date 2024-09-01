@@ -1,14 +1,14 @@
-import { StyleSheet, Text, TextInput, View } from "react-native";
-import useThemeContext from "@/src/contexts/Theme/useThemeContext";
-import { Colors } from "@/src/constants/Colors";
-import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
+import { StyleSheet, Text, TextInput, View } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import EditWeightModal from "./EditWeightModal";
 import ThemedButton from "../Buttons/ThemedButton";
 import CustomSelectDropdown from "../CustomSelectDropdown";
-import { Exercise } from "@/src/types/Routines";
-import EditWeightModal from "./EditWeightModal";
-import { Theme } from "@/src/types/Contexts";
+import { Colors } from "@/src/constants/Colors";
+import useThemeContext from "@/src/contexts/Theme/useThemeContext";
 import useModal from "@/src/hooks/useModal";
+import { Theme } from "@/src/types/Contexts";
+import { Exercise } from "@/src/types/Routines";
 
 export const ExerciseItemTitle = () => {
   const { theme } = useThemeContext();
@@ -23,12 +23,6 @@ export const ExerciseItemTitle = () => {
   );
 };
 
-// WORK HERE
-// WORK HERE
-// WORK HERE
-// WORK HERE
-// WORK HERE
-
 export const ExerciseItem = ({ exercise }: { exercise: Exercise }) => {
   const { theme } = useThemeContext();
   const styles = exerciseItemStyles(theme, false);
@@ -37,15 +31,14 @@ export const ExerciseItem = ({ exercise }: { exercise: Exercise }) => {
 
   const { name, sets, weightsAndRepetitions, current } = exercise;
 
-  const repetitions = weightsAndRepetitions.map((el) => el.qty || "N/A");
+  const [selectedDropdownItem, setSelectedDropdownItem] = useState(current);
+  const handleDropdownItem = (i: number) => setSelectedDropdownItem(i);
+
+  const repetitions = weightsAndRepetitions.map(({ qty }) => qty || "N/A");
   const prevWeight = weightsAndRepetitions.at(current - 1);
   const currentWeight = weightsAndRepetitions[current].weight;
-
-  const [selectedDropdownItem, setSelectedDropdownItem] = useState(current);
   const weight = weightsAndRepetitions[selectedDropdownItem]?.weight;
   const isCurrent = selectedDropdownItem === current;
-
-  const handleDropdownItem = (i: number) => setSelectedDropdownItem(i);
 
   const repetitionsSelect = (data: string[]) => {
     if (data.length === 0) return null;
@@ -89,13 +82,13 @@ export const ExerciseItem = ({ exercise }: { exercise: Exercise }) => {
               {prevWeight?.weight && (
                 <Text style={styles.prevText}>
                   Prev: {prevWeight.qty}r - {prevWeight.weight}
-                  {typeof +prevWeight.weight === "number" && " kg"}
+                  {!Number.isNaN(parseFloat(prevWeight.weight)) && " kg"}
                 </Text>
               )}
               {currentWeight && (
                 <Text style={styles.prevText}>
                   Today: {weightsAndRepetitions[current].qty}r -{currentWeight}
-                  {typeof +currentWeight === "number" && " kg"}
+                  {!Number.isNaN(parseFloat(currentWeight)) && " kg"}
                 </Text>
               )}
             </>
@@ -106,7 +99,7 @@ export const ExerciseItem = ({ exercise }: { exercise: Exercise }) => {
             <TextInput
               style={styles.weightText}
               defaultValue={
-                weight && typeof +weight === "number" ? `${weight} kg` : weight ?? undefined
+                weight && !Number.isNaN(parseFloat(weight)) ? `${weight} kg` : weight ?? undefined
               }
               multiline
               scrollEnabled
@@ -182,7 +175,6 @@ const exerciseItemStyles = (theme: Theme, isTitle: boolean) =>
       marginRight: 10,
       alignItems: "center",
     },
-    //
     uniqueButtonStyle: {
       flex: 2,
       height: "75%",

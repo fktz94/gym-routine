@@ -1,4 +1,4 @@
-import { Exercise, RoutineDay, RoutineStructure } from "./Routines";
+import { Exercise, RoutineDay, RoutineStructure, WeightsAndRepetitions } from "./Routines";
 
 export interface UseRoutineDescription {
   id?: string | undefined;
@@ -18,4 +18,12 @@ export interface UseEditRoutineChanges {
   isChangingName: boolean;
   handleName: (val: string) => void;
   setIsChangingName: (val: boolean) => void;
+}
+
+export interface UseEditWeightModal {
+  closeModal: () => void;
+  exerciseData: WeightsAndRepetitions;
+  exerciseName: string;
+  isCurrent: boolean;
+  selectedSerie: number;
 }

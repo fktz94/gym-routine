@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { View, Text, StyleSheet, Alert } from "react-native";
 import { useIsFocused } from "@react-navigation/native";
 import { Link, router, useLocalSearchParams } from "expo-router";
-
 import { AcceptButton } from "@/src/components/Buttons/AcceptButton";
 import CustomLoader from "@/src/components/CustomLoader";
 import RoutineDetails from "@/src/components/Routine/RoutineDetails";
