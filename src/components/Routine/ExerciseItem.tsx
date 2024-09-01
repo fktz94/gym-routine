@@ -8,6 +8,7 @@ import CustomSelectDropdown from "../CustomSelectDropdown";
 import { Exercise } from "@/src/types/Routines";
 import EditWeightModal from "./EditWeightModal";
 import { Theme } from "@/src/types/Contexts";
+import useModal from "@/src/hooks/useModal";
 
 export const ExerciseItemTitle = () => {
   const { theme } = useThemeContext();
@@ -28,30 +29,27 @@ export const ExerciseItemTitle = () => {
 // WORK HERE
 // WORK HERE
 
-export const ExerciseItem = ({ name, sets, weightsAndRepetitions, current }: Exercise) => {
+export const ExerciseItem = ({ exercise }: { exercise: Exercise }) => {
   const { theme } = useThemeContext();
   const styles = exerciseItemStyles(theme, false);
 
-  const repetitions = weightsAndRepetitions.map((el) => el.qty || "N/A");
+  const { closeModal, isModalOpen: isEditing, openModal } = useModal();
 
+  const { name, sets, weightsAndRepetitions, current } = exercise;
+
+  const repetitions = weightsAndRepetitions.map((el) => el.qty || "N/A");
   const prevWeight = weightsAndRepetitions.at(current - 1);
   const currentWeight = weightsAndRepetitions[current].weight;
 
-  const [isEditingExercise, setIsEditingExercise] = useState(false);
-
   const [selectedDropdownItem, setSelectedDropdownItem] = useState(current);
   const weight = weightsAndRepetitions[selectedDropdownItem]?.weight;
+  const isCurrent = selectedDropdownItem === current;
 
   const handleDropdownItem = (i: number) => setSelectedDropdownItem(i);
 
-  const openEditModal = () => setIsEditingExercise(true);
-  const closeEditModal = () => setIsEditingExercise(false);
-
-  const repetitionsSelect = (data: (string | number)[]) => {
+  const repetitionsSelect = (data: string[]) => {
     if (data.length === 0) return null;
-
     const mappedData = data.map((rep, i) => ({ rep, i }));
-
     return data.length > 1 ? (
       <CustomSelectDropdown
         data={mappedData}
@@ -72,11 +70,11 @@ export const ExerciseItem = ({ name, sets, weightsAndRepetitions, current }: Exe
 
   return (
     <>
-      {isEditingExercise && (
+      {isEditing && (
         <EditWeightModal
-          isCurrent={selectedDropdownItem === current}
+          isCurrent={isCurrent}
           selectedSerie={selectedDropdownItem}
-          closeModal={closeEditModal}
+          closeModal={closeModal}
           exerciseData={weightsAndRepetitions[selectedDropdownItem]}
           exerciseName={name}
         />
@@ -85,23 +83,22 @@ export const ExerciseItem = ({ name, sets, weightsAndRepetitions, current }: Exe
         <Text style={styles.inputContainer}>{name}</Text>
         <Text style={[styles.inputContainer, styles.sets]}>{sets}</Text>
         <View style={styles.inputContainer}>
-          {!currentWeight ? (
-            <Text style={styles.prevText}>Add today's weight!</Text>
-          ) : (
-            weightsAndRepetitions.length > 1 && (
-              <>
+          {!currentWeight && <Text style={styles.prevText}>Add today's weight!</Text>}
+          {weightsAndRepetitions.length > 1 && (
+            <>
+              {prevWeight?.weight && (
+                <Text style={styles.prevText}>
+                  Prev: {prevWeight.qty}r - {prevWeight.weight}
+                  {typeof +prevWeight.weight === "number" && " kg"}
+                </Text>
+              )}
+              {currentWeight && (
                 <Text style={styles.prevText}>
                   Today: {weightsAndRepetitions[current].qty}r -{currentWeight}
-                  {typeof currentWeight === "number" && " kg"}
+                  {typeof +currentWeight === "number" && " kg"}
                 </Text>
-                {prevWeight?.weight && (
-                  <Text style={styles.prevText}>
-                    Prev: {prevWeight.qty}r - {prevWeight.weight}
-                    {typeof prevWeight.weight === "number" && " kg"}
-                  </Text>
-                )}
-              </>
-            )
+              )}
+            </>
           )}
 
           <View style={styles.weightAndRepetitionsView}>
@@ -109,7 +106,7 @@ export const ExerciseItem = ({ name, sets, weightsAndRepetitions, current }: Exe
             <TextInput
               style={styles.weightText}
               defaultValue={
-                typeof weight === "number" ? `${weight?.toString()} kg` : weight ?? undefined
+                weight && typeof +weight === "number" ? `${weight} kg` : weight ?? undefined
               }
               multiline
               scrollEnabled
@@ -118,7 +115,7 @@ export const ExerciseItem = ({ name, sets, weightsAndRepetitions, current }: Exe
           </View>
 
           <View style={styles.themedButtonContainer}>
-            <ThemedButton externalButtonStyles={styles.editButtonView} onPress={openEditModal}>
+            <ThemedButton externalButtonStyles={styles.editButtonView} onPress={openModal}>
               <Ionicons color={Colors[theme].background} name="pencil" />
             </ThemedButton>
           </View>
@@ -185,7 +182,6 @@ const exerciseItemStyles = (theme: Theme, isTitle: boolean) =>
       marginRight: 10,
       alignItems: "center",
     },
-    editButtonIcon: {},
     //
     uniqueButtonStyle: {
       flex: 2,

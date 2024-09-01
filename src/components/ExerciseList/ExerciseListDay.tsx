@@ -97,10 +97,4 @@ const exerciseListDayStyles = (theme: Theme) =>
     exercises: { backgroundColor: Colors[theme].text, gap: 15, padding: 20 },
     addExerciseIconContainer: { flexDirection: "row", width: "100%" },
     addExerciseIcon: { margin: "auto" },
-    acceptCancelButtonContainer: {
-      flexDirection: "row",
-      justifyContent: "center",
-      margin: "auto",
-      gap: 60,
-    },
   });

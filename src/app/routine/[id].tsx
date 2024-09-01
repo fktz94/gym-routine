@@ -1,5 +1,11 @@
+import { useEffect } from "react";
+import { View, Text, StyleSheet, Alert } from "react-native";
+import { useIsFocused } from "@react-navigation/native";
+import { Link, router, useLocalSearchParams } from "expo-router";
+
+import { AcceptButton } from "@/src/components/Buttons/AcceptButton";
 import CustomLoader from "@/src/components/CustomLoader";
-import RoutineDetails from "@/src/components/RoutineDetails";
+import RoutineDetails from "@/src/components/Routine/RoutineDetails";
 import ThemedButton from "@/src/components/Buttons/ThemedButton";
 import { Colors } from "@/src/constants/Colors";
 import useHeaderContext from "@/src/contexts/Header/useHeaderContext";
@@ -11,11 +17,6 @@ import { concludeRoutineDay } from "@/src/store/Routines/RoutinesAsyncThunk";
 import { resetConcludeExerciseState } from "@/src/store/Routines/RoutinesSlice";
 import { Theme } from "@/src/types/Contexts";
 import { ResponseStatus } from "@/src/types/Store";
-import { useIsFocused } from "@react-navigation/native";
-import { Link, router, useLocalSearchParams } from "expo-router";
-import { useEffect } from "react";
-import { View, Text, StyleSheet, Alert } from "react-native";
-import { AcceptButton } from "@/src/components/Buttons/AcceptButton";
 
 export default function RoutineScreen() {
   const { toggleShowBackArrowButton } = useHeaderContext();

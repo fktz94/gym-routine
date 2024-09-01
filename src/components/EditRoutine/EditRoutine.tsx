@@ -153,13 +153,6 @@ const editRoutineStyles = (theme: Theme) =>
       textAlign: "center",
       fontSize: 20,
     },
-    subtitle: {
-      color: Colors[theme].text,
-      fontWeight: "bold",
-      letterSpacing: 0.5,
-      textAlign: "center",
-      marginTop: -20,
-    },
     modifyRoutineBtnContainer: { width: "40%", margin: "auto", marginTop: 15, marginBottom: 30 },
     modifyRoutineBtnText: {
       fontSize: 14,

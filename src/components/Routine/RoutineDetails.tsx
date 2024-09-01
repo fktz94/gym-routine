@@ -1,19 +1,13 @@
 import { ScrollView, StyleSheet } from "react-native";
-import { ExerciseItem, ExerciseItemTitle } from "./Routine/ExerciseItem";
-import { RoutineDay } from "../types/Routines";
+import { ExerciseItem, ExerciseItemTitle } from "./ExerciseItem";
+import { RoutineDay } from "@/src/types/Routines";
 
 const RoutineDetails = ({ routineDay }: { routineDay: RoutineDay }) => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <ExerciseItemTitle />
-      {routineDay.map(({ name, sets, weightsAndRepetitions, current }, i) => (
-        <ExerciseItem
-          name={name}
-          sets={sets}
-          weightsAndRepetitions={weightsAndRepetitions}
-          current={current}
-          key={i}
-        />
+      {routineDay.map((exercise, i) => (
+        <ExerciseItem exercise={exercise} key={i} />
       ))}
     </ScrollView>
   );

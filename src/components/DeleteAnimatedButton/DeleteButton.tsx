@@ -1,5 +1,4 @@
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
-import React from "react";
 import { Colors } from "@/src/constants/Colors";
 import { DeleteButtonProps } from "@/src/types/Components";
 

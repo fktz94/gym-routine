@@ -12,6 +12,7 @@ import { resetModifiyExerciseState } from "@/src/store/Routines/RoutinesSlice";
 import useThemeContext from "@/src/contexts/Theme/useThemeContext";
 import ThemedModal from "../ThemedModal";
 import { Theme } from "@/src/types/Contexts";
+import CheckboxContainer from "./CheckboxContainer";
 
 const EditWeightModal = ({
   closeModal,
@@ -51,7 +52,7 @@ const EditWeightModal = ({
     const isNotNumber = Number.isNaN(+input);
     const newVal = isNotNumber || input === "" ? input : +input;
     if (!customValue && validateWeightInputNumber(newVal)) return;
-    setNewValue(newVal);
+    setNewValue(newVal.toString());
   };
 
   const handleAccept = () => {
@@ -116,27 +117,17 @@ const EditWeightModal = ({
         />
         {!customValue && <Text style={styles.kgText}>kg</Text>}
       </View>
-      <View style={styles.customContainer}>
-        <Text style={styles.customText}>Customize value</Text>
-        <BouncyCheckbox
-          size={18}
-          fillColor={Colors.light.primary}
-          innerIconStyle={{ borderWidth: 2 }}
-          onPress={handleCustomCheckbox}
-          isChecked={customValue}
-        />
-      </View>
+      <CheckboxContainer
+        isChecked={customValue}
+        onPress={handleCustomCheckbox}
+        text="Customize value"
+      />
       {!isCurrent && (
-        <View style={styles.customContainer}>
-          <Text style={styles.customText}>Set to current week</Text>
-          <BouncyCheckbox
-            size={18}
-            fillColor={Colors.light.primary}
-            innerIconStyle={{ borderWidth: 2 }}
-            onPress={handleCurrentCheckbox}
-            isChecked={settedToCurrent}
-          />
-        </View>
+        <CheckboxContainer
+          isChecked={settedToCurrent}
+          onPress={handleCurrentCheckbox}
+          text="Set to current week"
+        />
       )}
     </ThemedModal>
   );
@@ -175,6 +166,4 @@ const editExerciseModalStyles = (theme: Theme, customValue: boolean) =>
     previousWeightText: {
       color: Colors[theme].text,
     },
-    customContainer: { flexDirection: "row", gap: 12, justifyContent: "flex-end" },
-    customText: { textAlignVertical: "center", color: Colors[theme].text, fontSize: 12 },
   });
