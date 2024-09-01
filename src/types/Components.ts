@@ -49,7 +49,7 @@ export interface EditExerciseModalProps {
 
 export interface CreateExerciseModalProps {
   closeModal: () => void;
-  dayIndex: number;
+  dayIndex?: number;
   exerciseToEdit?: Exercise;
   handleOnAccept: ({
     dayIndex,
@@ -58,7 +58,7 @@ export interface CreateExerciseModalProps {
   }: {
     dayIndex: number;
     exerciseData: Exercise;
-    prevName?: string;
+    prevName: string;
   }) => void;
 }
 
@@ -98,7 +98,7 @@ export interface CustomSelectDropdownProps {
 }
 
 export interface ExerciseListItemProps {
-  dayIndex: number;
+  dayIndex?: number;
   exerciseData: Exercise;
   exerciseIndex?: number;
   handleDeleteExercise: ({ dayIndex, exerciseIndex }: DeleteExercisePayloadType) => void;
@@ -108,12 +108,13 @@ export interface ExerciseListItemProps {
 }
 
 export interface ExerciseListDayProps {
-  data: RoutineDay[];
+  dataToMap: RoutineDay;
   dayHasToBeShown?: boolean;
-  dayIndex: number;
+  dayIndex?: number;
   handleAddExercise: ({ dayIndex, exerciseData }: AddExercisePayloadType) => void;
   handleDeleteExercise: ({ dayIndex, exerciseIndex }: DeleteExercisePayloadType) => void;
   handleEditExercise: ({ dayIndex, exerciseData, prevName }: EditExercisePayloadType) => void;
+  isWarmUp?: boolean;
 }
 
 export interface ConfirmCreateNewExerciseModalProps {

@@ -10,10 +10,14 @@ const SecondStep = () => {
   const styles = secondStepStyles(theme);
 
   const {
-    newRoutineState: { data },
+    newRoutineState: { data, warmUp },
     handleAddOneExercise,
+    handleAddOneWarmUpExercise,
     handleDeleteOneExercise,
+    handleDeleteOneWarmUpExercise,
     handleEditOneExercise,
+    handleEditOneWarmUpExercise,
+    hasWarmUpRoutine,
   } = useNewRoutineContext();
 
   const renderDays = () =>
@@ -21,7 +25,7 @@ const SecondStep = () => {
       <ExerciseListDay
         key={i}
         dayIndex={i}
-        data={data}
+        dataToMap={data[i]}
         handleAddExercise={handleAddOneExercise}
         handleDeleteExercise={handleDeleteOneExercise}
         handleEditExercise={handleEditOneExercise}
@@ -33,7 +37,20 @@ const SecondStep = () => {
       <View style={styles.container}>
         <Text style={styles.title}>Now, let's start filling each day with its exercises.</Text>
       </View>
-      <ScrollView contentContainerStyle={styles.scrollViewContainer}>{renderDays()}</ScrollView>
+      <ScrollView contentContainerStyle={styles.scrollViewContainer}>
+        <>
+          {hasWarmUpRoutine && (
+            <ExerciseListDay
+              dataToMap={warmUp}
+              handleAddExercise={handleAddOneWarmUpExercise}
+              isWarmUp
+              handleDeleteExercise={handleDeleteOneWarmUpExercise}
+              handleEditExercise={handleEditOneWarmUpExercise}
+            />
+          )}
+          {renderDays()}
+        </>
+      </ScrollView>
     </View>
   );
 };

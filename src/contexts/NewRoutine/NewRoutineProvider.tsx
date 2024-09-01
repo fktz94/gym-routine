@@ -1,11 +1,8 @@
+import { PropsWithChildren } from "react";
 import NewRoutineContext from "./NewRoutineContext";
 import useNewRoutine from "@/src/hooks/useNewRoutine";
 
-type Props = {
-  children: React.ReactNode;
-};
-
-export default function NewRoutineProvider({ children }: Props) {
+export default function NewRoutineProvider({ children }: PropsWithChildren) {
   const {
     handleName,
     handleStep,
@@ -15,8 +12,12 @@ export default function NewRoutineProvider({ children }: Props) {
     toggleWarmUpRoutine,
     newRoutineState,
     handleAddOneExercise,
+    handleAddOneWarmUpExercise,
     handleDeleteOneExercise,
+    handleDeleteOneWarmUpExercise,
     handleEditOneExercise,
+    handleEditOneWarmUpExercise,
+    handleClearWarmUp,
   } = useNewRoutine();
 
   return (
@@ -30,8 +31,12 @@ export default function NewRoutineProvider({ children }: Props) {
         toggleWarmUpRoutine,
         newRoutineState,
         handleAddOneExercise,
+        handleAddOneWarmUpExercise,
         handleDeleteOneExercise,
+        handleDeleteOneWarmUpExercise,
         handleEditOneExercise,
+        handleEditOneWarmUpExercise,
+        handleClearWarmUp,
       }}
     >
       {children}

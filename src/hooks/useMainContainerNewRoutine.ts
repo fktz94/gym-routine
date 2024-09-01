@@ -2,7 +2,8 @@ import useModal from "./useModal";
 import useNewRoutineContext from "../contexts/NewRoutine/useNewRoutineContext";
 
 const useMainContainerNewRoutine = () => {
-  const { handleStep, newRoutineState, step } = useNewRoutineContext();
+  const { handleStep, newRoutineState, step, handleClearWarmUp, hasWarmUpRoutine } =
+    useNewRoutineContext();
   const { name } = newRoutineState;
 
   const { closeModal, isModalOpen: isCreating, openModal } = useModal();
@@ -16,6 +17,9 @@ const useMainContainerNewRoutine = () => {
     if (isLastStep) {
       openModal();
     } else {
+      if (!hasWarmUpRoutine) {
+        handleClearWarmUp();
+      }
       handleStep({ direction: "up" });
     }
   };

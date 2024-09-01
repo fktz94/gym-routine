@@ -7,10 +7,11 @@ import {
   EditExercisePayloadType,
   NewRoutineActionsTypes,
 } from "../types/Reducers";
+import { Exercise } from "../types/Routines";
 
 const useNewRoutine = () => {
   const [step, setStep] = useState(0);
-  const [hasWarmUpRoutine, setHasWarmUpRoutine] = useState(false); // Still have to create a warm up section and state.
+  const [hasWarmUpRoutine, setHasWarmUpRoutine] = useState(false);
 
   const [newRoutineState, dispatch] = useReducer(newRoutineReducers, initialState);
 
@@ -51,10 +52,30 @@ const useNewRoutine = () => {
     });
   };
 
+  const handleAddOneWarmUpExercise = ({ exerciseData }: { exerciseData: Exercise }) => {
+    dispatch({
+      type: NewRoutineActionsTypes.ADDWARMUPEXERCISE,
+      payload: { exerciseData },
+    });
+  };
+
   const handleEditOneExercise = ({ exerciseData, dayIndex, prevName }: EditExercisePayloadType) => {
     dispatch({
       type: NewRoutineActionsTypes.EDITEXERCISE,
       payload: { dayIndex, exerciseData, prevName },
+    });
+  };
+
+  const handleEditOneWarmUpExercise = ({
+    exerciseData,
+    prevName,
+  }: {
+    exerciseData: Exercise;
+    prevName: string;
+  }) => {
+    dispatch({
+      type: NewRoutineActionsTypes.EDITWARMUPEXERCISE,
+      payload: { exerciseData, prevName },
     });
   };
 
@@ -65,13 +86,31 @@ const useNewRoutine = () => {
     });
   };
 
+  const handleDeleteOneWarmUpExercise = ({ exerciseIndex }: { exerciseIndex: number }) => {
+    dispatch({
+      type: NewRoutineActionsTypes.DELETEWARMUPEXERCISE,
+      payload: { exerciseIndex },
+    });
+  };
+
+  const handleClearWarmUp = () => {
+    dispatch({
+      type: NewRoutineActionsTypes.CLEANWARMUP,
+      payload: undefined,
+    });
+  };
+
   const toggleWarmUpRoutine = () => setHasWarmUpRoutine(!hasWarmUpRoutine);
 
   return {
     handleAddOneExercise,
+    handleAddOneWarmUpExercise,
+    handleClearWarmUp,
     handleDays,
     handleDeleteOneExercise,
+    handleDeleteOneWarmUpExercise,
     handleEditOneExercise,
+    handleEditOneWarmUpExercise,
     handleName,
     handleStep,
     hasWarmUpRoutine,

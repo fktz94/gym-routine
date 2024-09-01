@@ -9,7 +9,7 @@ import { ExerciseListItemProps } from "@/src/types/Components";
 import { Theme } from "@/src/types/Contexts";
 
 const ExerciseListItem = ({
-  dayIndex,
+  dayIndex = 0,
   exerciseData,
   exerciseIndex,
   handleDeleteExercise,
@@ -39,7 +39,7 @@ const ExerciseListItem = ({
           closeModal={closeModal}
           dayIndex={dayIndex}
           exerciseToEdit={exerciseData}
-          handleOnAccept={handleEditExercise} // check how to solve this type error
+          handleOnAccept={handleEditExercise}
         />
       )}
       <DeleteAnimation

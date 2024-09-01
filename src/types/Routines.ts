@@ -18,6 +18,7 @@ export interface RoutineStructure {
   madeOn: string;
   name: string;
   currentDay: number;
+  warmUp: RoutineDay;
 }
 
 export type Routine = RoutineStructure[];

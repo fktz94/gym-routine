@@ -4,8 +4,12 @@ export enum NewRoutineActionsTypes {
   SETNAME = "setName",
   SETDAYS = "setDays",
   ADDEXERCISE = "addExercise",
+  ADDWARMUPEXERCISE = "addWarmUpExercise",
   EDITEXERCISE = "editExercise",
+  EDITWARMUPEXERCISE = "editWarmUpExercise",
   DELETEEXERCISE = "deleteExercise",
+  DELETEWARMUPEXERCISE = "deleteWarmUpExercise",
+  CLEANWARMUP = "cleanWarmUp",
 }
 
 export type AddExercisePayloadType = { exerciseData: Exercise; dayIndex: number };
@@ -20,8 +24,15 @@ export type NewRoutineActions =
   | { type: NewRoutineActionsTypes.SETNAME; payload: string }
   | { type: NewRoutineActionsTypes.SETDAYS; payload: number }
   | { type: NewRoutineActionsTypes.ADDEXERCISE; payload: AddExercisePayloadType }
+  | { type: NewRoutineActionsTypes.ADDWARMUPEXERCISE; payload: { exerciseData: Exercise } }
   | { type: NewRoutineActionsTypes.EDITEXERCISE; payload: EditExercisePayloadType }
-  | { type: NewRoutineActionsTypes.DELETEEXERCISE; payload: DeleteExercisePayloadType };
+  | {
+      type: NewRoutineActionsTypes.EDITWARMUPEXERCISE;
+      payload: { exerciseData: Exercise; prevName: string };
+    }
+  | { type: NewRoutineActionsTypes.DELETEEXERCISE; payload: DeleteExercisePayloadType }
+  | { type: NewRoutineActionsTypes.DELETEWARMUPEXERCISE; payload: { exerciseIndex: number } }
+  | { type: NewRoutineActionsTypes.CLEANWARMUP; payload: undefined };
 
 export enum EditRoutineActionsTypes {
   SETINITIALSTATE = "setInitialState",

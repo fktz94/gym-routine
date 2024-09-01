@@ -13,7 +13,7 @@ import { Theme } from "@/src/types/Contexts";
 
 const CreateOrEditExerciseModal = ({
   closeModal,
-  dayIndex,
+  dayIndex = 0,
   exerciseToEdit,
   handleOnAccept,
 }: CreateExerciseModalProps) => {
@@ -62,7 +62,7 @@ const CreateOrEditExerciseModal = ({
       current: exerciseToEdit?.current || 0,
       weightsAndRepetitions: variations,
     };
-    handleOnAccept({ dayIndex, exerciseData: payload, prevName: exerciseToEdit?.name });
+    handleOnAccept({ dayIndex, exerciseData: payload, prevName: exerciseToEdit?.name || "" });
     closeModal();
   };
 

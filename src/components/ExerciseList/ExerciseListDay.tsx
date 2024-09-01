@@ -12,12 +12,13 @@ import { ExerciseListDayProps } from "@/src/types/Components";
 import { Theme } from "@/src/types/Contexts";
 
 const ExerciseListDay = ({
-  data,
+  dataToMap,
   dayHasToBeShown = false,
-  dayIndex,
+  dayIndex = 0,
   handleDeleteExercise,
   handleEditExercise,
   handleAddExercise,
+  isWarmUp = false,
 }: ExerciseListDayProps) => {
   const { theme } = useThemeContext();
   const styles = exerciseListDayStyles(theme);
@@ -28,8 +29,8 @@ const ExerciseListDay = ({
   });
 
   const currentExercises = () =>
-    data[dayIndex].map((exercise, i) => {
-      const isLastElement = i === data[dayIndex].length - 1;
+    dataToMap.map((exercise, i) => {
+      const isLastElement = i === dataToMap.length - 1;
       return (
         <ExerciseListItem
           dayIndex={dayIndex}
@@ -46,7 +47,7 @@ const ExerciseListDay = ({
   return (
     <View style={styles.dayContainer}>
       <Pressable style={styles.dayButton} onPress={showDayDetails}>
-        <Text style={styles.dayButtonText}>DAY {dayIndex + 1}</Text>
+        <Text style={styles.dayButtonText}>{isWarmUp ? "WARM UP" : `DAY ${dayIndex + 1}`}</Text>
         <Ionicons name={isShown ? "chevron-up" : "chevron-down"} />
       </Pressable>
       <Animated.View style={animatedStyle}>
@@ -59,7 +60,7 @@ const ExerciseListDay = ({
             />
           )}
           <View style={styles.exercises}>
-            {data[dayIndex].length > 0 && (
+            {dataToMap.length > 0 && (
               <View>
                 <ExerciseListTitle />
                 {currentExercises()}

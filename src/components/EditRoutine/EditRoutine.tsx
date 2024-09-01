@@ -51,7 +51,7 @@ const EditRoutine = () => {
   const renderDays = () =>
     data.map((_, i) => (
       <ExerciseListDay
-        data={data}
+        dataToMap={data[i]}
         dayHasToBeShown={selectedDay === i.toString()}
         dayIndex={i}
         handleAddExercise={handleAddOneExercise}

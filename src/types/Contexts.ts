@@ -3,7 +3,7 @@ import {
   DeleteExercisePayloadType,
   EditExercisePayloadType,
 } from "./Reducers";
-import { RoutineStructure } from "./Routines";
+import { Exercise, RoutineStructure } from "./Routines";
 
 export interface NewRoutineContextProps {
   handleName: (val: string) => void;
@@ -14,8 +14,18 @@ export interface NewRoutineContextProps {
   toggleWarmUpRoutine: () => void;
   newRoutineState: RoutineStructure;
   handleAddOneExercise: ({ dayIndex, exerciseData }: AddExercisePayloadType) => void;
+  handleAddOneWarmUpExercise: ({ exerciseData }: { exerciseData: Exercise }) => void;
   handleDeleteOneExercise: ({ dayIndex, exerciseIndex }: DeleteExercisePayloadType) => void;
+  handleDeleteOneWarmUpExercise: ({ exerciseIndex }: { exerciseIndex: number }) => void;
   handleEditOneExercise: ({ dayIndex, exerciseData, prevName }: EditExercisePayloadType) => void;
+  handleEditOneWarmUpExercise: ({
+    exerciseData,
+    prevName,
+  }: {
+    exerciseData: Exercise;
+    prevName: string;
+  }) => void;
+  handleClearWarmUp: () => void;
 }
 
 export interface EditRoutineContextProps {
