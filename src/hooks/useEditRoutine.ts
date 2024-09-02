@@ -12,6 +12,7 @@ import { Exercise } from "../types/Routines";
 const useEditRoutine = ({ routineId }: { routineId: string }) => {
   const { routine, isCurrent } = useRoutineDescription({ id: routineId });
   const [toCurrent, setToCurrent] = useState(false);
+  const [addWarmUp, setAddWarmUp] = useState(false);
   const [editRoutineState, dispatch] = useReducer(editRoutineReducers, initialState);
   const setState = () => {
     dispatch({ type: EditRoutineActionsTypes.SETINITIALSTATE, payload: routine });
@@ -57,6 +58,16 @@ const useEditRoutine = ({ routineId }: { routineId: string }) => {
       payload: { exerciseIndex },
     });
   };
+  const toggleWarmUp = () => {
+    if (addWarmUp) {
+      dispatch({
+        type: EditRoutineActionsTypes.CLEANWARMUP,
+        payload: undefined,
+      });
+    }
+    setAddWarmUp(!addWarmUp);
+  };
+
   useEffect(setState, []);
 
   return {
@@ -69,10 +80,11 @@ const useEditRoutine = ({ routineId }: { routineId: string }) => {
     toCurrent,
     handleName,
     handleEditOneExercise,
-
     handleAddOneWarmUpExercise,
     handleEditOneWarmUpExercise,
     handleDeleteOneWarmUpExercise,
+    addWarmUp,
+    toggleWarmUp,
   };
 };
 

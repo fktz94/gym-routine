@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { View, Text, StyleSheet, Alert } from "react-native";
+import { View, Text, StyleSheet, Alert, ScrollView } from "react-native";
 import { useIsFocused } from "@react-navigation/native";
 import { Link, router, useLocalSearchParams } from "expo-router";
 import { AcceptButton } from "@/src/components/Buttons/AcceptButton";
@@ -19,6 +19,8 @@ import { ResponseStatus } from "@/src/types/Store";
 import AnimatedDayCard from "@/src/components/ExerciseList/AnimatedDayCard";
 import { ExerciseItem } from "@/src/components/Routine/ExerciseItem";
 import ExerciseListTitle from "@/src/components/ExerciseList/ExerciseListTitle";
+import WarmUpItem from "@/src/components/Routine/WarmUpItem";
+import WarmUpTitle from "@/src/components/Routine/WarmUpTitle";
 
 export default function RoutineScreen() {
   const { toggleShowBackArrowButton } = useHeaderContext();
@@ -105,16 +107,16 @@ export default function RoutineScreen() {
         ) : isDayEmpty ? (
           emptyDayText()
         ) : (
-          <View style={styles.routineContainer}>
+          <ScrollView>
             {hasWarmUp && (
               <>
                 <AnimatedDayCard
                   title="WARM UP"
                   containerStyle={{ width: "94%", paddingBottom: 20 }}
                 >
-                  <ExerciseListTitle containerStyle={{ borderWidth: 0 }} />
+                  <WarmUpTitle />
                   {routine.warmUp.map((exercise) => (
-                    <ExerciseItem exercise={exercise} key={exercise.name} />
+                    <WarmUpItem exercise={exercise} key={exercise.name} />
                   ))}
                 </AnimatedDayCard>
                 <View style={styles.routineTitle}>
@@ -135,7 +137,7 @@ export default function RoutineScreen() {
                 text="Routine done!"
               />
             </View>
-          </View>
+          </ScrollView>
         )}
       </View>
     </RoutineProvider>

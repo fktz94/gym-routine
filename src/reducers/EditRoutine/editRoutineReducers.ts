@@ -37,6 +37,8 @@ export function editRoutineReducers(
       return { ...state, warmUp: findAndEditWarmUpExercise(state.warmUp, payload) };
     case EditRoutineActionsTypes.DELETEWARMUPEXERCISE:
       return { ...state, warmUp: findAndDeleteWarmUpExercise(state.warmUp, payload) };
+    case EditRoutineActionsTypes.CLEANWARMUP:
+      return { ...state, warmUp: [] };
     default:
       return state;
   }

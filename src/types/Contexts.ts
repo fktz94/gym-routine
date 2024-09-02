@@ -48,6 +48,8 @@ export interface EditRoutineContextProps {
     exerciseData: Exercise;
     prevName: string;
   }) => void;
+  toggleWarmUp: () => void;
+  addWarmUp: boolean;
 }
 
 export type Theme = "light" | "dark";

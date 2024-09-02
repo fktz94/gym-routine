@@ -35,6 +35,8 @@ const EditRoutine = () => {
     handleAddOneWarmUpExercise,
     handleEditOneWarmUpExercise,
     handleDeleteOneWarmUpExercise,
+    toggleWarmUp,
+    addWarmUp,
   } = useEditRoutineContext();
 
   if (!originalRoutine) return null;
@@ -52,7 +54,8 @@ const EditRoutine = () => {
     warmUp,
   });
 
-  const hasWarmUp = originalRoutine.warmUp.length > 0;
+  const hasPrevWarmUp = originalRoutine.warmUp.length > 0;
+  const hasWarmUp = hasPrevWarmUp || addWarmUp;
 
   const renderDays = () =>
     data.map((_, i) => (
@@ -106,6 +109,18 @@ const EditRoutine = () => {
             ]}
           >
             <TextInput value={name} onChangeText={handleName} style={styles.textInput} />
+          </View>
+        )}
+        {!hasPrevWarmUp && (
+          <View style={[styles.container, styles.checkboxContainer]}>
+            <Text style={styles.baseText}>Add warm up</Text>
+            <BouncyCheckbox
+              size={18}
+              fillColor={Colors.light.primary}
+              innerIconStyle={{ borderWidth: 2 }}
+              onPress={toggleWarmUp}
+              isChecked={addWarmUp}
+            />
           </View>
         )}
         <ScrollView contentContainerStyle={styles.scrollViewContainer}>

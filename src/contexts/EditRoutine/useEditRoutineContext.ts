@@ -15,10 +15,11 @@ export default function useEditRoutineContext() {
     toCurrent,
     handleName,
     handleEditOneExercise,
-
     handleAddOneWarmUpExercise,
     handleEditOneWarmUpExercise,
     handleDeleteOneWarmUpExercise,
+    toggleWarmUp,
+    addWarmUp,
   } = routineContext;
   return {
     isCurrent,
@@ -31,9 +32,10 @@ export default function useEditRoutineContext() {
     toCurrent,
     handleName,
     handleEditOneExercise,
-
     handleAddOneWarmUpExercise,
     handleEditOneWarmUpExercise,
     handleDeleteOneWarmUpExercise,
+    toggleWarmUp,
+    addWarmUp,
   };
 }

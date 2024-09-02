@@ -136,7 +136,6 @@ const exerciseItemStyles = (theme: Theme, isTitle: boolean) =>
       borderBottomColor: Colors[theme].text,
       fontWeight: isTitle ? "bold" : undefined,
       minHeight: 60,
-      overlayColor: "red",
     },
     sets: { fontSize: 16 },
     weightAndRepetitionsView: {

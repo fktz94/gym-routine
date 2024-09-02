@@ -43,6 +43,7 @@ export enum EditRoutineActionsTypes {
   ADDWARMUPEXERCISE = "addWarmUpExercise",
   EDITWARMUPEXERCISE = "editWarmUpExercise",
   DELETEWARMUPEXERCISE = "deleteWarmUpExercise",
+  CLEANWARMUP = "cleanWarmUp",
 }
 export type EditRoutineActions =
   | { type: EditRoutineActionsTypes.SETINITIALSTATE; payload: RoutineStructure | undefined }
@@ -55,4 +56,5 @@ export type EditRoutineActions =
       type: EditRoutineActionsTypes.EDITWARMUPEXERCISE;
       payload: { exerciseData: Exercise; prevName: string };
     }
-  | { type: EditRoutineActionsTypes.DELETEWARMUPEXERCISE; payload: { exerciseIndex: number } };
+  | { type: EditRoutineActionsTypes.DELETEWARMUPEXERCISE; payload: { exerciseIndex: number } }
+  | { type: EditRoutineActionsTypes.CLEANWARMUP; payload: undefined };
