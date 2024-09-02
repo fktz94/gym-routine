@@ -40,13 +40,14 @@ export interface ModifyExerciseAsyncThunkProps {
   selectedDay: number;
   exerciseName: string;
   selectedSerie: number;
-  newWeightValue: string | number;
+  newWeightValue: string;
   makeItCurrent: boolean;
 }
 
 export interface CreateNewRoutineAsyncThunkProps {
   routineData: RoutineDay[];
   routineName: string;
+  routineWarmUp: RoutineDay;
 }
 
 export interface EditRoutineAsyncThunkProps {

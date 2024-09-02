@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { View, Text, StyleSheet, Alert } from "react-native";
+import { View, Text, StyleSheet, Alert, FlatList } from "react-native";
 import { useIsFocused } from "@react-navigation/native";
 import { Link, router, useLocalSearchParams } from "expo-router";
 import { AcceptButton } from "@/src/components/Buttons/AcceptButton";
@@ -16,6 +16,9 @@ import { concludeRoutineDay } from "@/src/store/Routines/RoutinesAsyncThunk";
 import { resetConcludeExerciseState } from "@/src/store/Routines/RoutinesSlice";
 import { Theme } from "@/src/types/Contexts";
 import { ResponseStatus } from "@/src/types/Store";
+import AnimatedDayCard from "@/src/components/ExerciseList/AnimatedDayCard";
+import { ExerciseItem } from "@/src/components/Routine/ExerciseItem";
+import ExerciseListTitle from "@/src/components/ExerciseList/ExerciseListTitle";
 
 export default function RoutineScreen() {
   const { toggleShowBackArrowButton } = useHeaderContext();
@@ -32,8 +35,16 @@ export default function RoutineScreen() {
   const { routine, selectedDay, handleSelectedDay } = useRoutineDescription({ id });
 
   const dispatch = useAppDispatch();
-
   const isFocused = useIsFocused();
+
+  const hasWarmUp = routine && routine?.warmUp.length > 0;
+
+  // WORK ON SHOWING WARM UP ON EVERY DAY
+  // WORK ON SHOWING WARM UP ON EVERY DAY
+  // WORK ON SHOWING WARM UP ON EVERY DAY
+  // WORK ON SHOWING WARM UP ON EVERY DAY
+  // WORK ON SHOWING WARM UP ON EVERY DAY
+  // WORK ON SHOWING WARM UP ON EVERY DAY
 
   const daysButtons = () =>
     routine?.data.map((_, i) => (
@@ -102,6 +113,14 @@ export default function RoutineScreen() {
           emptyDayText()
         ) : (
           <View style={styles.routineContainer}>
+            {hasWarmUp && (
+              <AnimatedDayCard title="WARM UP" containerStyle={{ width: "94%", paddingBottom: 20 }}>
+                <ExerciseListTitle />
+                {routine.warmUp.map((exercise) => (
+                  <ExerciseItem exercise={exercise} />
+                ))}
+              </AnimatedDayCard>
+            )}
             <RoutineDetails routineDay={routine?.data[selectedDay]} />
             <View style={styles.buttonsContainer}>
               <Link href={{ pathname: `/edit-routine/[id]`, params: { id, selectedDay } }} asChild>

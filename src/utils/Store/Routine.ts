@@ -39,6 +39,7 @@ export const addNewRoutine = ({
   prevRoutinesData,
   routineData,
   routineName,
+  routineWarmUp,
 }: AddNewRoutineUtilsProps) => {
   const madeOn = new Date().toDateString().split(" ").slice(1).join(" ");
   const routineId = Crypto.randomUUID();
@@ -48,6 +49,7 @@ export const addNewRoutine = ({
     id: routineId,
     madeOn,
     name: routineName,
+    warmUp: routineWarmUp,
   };
 
   const nextState = produce(prevRoutinesData, (draft: RoutinesData) => {

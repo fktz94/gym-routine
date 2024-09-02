@@ -64,7 +64,10 @@ export const modifyExercise = createAsyncThunk(
 
 export const createNewRoutine = createAsyncThunk(
   "routines/createNewRoutine",
-  async ({ routineData, routineName }: CreateNewRoutineAsyncThunkProps, { getState, dispatch }) => {
+  async (
+    { routineData, routineName, routineWarmUp }: CreateNewRoutineAsyncThunkProps,
+    { getState, dispatch }
+  ) => {
     const {
       routines: { routines, currentRoutineId },
     } = getState(); // Learn how to type AsyncThunk
@@ -73,6 +76,7 @@ export const createNewRoutine = createAsyncThunk(
       routineData,
       routineName,
       prevRoutinesData: { routines, currentRoutineId },
+      routineWarmUp,
     });
 
     try {

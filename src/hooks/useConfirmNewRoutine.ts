@@ -17,10 +17,10 @@ const useConfirmNewRoutine = ({ closeModal }: { closeModal: () => void }) => {
 
   const { toggleShowBackArrowButton } = useHeaderContext();
   const { newRoutineState } = useNewRoutineContext();
-  const { name, data } = newRoutineState;
+  const { name, data, warmUp } = newRoutineState;
 
   const handleCreateRoutine = () => {
-    dispatch(createNewRoutine({ routineData: data, routineName: name }));
+    dispatch(createNewRoutine({ routineData: data, routineName: name, routineWarmUp: warmUp }));
   };
 
   const isLoading = createRoutineStatus !== ResponseStatus.IDLE && isCreatingRoutine;
