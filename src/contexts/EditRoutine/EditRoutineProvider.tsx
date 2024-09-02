@@ -18,6 +18,10 @@ export default function EditRoutineProvider({ children, routineId, selectedDay }
     toCurrent,
     handleName,
     handleEditOneExercise,
+
+    handleAddOneWarmUpExercise,
+    handleEditOneWarmUpExercise,
+    handleDeleteOneWarmUpExercise,
   } = useEditRoutine({ routineId });
 
   return (
@@ -33,6 +37,10 @@ export default function EditRoutineProvider({ children, routineId, selectedDay }
         toCurrent,
         handleName,
         handleEditOneExercise,
+
+        handleAddOneWarmUpExercise,
+        handleEditOneWarmUpExercise,
+        handleDeleteOneWarmUpExercise,
       }}
     >
       {children}

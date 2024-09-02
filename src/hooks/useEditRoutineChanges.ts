@@ -11,9 +11,13 @@ const useEditRoutineChanges = ({
   isChangingName,
   handleName,
   setIsChangingName,
+  warmUp,
 }: UseEditRoutineChanges) => {
-  const { data: originalData } = originalRoutine;
-  const hasChanges = !isEqual(data, originalData) || originalRoutine.name !== name;
+  const { data: originalData, warmUp: originalWarmUp } = originalRoutine;
+  const hasChanges =
+    !isEqual(data, originalData) ||
+    !isEqual(warmUp, originalWarmUp) ||
+    originalRoutine.name !== name;
   const setToCurrent = !isCurrent && toCurrent;
   const isButtonDisabled = !hasChanges && !setToCurrent;
   const handleSaveChanges = () => {

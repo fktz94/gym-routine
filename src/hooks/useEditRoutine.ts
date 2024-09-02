@@ -7,6 +7,7 @@ import {
   EditExercisePayloadType,
   EditRoutineActionsTypes,
 } from "../types/Reducers";
+import { Exercise } from "../types/Routines";
 
 const useEditRoutine = ({ routineId }: { routineId: string }) => {
   const { routine, isCurrent } = useRoutineDescription({ id: routineId });
@@ -30,6 +31,32 @@ const useEditRoutine = ({ routineId }: { routineId: string }) => {
   const handleName = (payload: string) => {
     dispatch({ type: EditRoutineActionsTypes.CHANGENAME, payload });
   };
+
+  const handleAddOneWarmUpExercise = ({ exerciseData }: { exerciseData: Exercise }) => {
+    dispatch({
+      type: EditRoutineActionsTypes.ADDWARMUPEXERCISE,
+      payload: { exerciseData },
+    });
+  };
+
+  const handleEditOneWarmUpExercise = ({
+    exerciseData,
+    prevName,
+  }: {
+    exerciseData: Exercise;
+    prevName: string;
+  }) => {
+    dispatch({
+      type: EditRoutineActionsTypes.EDITWARMUPEXERCISE,
+      payload: { exerciseData, prevName },
+    });
+  };
+  const handleDeleteOneWarmUpExercise = ({ exerciseIndex }: { exerciseIndex: number }) => {
+    dispatch({
+      type: EditRoutineActionsTypes.DELETEWARMUPEXERCISE,
+      payload: { exerciseIndex },
+    });
+  };
   useEffect(setState, []);
 
   return {
@@ -42,6 +69,10 @@ const useEditRoutine = ({ routineId }: { routineId: string }) => {
     toCurrent,
     handleName,
     handleEditOneExercise,
+
+    handleAddOneWarmUpExercise,
+    handleEditOneWarmUpExercise,
+    handleDeleteOneWarmUpExercise,
   };
 };
 

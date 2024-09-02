@@ -18,6 +18,7 @@ export interface UseEditRoutineChanges {
   isChangingName: boolean;
   handleName: (val: string) => void;
   setIsChangingName: (val: boolean) => void;
+  warmUp: RoutineDay;
 }
 
 export interface UseEditWeightModal {

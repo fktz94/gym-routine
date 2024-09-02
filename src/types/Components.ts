@@ -114,6 +114,7 @@ export interface ExerciseListDayProps {
   handleAddExercise: ({ dayIndex, exerciseData }: AddExercisePayloadType) => void;
   handleDeleteExercise: ({ dayIndex, exerciseIndex }: DeleteExercisePayloadType) => void;
   handleEditExercise: ({ dayIndex, exerciseData, prevName }: EditExercisePayloadType) => void;
+  isWarmUp?: boolean;
 }
 
 export interface ConfirmCreateNewExerciseModalProps {

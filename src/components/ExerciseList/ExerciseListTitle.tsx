@@ -1,13 +1,13 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, ViewStyle } from "react-native";
 import { Colors } from "@/src/constants/Colors";
 import useThemeContext from "@/src/contexts/Theme/useThemeContext";
 import { Theme } from "@/src/types/Contexts";
 
-const ExerciseListTitle = () => {
+const ExerciseListTitle = (props: { containerStyle?: ViewStyle }) => {
   const { theme } = useThemeContext();
   const styles = exerciseListTitleStyles(theme);
   return (
-    <View style={styles.exerciseItem}>
+    <View style={[styles.exerciseItem, props?.containerStyle]}>
       <Text style={[styles.exerciseItemText, styles.exerciseName, styles.exerciseTitle]}>
         Exercise
       </Text>

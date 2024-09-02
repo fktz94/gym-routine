@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { View, Text, StyleSheet, Alert, FlatList } from "react-native";
+import { View, Text, StyleSheet, Alert } from "react-native";
 import { useIsFocused } from "@react-navigation/native";
 import { Link, router, useLocalSearchParams } from "expo-router";
 import { AcceptButton } from "@/src/components/Buttons/AcceptButton";
@@ -38,13 +38,6 @@ export default function RoutineScreen() {
   const isFocused = useIsFocused();
 
   const hasWarmUp = routine && routine?.warmUp.length > 0;
-
-  // WORK ON SHOWING WARM UP ON EVERY DAY
-  // WORK ON SHOWING WARM UP ON EVERY DAY
-  // WORK ON SHOWING WARM UP ON EVERY DAY
-  // WORK ON SHOWING WARM UP ON EVERY DAY
-  // WORK ON SHOWING WARM UP ON EVERY DAY
-  // WORK ON SHOWING WARM UP ON EVERY DAY
 
   const daysButtons = () =>
     routine?.data.map((_, i) => (
@@ -114,12 +107,20 @@ export default function RoutineScreen() {
         ) : (
           <View style={styles.routineContainer}>
             {hasWarmUp && (
-              <AnimatedDayCard title="WARM UP" containerStyle={{ width: "94%", paddingBottom: 20 }}>
-                <ExerciseListTitle />
-                {routine.warmUp.map((exercise) => (
-                  <ExerciseItem exercise={exercise} />
-                ))}
-              </AnimatedDayCard>
+              <>
+                <AnimatedDayCard
+                  title="WARM UP"
+                  containerStyle={{ width: "94%", paddingBottom: 20 }}
+                >
+                  <ExerciseListTitle containerStyle={{ borderWidth: 0 }} />
+                  {routine.warmUp.map((exercise) => (
+                    <ExerciseItem exercise={exercise} key={exercise.name} />
+                  ))}
+                </AnimatedDayCard>
+                <View style={styles.routineTitle}>
+                  <Text style={styles.routineTitleText}>ROUTINE</Text>
+                </View>
+              </>
             )}
             <RoutineDetails routineDay={routine?.data[selectedDay]} />
             <View style={styles.buttonsContainer}>
@@ -192,5 +193,22 @@ const routineDescriptionStyles = (theme: Theme) =>
       fontWeight: "bold",
       textAlign: "center",
       paddingVertical: 6,
+    },
+    routineTitle: {
+      backgroundColor: Colors[theme].secondary,
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      paddingHorizontal: 20,
+      paddingVertical: 10,
+      width: "94%",
+      margin: "auto",
+      marginBottom: -12,
+    },
+    routineTitleText: {
+      color: Colors[theme].text,
+      fontWeight: "bold",
+      letterSpacing: 1,
+      fontSize: 16,
     },
   });

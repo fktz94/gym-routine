@@ -29,14 +29,14 @@ export function newRoutineReducers(
       return { ...state, data: new Array(payload).fill([]) };
     case NewRoutineActionsTypes.ADDEXERCISE:
       return { ...state, data: findDayAndAddNewExercise(state.data, payload) };
-    case NewRoutineActionsTypes.ADDWARMUPEXERCISE:
-      return { ...state, warmUp: [...state.warmUp, payload.exerciseData] };
     case NewRoutineActionsTypes.EDITEXERCISE:
       return { ...state, data: findDayAndEditExercise(state.data, payload) };
-    case NewRoutineActionsTypes.EDITWARMUPEXERCISE:
-      return { ...state, warmUp: findAndEditWarmUpExercise(state.warmUp, payload) };
     case NewRoutineActionsTypes.DELETEEXERCISE:
       return { ...state, data: findDayAndDeleteExercise(state.data, payload) };
+    case NewRoutineActionsTypes.ADDWARMUPEXERCISE:
+      return { ...state, warmUp: [...state.warmUp, payload.exerciseData] };
+    case NewRoutineActionsTypes.EDITWARMUPEXERCISE:
+      return { ...state, warmUp: findAndEditWarmUpExercise(state.warmUp, payload) };
     case NewRoutineActionsTypes.DELETEWARMUPEXERCISE:
       return { ...state, warmUp: findAndDeleteWarmUpExercise(state.warmUp, payload) };
     case NewRoutineActionsTypes.CLEANWARMUP:

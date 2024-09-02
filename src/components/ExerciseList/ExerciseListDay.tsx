@@ -1,4 +1,4 @@
-import { StyleSheet, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import ExerciseListItem from "./ExerciseListItem";
 import ExerciseListTitle from "./ExerciseListTitle";
@@ -17,6 +17,7 @@ const ExerciseListDay = ({
   handleDeleteExercise,
   handleEditExercise,
   handleAddExercise,
+  isWarmUp = false,
 }: ExerciseListDayProps) => {
   const { theme } = useThemeContext();
   const styles = exerciseListDayStyles(theme);
@@ -40,7 +41,10 @@ const ExerciseListDay = ({
     });
 
   return (
-    <AnimatedDayCard dayHasToBeShown={dayHasToBeShown} title={`DAY ${dayIndex + 1}`}>
+    <AnimatedDayCard
+      dayHasToBeShown={dayHasToBeShown}
+      title={isWarmUp ? "WARM UP" : `DAY ${dayIndex + 1}`}
+    >
       {isCreating && (
         <CreateOrEditExerciseModal
           closeModal={closeModal}

@@ -14,10 +14,10 @@ export interface NewRoutineContextProps {
   toggleWarmUpRoutine: () => void;
   newRoutineState: RoutineStructure;
   handleAddOneExercise: ({ dayIndex, exerciseData }: AddExercisePayloadType) => void;
-  handleAddOneWarmUpExercise: ({ exerciseData }: { exerciseData: Exercise }) => void;
   handleDeleteOneExercise: ({ dayIndex, exerciseIndex }: DeleteExercisePayloadType) => void;
-  handleDeleteOneWarmUpExercise: ({ exerciseIndex }: { exerciseIndex: number }) => void;
   handleEditOneExercise: ({ dayIndex, exerciseData, prevName }: EditExercisePayloadType) => void;
+  handleAddOneWarmUpExercise: ({ exerciseData }: { exerciseData: Exercise }) => void;
+  handleDeleteOneWarmUpExercise: ({ exerciseIndex }: { exerciseIndex: number }) => void;
   handleEditOneWarmUpExercise: ({
     exerciseData,
     prevName,
@@ -39,6 +39,15 @@ export interface EditRoutineContextProps {
   toCurrent: boolean;
   isCurrent: boolean;
   handleName: (val: string) => void;
+  handleAddOneWarmUpExercise: ({ exerciseData }: { exerciseData: Exercise }) => void;
+  handleDeleteOneWarmUpExercise: ({ exerciseIndex }: { exerciseIndex: number }) => void;
+  handleEditOneWarmUpExercise: ({
+    exerciseData,
+    prevName,
+  }: {
+    exerciseData: Exercise;
+    prevName: string;
+  }) => void;
 }
 
 export type Theme = "light" | "dark";

@@ -30,8 +30,11 @@ const EditRoutine = () => {
     isCurrent,
     originalRoutine,
     selectedDay,
-    selectedRoutine: { data, name },
+    selectedRoutine: { data, name, warmUp },
     toCurrent,
+    handleAddOneWarmUpExercise,
+    handleEditOneWarmUpExercise,
+    handleDeleteOneWarmUpExercise,
   } = useEditRoutineContext();
 
   if (!originalRoutine) return null;
@@ -46,7 +49,10 @@ const EditRoutine = () => {
     originalRoutine,
     setIsChangingName,
     toCurrent,
+    warmUp,
   });
+
+  const hasWarmUp = originalRoutine.warmUp.length > 0;
 
   const renderDays = () =>
     data.map((_, i) => (
@@ -102,7 +108,18 @@ const EditRoutine = () => {
             <TextInput value={name} onChangeText={handleName} style={styles.textInput} />
           </View>
         )}
-        <ScrollView contentContainerStyle={styles.scrollViewContainer}>{renderDays()}</ScrollView>
+        <ScrollView contentContainerStyle={styles.scrollViewContainer}>
+          {hasWarmUp && (
+            <ExerciseListDay
+              dataToMap={warmUp}
+              handleAddExercise={handleAddOneWarmUpExercise}
+              handleDeleteExercise={handleDeleteOneWarmUpExercise}
+              handleEditExercise={handleEditOneWarmUpExercise}
+              isWarmUp
+            />
+          )}
+          {renderDays()}
+        </ScrollView>
         <ThemedButton
           externalButtonStyles={styles.modifyRoutineBtnContainer}
           externalTextStyles={styles.modifyRoutineBtnText}

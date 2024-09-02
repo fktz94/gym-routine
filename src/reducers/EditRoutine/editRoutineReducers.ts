@@ -5,7 +5,7 @@ import {
   EditRoutineActions,
   EditRoutineActionsTypes,
 } from "@/src/types/Reducers";
-import { RoutineDay, RoutineStructure } from "@/src/types/Routines";
+import { Exercise, RoutineDay, RoutineStructure } from "@/src/types/Routines";
 
 export const initialState: RoutineStructure = {
   currentDay: 0,
@@ -13,6 +13,7 @@ export const initialState: RoutineStructure = {
   id: "",
   madeOn: "",
   name: "",
+  warmUp: [],
 };
 
 export function editRoutineReducers(
@@ -30,9 +31,29 @@ export function editRoutineReducers(
       return { ...state, data: findDayAndDeleteExercise(state.data, payload) };
     case EditRoutineActionsTypes.CHANGENAME:
       return { ...state, name: payload };
+    case EditRoutineActionsTypes.ADDWARMUPEXERCISE:
+      return { ...state, warmUp: [...state.warmUp, payload.exerciseData] };
+    case EditRoutineActionsTypes.EDITWARMUPEXERCISE:
+      return { ...state, warmUp: findAndEditWarmUpExercise(state.warmUp, payload) };
+    case EditRoutineActionsTypes.DELETEWARMUPEXERCISE:
+      return { ...state, warmUp: findAndDeleteWarmUpExercise(state.warmUp, payload) };
     default:
       return state;
   }
+}
+
+function findAndDeleteWarmUpExercise(
+  warmUp: RoutineDay,
+  { exerciseIndex }: { exerciseIndex: number }
+) {
+  return warmUp.filter((_, i) => i !== exerciseIndex);
+}
+
+function findAndEditWarmUpExercise(
+  warmUp: RoutineDay,
+  { exerciseData, prevName }: { exerciseData: Exercise; prevName: string }
+) {
+  return warmUp.map((exercise) => (exercise.name === prevName ? exerciseData : exercise));
 }
 
 function findDayAndAddNewExercise(
