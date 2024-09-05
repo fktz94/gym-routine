@@ -10,7 +10,7 @@ const WarmUpTitle = (props: { containerStyle?: ViewStyle }) => {
     <View style={[styles.warmUpTitleItem, props?.containerStyle]}>
       <Text style={styles.warmUpTitleText}>Exercise</Text>
       <Text style={styles.warmUpTitleText}>Sets</Text>
-      <Text style={styles.warmUpTitleText}>Repetitions/Time</Text>
+      <Text style={styles.warmUpTitleText}>Repetitions / time</Text>
     </View>
   );
 };

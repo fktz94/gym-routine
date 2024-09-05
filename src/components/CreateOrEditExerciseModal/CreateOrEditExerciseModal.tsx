@@ -16,6 +16,7 @@ const CreateOrEditExerciseModal = ({
   dayIndex = 0,
   exerciseToEdit,
   handleOnAccept,
+  isWarmUp = false,
 }: CreateExerciseModalProps) => {
   const {
     currentVariations,
@@ -93,16 +94,18 @@ const CreateOrEditExerciseModal = ({
           btnTextStyle={styles.dropdownButtonTxtStyle}
         />
       </View>
-      <View style={styles.innerContainer}>
-        <CustomText text="Check if it has repetition variations along the weeks." />
-        <BouncyCheckbox
-          size={18}
-          fillColor={Colors.light.primary}
-          innerIconStyle={{ borderWidth: 2 }}
-          onPress={toggleHasWeeksVariations}
-          isChecked={hasWeeksVariations}
-        />
-      </View>
+      {!isWarmUp && (
+        <View style={styles.innerContainer}>
+          <CustomText text="Check if it has repetition variations along the weeks." />
+          <BouncyCheckbox
+            size={18}
+            fillColor={Colors.light.primary}
+            innerIconStyle={{ borderWidth: 2 }}
+            onPress={toggleHasWeeksVariations}
+            isChecked={hasWeeksVariations}
+          />
+        </View>
+      )}
       {hasWeeksVariations && (
         <View style={styles.innerContainer}>
           <CustomText text="How many variations?" />
@@ -116,7 +119,7 @@ const CreateOrEditExerciseModal = ({
         </View>
       )}
       <View style={[styles.innerContainer, styles.repetitionsContainer]}>
-        <CustomText text="Repetitions:" />
+        <CustomText text="Repetitions / time:" />
         {repetitionsInputs()}
       </View>
       <View style={styles.innerContainer}>

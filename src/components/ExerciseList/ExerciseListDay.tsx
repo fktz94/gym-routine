@@ -50,6 +50,7 @@ const ExerciseListDay = ({
           closeModal={closeModal}
           dayIndex={dayIndex}
           handleOnAccept={handleAddExercise}
+          isWarmUp={isWarmUp}
         />
       )}
       <View style={styles.exercises}>

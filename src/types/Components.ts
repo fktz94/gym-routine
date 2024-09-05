@@ -60,6 +60,7 @@ export interface CreateExerciseModalProps {
     exerciseData: Exercise;
     prevName: string;
   }) => void;
+  isWarmUp?: boolean;
 }
 
 export interface EditCreatedExerciseModalProps extends CreateExerciseModalProps {
