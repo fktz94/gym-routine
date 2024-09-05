@@ -9,6 +9,7 @@ import useThemeContext from "@/src/contexts/Theme/useThemeContext";
 import useModal from "@/src/hooks/useModal";
 import { Theme } from "@/src/types/Contexts";
 import { Exercise } from "@/src/types/Routines";
+import { cloneDeep } from "lodash";
 
 export const ExerciseItemTitle = () => {
   const { theme } = useThemeContext();
@@ -35,7 +36,14 @@ export const ExerciseItem = ({ exercise }: { exercise: Exercise }) => {
   const handleDropdownItem = (i: number) => setSelectedDropdownItem(i);
 
   const repetitions = weightsAndRepetitions.map(({ qty }) => qty || "N/A");
-  const prevWeight = weightsAndRepetitions.at(current - 1);
+  const reversedWeightAndRepetitions = cloneDeep(weightsAndRepetitions).reverse();
+  const reversedIndex = weightsAndRepetitions.length - current;
+  const firstPart = reversedWeightAndRepetitions.slice(reversedIndex).find(({ weight }) => weight);
+  const secondPart = reversedWeightAndRepetitions
+    .slice(0, reversedIndex - 1)
+    .find(({ weight }) => weight);
+  const prevWeight = firstPart || secondPart;
+
   const currentWeight = weightsAndRepetitions[current].weight;
   const weight = weightsAndRepetitions[selectedDropdownItem]?.weight;
   const isCurrent = selectedDropdownItem === current;
