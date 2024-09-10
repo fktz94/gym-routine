@@ -17,11 +17,11 @@ export default function RootLayout() {
     SpaceMono: require("@/assets/fonts/SpaceMono-Regular.ttf"),
   });
 
-  const [initialTheme, setInitialTheme] = useState<Theme>("light");
+  const [initialTheme, setInitialTheme] = useState<Theme>("dark");
   const colorScheme = useColorScheme();
   const setStoredTheme = async () => {
     const storedTheme = (await getTheme()) as Theme | undefined | null;
-    setInitialTheme(storedTheme ?? colorScheme ?? "light");
+    setInitialTheme(storedTheme ?? colorScheme ?? "dark");
   };
 
   useEffect(() => {
