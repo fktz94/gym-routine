@@ -50,7 +50,7 @@ const useCreateOrEditExercise = (props?: UseCreateOrEditExerciseObj) => {
     setVariations((prev) => prev.map((el, index) => (index === i ? { ...el, qty: val } : el)));
   };
 
-  const dropdownValues = [...Array(10)].map((_, i) => i + 1);
+  const dropdownValues = [...Array(8)].map((_, i) => i + 1);
 
   const areUncompletedRepetitions = variations.findIndex(({ qty }) => !qty);
 

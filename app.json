@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "gym-routine",
+    "name": "Gym Routine",
     "slug": "gym-routine",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -19,7 +19,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#FEF3E2"
-      }
+      },
+      "package": "com.fktz94.gymroutine"
     },
     "web": {
       "bundler": "metro",

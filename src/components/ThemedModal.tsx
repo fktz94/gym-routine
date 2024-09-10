@@ -1,4 +1,4 @@
-import { Modal, StyleSheet, View } from "react-native";
+import { Modal, StyleSheet, View, ScrollView, KeyboardAvoidingView } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import CustomLoader from "./CustomLoader";
 import { CancelButton } from "./Buttons/CancelButton";
@@ -33,7 +33,7 @@ const ThemedModal = ({
               size={30}
               onPress={closeModal}
             />
-            <View style={styles.childrenContainer}>
+            <ScrollView contentContainerStyle={styles.childrenContainer}>
               {children}
               <View style={styles.buttonsContainer}>
                 <CancelButton onCancel={closeModal} isIcon={buttonsAreIcons} />
@@ -43,7 +43,7 @@ const ThemedModal = ({
                   isIcon={buttonsAreIcons}
                 />
               </View>
-            </View>
+            </ScrollView>
           </>
         )}
       </View>
@@ -61,14 +61,15 @@ const themedModalStyles = (theme: Theme) =>
       top: 0,
       padding: 10,
       color: Colors[theme].background,
+      zIndex: 999,
     },
     container: {
       flex: 1,
-      alignItems: "center",
-      justifyContent: "center",
       backgroundColor: Colors[theme].modalBackground,
+      alignItems: "center",
     },
     childrenContainer: {
+      margin: "auto",
       width: "80%",
       padding: 30,
       paddingVertical: 40,

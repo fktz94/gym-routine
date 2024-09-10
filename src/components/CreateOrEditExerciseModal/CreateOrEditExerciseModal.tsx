@@ -118,9 +118,11 @@ const CreateOrEditExerciseModal = ({
           />
         </View>
       )}
-      <View style={[styles.innerContainer, styles.repetitionsContainer]}>
-        <CustomText text="Repetitions / time:" />
-        {repetitionsInputs()}
+      <View style={styles.innerContainer}>
+        <View style={styles.repetitionsContainer}>
+          <CustomText text="Repetitions / time:" />
+          {repetitionsInputs()}
+        </View>
       </View>
       <View style={styles.innerContainer}>
         <CustomText text="Need to customize the text instead of just numbers?" />
@@ -172,6 +174,7 @@ const createOrEditExerciseModalStyles = (theme: Theme, multipleRepetitions: bool
       fontSize: 18,
     },
     repetitionsContainer: {
+      width: "100%",
       flexDirection: multipleRepetitions ? "column" : "row",
     },
     repetitionsInputsContainer: {
