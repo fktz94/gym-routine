@@ -72,6 +72,9 @@ const EditRoutine = () => {
 
   useEffect(() => {
     toggleHasUpdatedValues(!isButtonDisabled);
+    return () => {
+      toggleHasUpdatedValues(false);
+    };
   }, [isButtonDisabled]);
 
   return (

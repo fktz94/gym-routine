@@ -1,4 +1,4 @@
-import { useReducer, useState } from "react";
+import { useEffect, useReducer, useState } from "react";
 import useHeaderContext from "../contexts/Header/useHeaderContext";
 import { initialState, newRoutineReducers } from "../reducers/NewRoutine/newRoutineReducers";
 import {
@@ -8,6 +8,7 @@ import {
   NewRoutineActionsTypes,
 } from "../types/Reducers";
 import { Exercise } from "../types/Routines";
+import { isEqual } from "lodash";
 
 const useNewRoutine = () => {
   const [step, setStep] = useState(0);
@@ -15,7 +16,7 @@ const useNewRoutine = () => {
 
   const [newRoutineState, dispatch] = useReducer(newRoutineReducers, initialState);
 
-  const { toggleShowBackArrowButton } = useHeaderContext();
+  const { toggleShowBackArrowButton, toggleHasUpdatedValues } = useHeaderContext();
 
   const handleStep = ({ direction }: { direction: "up" | "down" }) => {
     const goUp = direction === "up";
@@ -101,6 +102,14 @@ const useNewRoutine = () => {
   };
 
   const toggleWarmUpRoutine = () => setHasWarmUpRoutine(!hasWarmUpRoutine);
+
+  useEffect(() => {
+    const hasUpdatedValues = !isEqual(initialState, newRoutineState);
+    toggleHasUpdatedValues(hasUpdatedValues);
+    return () => {
+      toggleHasUpdatedValues(false);
+    };
+  }, [newRoutineState]);
 
   return {
     handleAddOneExercise,
