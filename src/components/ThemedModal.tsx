@@ -1,4 +1,4 @@
-import { Modal, StyleSheet, View, ScrollView, KeyboardAvoidingView } from "react-native";
+import { Modal, StyleSheet, View, ScrollView } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import CustomLoader from "./CustomLoader";
 import { CancelButton } from "./Buttons/CancelButton";
@@ -7,6 +7,7 @@ import { Colors } from "../constants/Colors";
 import useThemeContext from "../contexts/Theme/useThemeContext";
 import { ThemedModalProps } from "../types/Components";
 import { Theme } from "../types/Contexts";
+import { useState } from "react";
 
 const ThemedModal = ({
   isLoading = false,
@@ -17,11 +18,26 @@ const ThemedModal = ({
   buttonsAreIcons = false,
 }: ThemedModalProps) => {
   const { theme } = useThemeContext();
-  const styles = themedModalStyles(theme);
+  const [layoutHeight, setLayoutHeight] = useState(0);
+  const [scrollViewHeight, setScrollViewHeight] = useState(0);
+
+  const handleLayoutHeight = (val: number) => {
+    setLayoutHeight(val);
+  };
+  const handleScrollViewHeight = (val: number) => {
+    setScrollViewHeight(val);
+  };
+
+  const shouldHaveMarginAuto = layoutHeight >= scrollViewHeight;
+
+  const styles = themedModalStyles(theme, shouldHaveMarginAuto);
 
   return (
     <Modal animationType="slide" transparent>
-      <View style={styles.container}>
+      <View
+        style={styles.container}
+        onLayout={({ nativeEvent }) => handleLayoutHeight(nativeEvent.layout.height)}
+      >
         {isLoading ? (
           <CustomLoader />
         ) : (
@@ -33,7 +49,10 @@ const ThemedModal = ({
               size={30}
               onPress={closeModal}
             />
-            <ScrollView contentContainerStyle={styles.childrenContainer}>
+            <ScrollView
+              contentContainerStyle={styles.childrenContainer}
+              onContentSizeChange={(_, height) => handleScrollViewHeight(height)}
+            >
               {children}
               <View style={styles.buttonsContainer}>
                 <CancelButton onCancel={closeModal} isIcon={buttonsAreIcons} />
@@ -53,7 +72,7 @@ const ThemedModal = ({
 
 export default ThemedModal;
 
-const themedModalStyles = (theme: Theme) =>
+const themedModalStyles = (theme: Theme, shouldHaveMarginAuto: boolean) =>
   StyleSheet.create({
     closeIconBtn: {
       position: "absolute",
@@ -69,7 +88,7 @@ const themedModalStyles = (theme: Theme) =>
       alignItems: "center",
     },
     childrenContainer: {
-      margin: "auto",
+      marginVertical: shouldHaveMarginAuto ? "auto" : undefined,
       width: "80%",
       padding: 30,
       paddingVertical: 40,
