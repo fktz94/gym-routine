@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { WeightsAndRepetitions } from "../types/Routines";
 import { UseCreateOrEditExerciseObj } from "../types/Hooks";
+import { isEqual } from "lodash";
 
 const useCreateOrEditExercise = (props?: UseCreateOrEditExerciseObj) => {
   const exerciseToEdit = props?.exerciseToEdit;
@@ -54,11 +55,18 @@ const useCreateOrEditExercise = (props?: UseCreateOrEditExerciseObj) => {
 
   const areUncompletedRepetitions = variations.findIndex(({ qty }) => !qty);
 
-  // check how to solve this implementation correctly
-  // const unchangedName = exerciseToEdit?.name === name;
-  // const isButtonDisabled = !name || unchangedName || areUncompletedRepetitions !== -1; ---> not correct like this
-  const isButtonDisabled = !name || areUncompletedRepetitions !== -1;
-  // check how to solve this implementation correctly
+  const hasChanges = !isEqual(exerciseToEdit, {
+    name,
+    current: exerciseToEdit?.current,
+    sets,
+    weightsAndRepetitions: variations,
+  });
+  const isOldExerciseDisabled = !hasChanges;
+  const isNewExerciseDisabled = !name;
+
+  const isButtonDisabled =
+    (exerciseToEdit ? isOldExerciseDisabled : isNewExerciseDisabled) ||
+    areUncompletedRepetitions !== -1;
 
   return {
     currentVariations,
