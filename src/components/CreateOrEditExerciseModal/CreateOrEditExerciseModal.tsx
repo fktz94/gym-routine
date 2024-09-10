@@ -112,7 +112,7 @@ const CreateOrEditExerciseModal = ({
           <CustomSelectDropdown
             data={dropdownValues.slice(1)}
             defaultValue={dropdownValues.find((el) => el === currentVariations)!}
-            onSelect={handleWeeksVariations} //
+            onSelect={handleWeeksVariations}
             btnStyle={styles.dropdownButtonStyle}
             btnTextStyle={styles.dropdownButtonTxtStyle}
           />

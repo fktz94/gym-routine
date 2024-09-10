@@ -64,4 +64,6 @@ export type HeaderContextType = {
   toggleShowBackArrowButton: (val: boolean) => void;
   showQuitModal: boolean;
   toggleShowQuitModal: (val: boolean) => void;
+  hasUpdatedValues: boolean;
+  toggleHasUpdatedValues: (val: boolean) => void;
 } | null;

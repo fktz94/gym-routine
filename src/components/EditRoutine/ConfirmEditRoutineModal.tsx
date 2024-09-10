@@ -13,8 +13,6 @@ import ThemedModal from "../ThemedModal";
 import { Theme } from "@/src/types/Contexts";
 
 const ConfirmEditRoutineModal = ({ closeModal }: ConfirmCreateNewExerciseModalProps) => {
-  // CREATE CUSTOM HOOK
-
   const { theme } = useThemeContext();
   const styles = quitCreatingModalStyles(theme);
   const dispatch = useAppDispatch();

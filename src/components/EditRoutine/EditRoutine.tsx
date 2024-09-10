@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ScrollView, StyleSheet, Text, View, TextInput } from "react-native";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import ConfirmEditRoutineModal from "./ConfirmEditRoutineModal";
@@ -20,7 +20,7 @@ const EditRoutine = () => {
   const [isChangingName, setIsChangingName] = useState(false);
 
   const { closeModal, isModalOpen: isCreating, openModal } = useModal();
-  const { showQuitModal } = useHeaderContext();
+  const { showQuitModal, toggleHasUpdatedValues } = useHeaderContext();
   const {
     handleAddOneExercise,
     handleDeleteOneExercise,
@@ -69,6 +69,10 @@ const EditRoutine = () => {
         key={i}
       />
     ));
+
+  useEffect(() => {
+    toggleHasUpdatedValues(!isButtonDisabled);
+  }, [isButtonDisabled]);
 
   return (
     <>

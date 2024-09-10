@@ -12,12 +12,12 @@ export default function Header() {
   const { theme, toggleTheme } = useThemeContext();
   const iconName = theme === "light" ? "moon" : "sunny";
 
-  const { showBackArrowButton, toggleShowQuitModal } = useHeaderContext();
+  const { showBackArrowButton, toggleShowQuitModal, hasUpdatedValues } = useHeaderContext();
 
   const canGoBack = router.canGoBack();
 
   const goBack = () => {
-    if (path === Path.NEWROUTINE || path.includes(Path.EDITROUTINE)) {
+    if (path === Path.NEWROUTINE || (path.includes(Path.EDITROUTINE) && hasUpdatedValues)) {
       toggleShowQuitModal(true);
     } else {
       router.back();
