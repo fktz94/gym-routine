@@ -17,8 +17,6 @@ export default function Header() {
   const canGoBack = router.canGoBack();
 
   const goBack = () => {
-    console.log({ hasUpdatedValues });
-
     if ((path === Path.NEWROUTINE || path.includes(Path.EDITROUTINE)) && hasUpdatedValues) {
       toggleShowQuitModal(true);
     } else {
