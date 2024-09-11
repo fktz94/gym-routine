@@ -107,7 +107,7 @@ export default function RoutineScreen() {
         ) : isDayEmpty ? (
           emptyDayText()
         ) : (
-          <ScrollView>
+          <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
             {hasWarmUp && (
               <>
                 <AnimatedDayCard
@@ -175,7 +175,6 @@ const routineDescriptionStyles = (theme: Theme) =>
     },
     emptyDayBtnContainer: { width: "50%", margin: "auto" },
     emptyDayBtnText: { fontSize: 18, letterSpacing: 2, fontWeight: "bold", textAlign: "center" },
-    routineContainer: { flex: 1 },
     routineName: {
       fontWeight: "bold",
       fontSize: 32,
