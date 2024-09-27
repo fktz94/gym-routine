@@ -48,7 +48,7 @@ const EditWeightModal = ({
             Current weight:{" "}
           </Text>
           <Text style={[styles.previousWeightText, { fontWeight: "bold" }]}>
-            {exerciseData.weight} {typeof exerciseData.weight === "number" ? "kg" : undefined}
+            {exerciseData.weight} {!isNaN(+exerciseData.weight) ? "kg" : undefined}
           </Text>
         </View>
       )}

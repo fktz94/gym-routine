@@ -90,12 +90,12 @@ export const ExerciseItem = ({ exercise }: { exercise: Exercise }) => {
               {prevWeight?.weight && (
                 <Text style={styles.prevText}>
                   Prev: {prevWeight.qty}r - {prevWeight.weight}
-                  {!Number.isNaN(parseFloat(prevWeight.weight)) && " kg"}
+                  {!isNaN(+prevWeight.weight) && " kg"}
                 </Text>
               )}
               {currentWeight && (
                 <Text style={styles.prevText}>
-                  Today: {weightsAndRepetitions[current].qty}r -{currentWeight}
+                  Today: {weightsAndRepetitions[current].qty}r - {currentWeight}
                   {!Number.isNaN(parseFloat(currentWeight)) && " kg"}
                 </Text>
               )}
@@ -106,9 +106,7 @@ export const ExerciseItem = ({ exercise }: { exercise: Exercise }) => {
             {repetitionsSelect(repetitions)}
             <TextInput
               style={styles.weightText}
-              defaultValue={
-                weight && !Number.isNaN(parseFloat(weight)) ? `${weight} kg` : weight ?? undefined
-              }
+              defaultValue={weight && !isNaN(+weight) ? `${weight} kg` : weight ?? undefined}
               multiline
               scrollEnabled
               readOnly
