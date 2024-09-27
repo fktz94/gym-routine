@@ -1,50 +1,31 @@
-# Welcome to your Expo app 👋
+# Gym Tracker 🏋️‍♀️
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+This is an app I made for track my weight changes in my gym routine upon the days.
 
-## Get started
+It´s a [React Native](https://reactnative.dev/) project, written in [TypeScript](https://typescript.org) and created using [Expo](https://expo.dev).
 
-1. Install dependencies
+The interface was created with modularized components...
 
-   ```bash
-   npm install
-   ```
+Various React´s functionalities and hooks have been used, such as **useState**, **useEffect**, **useContext** or **useReducer**, and **custom hooks** have been written to modularize the program functionalities.
 
-2. Start the app
+I´ve used third-party libraries as well, of which we could find: **React Native Reanimated** to create animations, **Lodash** to manipulate objects and arrays, or **React Redux Toolkit** to handle global states.
 
-   ```bash
-    npx expo start
-   ```
+---
 
-In the output, you'll find options to open the app in a
+## How it works
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+- **Create a routine**: You've got to select the amount of days it has and if it has a warm-up session (this one will be the same for every day). You can add/delete exercises, or you can just create it with empty days and then fill them whenever you want.
+- **Edit a routine**: You will have the possibility of editing the routine (or even deleting it) at any moment. You also can add or delete exercises from it.
+- **Add the weights**: The weights can be modify in the corresponding day of the routine. A modal window will be opened when clicking on the _pencil_ button. There, the value can be changed, even customized and change the current repetitions set.
+- **Day completed**: Once you've finished doing all your exercises, you just have to click the _Routine done_ button. It'll automatically update all the current repetitions and the day to the proper ones setting up the data for the next time you're using the app. It'll also redirect you back home.
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+---
 
-## Get a fresh project
+## Side information and next steps
 
-When you're ready, run:
+**TO DO**:
 
-```bash
-npm run reset-project
-```
+1.  Create a _hang & drop_ animation to re-order the items (exercises) when creating or editing a routine.
+2.
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+- For the moment, and since I don't own no hosting (yet), all the information is stored in the local storage of the phone.
