@@ -40,9 +40,9 @@ To delete an exercise, it has to be dragged to the left (while being on the crea
 3. Add **rest** time when wanted.
 4. Add chronometer.
 5. Create a _hang & drop_ animation to re-order the items (exercises) when creating or editing a routine.
-6. Autoscroll to bottom when creating new exercise (just when needed).
+6. Correct autoscroll when going into edit routine (it opens the correct day to edit but it doesn't scroll, nor when a nex exercise is created, it might rely unseen and has to be scrolled manually).
 
 - For the moment, and since I don't own no hosting (yet), all the information is stored in the local storage of the phone.
 - At the same time, as I don't have an Apple Dev account yet, I can only build it for Android devices.
-- The whole code was designed and written by me :)
-  **Facundo Ortiz** - **github/fktz94**
+- The whole code and the app were designed and written by me :)
+  **Facundo Ortiz** - **github.com/fktz94**

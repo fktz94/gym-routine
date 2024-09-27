@@ -33,5 +33,6 @@ const exerciseListTitleStyles = (theme: Theme) =>
       color: Colors[theme].text,
       flexGrow: 1,
       width: 1,
+      textAlignVertical: "center",
     },
   });
