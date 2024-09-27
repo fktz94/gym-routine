@@ -26,7 +26,7 @@ const exerciseListTitleStyles = (theme: Theme) =>
     },
     warmUpTitleText: {
       paddingHorizontal: 6,
-      paddingVertical: 2,
+      paddingVertical: 8,
       textAlign: "center",
       fontWeight: "bold",
       backgroundColor: Colors[theme].modalBackground,

@@ -35,6 +35,7 @@ const warmUpItemStyles = (theme: Theme) =>
       borderBottomWidth: 1,
       borderBottomColor: Colors[theme].text,
       minHeight: 60,
+      paddingVertical: 8,
     },
     sets: { fontSize: 16 },
   });
