@@ -6,6 +6,7 @@ import useThemeContext from "@/src/contexts/Theme/useThemeContext";
 import useEditWeightModal from "@/src/hooks/useEditWeightModal";
 import { EditExerciseModalProps } from "@/src/types/Components";
 import { Theme } from "@/src/types/Contexts";
+import { NoWeight } from "@/src/constants/Strings";
 
 const EditWeightModal = ({
   closeModal,
@@ -13,6 +14,7 @@ const EditWeightModal = ({
   isCurrent,
   selectedSerie,
   exerciseName,
+  hasMultipleRepetitions,
 }: EditExerciseModalProps) => {
   const {
     customValue,
@@ -20,6 +22,8 @@ const EditWeightModal = ({
     handleCustomCheckbox,
     handleCurrentCheckbox,
     handleNewValue,
+    handleNoWeightCheckbox,
+    hasNoWeight,
     isButtonDisabled,
     isLoading,
     newWeightValue,
@@ -42,7 +46,7 @@ const EditWeightModal = ({
       isAcceptBtnDisabled={isButtonDisabled}
       isLoading={isLoading}
     >
-      {exerciseData.weight && (
+      {exerciseData.weight && exerciseData.weight !== NoWeight && (
         <View style={styles.previousWeightTextView}>
           <Text style={[styles.previousWeightText, { fontSize: 10, letterSpacing: 0.5 }]}>
             Current weight:{" "}
@@ -52,22 +56,33 @@ const EditWeightModal = ({
           </Text>
         </View>
       )}
-      <View style={styles.textInputContainer}>
-        <TextInput
-          style={styles.weightTextInput}
-          keyboardType={customValue ? "default" : "decimal-pad"}
-          onChangeText={handleNewValue}
-          value={newWeightValue?.toString()}
-          placeholder={customValue ? '100 kg c/l - 45"- RIR 2' : "12,5"}
-          placeholderTextColor={Colors.greyText}
+      {!hasNoWeight && (
+        <>
+          <View style={styles.textInputContainer}>
+            <TextInput
+              style={styles.weightTextInput}
+              keyboardType={customValue ? "default" : "decimal-pad"}
+              onChangeText={handleNewValue}
+              value={newWeightValue?.toString()}
+              placeholder={customValue ? '100 kg c/l - 45"- RIR 2' : "12,5"}
+              placeholderTextColor={Colors.greyText}
+            />
+            {!customValue && <Text style={styles.kgText}>kg</Text>}
+          </View>
+          <CheckboxContainer
+            isChecked={customValue}
+            onPress={handleCustomCheckbox}
+            text="Customize value"
+          />
+        </>
+      )}
+      {!hasMultipleRepetitions && (
+        <CheckboxContainer
+          isChecked={hasNoWeight}
+          onPress={handleNoWeightCheckbox}
+          text="Exercise without weight"
         />
-        {!customValue && <Text style={styles.kgText}>kg</Text>}
-      </View>
-      <CheckboxContainer
-        isChecked={customValue}
-        onPress={handleCustomCheckbox}
-        text="Customize value"
-      />
+      )}
       {!isCurrent && (
         <CheckboxContainer
           isChecked={settedToCurrent}

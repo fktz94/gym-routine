@@ -45,6 +45,7 @@ export interface EditExerciseModalProps {
   isCurrent: boolean;
   selectedSerie: number;
   exerciseName: string;
+  hasMultipleRepetitions: boolean;
 }
 
 export interface CreateExerciseModalProps {

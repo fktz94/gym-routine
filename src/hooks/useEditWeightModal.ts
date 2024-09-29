@@ -7,6 +7,7 @@ import { ResponseStatus } from "../types/Store";
 import { modifyExercise } from "../store/Routines/RoutinesAsyncThunk";
 import { resetModifiyExerciseState } from "../store/Routines/RoutinesSlice";
 import { validateWeightInputNumber } from "@/src/utils/Validations/Validations";
+import { NoWeight } from "../constants/Strings";
 
 const useEditWeightModal = ({
   closeModal,
@@ -28,16 +29,20 @@ const useEditWeightModal = ({
 
   const [newWeightValue, setNewValue] = useState(exerciseData.weight);
   const [customValue, setCustomValue] = useState(
-    Number.isNaN(exerciseData.weight && +exerciseData.weight)
+    Number.isNaN(exerciseData.weight && +exerciseData.weight) && exerciseData.weight !== NoWeight
   );
   const [settedToCurrent, setSettedToCurrent] = useState(isCurrent);
 
-  const handleCustomCheckbox = () => {
+  const handleCustomCheckbox = (val: boolean) => {
     setNewValue("");
-    setCustomValue(!customValue);
+    setCustomValue(val);
   };
 
-  const handleCurrentCheckbox = () => setSettedToCurrent(!settedToCurrent);
+  const handleCurrentCheckbox = (val: boolean) => setSettedToCurrent(val);
+
+  const handleNoWeightCheckbox = (val: boolean) => setNewValue(val ? NoWeight : "");
+
+  const hasNoWeight = newWeightValue === NoWeight;
 
   const handleNewValue = (input: number | string) => {
     const isNotNumber = Number.isNaN(+input);
@@ -85,6 +90,8 @@ const useEditWeightModal = ({
     handleCustomCheckbox,
     handleCurrentCheckbox,
     handleNewValue,
+    handleNoWeightCheckbox,
+    hasNoWeight,
     isButtonDisabled,
     isLoading,
     newWeightValue,

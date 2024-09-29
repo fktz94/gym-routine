@@ -10,6 +10,7 @@ import useModal from "@/src/hooks/useModal";
 import { Theme } from "@/src/types/Contexts";
 import { Exercise } from "@/src/types/Routines";
 import { cloneDeep } from "lodash";
+import { NoWeight } from "@/src/constants/Strings";
 
 export const ExerciseItemTitle = () => {
   const { theme } = useThemeContext();
@@ -26,7 +27,6 @@ export const ExerciseItemTitle = () => {
 
 export const ExerciseItem = ({ exercise }: { exercise: Exercise }) => {
   const { theme } = useThemeContext();
-  const styles = exerciseItemStyles(theme, false);
 
   const { closeModal, isModalOpen: isEditing, openModal } = useModal();
 
@@ -46,7 +46,11 @@ export const ExerciseItem = ({ exercise }: { exercise: Exercise }) => {
 
   const currentWeight = weightsAndRepetitions[current].weight;
   const weight = weightsAndRepetitions[selectedDropdownItem]?.weight;
+  const hasMultipleRepetitions = weightsAndRepetitions.length > 1;
   const isCurrent = selectedDropdownItem === current;
+  const exerciseWithoutWeight = weight === NoWeight;
+
+  const styles = exerciseItemStyles(theme, false, exerciseWithoutWeight);
 
   const repetitionsSelect = (data: string[]) => {
     if (data.length === 0) return null;
@@ -78,6 +82,7 @@ export const ExerciseItem = ({ exercise }: { exercise: Exercise }) => {
           closeModal={closeModal}
           exerciseData={weightsAndRepetitions[selectedDropdownItem]}
           exerciseName={name}
+          hasMultipleRepetitions={hasMultipleRepetitions}
         />
       )}
       <View style={styles.container}>
@@ -85,7 +90,7 @@ export const ExerciseItem = ({ exercise }: { exercise: Exercise }) => {
         <Text style={[styles.inputContainer, styles.sets]}>{sets}</Text>
         <View style={styles.inputContainer}>
           {!currentWeight && <Text style={styles.prevText}>Add today's weight!</Text>}
-          {weightsAndRepetitions.length > 1 && (
+          {hasMultipleRepetitions && (
             <>
               {prevWeight?.weight && (
                 <Text style={styles.prevText}>
@@ -104,13 +109,15 @@ export const ExerciseItem = ({ exercise }: { exercise: Exercise }) => {
 
           <View style={styles.weightAndRepetitionsView}>
             {repetitionsSelect(repetitions)}
-            <TextInput
-              style={styles.weightText}
-              defaultValue={weight && !isNaN(+weight) ? `${weight} kg` : weight ?? undefined}
-              multiline
-              scrollEnabled
-              readOnly
-            />
+            {!exerciseWithoutWeight && (
+              <TextInput
+                style={styles.weightText}
+                defaultValue={weight && !isNaN(+weight) ? `${weight} kg` : weight ?? undefined}
+                multiline
+                scrollEnabled
+                readOnly
+              />
+            )}
           </View>
 
           <View style={styles.themedButtonContainer}>
@@ -124,7 +131,11 @@ export const ExerciseItem = ({ exercise }: { exercise: Exercise }) => {
   );
 };
 
-const exerciseItemStyles = (theme: Theme, isTitle: boolean) =>
+const exerciseItemStyles = (
+  theme: Theme,
+  isTitle: boolean,
+  exerciseWithoutWeight: boolean = false
+) =>
   StyleSheet.create({
     container: {
       flexDirection: "row",
@@ -149,6 +160,8 @@ const exerciseItemStyles = (theme: Theme, isTitle: boolean) =>
       gap: 6,
       alignItems: "center",
       minHeight: 60,
+      width: exerciseWithoutWeight ? "66%" : undefined,
+      margin: exerciseWithoutWeight ? "auto" : undefined,
     },
     prevText: {
       fontSize: 11,
