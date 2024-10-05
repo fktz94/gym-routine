@@ -16,7 +16,6 @@ const CheckboxContainer = ({ isChecked, onPress, text }: CheckboxContainerProps)
         fillColor={Colors.light.primary}
         innerIconStyle={{ borderWidth: 2 }}
         onPress={onPress}
-        iconStyle={{ marginRight: -16 }}
         isChecked={isChecked}
       />
     </View>

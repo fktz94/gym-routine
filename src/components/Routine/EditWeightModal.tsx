@@ -1,12 +1,4 @@
-import {
-  Button,
-  StyleSheet,
-  Text,
-  TextInput,
-  Touchable,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import CheckboxContainer from "./CheckboxContainer";
 import ThemedModal from "../ThemedModal";
 import { Colors } from "@/src/constants/Colors";
@@ -14,8 +6,7 @@ import useThemeContext from "@/src/contexts/Theme/useThemeContext";
 import useEditWeightModal from "@/src/hooks/useEditWeightModal";
 import { EditExerciseModalProps } from "@/src/types/Components";
 import { Theme } from "@/src/types/Contexts";
-import { NoWeight } from "@/src/constants/Strings";
-import { useState } from "react";
+import { Strings } from "@/src/constants/Strings";
 
 const EditWeightModal = ({
   closeModal,
@@ -57,7 +48,7 @@ const EditWeightModal = ({
       isAcceptBtnDisabled={isButtonDisabled}
       isLoading={isLoading}
     >
-      {exerciseData.weight?.value && exerciseData.weight.value !== NoWeight && (
+      {exerciseData.weight?.value && exerciseData.weight.value !== Strings.NoWeight && (
         <View style={styles.previousWeightTextView}>
           <Text style={[styles.previousWeightText, { fontSize: 10, letterSpacing: 0.5 }]}>
             Current weight:{" "}
@@ -75,14 +66,14 @@ const EditWeightModal = ({
               keyboardType={customValue ? "default" : "decimal-pad"}
               onChangeText={handleNewValue}
               value={newWeightValue?.toString()}
-              placeholder={customValue ? '100 kg c/l - 45"- RIR 2' : "12,5"}
+              placeholder={customValue ? `100 kg ${Strings.EachSide} - 45"- RIR 2` : "12,5"}
               placeholderTextColor={Colors.greyText}
             />
             {!customValue && (
               <>
                 <Text style={styles.kgText}>kg</Text>
-                <TouchableOpacity style={styles.clContainer} onPress={toggleCL}>
-                  <Text style={styles.clText}>c/l</Text>
+                <TouchableOpacity style={styles.eachSideContainer} onPress={toggleCL}>
+                  <Text style={styles.eachSideText}>{Strings.EachSide}</Text>
                 </TouchableOpacity>
               </>
             )}
@@ -120,6 +111,7 @@ const editExerciseModalStyles = (theme: Theme, customValue: boolean, hasCL: bool
       flexDirection: "row",
       gap: 10,
       alignSelf: "flex-end",
+      marginRight: 14,
     },
     weightTextInput: {
       color: Colors[theme].text,
@@ -131,7 +123,7 @@ const editExerciseModalStyles = (theme: Theme, customValue: boolean, hasCL: bool
       borderColor: Colors[theme].text,
     },
     kgText: { color: Colors[theme].text, textAlignVertical: "center", fontSize: 16 },
-    clContainer: {
+    eachSideContainer: {
       backgroundColor: hasCL ? Colors.greyText : "transparent",
       justifyContent: "center",
       paddingHorizontal: 8,
@@ -139,10 +131,10 @@ const editExerciseModalStyles = (theme: Theme, customValue: boolean, hasCL: bool
       borderWidth: 1,
       borderColor: hasCL ? "transparent" : Colors.greyText,
     },
-    clText: {
-      letterSpacing: 1,
-      fontWeight: hasCL ? "semibold" : undefined,
+    eachSideText: {
+      fontWeight: hasCL ? "bold" : undefined,
       color: Colors[theme].text,
+      opacity: !hasCL ? 0.5 : 1,
     },
     previousWeightTextView: {
       flexDirection: "row",

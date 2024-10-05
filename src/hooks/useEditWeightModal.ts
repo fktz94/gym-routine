@@ -7,7 +7,7 @@ import { ResponseStatus } from "../types/Store";
 import { modifyExercise } from "../store/Routines/RoutinesAsyncThunk";
 import { resetModifiyExerciseState } from "../store/Routines/RoutinesSlice";
 import { validateWeightInputNumber } from "@/src/utils/Validations/Validations";
-import { NoWeight } from "../constants/Strings";
+import { Strings } from "../constants/Strings";
 import { Weight } from "../types/Routines";
 
 const useEditWeightModal = ({
@@ -34,7 +34,7 @@ const useEditWeightModal = ({
 
   const initialCL =
     exerciseData.weight?.value &&
-    exerciseData.weight?.value?.split(" ")?.findIndex((item) => item === "c/l") !== -1;
+    exerciseData.weight?.value?.split(" ")?.findIndex((item) => item === Strings.EachSide) !== -1;
 
   const [newWeightValue, setNewValue] = useState(newInitialWeight);
   const [customValue, setCustomValue] = useState(exerciseData.weight?.isCustom);
@@ -49,9 +49,9 @@ const useEditWeightModal = ({
 
   const handleCurrentCheckbox = (val: boolean) => setSettedToCurrent(val);
 
-  const handleNoWeightCheckbox = (val: boolean) => setNewValue(val ? NoWeight : "");
+  const handleNoWeightCheckbox = (val: boolean) => setNewValue(val ? Strings.NoWeight : "");
 
-  const hasNoWeight = newWeightValue === NoWeight;
+  const hasNoWeight = newWeightValue === Strings.NoWeight;
 
   const handleNewValue = (input: string) => {
     if (!customValue && validateWeightInputNumber(input)) return;
@@ -70,10 +70,10 @@ const useEditWeightModal = ({
   const handleAccept = () => {
     if (!newWeightValue) return;
     const completedValue = !customValue
-      ? `${newWeightValue} kg ${hasCL ? "c/l" : ""}`
+      ? `${newWeightValue} kg${hasCL ? ` ${Strings.EachSide}` : ""}`
       : newWeightValue;
     const newValue: Weight = {
-      isCustom: !!customValue || newWeightValue === NoWeight,
+      isCustom: !!customValue || newWeightValue === Strings.NoWeight,
       value: completedValue,
     };
     const payload = {

@@ -10,7 +10,7 @@ import useModal from "@/src/hooks/useModal";
 import { Theme } from "@/src/types/Contexts";
 import { Exercise } from "@/src/types/Routines";
 import { cloneDeep } from "lodash";
-import { NoWeight } from "@/src/constants/Strings";
+import { Strings } from "@/src/constants/Strings";
 
 export const ExerciseItemTitle = () => {
   const { theme } = useThemeContext();
@@ -27,8 +27,6 @@ export const ExerciseItemTitle = () => {
 
 export const ExerciseItem = ({ exercise }: { exercise: Exercise }) => {
   const { theme } = useThemeContext();
-
-  const { closeModal, isModalOpen: isEditing, openModal } = useModal();
 
   const { name, sets, weightsAndRepetitions, current } = exercise;
 
@@ -50,7 +48,7 @@ export const ExerciseItem = ({ exercise }: { exercise: Exercise }) => {
   const weight = weightsAndRepetitions[selectedDropdownItem]?.weight?.value;
   const hasMultipleRepetitions = weightsAndRepetitions.length > 1;
   const isCurrent = selectedDropdownItem === current;
-  const exerciseWithoutWeight = weight === NoWeight;
+  const exerciseWithoutWeight = weight === Strings.NoWeight;
 
   const styles = exerciseItemStyles(theme, false, exerciseWithoutWeight);
 
@@ -74,6 +72,10 @@ export const ExerciseItem = ({ exercise }: { exercise: Exercise }) => {
       </View>
     );
   };
+
+  const { closeModal, isModalOpen: isEditing, openModal } = useModal();
+
+  console.log({ isEditing });
 
   return (
     <>
@@ -174,7 +176,6 @@ const exerciseItemStyles = (
       flex: 3,
       textAlign: "center",
       fontWeight: "bold",
-      letterSpacing: 1,
       fontSize: 16,
       color: Colors[theme].text,
       height: "100%",

@@ -1,1 +1,4 @@
-export const NoWeight = "no-weight";
+export const Strings = {
+  NoWeight: "no-weight",
+  EachSide: "each",
+};
