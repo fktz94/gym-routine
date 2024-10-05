@@ -60,7 +60,15 @@ const useEditWeightModal = ({
 
   const toggleCL = () => setHasCL(!hasCL);
 
-  const isValueInvalid = exerciseData.weight?.value === newWeightValue || !newWeightValue;
+  const isSameValue = () => {
+    if (!exerciseData.weight) return;
+    const { value } = exerciseData.weight;
+    if (value === newWeightValue) return true;
+    if (!customValue && initialCL === hasCL && newWeightValue === newInitialWeight) return true;
+    return false;
+  };
+
+  const isValueInvalid = isSameValue() || !newWeightValue;
   const isButtonDisabled = isValueInvalid && settedToCurrent === isCurrent;
   const isLoading = isGettingAllRoutines || isModifyingRoutines;
   const hasEndedFetchingModification =
