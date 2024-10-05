@@ -1,6 +1,11 @@
+export type Weight = {
+  value: string;
+  isCustom: boolean;
+};
+
 export interface WeightsAndRepetitions {
   qty: string | undefined;
-  weight: string | null | undefined;
+  weight: Weight | null | undefined;
 }
 
 export interface Exercise {

@@ -1,4 +1,4 @@
-import { RoutineDay, RoutinesData, RoutineStructure } from "./Routines";
+import { RoutineDay, RoutinesData, RoutineStructure, Weight } from "./Routines";
 
 export enum ResponseStatus {
   IDLE,
@@ -40,7 +40,7 @@ export interface ModifyExerciseAsyncThunkProps {
   selectedDay: number;
   exerciseName: string;
   selectedSerie: number;
-  newWeightValue: string;
+  newWeightValue: Weight;
   makeItCurrent: boolean;
 }
 

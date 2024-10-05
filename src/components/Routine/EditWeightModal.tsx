@@ -1,4 +1,12 @@
-import { StyleSheet, Text, TextInput, View } from "react-native";
+import {
+  Button,
+  StyleSheet,
+  Text,
+  TextInput,
+  Touchable,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import CheckboxContainer from "./CheckboxContainer";
 import ThemedModal from "../ThemedModal";
 import { Colors } from "@/src/constants/Colors";
@@ -7,6 +15,7 @@ import useEditWeightModal from "@/src/hooks/useEditWeightModal";
 import { EditExerciseModalProps } from "@/src/types/Components";
 import { Theme } from "@/src/types/Contexts";
 import { NoWeight } from "@/src/constants/Strings";
+import { useState } from "react";
 
 const EditWeightModal = ({
   closeModal,
@@ -23,11 +32,13 @@ const EditWeightModal = ({
     handleCurrentCheckbox,
     handleNewValue,
     handleNoWeightCheckbox,
+    hasCL,
     hasNoWeight,
     isButtonDisabled,
     isLoading,
     newWeightValue,
     settedToCurrent,
+    toggleCL,
   } = useEditWeightModal({
     exerciseData,
     isCurrent,
@@ -37,7 +48,8 @@ const EditWeightModal = ({
   });
 
   const { theme } = useThemeContext();
-  const styles = editExerciseModalStyles(theme, customValue);
+  const styles = editExerciseModalStyles(theme, !!customValue, hasCL);
+  const [pressed, setPressed] = useState(false);
 
   return (
     <ThemedModal
@@ -46,13 +58,13 @@ const EditWeightModal = ({
       isAcceptBtnDisabled={isButtonDisabled}
       isLoading={isLoading}
     >
-      {exerciseData.weight && exerciseData.weight !== NoWeight && (
+      {exerciseData.weight?.value && exerciseData.weight.value !== NoWeight && (
         <View style={styles.previousWeightTextView}>
           <Text style={[styles.previousWeightText, { fontSize: 10, letterSpacing: 0.5 }]}>
             Current weight:{" "}
           </Text>
           <Text style={[styles.previousWeightText, { fontWeight: "bold" }]}>
-            {exerciseData.weight} {!isNaN(+exerciseData.weight) ? "kg" : undefined}
+            {exerciseData.weight.value}
           </Text>
         </View>
       )}
@@ -67,10 +79,17 @@ const EditWeightModal = ({
               placeholder={customValue ? '100 kg c/l - 45"- RIR 2' : "12,5"}
               placeholderTextColor={Colors.greyText}
             />
-            {!customValue && <Text style={styles.kgText}>kg</Text>}
+            {!customValue && (
+              <>
+                <Text style={styles.kgText}>kg</Text>
+                <TouchableOpacity style={styles.clContainer} onPress={toggleCL}>
+                  <Text style={styles.clText}>c/l</Text>
+                </TouchableOpacity>
+              </>
+            )}
           </View>
           <CheckboxContainer
-            isChecked={customValue}
+            isChecked={!!customValue}
             onPress={handleCustomCheckbox}
             text="Customize value"
           />
@@ -96,12 +115,12 @@ const EditWeightModal = ({
 
 export default EditWeightModal;
 
-const editExerciseModalStyles = (theme: Theme, customValue: boolean) =>
+const editExerciseModalStyles = (theme: Theme, customValue: boolean, hasCL: boolean) =>
   StyleSheet.create({
     textInputContainer: {
       flexDirection: "row",
       gap: 10,
-      margin: "auto",
+      alignSelf: "flex-end",
     },
     weightTextInput: {
       color: Colors[theme].text,
@@ -113,6 +132,19 @@ const editExerciseModalStyles = (theme: Theme, customValue: boolean) =>
       borderColor: Colors[theme].text,
     },
     kgText: { color: Colors[theme].text, textAlignVertical: "center", fontSize: 16 },
+    clContainer: {
+      backgroundColor: hasCL ? Colors.greyText : "transparent",
+      justifyContent: "center",
+      paddingHorizontal: 8,
+      borderRadius: 10,
+      borderWidth: 1,
+      borderColor: hasCL ? "transparent" : Colors.greyText,
+    },
+    clText: {
+      letterSpacing: 1,
+      fontWeight: hasCL ? "semibold" : undefined,
+      color: Colors[theme].text,
+    },
     previousWeightTextView: {
       flexDirection: "row",
       alignItems: "flex-end",

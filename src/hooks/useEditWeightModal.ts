@@ -8,6 +8,7 @@ import { modifyExercise } from "../store/Routines/RoutinesAsyncThunk";
 import { resetModifiyExerciseState } from "../store/Routines/RoutinesSlice";
 import { validateWeightInputNumber } from "@/src/utils/Validations/Validations";
 import { NoWeight } from "../constants/Strings";
+import { Weight } from "../types/Routines";
 
 const useEditWeightModal = ({
   closeModal,
@@ -27,14 +28,24 @@ const useEditWeightModal = ({
 
   const { routineId, selectedDay } = useRoutineContext();
 
-  const [newWeightValue, setNewValue] = useState(exerciseData.weight);
-  const [customValue, setCustomValue] = useState(
-    Number.isNaN(exerciseData.weight && +exerciseData.weight) && exerciseData.weight !== NoWeight
+  const newInitialWeight = !exerciseData.weight?.isCustom
+    ? exerciseData.weight?.value?.split(" ")[0]
+    : exerciseData.weight?.value;
+
+  const initialCL = !!(
+    exerciseData.weight?.value?.split(" ")?.findIndex((item) => item === "c/l") === -1
   );
+
+  console.log(initialCL);
+
+  const [newWeightValue, setNewValue] = useState(newInitialWeight);
+  const [customValue, setCustomValue] = useState(exerciseData.weight?.isCustom);
   const [settedToCurrent, setSettedToCurrent] = useState(isCurrent);
+  const [hasCL, setHasCL] = useState(initialCL);
 
   const handleCustomCheckbox = (val: boolean) => {
     setNewValue("");
+    setHasCL(false);
     setCustomValue(val);
   };
 
@@ -44,14 +55,14 @@ const useEditWeightModal = ({
 
   const hasNoWeight = newWeightValue === NoWeight;
 
-  const handleNewValue = (input: number | string) => {
-    const isNotNumber = Number.isNaN(+input);
-    const newVal = isNotNumber || input === "" ? input : +input;
-    if (!customValue && validateWeightInputNumber(newVal)) return;
-    setNewValue(newVal.toString());
+  const handleNewValue = (input: string) => {
+    if (!customValue && validateWeightInputNumber(input)) return;
+    setNewValue(input);
   };
 
-  const isValueInvalid = exerciseData.weight === newWeightValue || !newWeightValue;
+  const toggleCL = () => setHasCL(!hasCL);
+
+  const isValueInvalid = exerciseData.weight?.value === newWeightValue || !newWeightValue;
   const isButtonDisabled = isValueInvalid && settedToCurrent === isCurrent;
   const isLoading = isGettingAllRoutines || isModifyingRoutines;
   const hasEndedFetchingModification =
@@ -60,12 +71,17 @@ const useEditWeightModal = ({
 
   const handleAccept = () => {
     if (!newWeightValue) return;
+    const completedValue = !customValue ? `${newWeightValue} kg ${hasCL && "c/l"}` : newWeightValue;
+    const newValue: Weight = {
+      isCustom: !!customValue || newWeightValue === NoWeight,
+      value: completedValue,
+    };
     const payload = {
       routineId,
       selectedDay,
       exerciseName,
       selectedSerie,
-      newWeightValue,
+      newWeightValue: newValue,
       makeItCurrent: settedToCurrent && !isCurrent,
     };
 
@@ -91,11 +107,13 @@ const useEditWeightModal = ({
     handleCurrentCheckbox,
     handleNewValue,
     handleNoWeightCheckbox,
+    hasCL,
     hasNoWeight,
     isButtonDisabled,
     isLoading,
     newWeightValue,
     settedToCurrent,
+    toggleCL,
   };
 };
 

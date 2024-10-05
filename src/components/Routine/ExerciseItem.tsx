@@ -38,14 +38,16 @@ export const ExerciseItem = ({ exercise }: { exercise: Exercise }) => {
   const repetitions = weightsAndRepetitions.map(({ qty }) => qty || "N/A");
   const reversedWeightAndRepetitions = cloneDeep(weightsAndRepetitions).reverse();
   const reversedIndex = weightsAndRepetitions.length - current;
-  const firstPart = reversedWeightAndRepetitions.slice(reversedIndex).find(({ weight }) => weight);
+  const firstPart = reversedWeightAndRepetitions
+    .slice(reversedIndex)
+    .find(({ weight }) => weight?.value);
   const secondPart = reversedWeightAndRepetitions
     .slice(0, reversedIndex - 1)
-    .find(({ weight }) => weight);
+    .find(({ weight }) => weight?.value);
   const prevWeight = firstPart || secondPart;
 
-  const currentWeight = weightsAndRepetitions[current].weight;
-  const weight = weightsAndRepetitions[selectedDropdownItem]?.weight;
+  const currentWeight = weightsAndRepetitions[current].weight?.value;
+  const weight = weightsAndRepetitions[selectedDropdownItem]?.weight?.value;
   const hasMultipleRepetitions = weightsAndRepetitions.length > 1;
   const isCurrent = selectedDropdownItem === current;
   const exerciseWithoutWeight = weight === NoWeight;
@@ -92,16 +94,14 @@ export const ExerciseItem = ({ exercise }: { exercise: Exercise }) => {
           {!currentWeight && <Text style={styles.prevText}>Add today's weight!</Text>}
           {hasMultipleRepetitions && (
             <>
-              {prevWeight?.weight && (
+              {prevWeight?.weight?.value && (
                 <Text style={styles.prevText}>
-                  Prev: {prevWeight.qty}r - {prevWeight.weight}
-                  {!isNaN(+prevWeight.weight) && " kg"}
+                  Prev: {prevWeight.qty}r - {prevWeight.weight.value}
                 </Text>
               )}
               {currentWeight && (
                 <Text style={styles.prevText}>
                   Today: {weightsAndRepetitions[current].qty}r - {currentWeight}
-                  {!Number.isNaN(parseFloat(currentWeight)) && " kg"}
                 </Text>
               )}
             </>
@@ -112,7 +112,7 @@ export const ExerciseItem = ({ exercise }: { exercise: Exercise }) => {
             {!exerciseWithoutWeight && (
               <TextInput
                 style={styles.weightText}
-                defaultValue={weight && !isNaN(+weight) ? `${weight} kg` : weight ?? undefined}
+                defaultValue={weight}
                 multiline
                 scrollEnabled
                 readOnly
