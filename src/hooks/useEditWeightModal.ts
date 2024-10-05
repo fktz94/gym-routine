@@ -5,7 +5,6 @@ import useRoutineContext from "../contexts/Routine/useRoutineContext";
 import { UseEditWeightModal } from "../types/Hooks";
 import { ResponseStatus } from "../types/Store";
 import { modifyExercise } from "../store/Routines/RoutinesAsyncThunk";
-import { resetModifiyExerciseState } from "../store/Routines/RoutinesSlice";
 import { validateWeightInputNumber } from "@/src/utils/Validations/Validations";
 import { Strings } from "../constants/Strings";
 import { Weight } from "../types/Routines";
@@ -70,9 +69,6 @@ const useEditWeightModal = ({
   const isValueInvalid = isSameValue() || !newWeightValue;
   const isButtonDisabled = isValueInvalid && settedToCurrent === isCurrent;
   const isLoading = isGettingAllRoutines || isModifyingRoutines;
-  const hasEndedFetchingModification =
-    modifyExerciseStatus === ResponseStatus.REJECTED ||
-    modifyExerciseStatus === ResponseStatus.FULFILLED;
 
   const handleAccept = () => {
     if (!newWeightValue) return;
@@ -98,9 +94,6 @@ const useEditWeightModal = ({
   useEffect(() => {
     if (isLoading || modifyExerciseStatus === ResponseStatus.IDLE) return;
 
-    if (hasEndedFetchingModification) {
-      dispatch(resetModifiyExerciseState());
-    }
     if (modifyExerciseErrorMessage) {
       Alert.alert("Error!", modifyExerciseErrorMessage);
     }

@@ -13,12 +13,13 @@ import useThemeContext from "@/src/contexts/Theme/useThemeContext";
 import { useAppDispatch, useAppSelector } from "@/src/hooks/reactReduxHook";
 import useRoutineDescription from "@/src/hooks/useRoutineDescription";
 import { concludeRoutineDay } from "@/src/store/Routines/RoutinesAsyncThunk";
-import { resetConcludeExerciseState } from "@/src/store/Routines/RoutinesSlice";
+import {
+  resetConcludeExerciseState,
+  resetModifiyExerciseState,
+} from "@/src/store/Routines/RoutinesSlice";
 import { Theme } from "@/src/types/Contexts";
 import { ResponseStatus } from "@/src/types/Store";
 import AnimatedDayCard from "@/src/components/ExerciseList/AnimatedDayCard";
-import { ExerciseItem } from "@/src/components/Routine/ExerciseItem";
-import ExerciseListTitle from "@/src/components/ExerciseList/ExerciseListTitle";
 import WarmUpItem from "@/src/components/Routine/WarmUpItem";
 import WarmUpTitle from "@/src/components/Routine/WarmUpTitle";
 
@@ -33,6 +34,7 @@ export default function RoutineScreen() {
     concludeExerciseStatus,
     isConcludingExerciseRoutine,
     concludeExerciseErrorMessage,
+    modifyExerciseStatus,
   } = useAppSelector(({ routines }) => routines);
   const { routine, selectedDay, handleSelectedDay } = useRoutineDescription({ id });
 
@@ -92,6 +94,16 @@ export default function RoutineScreen() {
       dispatch(resetConcludeExerciseState());
     }
   }, [concludeExerciseStatus, isConcludingExerciseRoutine]);
+
+  const hasEndedFetchingModification =
+    modifyExerciseStatus === ResponseStatus.REJECTED ||
+    modifyExerciseStatus === ResponseStatus.FULFILLED;
+
+  useEffect(() => {
+    if (hasEndedFetchingModification) {
+      dispatch(resetModifiyExerciseState());
+    }
+  }, [modifyExerciseStatus]);
 
   const handleRoutineDone = () => {
     dispatch(concludeRoutineDay({ dayIndex: selectedDay, routineId: id }));

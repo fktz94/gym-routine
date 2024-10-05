@@ -75,8 +75,6 @@ export const ExerciseItem = ({ exercise }: { exercise: Exercise }) => {
 
   const { closeModal, isModalOpen: isEditing, openModal } = useModal();
 
-  console.log({ isEditing });
-
   return (
     <>
       {isEditing && (
