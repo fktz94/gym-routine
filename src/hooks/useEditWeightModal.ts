@@ -32,11 +32,9 @@ const useEditWeightModal = ({
     ? exerciseData.weight?.value?.split(" ")[0]
     : exerciseData.weight?.value;
 
-  const initialCL = !!(
-    exerciseData.weight?.value?.split(" ")?.findIndex((item) => item === "c/l") === -1
-  );
-
-  console.log(initialCL);
+  const initialCL =
+    exerciseData.weight?.value &&
+    exerciseData.weight?.value?.split(" ")?.findIndex((item) => item === "c/l") !== -1;
 
   const [newWeightValue, setNewValue] = useState(newInitialWeight);
   const [customValue, setCustomValue] = useState(exerciseData.weight?.isCustom);
@@ -71,7 +69,9 @@ const useEditWeightModal = ({
 
   const handleAccept = () => {
     if (!newWeightValue) return;
-    const completedValue = !customValue ? `${newWeightValue} kg ${hasCL && "c/l"}` : newWeightValue;
+    const completedValue = !customValue
+      ? `${newWeightValue} kg ${hasCL ? "c/l" : ""}`
+      : newWeightValue;
     const newValue: Weight = {
       isCustom: !!customValue || newWeightValue === NoWeight,
       value: completedValue,

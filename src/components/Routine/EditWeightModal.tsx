@@ -48,8 +48,7 @@ const EditWeightModal = ({
   });
 
   const { theme } = useThemeContext();
-  const styles = editExerciseModalStyles(theme, !!customValue, hasCL);
-  const [pressed, setPressed] = useState(false);
+  const styles = editExerciseModalStyles(theme, !!customValue, !!hasCL);
 
   return (
     <ThemedModal
