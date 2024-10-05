@@ -39,7 +39,7 @@ const ThemedModal = ({
         onLayout={({ nativeEvent }) => handleLayoutHeight(nativeEvent.layout.height)}
       >
         {isLoading ? (
-          <CustomLoader />
+          <CustomLoader style={{ margin: "auto" }} />
         ) : (
           <>
             <Ionicons

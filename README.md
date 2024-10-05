@@ -35,14 +35,13 @@ To delete an exercise, it has to be dragged to the left (while being on the crea
 
 **TO DO**:
 
-1. BUG - After the routine screen is loaded or reloaded, first try to edit weight (no matter which exercise) opens and close instantanely. After that, it works fine. --> **In progress**
-2. Add a simple pressable effect when clicking on WarmUp to open the list.
-3. Possibility of joining group of exercises in "circuits".
-4. Add **rest** time when wanted.
-5. Add chronometer.
-6. Create a _hang & drop_ animation to re-order the items (exercises) when creating or editing a routine.
-7. Correct autoscroll when going into edit routine (it opens the correct day to edit but it doesn't scroll, nor when a nex exercise is created. It might rely unseen and has to be scrolled manually).
-8. Recognize a routine image using AI and automatically load its data to a new routine.
+1. Add a simple pressable effect when clicking on WarmUp to open the list.
+2. Possibility of joining group of exercises in "circuits".
+3. Add **rest** time when wanted.
+4. Add chronometer.
+5. Create a _hang & drop_ animation to re-order the items (exercises) when creating or editing a routine.
+6. Correct autoscroll when going into edit routine (it opens the correct day to edit but it doesn't scroll, nor when a nex exercise is created. It might rely unseen and has to be scrolled manually).
+7. Recognize a routine image using AI and automatically load its data to a new routine.
 
 - At the moment, and since I don't own no hosting (yet), all the information is stored in the local storage of the phone.
 - As I don't have an Apple dev account yet, I can only build it for Android devices.

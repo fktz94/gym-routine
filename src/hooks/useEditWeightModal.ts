@@ -11,7 +11,6 @@ import { Strings } from "../constants/Strings";
 import { Weight } from "../types/Routines";
 
 const useEditWeightModal = ({
-  closeModal,
   exerciseData,
   exerciseName,
   isCurrent,
@@ -101,7 +100,6 @@ const useEditWeightModal = ({
 
     if (hasEndedFetchingModification) {
       dispatch(resetModifiyExerciseState());
-      closeModal();
     }
     if (modifyExerciseErrorMessage) {
       Alert.alert("Error!", modifyExerciseErrorMessage);

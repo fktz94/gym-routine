@@ -35,7 +35,6 @@ const EditWeightModal = ({
     isCurrent,
     selectedSerie,
     exerciseName,
-    closeModal,
   });
 
   const { theme } = useThemeContext();

@@ -22,7 +22,6 @@ export interface UseEditRoutineChanges {
 }
 
 export interface UseEditWeightModal {
-  closeModal: () => void;
   exerciseData: WeightsAndRepetitions;
   exerciseName: string;
   isCurrent: boolean;
