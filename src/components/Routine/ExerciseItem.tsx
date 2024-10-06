@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { StyleSheet, Text, TextInput, View } from "react-native";
+import { useEffect, useRef, useState } from "react";
+import { Animated, StyleSheet, Text, TextInput, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import EditWeightModal from "./EditWeightModal";
 import ThemedButton from "../Buttons/ThemedButton";
@@ -11,6 +11,7 @@ import { Theme } from "@/src/types/Contexts";
 import { Exercise } from "@/src/types/Routines";
 import { cloneDeep } from "lodash";
 import { Strings } from "@/src/constants/Strings";
+import { Gesture, GestureDetector, GestureHandlerRootView } from "react-native-gesture-handler";
 
 export const ExerciseItemTitle = () => {
   const { theme } = useThemeContext();
@@ -27,6 +28,7 @@ export const ExerciseItemTitle = () => {
 
 export const ExerciseItem = ({ exercise }: { exercise: Exercise }) => {
   const { theme } = useThemeContext();
+  const [isFinished, setIsFinished] = useState(false);
 
   const { name, sets, weightsAndRepetitions, current } = exercise;
 
@@ -75,6 +77,27 @@ export const ExerciseItem = ({ exercise }: { exercise: Exercise }) => {
 
   const { closeModal, isModalOpen: isEditing, openModal } = useModal();
 
+  const opacityAnim = useRef(new Animated.Value(0)).current;
+  const zIndexAnim = useRef(new Animated.Value(0)).current;
+
+  const animation = (animationRef: Animated.Value, finalValue: number) => {
+    Animated.timing(animationRef, {
+      toValue: isFinished ? finalValue : 0,
+      duration: 250,
+      useNativeDriver: true,
+    }).start();
+  };
+
+  useEffect(() => {
+    animation(opacityAnim, 0.5);
+    animation(zIndexAnim, 999);
+  }, [isFinished]);
+
+  const handleDoubleTap = Gesture.Tap()
+    .numberOfTaps(2)
+    .onEnd(() => setIsFinished(!isFinished))
+    .runOnJS(true);
+
   return (
     <>
       {isEditing && (
@@ -87,46 +110,53 @@ export const ExerciseItem = ({ exercise }: { exercise: Exercise }) => {
           hasMultipleRepetitions={hasMultipleRepetitions}
         />
       )}
-      <View style={styles.container}>
-        <Text style={styles.inputContainer}>{name}</Text>
-        <Text style={[styles.inputContainer, styles.sets]}>{sets}</Text>
-        <View style={styles.inputContainer}>
-          {!currentWeight && <Text style={styles.prevText}>Add today's weight!</Text>}
-          {hasMultipleRepetitions && (
-            <>
-              {prevWeight?.weight?.value && (
-                <Text style={styles.prevText}>
-                  Prev: {prevWeight.qty}r - {prevWeight.weight.value}
-                </Text>
+      <GestureHandlerRootView>
+        <GestureDetector gesture={handleDoubleTap}>
+          <View style={styles.container}>
+            <Animated.View
+              style={[styles.isFinishedOpacity, { opacity: opacityAnim, zIndex: zIndexAnim }]}
+            />
+            <Text style={styles.inputContainer}>{name}</Text>
+            <Text style={[styles.inputContainer, styles.sets]}>{sets}</Text>
+            <View style={styles.inputContainer}>
+              {!currentWeight && <Text style={styles.prevText}>Add today's weight!</Text>}
+              {hasMultipleRepetitions && (
+                <>
+                  {prevWeight?.weight?.value && (
+                    <Text style={styles.prevText}>
+                      Prev: {prevWeight.qty}r - {prevWeight.weight.value}
+                    </Text>
+                  )}
+                  {currentWeight && (
+                    <Text style={styles.prevText}>
+                      Today: {weightsAndRepetitions[current].qty}r - {currentWeight}
+                    </Text>
+                  )}
+                </>
               )}
-              {currentWeight && (
-                <Text style={styles.prevText}>
-                  Today: {weightsAndRepetitions[current].qty}r - {currentWeight}
-                </Text>
-              )}
-            </>
-          )}
 
-          <View style={styles.weightAndRepetitionsView}>
-            {repetitionsSelect(repetitions)}
-            {!exerciseWithoutWeight && (
-              <TextInput
-                style={styles.weightText}
-                defaultValue={weight}
-                multiline
-                scrollEnabled
-                readOnly
-              />
-            )}
-          </View>
+              <View style={styles.weightAndRepetitionsView}>
+                {repetitionsSelect(repetitions)}
+                {!exerciseWithoutWeight && (
+                  <TextInput
+                    style={styles.weightText}
+                    defaultValue={weight}
+                    multiline
+                    scrollEnabled
+                    readOnly
+                  />
+                )}
+              </View>
 
-          <View style={styles.themedButtonContainer}>
-            <ThemedButton externalButtonStyles={styles.editButtonView} onPress={openModal}>
-              <Ionicons color={Colors[theme].background} name="pencil" />
-            </ThemedButton>
+              <View style={styles.themedButtonContainer}>
+                <ThemedButton externalButtonStyles={styles.editButtonView} onPress={openModal}>
+                  <Ionicons color={Colors[theme].background} name="pencil" />
+                </ThemedButton>
+              </View>
+            </View>
           </View>
-        </View>
-      </View>
+        </GestureDetector>
+      </GestureHandlerRootView>
     </>
   );
 };
@@ -141,6 +171,12 @@ const exerciseItemStyles = (
       flexDirection: "row",
       borderTopLeftRadius: isTitle ? 6 : undefined,
       borderTopRightRadius: isTitle ? 6 : undefined,
+    },
+    isFinishedOpacity: {
+      position: "absolute",
+      width: "100%",
+      height: "100%",
+      backgroundColor: "black",
     },
     inputContainer: {
       flex: 1,
