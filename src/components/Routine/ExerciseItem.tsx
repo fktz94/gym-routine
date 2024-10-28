@@ -12,6 +12,8 @@ import { Exercise } from "@/src/types/Routines";
 import { cloneDeep } from "lodash";
 import { Strings } from "@/src/constants/Strings";
 import { Gesture, GestureDetector, GestureHandlerRootView } from "react-native-gesture-handler";
+import { useAppDispatch, useAppSelector } from "@/src/hooks/reactReduxHook";
+import { toggleExerciseState } from "@/src/store/DoneExercise/DoneExerciseSlice";
 
 export const ExerciseItemTitle = () => {
   const { theme } = useThemeContext();
@@ -28,9 +30,13 @@ export const ExerciseItemTitle = () => {
 
 export const ExerciseItem = ({ exercise }: { exercise: Exercise }) => {
   const { theme } = useThemeContext();
-  const [isFinished, setIsFinished] = useState(false);
+
+  const dispatch = useAppDispatch();
+  const doneExercises = useAppSelector(({ doneExercise }) => doneExercise);
 
   const { name, sets, weightsAndRepetitions, current } = exercise;
+
+  const isExerciseDone = doneExercises.findIndex((item) => item === name) !== -1;
 
   const [selectedDropdownItem, setSelectedDropdownItem] = useState(current);
   const handleDropdownItem = (i: number) => setSelectedDropdownItem(i);
@@ -82,7 +88,7 @@ export const ExerciseItem = ({ exercise }: { exercise: Exercise }) => {
 
   const animation = (animationRef: Animated.Value, finalValue: number) => {
     Animated.timing(animationRef, {
-      toValue: isFinished ? finalValue : 0,
+      toValue: isExerciseDone ? finalValue : 0,
       duration: 250,
       useNativeDriver: true,
     }).start();
@@ -91,11 +97,11 @@ export const ExerciseItem = ({ exercise }: { exercise: Exercise }) => {
   useEffect(() => {
     animation(opacityAnim, 0.5);
     animation(zIndexAnim, 999);
-  }, [isFinished]);
+  }, [isExerciseDone]);
 
   const handleDoubleTap = Gesture.Tap()
     .numberOfTaps(2)
-    .onEnd(() => setIsFinished(!isFinished))
+    .onEnd(() => dispatch(toggleExerciseState(name)))
     .runOnJS(true);
 
   return (
@@ -125,11 +131,6 @@ export const ExerciseItem = ({ exercise }: { exercise: Exercise }) => {
                   {prevWeight?.weight?.value && (
                     <Text style={styles.prevText}>
                       Prev: {prevWeight.qty}r - {prevWeight.weight.value}
-                    </Text>
-                  )}
-                  {currentWeight && (
-                    <Text style={styles.prevText}>
-                      Today: {weightsAndRepetitions[current].qty}r - {currentWeight}
                     </Text>
                   )}
                 </>
