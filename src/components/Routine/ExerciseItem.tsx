@@ -56,7 +56,7 @@ export const ExerciseItem = ({ exercise }: { exercise: Exercise }) => {
   const weight = weightsAndRepetitions[selectedDropdownItem]?.weight?.value;
   const hasMultipleRepetitions = weightsAndRepetitions.length > 1;
   const isCurrent = selectedDropdownItem === current;
-  const exerciseWithoutWeight = weight === Strings.NoWeight;
+  const exerciseWithoutWeight = weight?.includes(Strings.NoWeight);
 
   const styles = exerciseItemStyles(theme, false, exerciseWithoutWeight);
 
