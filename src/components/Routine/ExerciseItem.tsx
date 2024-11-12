@@ -76,7 +76,9 @@ export const ExerciseItem = ({ exercise }: { exercise: Exercise }) => {
       />
     ) : (
       <View style={styles.uniqueButtonStyle}>
-        <Text style={styles.uniqueButtonTxtStyle}>{data[0]}</Text>
+        <Text adjustsFontSizeToFit={true} numberOfLines={1} style={styles.uniqueButtonTxtStyle}>
+          {data[0]}
+        </Text>
       </View>
     );
   };
