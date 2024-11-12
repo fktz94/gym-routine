@@ -86,7 +86,8 @@ export const concludeDaySelectedRoutine = ({
       if (el.id === routineId) {
         const lastDay = el.data.length - 1;
         const nextDay = dayIndex === lastDay ? 0 : dayIndex + 1;
-        const updatedExercisesDays = el.data.map((el) => {
+        const updatedExercisesDays = el.data.map((el, i) => {
+          if (dayIndex !== i) return el;
           return el.map((el) => {
             if (el.weightsAndRepetitions.length === 1) return el;
             const lastDay = el.weightsAndRepetitions.length - 1;
