@@ -47,7 +47,7 @@ const EditWeightModal = ({
       isAcceptBtnDisabled={isButtonDisabled}
       isLoading={isLoading}
     >
-      {exerciseData.weight?.value && exerciseData.weight.value !== Strings.NoWeight && (
+      {exerciseData.weight?.value && !exerciseData.weight.value.includes(Strings.NoWeight) && (
         <View style={styles.previousWeightTextView}>
           <Text style={[styles.previousWeightText, { fontSize: 10, letterSpacing: 0.5 }]}>
             Current weight:{" "}

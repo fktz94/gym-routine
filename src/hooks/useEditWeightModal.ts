@@ -49,7 +49,7 @@ const useEditWeightModal = ({
 
   const handleNoWeightCheckbox = (val: boolean) => setNewValue(val ? Strings.NoWeight : "");
 
-  const hasNoWeight = newWeightValue === Strings.NoWeight;
+  const hasNoWeight = newWeightValue?.includes(Strings.NoWeight);
 
   const handleNewValue = (input: string) => {
     if (!customValue && validateWeightInputNumber(input)) return;
@@ -76,7 +76,7 @@ const useEditWeightModal = ({
       ? `${newWeightValue} kg${hasCL ? ` ${Strings.EachSide}` : ""}`
       : newWeightValue;
     const newValue: Weight = {
-      isCustom: !!customValue || newWeightValue === Strings.NoWeight,
+      isCustom: !!customValue || newWeightValue.includes(Strings.NoWeight),
       value: completedValue,
     };
     const payload = {
