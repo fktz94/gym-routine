@@ -141,6 +141,11 @@ export const ExerciseItem = ({ exercise }: { exercise: Exercise }) => {
               <View style={styles.weightAndRepetitionsView}>
                 {repetitionsSelect(repetitions)}
                 {!exerciseWithoutWeight && (
+                  <Text style={styles.weightText} numberOfLines={2} adjustsFontSizeToFit>
+                    {weight}
+                  </Text>
+                )}
+                {/* {!exerciseWithoutWeight && (
                   <TextInput
                     style={styles.weightText}
                     defaultValue={weight}
@@ -148,7 +153,7 @@ export const ExerciseItem = ({ exercise }: { exercise: Exercise }) => {
                     scrollEnabled
                     readOnly
                   />
-                )}
+                )} */}
               </View>
 
               <View style={styles.themedButtonContainer}>
@@ -216,6 +221,7 @@ const exerciseItemStyles = (
       fontSize: 16,
       color: Colors[theme].text,
       height: "100%",
+      textAlignVertical: "center",
     },
     themedButtonContainer: {
       flexDirection: "row",

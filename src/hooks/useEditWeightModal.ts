@@ -47,7 +47,10 @@ const useEditWeightModal = ({
 
   const handleCurrentCheckbox = (val: boolean) => setSettedToCurrent(val);
 
-  const handleNoWeightCheckbox = (val: boolean) => setNewValue(val ? Strings.NoWeight : "");
+  const handleNoWeightCheckbox = (val: boolean) => {
+    if (!val) setCustomValue(val);
+    setNewValue(val ? Strings.NoWeight : "");
+  };
 
   const hasNoWeight = newWeightValue?.includes(Strings.NoWeight);
 

@@ -65,7 +65,7 @@ const EditWeightModal = ({
               keyboardType={customValue ? "default" : "decimal-pad"}
               onChangeText={handleNewValue}
               value={newWeightValue?.toString()}
-              placeholder={customValue ? `100 kg ${Strings.EachSide} - 45"- RIR 2` : "12,5"}
+              placeholder={customValue ? 'Failure - 45"- RIR 2' : "12,5"}
               placeholderTextColor={Colors.greyText}
             />
             {!customValue && (
@@ -86,7 +86,7 @@ const EditWeightModal = ({
       )}
       {!hasMultipleRepetitions && (
         <CheckboxContainer
-          isChecked={hasNoWeight}
+          isChecked={hasNoWeight ?? false}
           onPress={handleNoWeightCheckbox}
           text="Exercise without weight"
         />
