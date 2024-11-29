@@ -13,7 +13,9 @@ const RepetitionInput = ({
   hasWeeksVariations,
 }: RepetitionInputProps) => {
   const { theme } = useThemeContext();
-  const styles = repetitionInputStyles(theme, hasWeeksVariations);
+  const value = el.qty?.toString();
+
+  const styles = repetitionInputStyles(theme, hasWeeksVariations, value);
 
   return (
     <View
@@ -28,7 +30,7 @@ const RepetitionInput = ({
         style={styles.repetitionsTextInput}
         multiline
         onChangeText={(val) => handleRepetitionValues(val, index)}
-        value={el.qty?.toString()}
+        value={value}
       />
       {index !== variations.length - 1 && (
         <Text style={[styles.baseText, styles.repetitionsTextSlash]}>/</Text>
@@ -39,7 +41,11 @@ const RepetitionInput = ({
 
 export default RepetitionInput;
 
-const repetitionInputStyles = (theme: Theme, multipleRepetitions: boolean) =>
+const repetitionInputStyles = (
+  theme: Theme,
+  multipleRepetitions: boolean,
+  value: string | undefined
+) =>
   StyleSheet.create({
     baseText: {
       color: Colors[theme].text,
@@ -58,10 +64,12 @@ const repetitionInputStyles = (theme: Theme, multipleRepetitions: boolean) =>
       paddingHorizontal: 10,
       paddingVertical: 4,
       borderBottomWidth: 0.9,
-      borderColor: Colors[theme].text,
+      borderColor: !value ? Colors.cancelBackground : Colors.acceptBackground,
       flexWrap: "wrap",
       flexGrow: 1,
       height: multipleRepetitions ? 60 : undefined,
     },
-    repetitionsTextSlash: { flexGrow: 0, borderBottomWidth: 0.9, borderColor: Colors[theme].text },
+    repetitionsTextSlash: {
+      flexGrow: 0,
+    },
   });

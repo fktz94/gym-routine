@@ -36,7 +36,11 @@ const CreateOrEditExerciseModal = ({
   } = useCreateOrEditExercise({ exerciseToEdit });
 
   const { theme } = useThemeContext();
-  const styles = createOrEditExerciseModalStyles(theme, hasWeeksVariations);
+  const styles = createOrEditExerciseModalStyles(
+    theme,
+    hasWeeksVariations,
+    name
+  );
 
   const repetitionsInputs = () => {
     return (
@@ -63,7 +67,11 @@ const CreateOrEditExerciseModal = ({
       current: exerciseToEdit?.current || 0,
       weightsAndRepetitions: variations,
     };
-    handleOnAccept({ dayIndex, exerciseData: payload, prevName: exerciseToEdit?.name || "" });
+    handleOnAccept({
+      dayIndex,
+      exerciseData: payload,
+      prevName: exerciseToEdit?.name || "",
+    });
     closeModal();
   };
 
@@ -111,7 +119,9 @@ const CreateOrEditExerciseModal = ({
           <CustomText text="How many variations?" />
           <CustomSelectDropdown
             data={dropdownValues.slice(1)}
-            defaultValue={dropdownValues.find((el) => el === currentVariations)!}
+            defaultValue={
+              dropdownValues.find((el) => el === currentVariations)!
+            }
             onSelect={handleWeeksVariations}
             btnStyle={styles.dropdownButtonStyle}
             btnTextStyle={styles.dropdownButtonTxtStyle}
@@ -140,7 +150,11 @@ const CreateOrEditExerciseModal = ({
 
 export default CreateOrEditExerciseModal;
 
-const createOrEditExerciseModalStyles = (theme: Theme, multipleRepetitions: boolean) =>
+const createOrEditExerciseModalStyles = (
+  theme: Theme,
+  multipleRepetitions: boolean,
+  name: string
+) =>
   StyleSheet.create({
     innerContainer: {
       width: "100%",
@@ -162,7 +176,7 @@ const createOrEditExerciseModalStyles = (theme: Theme, multipleRepetitions: bool
       fontSize: 18,
       padding: 10,
       borderBottomWidth: 0.9,
-      borderColor: Colors[theme].text,
+      borderColor: !name ? Colors.cancelBackground : Colors.acceptBackground,
     },
     dropdownButtonStyle: {
       gap: 8,
