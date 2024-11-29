@@ -35,7 +35,9 @@ const SecondStep = () => {
   return (
     <View style={styles.mainContainer}>
       <View style={styles.container}>
-        <Text style={styles.title}>Now, let's start filling each day with its exercises.</Text>
+        <Text style={styles.title}>
+          Now, let's start filling each day with its exercises.
+        </Text>
       </View>
       <ScrollView contentContainerStyle={styles.scrollViewContainer}>
         <>
@@ -65,6 +67,7 @@ const secondStepStyles = (theme: Theme) =>
       flexGrow: 1,
       gap: 40,
       width: "100%",
+      backgroundColor: Colors[theme].background,
     },
     container: {
       gap: 40,

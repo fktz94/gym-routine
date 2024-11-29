@@ -41,18 +41,19 @@ const EditRoutine = () => {
 
   if (!originalRoutine) return null;
 
-  const { toggleChangingName, handleSaveChanges, isButtonDisabled } = useEditRoutineChanges({
-    data,
-    handleName,
-    isChangingName,
-    isCurrent,
-    name,
-    openModal,
-    originalRoutine,
-    setIsChangingName,
-    toCurrent,
-    warmUp,
-  });
+  const { toggleChangingName, handleSaveChanges, isButtonDisabled } =
+    useEditRoutineChanges({
+      data,
+      handleName,
+      isChangingName,
+      isCurrent,
+      name,
+      openModal,
+      originalRoutine,
+      setIsChangingName,
+      toCurrent,
+      warmUp,
+    });
 
   const hasPrevWarmUp = originalRoutine.warmUp.length > 0;
   const hasWarmUp = hasPrevWarmUp || addWarmUp;
@@ -115,7 +116,11 @@ const EditRoutine = () => {
               styles.changeNameTextInputContainer,
             ]}
           >
-            <TextInput value={name} onChangeText={handleName} style={styles.textInput} />
+            <TextInput
+              value={name}
+              onChangeText={handleName}
+              style={styles.textInput}
+            />
           </View>
         )}
         {!hasPrevWarmUp && (
@@ -165,6 +170,7 @@ const editRoutineStyles = (theme: Theme) =>
       flexGrow: 1,
       gap: 40,
       width: "100%",
+      backgroundColor: Colors[theme].background,
     },
     container: {
       gap: 40,
@@ -192,7 +198,12 @@ const editRoutineStyles = (theme: Theme) =>
       textAlign: "center",
       fontSize: 20,
     },
-    modifyRoutineBtnContainer: { width: "40%", margin: "auto", marginTop: 15, marginBottom: 30 },
+    modifyRoutineBtnContainer: {
+      width: "40%",
+      margin: "auto",
+      marginTop: 15,
+      marginBottom: 30,
+    },
     modifyRoutineBtnText: {
       fontSize: 14,
       letterSpacing: 2,

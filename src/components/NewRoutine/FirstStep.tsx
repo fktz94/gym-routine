@@ -14,8 +14,13 @@ const FirstStep = () => {
 
   const { showQuitModal } = useHeaderContext();
 
-  const { handleName, handleDays, newRoutineState, hasWarmUpRoutine, toggleWarmUpRoutine } =
-    useNewRoutineContext();
+  const {
+    handleName,
+    handleDays,
+    newRoutineState,
+    hasWarmUpRoutine,
+    toggleWarmUpRoutine,
+  } = useNewRoutineContext();
 
   const { name, data } = newRoutineState;
 
@@ -30,7 +35,11 @@ const FirstStep = () => {
         <View style={styles.container}>
           <Text style={styles.title}>First, give it a name.</Text>
           <Text style={styles.subtitle}>(Normally, the month's name)</Text>
-          <TextInput value={name} onChangeText={handleName} style={styles.textInput} />
+          <TextInput
+            value={name}
+            onChangeText={handleName}
+            style={styles.textInput}
+          />
         </View>
         <View style={styles.container}>
           <Text style={styles.title}>
@@ -68,6 +77,7 @@ const firstStepStyles = (theme: Theme) =>
       flex: 1,
       gap: 80,
       width: "75%",
+      backgroundColor: Colors[theme].background,
     },
     container: {
       gap: 25,

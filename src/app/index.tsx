@@ -42,7 +42,8 @@ export default function Index() {
           {noRoutines && (
             <View style={styles.listContainer}>
               <Text style={[styles.title, styles.noRoutines]}>
-                It seems you haven't wrote any routine yet.{"\n\n"}Go ahead and start training!
+                It seems you haven't wrote any routine yet.{"\n\n"}Go ahead and
+                start training!
               </Text>
             </View>
           )}
@@ -60,11 +61,17 @@ const indexStyles = (theme: Theme) =>
       justifyContent: "flex-start",
       alignItems: "center",
       gap: 32,
+      backgroundColor: Colors[theme].background,
     },
     listContainer: {
       gap: 15,
       width: "100%",
     },
-    title: { fontWeight: "bold", fontSize: 24, color: Colors[theme].text, textAlign: "center" },
+    title: {
+      fontWeight: "bold",
+      fontSize: 24,
+      color: Colors[theme].text,
+      textAlign: "center",
+    },
     noRoutines: { letterSpacing: 2, padding: 60, lineHeight: 35 },
   });

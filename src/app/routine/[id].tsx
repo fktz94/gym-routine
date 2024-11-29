@@ -36,7 +36,9 @@ export default function RoutineScreen() {
     concludeExerciseErrorMessage,
     modifyExerciseStatus,
   } = useAppSelector(({ routines }) => routines);
-  const { routine, selectedDay, handleSelectedDay } = useRoutineDescription({ id });
+  const { routine, selectedDay, handleSelectedDay } = useRoutineDescription({
+    id,
+  });
 
   const dispatch = useAppDispatch();
   const isFocused = useIsFocused();
@@ -65,7 +67,10 @@ export default function RoutineScreen() {
   const emptyDayText = () => (
     <View style={styles.emptyDayContainer}>
       <Text style={styles.emptyDayText}>This day is empty!</Text>
-      <Link href={{ pathname: `/edit-routine/[id]`, params: { id, selectedDay } }} asChild>
+      <Link
+        href={{ pathname: `/edit-routine/[id]`, params: { id, selectedDay } }}
+        asChild
+      >
         <ThemedButton
           externalButtonStyles={styles.emptyDayBtnContainer}
           externalTextStyles={styles.emptyDayBtnText}
@@ -78,7 +83,8 @@ export default function RoutineScreen() {
 
   if (!routine) return null; // Should redirect to 404 page?
 
-  const isLoading = (isFocused && isGettingAllRoutines) || isConcludingExerciseRoutine;
+  const isLoading =
+    (isFocused && isGettingAllRoutines) || isConcludingExerciseRoutine;
 
   useEffect(() => {
     if (isConcludingExerciseRoutine) return;
@@ -138,7 +144,13 @@ export default function RoutineScreen() {
             )}
             <RoutineDetails routineDay={routine?.data[selectedDay]} />
             <View style={styles.buttonsContainer}>
-              <Link href={{ pathname: `/edit-routine/[id]`, params: { id, selectedDay } }} asChild>
+              <Link
+                href={{
+                  pathname: `/edit-routine/[id]`,
+                  params: { id, selectedDay },
+                }}
+                asChild
+              >
                 <ThemedButton externalTextStyles={styles.modifyRoutineBtnText}>
                   Modify routine
                 </ThemedButton>
@@ -161,6 +173,7 @@ const routineDescriptionStyles = (theme: Theme) =>
     container: {
       flex: 1,
       gap: 12,
+      backgroundColor: Colors[theme].background,
     },
     daysButtonsContainer: {
       paddingVertical: 16,
@@ -186,7 +199,12 @@ const routineDescriptionStyles = (theme: Theme) =>
       lineHeight: 64,
     },
     emptyDayBtnContainer: { width: "50%", margin: "auto" },
-    emptyDayBtnText: { fontSize: 18, letterSpacing: 2, fontWeight: "bold", textAlign: "center" },
+    emptyDayBtnText: {
+      fontSize: 18,
+      letterSpacing: 2,
+      fontWeight: "bold",
+      textAlign: "center",
+    },
     routineName: {
       fontWeight: "bold",
       fontSize: 32,

@@ -17,9 +17,7 @@ export default function App() {
     <SafeAreaView style={styles.container}>
       <StatusBar style={statusBarStyle} />
       <Header />
-      <Stack
-        screenOptions={{ headerShown: false, contentStyle: { backgroundColor: "transparent" } }}
-      >
+      <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="index" />
         <Stack.Screen name="new-routine" />
         <Stack.Screen name="routine/[id]" />
