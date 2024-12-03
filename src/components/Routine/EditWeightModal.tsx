@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, TextInput, View } from "react-native";
 import CheckboxContainer from "./CheckboxContainer";
 import ThemedModal from "../ThemedModal";
 import { Colors } from "@/src/constants/Colors";
@@ -7,6 +7,7 @@ import useEditWeightModal from "@/src/hooks/useEditWeightModal";
 import { EditExerciseModalProps } from "@/src/types/Components";
 import { Theme } from "@/src/types/Contexts";
 import { Strings } from "@/src/constants/Strings";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 const EditWeightModal = ({
   closeModal,
@@ -47,16 +48,22 @@ const EditWeightModal = ({
       isAcceptBtnDisabled={isButtonDisabled}
       isLoading={isLoading}
     >
-      {exerciseData.weight?.value && !exerciseData.weight.value.includes(Strings.NoWeight) && (
-        <View style={styles.previousWeightTextView}>
-          <Text style={[styles.previousWeightText, { fontSize: 10, letterSpacing: 0.5 }]}>
-            Current weight:{" "}
-          </Text>
-          <Text style={[styles.previousWeightText, { fontWeight: "bold" }]}>
-            {exerciseData.weight.value}
-          </Text>
-        </View>
-      )}
+      {exerciseData.weight?.value &&
+        !exerciseData.weight.value.includes(Strings.NoWeight) && (
+          <View style={styles.previousWeightTextView}>
+            <Text
+              style={[
+                styles.previousWeightText,
+                { fontSize: 10, letterSpacing: 0.5 },
+              ]}
+            >
+              Current weight:{" "}
+            </Text>
+            <Text style={[styles.previousWeightText, { fontWeight: "bold" }]}>
+              {exerciseData.weight.value}
+            </Text>
+          </View>
+        )}
       {!hasNoWeight && (
         <>
           <View style={styles.textInputContainer}>
@@ -71,7 +78,10 @@ const EditWeightModal = ({
             {!customValue && (
               <>
                 <Text style={styles.kgText}>kg</Text>
-                <TouchableOpacity style={styles.eachSideContainer} onPress={toggleCL}>
+                <TouchableOpacity
+                  style={styles.eachSideContainer}
+                  onPress={toggleCL}
+                >
                   <Text style={styles.eachSideText}>{Strings.EachSide}</Text>
                 </TouchableOpacity>
               </>
@@ -104,7 +114,11 @@ const EditWeightModal = ({
 
 export default EditWeightModal;
 
-const editExerciseModalStyles = (theme: Theme, customValue: boolean, hasCL: boolean) =>
+const editExerciseModalStyles = (
+  theme: Theme,
+  customValue: boolean,
+  hasCL: boolean
+) =>
   StyleSheet.create({
     textInputContainer: {
       flexDirection: "row",
@@ -121,7 +135,11 @@ const editExerciseModalStyles = (theme: Theme, customValue: boolean, hasCL: bool
       padding: 10,
       borderColor: Colors[theme].text,
     },
-    kgText: { color: Colors[theme].text, textAlignVertical: "center", fontSize: 16 },
+    kgText: {
+      color: Colors[theme].text,
+      textAlignVertical: "center",
+      fontSize: 16,
+    },
     eachSideContainer: {
       backgroundColor: hasCL ? Colors.greyText : "transparent",
       justifyContent: "center",

@@ -1,8 +1,13 @@
-import { StyleSheet, Text, TouchableOpacity } from "react-native";
+import { StyleSheet, Text } from "react-native";
 import { Colors } from "@/src/constants/Colors";
 import { DeleteButtonProps } from "@/src/types/Components";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
-const DeleteButton = ({ onDelete, isRoutine, isCurrent }: DeleteButtonProps) => {
+const DeleteButton = ({
+  onDelete,
+  isRoutine,
+  isCurrent,
+}: DeleteButtonProps) => {
   const styles = deleteButtonStyles(isCurrent);
   return (
     <TouchableOpacity

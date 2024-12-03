@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TouchableOpacity } from "react-native";
+import { StyleSheet, Text } from "react-native";
 import CreateOrEditExerciseModal from "../CreateOrEditExerciseModal/CreateOrEditExerciseModal";
 import DeleteAnimation from "../DeleteAnimatedButton/DeleteAnimation";
 import { Colors } from "@/src/constants/Colors";
@@ -7,6 +7,7 @@ import useDeleteAnimation from "@/src/hooks/useDeleteAnimation";
 import useModal from "@/src/hooks/useModal";
 import { ExerciseListItemProps } from "@/src/types/Components";
 import { Theme } from "@/src/types/Contexts";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 const ExerciseListItem = ({
   dayIndex = 0,
@@ -21,12 +22,18 @@ const ExerciseListItem = ({
   const styles = exerciseListItemStyles(theme);
 
   const { name, sets, weightsAndRepetitions } = exerciseData;
-  const exerciseRepetitions = weightsAndRepetitions.map((el) => el.qty).join(" / ");
+  const exerciseRepetitions = weightsAndRepetitions
+    .map((el) => el.qty)
+    .join(" / ");
 
   const { closeModal, isModalOpen: isEditing, openModal } = useModal();
 
   const deleteExercise = () => {
-    if ((dayIndex !== 0 && !dayIndex) || (exerciseIndex !== 0 && !exerciseIndex)) return;
+    if (
+      (dayIndex !== 0 && !dayIndex) ||
+      (exerciseIndex !== 0 && !exerciseIndex)
+    )
+      return;
     handleDeleteExercise({ dayIndex, exerciseIndex });
   };
 
@@ -53,15 +60,34 @@ const ExerciseListItem = ({
         animatedViewStyles={{ flex: 1, flexDirection: "row" }}
         onDelete={deleteExercise}
       >
-        <TouchableOpacity style={{ flex: 1, flexDirection: "row" }} onPress={openModal}>
-          <Text style={[styles.exerciseItemText, styles.exerciseName, styles.exerciseElement]}>
+        <TouchableOpacity
+          style={{ flex: 1, flexDirection: "row" }}
+          onPress={openModal}
+        >
+          <Text
+            style={[
+              styles.exerciseItemText,
+              styles.exerciseName,
+              styles.exerciseElement,
+            ]}
+          >
             {name}
           </Text>
-          <Text style={[styles.exerciseItemText, styles.exerciseSets, styles.exerciseElement]}>
+          <Text
+            style={[
+              styles.exerciseItemText,
+              styles.exerciseSets,
+              styles.exerciseElement,
+            ]}
+          >
             {sets}
           </Text>
           <Text
-            style={[styles.exerciseItemText, styles.exerciseRepetitions, styles.exerciseElement]}
+            style={[
+              styles.exerciseItemText,
+              styles.exerciseRepetitions,
+              styles.exerciseElement,
+            ]}
           >
             {exerciseRepetitions}
           </Text>

@@ -1,9 +1,10 @@
 import { forwardRef } from "react";
-import { Text, TouchableOpacity, StyleSheet } from "react-native";
+import { Text, StyleSheet } from "react-native";
 import { Colors } from "@/src/constants/Colors";
 import useThemeContext from "@/src/contexts/Theme/useThemeContext";
 import { ThemedButtonProps } from "@/src/types/Components";
 import { Theme } from "@/src/types/Contexts";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 const ThemedButton = forwardRef(
   (
@@ -34,7 +35,11 @@ const ThemedButton = forwardRef(
 
 export default ThemedButton;
 
-const themedButtonStyles = (isSecondary: boolean, theme: Theme, isDisabled = false) =>
+const themedButtonStyles = (
+  isSecondary: boolean,
+  theme: Theme,
+  isDisabled = false
+) =>
   StyleSheet.create({
     buttonContainer: {
       paddingHorizontal: 16,
@@ -42,8 +47,8 @@ const themedButtonStyles = (isSecondary: boolean, theme: Theme, isDisabled = fal
       backgroundColor: isDisabled
         ? Colors.light.text
         : isSecondary
-        ? Colors[theme].primary
-        : Colors[theme].secondary,
+          ? Colors[theme].primary
+          : Colors[theme].secondary,
       borderRadius: 10,
       borderWidth: 1,
       borderColor: `${isSecondary ? Colors[theme].secondary : Colors[theme].primary}99`,
@@ -59,8 +64,9 @@ const themedButtonStyles = (isSecondary: boolean, theme: Theme, isDisabled = fal
     text: {
       color: isDisabled
         ? Colors.light.secondary
-        : (theme === "light" && isSecondary) || (theme === "dark" && !isSecondary)
-        ? Colors[theme].background
-        : Colors[theme].text,
+        : (theme === "light" && isSecondary) ||
+            (theme === "dark" && !isSecondary)
+          ? Colors[theme].background
+          : Colors[theme].text,
     },
   });

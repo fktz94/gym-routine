@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import ExerciseListItem from "./ExerciseListItem";
 import ExerciseListTitle from "./ExerciseListTitle";
@@ -9,6 +9,7 @@ import useModal from "@/src/hooks/useModal";
 import { ExerciseListDayProps } from "@/src/types/Components";
 import { Theme } from "@/src/types/Contexts";
 import AnimatedDayCard from "./AnimatedDayCard";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 const ExerciseListDay = ({
   dataToMap,
@@ -60,8 +61,15 @@ const ExerciseListDay = ({
             {currentExercises()}
           </View>
         )}
-        <TouchableOpacity onPress={openModal} style={styles.addExerciseIconContainer}>
-          <Ionicons name="add-circle-outline" size={40} style={styles.addExerciseIcon} />
+        <TouchableOpacity
+          onPress={openModal}
+          style={styles.addExerciseIconContainer}
+        >
+          <Ionicons
+            name="add-circle-outline"
+            size={40}
+            style={styles.addExerciseIcon}
+          />
         </TouchableOpacity>
       </View>
     </AnimatedDayCard>
