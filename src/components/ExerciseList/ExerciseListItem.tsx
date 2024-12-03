@@ -37,7 +37,7 @@ const ExerciseListItem = ({
     handleDeleteExercise({ dayIndex, exerciseIndex });
   };
 
-  const { panResponder, translateX } = useDeleteAnimation();
+  const { isLeftSide, position } = useDeleteAnimation();
 
   return (
     <>
@@ -50,8 +50,8 @@ const ExerciseListItem = ({
         />
       )}
       <DeleteAnimation
-        panResponder={panResponder}
-        translateX={translateX}
+        isLeftSide={isLeftSide}
+        position={position}
         containerViewStyles={{
           ...styles.exerciseItem,
           ...style,

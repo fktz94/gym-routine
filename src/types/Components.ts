@@ -1,11 +1,17 @@
 import { PropsWithChildren, ReactNode } from "react";
-import { Animated, PanResponderInstance, TextStyle, ViewProps, ViewStyle } from "react-native";
-import { Exercise, Routine, RoutineDay, WeightsAndRepetitions } from "./Routines";
+import { TextStyle, ViewStyle } from "react-native";
+import {
+  Exercise,
+  Routine,
+  RoutineDay,
+  WeightsAndRepetitions,
+} from "./Routines";
 import {
   AddExercisePayloadType,
   DeleteExercisePayloadType,
   EditExercisePayloadType,
 } from "./Reducers";
+import { SharedValue } from "react-native-reanimated";
 
 export interface ThemedButtonProps {
   children: ReactNode;
@@ -64,7 +70,8 @@ export interface CreateExerciseModalProps {
   isWarmUp?: boolean;
 }
 
-export interface EditCreatedExerciseModalProps extends CreateExerciseModalProps {
+export interface EditCreatedExerciseModalProps
+  extends CreateExerciseModalProps {
   exerciseName: string;
 }
 
@@ -103,8 +110,15 @@ export interface ExerciseListItemProps {
   dayIndex?: number;
   exerciseData: Exercise;
   exerciseIndex?: number;
-  handleDeleteExercise: ({ dayIndex, exerciseIndex }: DeleteExercisePayloadType) => void;
-  handleEditExercise: ({ dayIndex, exerciseData, prevName }: EditExercisePayloadType) => void;
+  handleDeleteExercise: ({
+    dayIndex,
+    exerciseIndex,
+  }: DeleteExercisePayloadType) => void;
+  handleEditExercise: ({
+    dayIndex,
+    exerciseData,
+    prevName,
+  }: EditExercisePayloadType) => void;
   isLastElement: boolean;
   style?: ViewStyle;
 }
@@ -113,9 +127,19 @@ export interface ExerciseListDayProps {
   dataToMap: RoutineDay;
   dayHasToBeShown?: boolean;
   dayIndex?: number;
-  handleAddExercise: ({ dayIndex, exerciseData }: AddExercisePayloadType) => void;
-  handleDeleteExercise: ({ dayIndex, exerciseIndex }: DeleteExercisePayloadType) => void;
-  handleEditExercise: ({ dayIndex, exerciseData, prevName }: EditExercisePayloadType) => void;
+  handleAddExercise: ({
+    dayIndex,
+    exerciseData,
+  }: AddExercisePayloadType) => void;
+  handleDeleteExercise: ({
+    dayIndex,
+    exerciseIndex,
+  }: DeleteExercisePayloadType) => void;
+  handleEditExercise: ({
+    dayIndex,
+    exerciseData,
+    prevName,
+  }: EditExercisePayloadType) => void;
   isWarmUp?: boolean;
 }
 
@@ -151,11 +175,13 @@ export interface DeleteButtonProps {
   isCurrent?: boolean;
 }
 
-export interface DeleteAnimationProps extends PropsWithChildren, DeleteButtonProps {
+export interface DeleteAnimationProps
+  extends PropsWithChildren,
+    DeleteButtonProps {
   containerViewStyles?: ViewStyle;
   animatedViewStyles?: ViewStyle;
-  panResponder: PanResponderInstance;
-  translateX: Animated.Value;
+  position: SharedValue<number>;
+  isLeftSide: SharedValue<boolean>;
 }
 
 export interface CheckboxContainerProps {

@@ -9,6 +9,7 @@ import ThemeProvider from "@/src/contexts/Theme/ThemeProvider";
 import { getTheme } from "@/src/utils/AsyncStorage/Theme";
 import { store } from "@/src/store/store";
 import { Theme } from "@/src/types/Contexts";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -34,12 +35,14 @@ export default function RootLayout() {
   if (!loaded) return null;
 
   return (
-    <ThemeProvider storedTheme={initialTheme}>
-      <Provider store={store}>
-        <HeaderProvider>
-          <App />
-        </HeaderProvider>
-      </Provider>
-    </ThemeProvider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <ThemeProvider storedTheme={initialTheme}>
+        <Provider store={store}>
+          <HeaderProvider>
+            <App />
+          </HeaderProvider>
+        </Provider>
+      </ThemeProvider>
+    </GestureHandlerRootView>
   );
 }

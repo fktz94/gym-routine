@@ -20,9 +20,14 @@ export default function RoutineListItem({
   const { theme } = useThemeContext();
   const styles = routinesListStyles(theme, isCurrent);
 
-  const { panResponder, translateX, animateBackToTheBeginning } = useDeleteAnimation();
+  const { isLeftSide, position, animateBackToTheBeginning } =
+    useDeleteAnimation();
 
-  const { isModalOpen: isDeleting, openModal: handleOpenModal, closeModal } = useModal();
+  const {
+    isModalOpen: isDeleting,
+    openModal: handleOpenModal,
+    closeModal,
+  } = useModal();
 
   const handleCloseModal = () => {
     animateBackToTheBeginning();
@@ -32,15 +37,19 @@ export default function RoutineListItem({
   return (
     <>
       {isDeleting && (
-        <ConfirmDeleteRoutineModal id={id} name={routineName} closeModal={handleCloseModal} />
+        <ConfirmDeleteRoutineModal
+          id={id}
+          name={routineName}
+          closeModal={handleCloseModal}
+        />
       )}
       <DeleteAnimation
         containerViewStyles={styles.itemList}
         isCurrent={isCurrent}
         isRoutine
         onDelete={handleOpenModal}
-        panResponder={panResponder}
-        translateX={translateX}
+        position={position}
+        isLeftSide={isLeftSide}
       >
         <Link href={`/routine/${id}`} asChild>
           {isCurrent ? (
@@ -60,6 +69,11 @@ export default function RoutineListItem({
 const routinesListStyles = (theme: Theme, isCurrent: boolean) =>
   StyleSheet.create({
     bold: { fontWeight: "bold" },
-    itemList: { gap: 4, width: "50%", margin: "auto", overflow: "hidden" },
+    itemList: {
+      gap: 4,
+      width: "50%",
+      margin: "auto",
+      overflow: "hidden",
+    },
     madeOnText: { color: Colors[theme].text, fontSize: 12 },
   });
