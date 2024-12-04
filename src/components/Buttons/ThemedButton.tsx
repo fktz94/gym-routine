@@ -4,7 +4,7 @@ import { Colors } from "@/src/constants/Colors";
 import useThemeContext from "@/src/contexts/Theme/useThemeContext";
 import { ThemedButtonProps } from "@/src/types/Components";
 import { Theme } from "@/src/types/Contexts";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { BaseButton } from "react-native-gesture-handler";
 
 const ThemedButton = forwardRef(
   (
@@ -22,13 +22,13 @@ const ThemedButton = forwardRef(
     const styles = themedButtonStyles(isSecondary, theme, disabled);
 
     return (
-      <TouchableOpacity
-        disabled={disabled}
+      <BaseButton
+        enabled={!disabled}
         style={[styles.buttonContainer, externalButtonStyles]}
         onPress={onPress}
       >
         <Text style={[styles.text, externalTextStyles]}>{children}</Text>
-      </TouchableOpacity>
+      </BaseButton>
     );
   }
 );

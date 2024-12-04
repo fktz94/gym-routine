@@ -7,7 +7,7 @@ import useEditWeightModal from "@/src/hooks/useEditWeightModal";
 import { EditExerciseModalProps } from "@/src/types/Components";
 import { Theme } from "@/src/types/Contexts";
 import { Strings } from "@/src/constants/Strings";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { BaseButton } from "react-native-gesture-handler";
 
 const EditWeightModal = ({
   closeModal,
@@ -78,12 +78,11 @@ const EditWeightModal = ({
             {!customValue && (
               <>
                 <Text style={styles.kgText}>kg</Text>
-                <TouchableOpacity
-                  style={styles.eachSideContainer}
-                  onPress={toggleCL}
-                >
-                  <Text style={styles.eachSideText}>{Strings.EachSide}</Text>
-                </TouchableOpacity>
+                <View style={styles.eachSideContainer}>
+                  <BaseButton style={styles.eachSideBtn} onPress={toggleCL}>
+                    <Text style={styles.eachSideText}>{Strings.EachSide}</Text>
+                  </BaseButton>
+                </View>
               </>
             )}
           </View>
@@ -141,15 +140,19 @@ const editExerciseModalStyles = (
       fontSize: 16,
     },
     eachSideContainer: {
-      backgroundColor: hasCL ? Colors.greyText : "transparent",
       justifyContent: "center",
       paddingHorizontal: 8,
       borderRadius: 10,
       borderWidth: 1,
       borderColor: hasCL ? "transparent" : Colors.greyText,
+      backgroundColor: hasCL ? Colors.greyText : "transparent",
+    },
+    eachSideBtn: {
+      justifyContent: "center",
+      borderRadius: 10,
+      flex: 1,
     },
     eachSideText: {
-      fontWeight: hasCL ? "bold" : undefined,
       color: Colors[theme].text,
       opacity: !hasCL ? 0.5 : 1,
     },
