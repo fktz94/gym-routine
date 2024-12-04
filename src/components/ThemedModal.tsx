@@ -8,6 +8,7 @@ import useThemeContext from "../contexts/Theme/useThemeContext";
 import { ThemedModalProps } from "../types/Components";
 import { Theme } from "../types/Contexts";
 import { useState } from "react";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 const ThemedModal = ({
   isLoading = false,
@@ -34,38 +35,47 @@ const ThemedModal = ({
 
   return (
     <Modal animationType="slide" transparent>
-      <View
-        style={styles.container}
-        onLayout={({ nativeEvent }) => handleLayoutHeight(nativeEvent.layout.height)}
-      >
-        {isLoading ? (
-          <CustomLoader style={{ margin: "auto" }} />
-        ) : (
-          <>
-            <Ionicons
-              style={styles.closeIconBtn}
-              name="close"
-              color={Colors[theme].text}
-              size={30}
-              onPress={closeModal}
-            />
-            <ScrollView
-              contentContainerStyle={styles.childrenContainer}
-              onContentSizeChange={(_, height) => handleScrollViewHeight(height)}
-            >
-              {children}
-              <View style={styles.buttonsContainer}>
-                <CancelButton onCancel={closeModal} isIcon={buttonsAreIcons} />
-                <AcceptButton
-                  onAccept={handleAccept}
-                  isDisabled={isAcceptBtnDisabled}
-                  isIcon={buttonsAreIcons}
-                />
-              </View>
-            </ScrollView>
-          </>
-        )}
-      </View>
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <View
+          style={styles.container}
+          onLayout={({ nativeEvent }) =>
+            handleLayoutHeight(nativeEvent.layout.height)
+          }
+        >
+          {isLoading ? (
+            <CustomLoader style={{ margin: "auto" }} />
+          ) : (
+            <>
+              <Ionicons
+                style={styles.closeIconBtn}
+                name="close"
+                color={Colors[theme].text}
+                size={30}
+                onPress={closeModal}
+              />
+              <ScrollView
+                contentContainerStyle={styles.childrenContainer}
+                onContentSizeChange={(_, height) =>
+                  handleScrollViewHeight(height)
+                }
+              >
+                {children}
+                <View style={styles.buttonsContainer}>
+                  <CancelButton
+                    onCancel={closeModal}
+                    isIcon={buttonsAreIcons}
+                  />
+                  <AcceptButton
+                    onAccept={handleAccept}
+                    isDisabled={isAcceptBtnDisabled}
+                    isIcon={buttonsAreIcons}
+                  />
+                </View>
+              </ScrollView>
+            </>
+          )}
+        </View>
+      </GestureHandlerRootView>
     </Modal>
   );
 };
