@@ -1,7 +1,7 @@
 import { StyleSheet, Text } from "react-native";
 import { Colors } from "@/src/constants/Colors";
 import { DeleteButtonProps } from "@/src/types/Components";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { BaseButton } from "react-native-gesture-handler";
 
 const DeleteButton = ({
   onDelete,
@@ -10,12 +10,12 @@ const DeleteButton = ({
 }: DeleteButtonProps) => {
   const styles = deleteButtonStyles(isCurrent);
   return (
-    <TouchableOpacity
+    <BaseButton
       style={{ ...styles.exerciseBtn, ...(isRoutine && styles.routineBtn) }}
       onPress={onDelete}
     >
       <Text style={styles.deleteButtonText}>Delete</Text>
-    </TouchableOpacity>
+    </BaseButton>
   );
 };
 
