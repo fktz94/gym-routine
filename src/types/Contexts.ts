@@ -13,11 +13,29 @@ export interface NewRoutineContextProps {
   hasWarmUpRoutine: boolean;
   toggleWarmUpRoutine: () => void;
   newRoutineState: RoutineStructure;
-  handleAddOneExercise: ({ dayIndex, exerciseData }: AddExercisePayloadType) => void;
-  handleDeleteOneExercise: ({ dayIndex, exerciseIndex }: DeleteExercisePayloadType) => void;
-  handleEditOneExercise: ({ dayIndex, exerciseData, prevName }: EditExercisePayloadType) => void;
-  handleAddOneWarmUpExercise: ({ exerciseData }: { exerciseData: Exercise }) => void;
-  handleDeleteOneWarmUpExercise: ({ exerciseIndex }: { exerciseIndex: number }) => void;
+  handleAddOneExercise: ({
+    dayIndex,
+    exerciseData,
+  }: AddExercisePayloadType) => void;
+  handleDeleteOneExercise: ({
+    dayIndex,
+    exerciseIndex,
+  }: DeleteExercisePayloadType) => void;
+  handleEditOneExercise: ({
+    dayIndex,
+    exerciseData,
+    prevName,
+  }: EditExercisePayloadType) => void;
+  handleAddOneWarmUpExercise: ({
+    exerciseData,
+  }: {
+    exerciseData: Exercise;
+  }) => void;
+  handleDeleteOneWarmUpExercise: ({
+    exerciseIndex,
+  }: {
+    exerciseIndex: number;
+  }) => void;
   handleEditOneWarmUpExercise: ({
     exerciseData,
     prevName,
@@ -32,15 +50,33 @@ export interface EditRoutineContextProps {
   selectedRoutine: RoutineStructure;
   originalRoutine: RoutineStructure | undefined;
   selectedDay: string;
-  handleAddOneExercise: ({ dayIndex, exerciseData }: AddExercisePayloadType) => void;
-  handleEditOneExercise: ({ dayIndex, exerciseData, prevName }: EditExercisePayloadType) => void;
-  handleDeleteOneExercise: ({ dayIndex, exerciseIndex }: DeleteExercisePayloadType) => void;
+  handleAddOneExercise: ({
+    dayIndex,
+    exerciseData,
+  }: AddExercisePayloadType) => void;
+  handleEditOneExercise: ({
+    dayIndex,
+    exerciseData,
+    prevName,
+  }: EditExercisePayloadType) => void;
+  handleDeleteOneExercise: ({
+    dayIndex,
+    exerciseIndex,
+  }: DeleteExercisePayloadType) => void;
   handleSetToCurrent: () => void;
   toCurrent: boolean;
   isCurrent: boolean;
   handleName: (val: string) => void;
-  handleAddOneWarmUpExercise: ({ exerciseData }: { exerciseData: Exercise }) => void;
-  handleDeleteOneWarmUpExercise: ({ exerciseIndex }: { exerciseIndex: number }) => void;
+  handleAddOneWarmUpExercise: ({
+    exerciseData,
+  }: {
+    exerciseData: Exercise;
+  }) => void;
+  handleDeleteOneWarmUpExercise: ({
+    exerciseIndex,
+  }: {
+    exerciseIndex: number;
+  }) => void;
   handleEditOneWarmUpExercise: ({
     exerciseData,
     prevName,
@@ -50,6 +86,7 @@ export interface EditRoutineContextProps {
   }) => void;
   toggleWarmUp: () => void;
   addWarmUp: boolean;
+  isDispatching: boolean;
 }
 
 export type Theme = "light" | "dark";

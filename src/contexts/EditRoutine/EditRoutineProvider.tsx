@@ -7,7 +7,11 @@ type Props = {
   selectedDay: string;
 };
 
-export default function EditRoutineProvider({ children, routineId, selectedDay }: Props) {
+export default function EditRoutineProvider({
+  children,
+  routineId,
+  selectedDay,
+}: Props) {
   const {
     editRoutineState,
     handleAddOneExercise,
@@ -23,6 +27,7 @@ export default function EditRoutineProvider({ children, routineId, selectedDay }
     handleDeleteOneWarmUpExercise,
     toggleWarmUp,
     addWarmUp,
+    isDispatching,
   } = useEditRoutine({ routineId });
 
   return (
@@ -43,6 +48,7 @@ export default function EditRoutineProvider({ children, routineId, selectedDay }
         handleDeleteOneWarmUpExercise,
         toggleWarmUp,
         addWarmUp,
+        isDispatching,
       }}
     >
       {children}

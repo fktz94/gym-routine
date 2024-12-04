@@ -1,6 +1,9 @@
 import { useEffect, useReducer, useState } from "react";
 import useRoutineDescription from "./useRoutineDescription";
-import { editRoutineReducers, initialState } from "../reducers/EditRoutine/editRoutineReducers";
+import {
+  editRoutineReducers,
+  initialState,
+} from "../reducers/EditRoutine/editRoutineReducers";
 import {
   AddExercisePayloadType,
   DeleteExercisePayloadType,
@@ -13,9 +16,15 @@ const useEditRoutine = ({ routineId }: { routineId: string }) => {
   const { routine, isCurrent } = useRoutineDescription({ id: routineId });
   const [toCurrent, setToCurrent] = useState(false);
   const [addWarmUp, setAddWarmUp] = useState(false);
-  const [editRoutineState, dispatch] = useReducer(editRoutineReducers, initialState);
+  const [editRoutineState, dispatch] = useReducer(
+    editRoutineReducers,
+    initialState
+  );
   const setState = () => {
-    dispatch({ type: EditRoutineActionsTypes.SETINITIALSTATE, payload: routine });
+    dispatch({
+      type: EditRoutineActionsTypes.SETINITIALSTATE,
+      payload: routine,
+    });
   };
   const handleAddOneExercise = (payload: AddExercisePayloadType) => {
     dispatch({ type: EditRoutineActionsTypes.ADDEXERCISE, payload });
@@ -33,7 +42,11 @@ const useEditRoutine = ({ routineId }: { routineId: string }) => {
     dispatch({ type: EditRoutineActionsTypes.CHANGENAME, payload });
   };
 
-  const handleAddOneWarmUpExercise = ({ exerciseData }: { exerciseData: Exercise }) => {
+  const handleAddOneWarmUpExercise = ({
+    exerciseData,
+  }: {
+    exerciseData: Exercise;
+  }) => {
     dispatch({
       type: EditRoutineActionsTypes.ADDWARMUPEXERCISE,
       payload: { exerciseData },
@@ -52,7 +65,11 @@ const useEditRoutine = ({ routineId }: { routineId: string }) => {
       payload: { exerciseData, prevName },
     });
   };
-  const handleDeleteOneWarmUpExercise = ({ exerciseIndex }: { exerciseIndex: number }) => {
+  const handleDeleteOneWarmUpExercise = ({
+    exerciseIndex,
+  }: {
+    exerciseIndex: number;
+  }) => {
     dispatch({
       type: EditRoutineActionsTypes.DELETEWARMUPEXERCISE,
       payload: { exerciseIndex },
@@ -70,6 +87,8 @@ const useEditRoutine = ({ routineId }: { routineId: string }) => {
 
   useEffect(setState, []);
 
+  const isDispatching = editRoutineState === initialState;
+
   return {
     editRoutineState,
     handleAddOneExercise,
@@ -83,6 +102,7 @@ const useEditRoutine = ({ routineId }: { routineId: string }) => {
     handleAddOneWarmUpExercise,
     handleEditOneWarmUpExercise,
     handleDeleteOneWarmUpExercise,
+    isDispatching,
     addWarmUp,
     toggleWarmUp,
   };

@@ -20,6 +20,7 @@ export default function useEditRoutineContext() {
     handleDeleteOneWarmUpExercise,
     toggleWarmUp,
     addWarmUp,
+    isDispatching,
   } = routineContext;
   return {
     isCurrent,
@@ -37,5 +38,6 @@ export default function useEditRoutineContext() {
     handleDeleteOneWarmUpExercise,
     toggleWarmUp,
     addWarmUp,
+    isDispatching,
   };
 }

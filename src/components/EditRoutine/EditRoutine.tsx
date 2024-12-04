@@ -12,6 +12,7 @@ import useThemeContext from "@/src/contexts/Theme/useThemeContext";
 import useEditRoutineChanges from "@/src/hooks/useEditRoutineChanges";
 import useModal from "@/src/hooks/useModal";
 import { Theme } from "@/src/types/Contexts";
+import CustomLoader from "../CustomLoader";
 
 const EditRoutine = () => {
   const { theme } = useThemeContext();
@@ -37,6 +38,7 @@ const EditRoutine = () => {
     handleDeleteOneWarmUpExercise,
     toggleWarmUp,
     addWarmUp,
+    isDispatching,
   } = useEditRoutineContext();
 
   if (!originalRoutine) return null;
@@ -86,75 +88,83 @@ const EditRoutine = () => {
         <View style={styles.container}>
           <Text style={styles.title}>Let's update this routine!</Text>
         </View>
-        {!isCurrent && (
-          <View style={[styles.container, styles.checkboxContainer]}>
-            <Text style={styles.baseText}>Set to current routine</Text>
-            <BouncyCheckbox
-              size={18}
-              fillColor={Colors.light.primary}
-              innerIconStyle={{ borderWidth: 2 }}
-              onPress={handleSetToCurrent}
-              isChecked={toCurrent}
-            />
+        {isDispatching ? (
+          <View style={styles.loaderContainer}>
+            <CustomLoader />
           </View>
+        ) : (
+          <>
+            {!isCurrent && (
+              <View style={[styles.container, styles.checkboxContainer]}>
+                <Text style={styles.baseText}>Set to current routine</Text>
+                <BouncyCheckbox
+                  size={18}
+                  fillColor={Colors.light.primary}
+                  innerIconStyle={{ borderWidth: 2 }}
+                  onPress={handleSetToCurrent}
+                  isChecked={toCurrent}
+                />
+              </View>
+            )}
+            <View style={[styles.container, styles.checkboxContainer]}>
+              <Text style={styles.baseText}>Change name?</Text>
+              <BouncyCheckbox
+                size={18}
+                fillColor={Colors.light.primary}
+                innerIconStyle={{ borderWidth: 2 }}
+                onPress={toggleChangingName}
+                isChecked={isChangingName}
+              />
+            </View>
+            {isChangingName && (
+              <View
+                style={[
+                  styles.container,
+                  styles.checkboxContainer,
+                  styles.changeNameTextInputContainer,
+                ]}
+              >
+                <TextInput
+                  value={name}
+                  onChangeText={handleName}
+                  style={styles.textInput}
+                />
+              </View>
+            )}
+            {!hasPrevWarmUp && (
+              <View style={[styles.container, styles.checkboxContainer]}>
+                <Text style={styles.baseText}>Add warm up</Text>
+                <BouncyCheckbox
+                  size={18}
+                  fillColor={Colors.light.primary}
+                  innerIconStyle={{ borderWidth: 2 }}
+                  onPress={toggleWarmUp}
+                  isChecked={addWarmUp}
+                />
+              </View>
+            )}
+            <ScrollView contentContainerStyle={styles.scrollViewContainer}>
+              {hasWarmUp && (
+                <ExerciseListDay
+                  dataToMap={warmUp}
+                  handleAddExercise={handleAddOneWarmUpExercise}
+                  handleDeleteExercise={handleDeleteOneWarmUpExercise}
+                  handleEditExercise={handleEditOneWarmUpExercise}
+                  isWarmUp
+                />
+              )}
+              {renderDays()}
+            </ScrollView>
+            <ThemedButton
+              externalButtonStyles={styles.modifyRoutineBtnContainer}
+              externalTextStyles={styles.modifyRoutineBtnText}
+              onPress={handleSaveChanges}
+              disabled={isButtonDisabled}
+            >
+              Save changes!
+            </ThemedButton>
+          </>
         )}
-        <View style={[styles.container, styles.checkboxContainer]}>
-          <Text style={styles.baseText}>Change name?</Text>
-          <BouncyCheckbox
-            size={18}
-            fillColor={Colors.light.primary}
-            innerIconStyle={{ borderWidth: 2 }}
-            onPress={toggleChangingName}
-            isChecked={isChangingName}
-          />
-        </View>
-        {isChangingName && (
-          <View
-            style={[
-              styles.container,
-              styles.checkboxContainer,
-              styles.changeNameTextInputContainer,
-            ]}
-          >
-            <TextInput
-              value={name}
-              onChangeText={handleName}
-              style={styles.textInput}
-            />
-          </View>
-        )}
-        {!hasPrevWarmUp && (
-          <View style={[styles.container, styles.checkboxContainer]}>
-            <Text style={styles.baseText}>Add warm up</Text>
-            <BouncyCheckbox
-              size={18}
-              fillColor={Colors.light.primary}
-              innerIconStyle={{ borderWidth: 2 }}
-              onPress={toggleWarmUp}
-              isChecked={addWarmUp}
-            />
-          </View>
-        )}
-        <ScrollView contentContainerStyle={styles.scrollViewContainer}>
-          {hasWarmUp && (
-            <ExerciseListDay
-              dataToMap={warmUp}
-              handleAddExercise={handleAddOneWarmUpExercise}
-              handleDeleteExercise={handleDeleteOneWarmUpExercise}
-              handleEditExercise={handleEditOneWarmUpExercise}
-              isWarmUp
-            />
-          )}
-          {renderDays()}
-        </ScrollView>
-        <ThemedButton
-          externalButtonStyles={styles.modifyRoutineBtnContainer}
-          externalTextStyles={styles.modifyRoutineBtnText}
-          onPress={handleSaveChanges}
-          disabled={isButtonDisabled}
-        >
-          Save changes!
-        </ThemedButton>
       </View>
     </>
   );
@@ -216,5 +226,10 @@ const editRoutineStyles = (theme: Theme) =>
       fontSize: 14,
       textAlignVertical: "center",
       flexGrow: 1,
+    },
+    loaderContainer: {
+      flex: 1,
+      justifyContent: "center",
+      alignContent: "center",
     },
   });
