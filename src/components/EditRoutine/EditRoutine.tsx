@@ -89,8 +89,8 @@ const EditRoutine = () => {
           <Text style={styles.title}>Let's update this routine!</Text>
         </View>
         {isDispatching ? (
-          <View style={styles.loaderContainer}>
-            <CustomLoader />
+          <View style={{ flex: 1 }}>
+            <CustomLoader style={{ marginTop: 100 }} />
           </View>
         ) : (
           <>
@@ -226,10 +226,5 @@ const editRoutineStyles = (theme: Theme) =>
       fontSize: 14,
       textAlignVertical: "center",
       flexGrow: 1,
-    },
-    loaderContainer: {
-      flex: 1,
-      justifyContent: "center",
-      alignContent: "center",
     },
   });
