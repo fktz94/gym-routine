@@ -5,18 +5,22 @@ import EditWeightModal from "./EditWeightModal";
 import ThemedButton from "../Buttons/ThemedButton";
 import CustomSelectDropdown from "../CustomSelectDropdown";
 import { Colors } from "@/src/constants/Colors";
-import useThemeContext from "@/src/contexts/Theme/useThemeContext";
+import useSettingsContext from "@/src/contexts/Settings/useSettingsContext";
 import useModal from "@/src/hooks/useModal";
 import { Theme } from "@/src/types/Contexts";
 import { Exercise } from "@/src/types/Routines";
 import { cloneDeep } from "lodash";
 import { Strings } from "@/src/constants/Strings";
-import { Gesture, GestureDetector, GestureHandlerRootView } from "react-native-gesture-handler";
+import {
+  Gesture,
+  GestureDetector,
+  GestureHandlerRootView,
+} from "react-native-gesture-handler";
 import { useAppDispatch, useAppSelector } from "@/src/hooks/reactReduxHook";
 import { toggleExerciseState } from "@/src/store/DoneExercise/DoneExerciseSlice";
 
 export const ExerciseItemTitle = () => {
-  const { theme } = useThemeContext();
+  const { theme } = useSettingsContext();
   const styles = exerciseItemStyles(theme, true);
 
   return (
@@ -29,20 +33,23 @@ export const ExerciseItemTitle = () => {
 };
 
 export const ExerciseItem = ({ exercise }: { exercise: Exercise }) => {
-  const { theme } = useThemeContext();
+  const { theme } = useSettingsContext();
 
   const dispatch = useAppDispatch();
   const doneExercises = useAppSelector(({ doneExercise }) => doneExercise);
 
   const { name, sets, weightsAndRepetitions, current } = exercise;
 
-  const isExerciseDone = doneExercises.findIndex((item) => item === name) !== -1;
+  const isExerciseDone =
+    doneExercises.findIndex((item) => item === name) !== -1;
 
   const [selectedDropdownItem, setSelectedDropdownItem] = useState(current);
   const handleDropdownItem = (i: number) => setSelectedDropdownItem(i);
 
   const repetitions = weightsAndRepetitions.map(({ qty }) => qty || "N/A");
-  const reversedWeightAndRepetitions = cloneDeep(weightsAndRepetitions).reverse();
+  const reversedWeightAndRepetitions = cloneDeep(
+    weightsAndRepetitions
+  ).reverse();
   const reversedIndex = weightsAndRepetitions.length - current;
   const firstPart = reversedWeightAndRepetitions
     .slice(reversedIndex)
@@ -76,7 +83,11 @@ export const ExerciseItem = ({ exercise }: { exercise: Exercise }) => {
       />
     ) : (
       <View style={styles.uniqueButtonStyle}>
-        <Text adjustsFontSizeToFit={true} numberOfLines={1} style={styles.uniqueButtonTxtStyle}>
+        <Text
+          adjustsFontSizeToFit={true}
+          numberOfLines={1}
+          style={styles.uniqueButtonTxtStyle}
+        >
           {data[0]}
         </Text>
       </View>
@@ -122,12 +133,17 @@ export const ExerciseItem = ({ exercise }: { exercise: Exercise }) => {
         <GestureDetector gesture={handleDoubleTap}>
           <View style={styles.container}>
             <Animated.View
-              style={[styles.isFinishedOpacity, { opacity: opacityAnim, zIndex: zIndexAnim }]}
+              style={[
+                styles.isFinishedOpacity,
+                { opacity: opacityAnim, zIndex: zIndexAnim },
+              ]}
             />
             <Text style={styles.inputContainer}>{name}</Text>
             <Text style={[styles.inputContainer, styles.sets]}>{sets}</Text>
             <View style={styles.inputContainer}>
-              {!currentWeight && <Text style={styles.prevText}>Add today's weight!</Text>}
+              {!currentWeight && (
+                <Text style={styles.prevText}>Add today's weight!</Text>
+              )}
               {hasMultipleRepetitions && (
                 <>
                   {prevWeight?.weight?.value && (
@@ -141,7 +157,11 @@ export const ExerciseItem = ({ exercise }: { exercise: Exercise }) => {
               <View style={styles.weightAndRepetitionsView}>
                 {repetitionsSelect(repetitions)}
                 {!exerciseWithoutWeight && (
-                  <Text style={styles.weightText} numberOfLines={2} adjustsFontSizeToFit>
+                  <Text
+                    style={styles.weightText}
+                    numberOfLines={2}
+                    adjustsFontSizeToFit
+                  >
                     {weight}
                   </Text>
                 )}
@@ -157,7 +177,10 @@ export const ExerciseItem = ({ exercise }: { exercise: Exercise }) => {
               </View>
 
               <View style={styles.themedButtonContainer}>
-                <ThemedButton externalButtonStyles={styles.editButtonView} onPress={openModal}>
+                <ThemedButton
+                  externalButtonStyles={styles.editButtonView}
+                  onPress={openModal}
+                >
                   <Ionicons color={Colors[theme].background} name="pencil" />
                 </ThemedButton>
               </View>

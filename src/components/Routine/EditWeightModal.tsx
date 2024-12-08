@@ -2,7 +2,7 @@ import { StyleSheet, Text, TextInput, View } from "react-native";
 import CheckboxContainer from "./CheckboxContainer";
 import ThemedModal from "../ThemedModal";
 import { Colors } from "@/src/constants/Colors";
-import useThemeContext from "@/src/contexts/Theme/useThemeContext";
+import useSettingsContext from "@/src/contexts/Settings/useSettingsContext";
 import useEditWeightModal from "@/src/hooks/useEditWeightModal";
 import { EditExerciseModalProps } from "@/src/types/Components";
 import { Theme } from "@/src/types/Contexts";
@@ -38,7 +38,7 @@ const EditWeightModal = ({
     exerciseName,
   });
 
-  const { theme } = useThemeContext();
+  const { theme } = useSettingsContext();
   const styles = editExerciseModalStyles(theme, !!customValue, !!hasCL);
 
   return (
@@ -141,7 +141,6 @@ const editExerciseModalStyles = (
     },
     eachSideContainer: {
       justifyContent: "center",
-      paddingHorizontal: 8,
       borderRadius: 10,
       borderWidth: 1,
       borderColor: hasCL ? "transparent" : Colors.greyText,
@@ -150,6 +149,7 @@ const editExerciseModalStyles = (
     eachSideBtn: {
       justifyContent: "center",
       borderRadius: 10,
+      paddingHorizontal: 8,
       flex: 1,
     },
     eachSideText: {

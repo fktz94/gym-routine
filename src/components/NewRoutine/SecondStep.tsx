@@ -2,11 +2,11 @@ import { ScrollView, StyleSheet, Text, View } from "react-native";
 import ExerciseListDay from "../ExerciseList/ExerciseListDay";
 import { Colors } from "@/src/constants/Colors";
 import useNewRoutineContext from "@/src/contexts/NewRoutine/useNewRoutineContext";
-import useThemeContext from "@/src/contexts/Theme/useThemeContext";
+import useSettingsContext from "@/src/contexts/Settings/useSettingsContext";
 import { Theme } from "@/src/types/Contexts";
 
 const SecondStep = () => {
-  const { theme } = useThemeContext();
+  const { theme } = useSettingsContext();
   const styles = secondStepStyles(theme);
 
   const {

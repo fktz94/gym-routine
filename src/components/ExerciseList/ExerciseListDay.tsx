@@ -4,7 +4,7 @@ import ExerciseListItem from "./ExerciseListItem";
 import ExerciseListTitle from "./ExerciseListTitle";
 import CreateOrEditExerciseModal from "../CreateOrEditExerciseModal/CreateOrEditExerciseModal";
 import { Colors } from "@/src/constants/Colors";
-import useThemeContext from "@/src/contexts/Theme/useThemeContext";
+import useSettingsContext from "@/src/contexts/Settings/useSettingsContext";
 import useModal from "@/src/hooks/useModal";
 import { ExerciseListDayProps } from "@/src/types/Components";
 import { Theme } from "@/src/types/Contexts";
@@ -20,7 +20,7 @@ const ExerciseListDay = ({
   handleAddExercise,
   isWarmUp = false,
 }: ExerciseListDayProps) => {
-  const { theme } = useThemeContext();
+  const { theme } = useSettingsContext();
   const styles = exerciseListDayStyles(theme);
 
   const { closeModal, isModalOpen: isCreating, openModal } = useModal();

@@ -1,15 +1,19 @@
 import { StyleSheet, Text, View } from "react-native";
 import ThemedModal from "../ThemedModal";
 import { Colors } from "@/src/constants/Colors";
-import useThemeContext from "@/src/contexts/Theme/useThemeContext";
+import useSettingsContext from "@/src/contexts/Settings/useSettingsContext";
 import useConfirmNewRoutine from "@/src/hooks/useConfirmNewRoutine";
 import { ConfirmCreateNewExerciseModalProps } from "@/src/types/Components";
 import { Theme } from "@/src/types/Contexts";
 
-const ConfirmCreateNewRoutineModal = ({ closeModal }: ConfirmCreateNewExerciseModalProps) => {
-  const { theme } = useThemeContext();
+const ConfirmCreateNewRoutineModal = ({
+  closeModal,
+}: ConfirmCreateNewExerciseModalProps) => {
+  const { theme } = useSettingsContext();
   const styles = confirmCreateNewRoutineModalStyle(theme);
-  const { handleCreateRoutine, isCreatingRoutine } = useConfirmNewRoutine({ closeModal });
+  const { handleCreateRoutine, isCreatingRoutine } = useConfirmNewRoutine({
+    closeModal,
+  });
 
   return (
     <ThemedModal
@@ -20,7 +24,9 @@ const ConfirmCreateNewRoutineModal = ({ closeModal }: ConfirmCreateNewExerciseMo
       <View style={styles.innerContainer}>
         <Text style={styles.baseText}>Great! You're almost done!</Text>
         <Text style={styles.baseText}>Confirm?</Text>
-        <Text style={[styles.baseText, { fontSize: 14 }]}>(You can modify it later anyway)</Text>
+        <Text style={[styles.baseText, { fontSize: 14 }]}>
+          (You can modify it later anyway)
+        </Text>
       </View>
     </ThemedModal>
   );

@@ -6,7 +6,7 @@ import ThemedButton from "../Buttons/ThemedButton";
 import useMainContainerNewRoutine from "@/src/hooks/useMainContainerNewRoutine";
 import { Theme } from "@/src/types/Contexts";
 import { Colors } from "@/src/constants/Colors";
-import useThemeContext from "@/src/contexts/Theme/useThemeContext";
+import useSettingsContext from "@/src/contexts/Settings/useSettingsContext";
 
 const MainContainer = () => {
   const {
@@ -20,7 +20,7 @@ const MainContainer = () => {
     isLastStep,
   } = useMainContainerNewRoutine();
 
-  const { theme } = useThemeContext();
+  const { theme } = useSettingsContext();
   const styles = mainStyles(theme);
 
   const renderStep = () => {

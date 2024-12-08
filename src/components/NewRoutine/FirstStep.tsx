@@ -5,11 +5,11 @@ import CustomSelectDropdown from "../CustomSelectDropdown";
 import { Colors } from "@/src/constants/Colors";
 import useHeaderContext from "@/src/contexts/Header/useHeaderContext";
 import useNewRoutineContext from "@/src/contexts/NewRoutine/useNewRoutineContext";
-import useThemeContext from "@/src/contexts/Theme/useThemeContext";
+import useSettingsContext from "@/src/contexts/Settings/useSettingsContext";
 import { Theme } from "@/src/types/Contexts";
 
 const FirstStep = () => {
-  const { theme } = useThemeContext();
+  const { theme } = useSettingsContext();
   const styles = firstStepStyles(theme);
 
   const { showQuitModal } = useHeaderContext();

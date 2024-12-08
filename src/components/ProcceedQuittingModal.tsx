@@ -3,11 +3,11 @@ import { router } from "expo-router";
 import ThemedModal from "./ThemedModal";
 import { Colors } from "@/src/constants/Colors";
 import useHeaderContext from "@/src/contexts/Header/useHeaderContext";
-import useThemeContext from "@/src/contexts/Theme/useThemeContext";
+import useSettingsContext from "@/src/contexts/Settings/useSettingsContext";
 import { Theme } from "@/src/types/Contexts";
 
 const ProcceedQuittingModal = () => {
-  const { theme } = useThemeContext();
+  const { theme } = useSettingsContext();
   const styles = quitCreatingModalStyles(theme);
 
   const { toggleShowQuitModal } = useHeaderContext();

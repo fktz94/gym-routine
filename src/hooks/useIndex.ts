@@ -1,15 +1,16 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "./reactReduxHook";
 import { ResponseStatus } from "../types/Store";
 import { useIsFocused } from "@react-navigation/native";
 import { getAllRoutines } from "../store/Routines/RoutinesAsyncThunk";
 import { setIsInitialLoadToFalse } from "../store/Routines/RoutinesSlice";
+import { getLanguage } from "../utils/AsyncStorage/Language";
+import { router } from "expo-router";
 
 const useIndex = () => {
   const dispatch = useAppDispatch();
-  const { getAllRoutinesStatus, isGettingAllRoutines, isInitialLoad } = useAppSelector(
-    ({ routines }) => routines
-  );
+  const { getAllRoutinesStatus, isGettingAllRoutines, isInitialLoad } =
+    useAppSelector(({ routines }) => routines);
 
   const dataIsNotFetchedYet = getAllRoutinesStatus === ResponseStatus.IDLE;
 
@@ -28,7 +29,8 @@ const useIndex = () => {
     }
   }, [isInitialLoad, isGettingAllRoutines, dataIsNotFetchedYet]);
 
-  const renderLoader = dataIsNotFetchedYet || (isInitialLoad && isGettingAllRoutines) || isLoading;
+  const renderLoader =
+    dataIsNotFetchedYet || (isInitialLoad && isGettingAllRoutines) || isLoading;
 
   return { renderLoader };
 };

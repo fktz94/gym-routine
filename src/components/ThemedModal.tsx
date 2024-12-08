@@ -4,7 +4,7 @@ import CustomLoader from "./CustomLoader";
 import { CancelButton } from "./Buttons/CancelButton";
 import { AcceptButton } from "./Buttons/AcceptButton";
 import { Colors } from "../constants/Colors";
-import useThemeContext from "../contexts/Theme/useThemeContext";
+import useSettingsContext from "../contexts/Settings/useSettingsContext";
 import { ThemedModalProps } from "../types/Components";
 import { Theme } from "../types/Contexts";
 import { useState } from "react";
@@ -18,7 +18,7 @@ const ThemedModal = ({
   isAcceptBtnDisabled,
   buttonsAreIcons = false,
 }: ThemedModalProps) => {
-  const { theme } = useThemeContext();
+  const { theme } = useSettingsContext();
   const [layoutHeight, setLayoutHeight] = useState(0);
   const [scrollViewHeight, setScrollViewHeight] = useState(0);
 

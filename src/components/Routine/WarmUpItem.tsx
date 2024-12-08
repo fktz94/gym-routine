@@ -1,19 +1,21 @@
 import { Colors } from "@/src/constants/Colors";
-import useThemeContext from "@/src/contexts/Theme/useThemeContext";
+import useSettingsContext from "@/src/contexts/Settings/useSettingsContext";
 import { Theme } from "@/src/types/Contexts";
 import { Exercise } from "@/src/types/Routines";
 import { StyleSheet, Text, View } from "react-native";
 
 const WarmUpItem = ({ exercise }: { exercise: Exercise }) => {
   const { name, sets, weightsAndRepetitions } = exercise;
-  const { theme } = useThemeContext();
+  const { theme } = useSettingsContext();
   const styles = warmUpItemStyles(theme);
 
   return (
     <View style={styles.container}>
       <Text style={styles.inputContainer}>{name}</Text>
       <Text style={[styles.inputContainer, styles.sets]}>{sets}</Text>
-      <Text style={[styles.inputContainer, styles.sets]}>{weightsAndRepetitions[0].qty}</Text>
+      <Text style={[styles.inputContainer, styles.sets]}>
+        {weightsAndRepetitions[0].qty}
+      </Text>
     </View>
   );
 };

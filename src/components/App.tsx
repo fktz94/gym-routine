@@ -1,28 +1,34 @@
 import { StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Stack } from "expo-router";
+import { Stack, usePathname } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { Theme } from "../types/Contexts";
 import Header from "@/src/components/Header";
 import { Colors } from "@/src/constants/Colors";
-import useThemeContext from "@/src/contexts/Theme/useThemeContext";
+import useSettingsContext from "@/src/contexts/Settings/useSettingsContext";
+import { Path } from "../types/Utils";
 
 export default function App() {
-  const { theme } = useThemeContext();
+  const { theme } = useSettingsContext();
   const styles = appStyles(theme);
+  const path = usePathname();
 
   const statusBarStyle = theme === "light" ? "dark" : "light";
+
+  const showHeader = path !== Path.SELECTLANGUAGE;
 
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style={statusBarStyle} />
-      <Header />
+      {showHeader && <Header />}
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="index" />
+        <Stack.Screen name="select-language" />
         <Stack.Screen name="new-routine" />
         <Stack.Screen name="routine/[id]" />
         <Stack.Screen name="edit-routine/[id]" />
         <Stack.Screen name="congratulations" />
+        <Stack.Screen name="settings" />
       </Stack>
     </SafeAreaView>
   );

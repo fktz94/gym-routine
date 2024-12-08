@@ -1,10 +1,10 @@
 import { StyleSheet, Text, View, ViewStyle } from "react-native";
 import { Colors } from "@/src/constants/Colors";
-import useThemeContext from "@/src/contexts/Theme/useThemeContext";
+import useSettingsContext from "@/src/contexts/Settings/useSettingsContext";
 import { Theme } from "@/src/types/Contexts";
 
 const WarmUpTitle = (props: { containerStyle?: ViewStyle }) => {
-  const { theme } = useThemeContext();
+  const { theme } = useSettingsContext();
   const styles = exerciseListTitleStyles(theme);
   return (
     <View style={[styles.warmUpTitleItem, props?.containerStyle]}>

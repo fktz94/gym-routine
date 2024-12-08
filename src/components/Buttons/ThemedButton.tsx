@@ -1,7 +1,7 @@
 import { forwardRef } from "react";
 import { Text, StyleSheet } from "react-native";
 import { Colors } from "@/src/constants/Colors";
-import useThemeContext from "@/src/contexts/Theme/useThemeContext";
+import useSettingsContext from "@/src/contexts/Settings/useSettingsContext";
 import { ThemedButtonProps } from "@/src/types/Components";
 import { Theme } from "@/src/types/Contexts";
 import { BaseButton } from "react-native-gesture-handler";
@@ -18,7 +18,7 @@ const ThemedButton = forwardRef(
     }: ThemedButtonProps,
     _
   ) => {
-    const { theme } = useThemeContext();
+    const { theme } = useSettingsContext();
     const styles = themedButtonStyles(isSecondary, theme, disabled);
 
     return (

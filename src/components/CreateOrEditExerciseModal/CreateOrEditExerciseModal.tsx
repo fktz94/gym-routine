@@ -1,5 +1,5 @@
 import { StyleSheet, TextInput, View } from "react-native";
-import useThemeContext from "@/src/contexts/Theme/useThemeContext";
+import useSettingsContext from "@/src/contexts/Settings/useSettingsContext";
 import { Colors } from "@/src/constants/Colors";
 import { CreateExerciseModalProps } from "@/src/types/Components";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
@@ -35,7 +35,7 @@ const CreateOrEditExerciseModal = ({
     variations,
   } = useCreateOrEditExercise({ exerciseToEdit });
 
-  const { theme } = useThemeContext();
+  const { theme } = useSettingsContext();
   const styles = createOrEditExerciseModalStyles(
     theme,
     hasWeeksVariations,

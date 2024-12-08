@@ -5,11 +5,13 @@ import { SplashScreen } from "expo-router";
 import { useFonts } from "expo-font";
 import App from "@/src/components/App";
 import HeaderProvider from "@/src/contexts/Header/HeaderProvider";
-import ThemeProvider from "@/src/contexts/Theme/ThemeProvider";
+import SettingsProvider from "@/src/contexts/Settings/SettingsProvider";
 import { getTheme } from "@/src/utils/AsyncStorage/Theme";
 import { store } from "@/src/store/store";
 import { Theme } from "@/src/types/Contexts";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { getLanguage } from "../utils/AsyncStorage/Language";
+import { useTranslation } from "react-i18next";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -18,6 +20,8 @@ export default function RootLayout() {
     SpaceMono: require("@/assets/fonts/SpaceMono-Regular.ttf"),
   });
 
+  const { i18n } = useTranslation();
+
   const [initialTheme, setInitialTheme] = useState<Theme>("dark");
   const colorScheme = useColorScheme();
   const setStoredTheme = async () => {
@@ -25,8 +29,22 @@ export default function RootLayout() {
     setInitialTheme(storedTheme ?? colorScheme ?? "dark");
   };
 
+  const [initialLanguage, setInitialLanguage] = useState<string | undefined>(
+    undefined
+  );
+  const setStoredLanguage = async () => {
+    const language = await getLanguage();
+    if (!language) return;
+    setInitialLanguage(language);
+    i18n.changeLanguage(language);
+  };
+
   useEffect(() => {
+    (async () => void setStoredLanguage())();
     (async () => void setStoredTheme())();
+  }, []);
+
+  useEffect(() => {
     if (loaded) {
       SplashScreen.hideAsync();
     }
@@ -36,13 +54,16 @@ export default function RootLayout() {
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <ThemeProvider storedTheme={initialTheme}>
+      <SettingsProvider
+        storedTheme={initialTheme}
+        storedLanguage={initialLanguage}
+      >
         <Provider store={store}>
           <HeaderProvider>
             <App />
           </HeaderProvider>
         </Provider>
-      </ThemeProvider>
+      </SettingsProvider>
     </GestureHandlerRootView>
   );
 }

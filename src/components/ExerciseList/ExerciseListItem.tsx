@@ -2,7 +2,7 @@ import { StyleSheet, Text } from "react-native";
 import CreateOrEditExerciseModal from "../CreateOrEditExerciseModal/CreateOrEditExerciseModal";
 import DeleteAnimation from "../DeleteAnimatedButton/DeleteAnimation";
 import { Colors } from "@/src/constants/Colors";
-import useThemeContext from "@/src/contexts/Theme/useThemeContext";
+import useSettingsContext from "@/src/contexts/Settings/useSettingsContext";
 import useDeleteAnimation from "@/src/hooks/useDeleteAnimation";
 import useModal from "@/src/hooks/useModal";
 import { ExerciseListItemProps } from "@/src/types/Components";
@@ -18,7 +18,7 @@ const ExerciseListItem = ({
   isLastElement,
   style,
 }: ExerciseListItemProps) => {
-  const { theme } = useThemeContext();
+  const { theme } = useSettingsContext();
   const styles = exerciseListItemStyles(theme);
 
   const { name, sets, weightsAndRepetitions } = exerciseData;

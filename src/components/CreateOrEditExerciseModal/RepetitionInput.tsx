@@ -1,5 +1,5 @@
 import { Colors } from "@/src/constants/Colors";
-import useThemeContext from "@/src/contexts/Theme/useThemeContext";
+import useSettingsContext from "@/src/contexts/Settings/useSettingsContext";
 import { RepetitionInputProps } from "@/src/types/Components";
 import { Theme } from "@/src/types/Contexts";
 import { StyleSheet, Text, TextInput, View } from "react-native";
@@ -12,7 +12,7 @@ const RepetitionInput = ({
   handleRepetitionValues,
   hasWeeksVariations,
 }: RepetitionInputProps) => {
-  const { theme } = useThemeContext();
+  const { theme } = useSettingsContext();
   const value = el.qty?.toString();
 
   const styles = repetitionInputStyles(theme, hasWeeksVariations, value);

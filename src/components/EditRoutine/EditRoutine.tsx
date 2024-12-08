@@ -8,14 +8,14 @@ import ExerciseListDay from "../ExerciseList/ExerciseListDay";
 import { Colors } from "@/src/constants/Colors";
 import useEditRoutineContext from "@/src/contexts/EditRoutine/useEditRoutineContext";
 import useHeaderContext from "@/src/contexts/Header/useHeaderContext";
-import useThemeContext from "@/src/contexts/Theme/useThemeContext";
+import useSettingsContext from "@/src/contexts/Settings/useSettingsContext";
 import useEditRoutineChanges from "@/src/hooks/useEditRoutineChanges";
 import useModal from "@/src/hooks/useModal";
 import { Theme } from "@/src/types/Contexts";
 import CustomLoader from "../CustomLoader";
 
 const EditRoutine = () => {
-  const { theme } = useThemeContext();
+  const { theme } = useSettingsContext();
   const styles = editRoutineStyles(theme);
 
   const [isChangingName, setIsChangingName] = useState(false);

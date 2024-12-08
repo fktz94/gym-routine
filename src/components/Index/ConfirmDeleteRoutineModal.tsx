@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { Alert, StyleSheet, Text, View } from "react-native";
 import ThemedModal from "../ThemedModal";
 import { Colors } from "@/src/constants/Colors";
-import useThemeContext from "@/src/contexts/Theme/useThemeContext";
+import useSettingsContext from "@/src/contexts/Settings/useSettingsContext";
 import { useAppDispatch, useAppSelector } from "@/src/hooks/reactReduxHook";
 import { deleteRoutine } from "@/src/store/Routines/RoutinesAsyncThunk";
 import { resetDeleteRoutineState } from "@/src/store/Routines/RoutinesSlice";
@@ -10,12 +10,15 @@ import { ConfirmDeleteRoutineModalProps } from "@/src/types/Components";
 import { Theme } from "@/src/types/Contexts";
 import { ResponseStatus } from "@/src/types/Store";
 
-const ConfirmDeleteRoutineModal = ({ closeModal, id, name }: ConfirmDeleteRoutineModalProps) => {
-  const { theme } = useThemeContext();
+const ConfirmDeleteRoutineModal = ({
+  closeModal,
+  id,
+  name,
+}: ConfirmDeleteRoutineModalProps) => {
+  const { theme } = useSettingsContext();
   const styles = confirmDeletingModalStyles(theme);
-  const { isDeletingRoutine, deleteRoutineErrorMessage, deleteRoutineStatus } = useAppSelector(
-    ({ routines }) => routines
-  );
+  const { isDeletingRoutine, deleteRoutineErrorMessage, deleteRoutineStatus } =
+    useAppSelector(({ routines }) => routines);
   const dispatch = useAppDispatch();
 
   const handleDeleteRoutine = () => {
@@ -48,7 +51,9 @@ const ConfirmDeleteRoutineModal = ({ closeModal, id, name }: ConfirmDeleteRoutin
           Are you sure you want to delete this routine: {"\n"}
           <Text style={styles.routineName}>{name}</Text>?
         </Text>
-        <Text style={[styles.baseText, { fontSize: 14 }]}>(This change cannot be undone)</Text>
+        <Text style={[styles.baseText, { fontSize: 14 }]}>
+          (This change cannot be undone)
+        </Text>
       </View>
     </ThemedModal>
   );

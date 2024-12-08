@@ -5,7 +5,7 @@ import CurrentThemedButton from "../Buttons/CurrentThemedButton";
 import DeleteAnimation from "../DeleteAnimatedButton/DeleteAnimation";
 import ThemedButton from "../Buttons/ThemedButton";
 import { Colors } from "@/src/constants/Colors";
-import useThemeContext from "@/src/contexts/Theme/useThemeContext";
+import useSettingsContext from "@/src/contexts/Settings/useSettingsContext";
 import useDeleteAnimation from "@/src/hooks/useDeleteAnimation";
 import useModal from "@/src/hooks/useModal";
 import { RoutinesListItemProps } from "@/src/types/Components";
@@ -17,7 +17,7 @@ export default function RoutineListItem({
   id,
   isCurrent = false,
 }: RoutinesListItemProps) {
-  const { theme } = useThemeContext();
+  const { theme } = useSettingsContext();
   const styles = routinesListStyles(theme, isCurrent);
 
   const { isLeftSide, position, animateBackToTheBeginning } =

@@ -9,7 +9,7 @@ import ThemedButton from "@/src/components/Buttons/ThemedButton";
 import { Colors } from "@/src/constants/Colors";
 import useHeaderContext from "@/src/contexts/Header/useHeaderContext";
 import RoutineProvider from "@/src/contexts/Routine/RoutineProvider";
-import useThemeContext from "@/src/contexts/Theme/useThemeContext";
+import useSettingsContext from "@/src/contexts/Settings/useSettingsContext";
 import { useAppDispatch, useAppSelector } from "@/src/hooks/reactReduxHook";
 import useRoutineDescription from "@/src/hooks/useRoutineDescription";
 import { concludeRoutineDay } from "@/src/store/Routines/RoutinesAsyncThunk";
@@ -25,7 +25,7 @@ import WarmUpTitle from "@/src/components/Routine/WarmUpTitle";
 
 export default function RoutineScreen() {
   const { toggleShowBackArrowButton } = useHeaderContext();
-  const { theme } = useThemeContext();
+  const { theme } = useSettingsContext();
   const styles = routineDescriptionStyles(theme);
 
   const { id } = useLocalSearchParams<{ id: string }>();

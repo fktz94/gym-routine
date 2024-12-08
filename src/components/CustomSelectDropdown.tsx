@@ -2,7 +2,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { StyleSheet, Text, View } from "react-native";
 import SelectDropdown from "react-native-select-dropdown";
 import { CustomSelectDropdownProps } from "../types/Components";
-import useThemeContext from "../contexts/Theme/useThemeContext";
+import useSettingsContext from "../contexts/Settings/useSettingsContext";
 import { Colors } from "../constants/Colors";
 import { Theme } from "../types/Contexts";
 
@@ -19,7 +19,7 @@ const CustomSelectDropdown = ({
   itemTextStyle,
   menuStyle,
 }: CustomSelectDropdownProps) => {
-  const { theme } = useThemeContext();
+  const { theme } = useSettingsContext();
   const styles = customSelectDropdownStyles(theme);
 
   return (
@@ -44,7 +44,8 @@ const CustomSelectDropdown = ({
             ...styles.dropdownItemStyle,
             ...(itemStyle && itemStyle),
             ...(isSelected && {
-              backgroundColor: theme === "light" ? Colors[theme].primary : Colors[theme].text,
+              backgroundColor:
+                theme === "light" ? Colors[theme].primary : Colors[theme].text,
             }),
           }}
         >
@@ -53,7 +54,10 @@ const CustomSelectDropdown = ({
               ...styles.dropdownItemTxtStyle,
               ...(itemTextStyle && itemTextStyle),
               ...(isSelected && {
-                color: theme === "light" ? Colors[theme].background : Colors[theme].primary,
+                color:
+                  theme === "light"
+                    ? Colors[theme].background
+                    : Colors[theme].primary,
               }),
               ...(isExerciseItem && current === index && { color: "red" }),
             }}
@@ -63,7 +67,10 @@ const CustomSelectDropdown = ({
         </View>
       )}
       showsVerticalScrollIndicator={false}
-      dropdownStyle={{ ...styles.dropdownMenuStyle, ...(menuStyle && menuStyle) }}
+      dropdownStyle={{
+        ...styles.dropdownMenuStyle,
+        ...(menuStyle && menuStyle),
+      }}
     />
   );
 };

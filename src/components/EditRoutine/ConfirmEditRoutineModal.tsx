@@ -1,6 +1,6 @@
 import { Alert, StyleSheet, Text, View } from "react-native";
 import { useEffect } from "react";
-import useThemeContext from "@/src/contexts/Theme/useThemeContext";
+import useSettingsContext from "@/src/contexts/Settings/useSettingsContext";
 import { ConfirmCreateNewExerciseModalProps } from "@/src/types/Components";
 import { Colors } from "@/src/constants/Colors";
 import { useAppDispatch, useAppSelector } from "@/src/hooks/reactReduxHook";
@@ -12,20 +12,27 @@ import useEditRoutineContext from "@/src/contexts/EditRoutine/useEditRoutineCont
 import ThemedModal from "../ThemedModal";
 import { Theme } from "@/src/types/Contexts";
 
-const ConfirmEditRoutineModal = ({ closeModal }: ConfirmCreateNewExerciseModalProps) => {
-  const { theme } = useThemeContext();
+const ConfirmEditRoutineModal = ({
+  closeModal,
+}: ConfirmCreateNewExerciseModalProps) => {
+  const { theme } = useSettingsContext();
   const styles = quitCreatingModalStyles(theme);
   const dispatch = useAppDispatch();
-  const { isEditingRoutine, editRoutineErrorMessage, editRoutineStatus } = useAppSelector(
-    ({ routines }) => routines
-  );
+  const { isEditingRoutine, editRoutineErrorMessage, editRoutineStatus } =
+    useAppSelector(({ routines }) => routines);
   const { selectedRoutine, toCurrent } = useEditRoutineContext();
 
   const handleCreateRoutine = () => {
-    dispatch(editRoutine({ routineData: selectedRoutine, setToCurrentRoutine: toCurrent }));
+    dispatch(
+      editRoutine({
+        routineData: selectedRoutine,
+        setToCurrentRoutine: toCurrent,
+      })
+    );
   };
 
-  const isLoading = editRoutineStatus !== ResponseStatus.IDLE && isEditingRoutine;
+  const isLoading =
+    editRoutineStatus !== ResponseStatus.IDLE && isEditingRoutine;
 
   const finishEdit = () => {
     dispatch(resetEditRoutineState());

@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from "react-native";
 import ConfettiCannon from "react-native-confetti-cannon";
 import ThemedButton from "../components/Buttons/ThemedButton";
-import useThemeContext from "../contexts/Theme/useThemeContext";
+import useSettingsContext from "../contexts/Settings/useSettingsContext";
 import { router } from "expo-router";
 import { Colors } from "../constants/Colors";
 import { Theme } from "../types/Contexts";
@@ -9,7 +9,7 @@ import useHeaderContext from "../contexts/Header/useHeaderContext";
 
 const Congratulations = () => {
   const { toggleShowBackArrowButton } = useHeaderContext();
-  const { theme } = useThemeContext();
+  const { theme } = useSettingsContext();
   const styles = congratulationsStyles(theme);
 
   const goHome = () => {

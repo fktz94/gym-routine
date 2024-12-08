@@ -5,11 +5,13 @@ import {
   ModifyExerciseAsyncThunkProps,
 } from "./Store";
 
-export interface ModifyOneExerciseUtilsProps extends ModifyExerciseAsyncThunkProps {
+export interface ModifyOneExerciseUtilsProps
+  extends ModifyExerciseAsyncThunkProps {
   routines: Routine;
 }
 
-export interface AddNewRoutineUtilsProps extends CreateNewRoutineAsyncThunkProps {
+export interface AddNewRoutineUtilsProps
+  extends CreateNewRoutineAsyncThunkProps {
   prevRoutinesData: RoutinesData;
 }
 
@@ -31,4 +33,6 @@ export interface ConcludeDayRoutineUtilsProps {
 export enum Path {
   NEWROUTINE = "/new-routine",
   EDITROUTINE = "/edit-routine",
+  SELECTLANGUAGE = "/select-language",
+  SETTINGS = "/settings",
 }

@@ -1,22 +1,24 @@
 import { StyleSheet, Text, View } from "react-native";
-import { Link } from "expo-router";
+import { Link, Redirect } from "expo-router";
 import CustomLoader from "@/src/components/CustomLoader";
 import CurrentRoutineButton from "@/src/components/Index/CurrentRoutineButton";
 import RoutinesList from "@/src/components/Index/RoutinesList";
 import ThemedButton from "@/src/components/Buttons/ThemedButton";
 import { Colors } from "@/src/constants/Colors";
-import useThemeContext from "@/src/contexts/Theme/useThemeContext";
+import useSettingsContext from "@/src/contexts/Settings/useSettingsContext";
 import useIndex from "@/src/hooks/useIndex";
 import useRoutines from "@/src/hooks/useRoutines";
 import { Theme } from "@/src/types/Contexts";
+import { Path } from "../types/Utils";
 
 export default function Index() {
-  const { theme } = useThemeContext();
+  const { theme, language } = useSettingsContext();
   const styles = indexStyles(theme);
 
   const { currentRoutine, pastRoutines, noRoutines } = useRoutines();
-
   const { renderLoader } = useIndex();
+
+  if (!language) return <Redirect href={Path.SELECTLANGUAGE} />;
 
   return (
     <View style={styles.mainContainer}>
@@ -27,6 +29,7 @@ export default function Index() {
           <Link href={`/new-routine`} asChild>
             <ThemedButton isSecondary>New routine</ThemedButton>
           </Link>
+
           {currentRoutine && (
             <View style={styles.listContainer}>
               <Text style={styles.title}>Current routine</Text>

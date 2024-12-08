@@ -91,9 +91,11 @@ export interface EditRoutineContextProps {
 
 export type Theme = "light" | "dark";
 
-export type ThemeValueType = {
+export type SettingsValueType = {
   theme: Theme;
   toggleTheme: () => void;
+  language: string | undefined;
+  changeLanguage: (val: string) => void;
 } | null;
 
 export type HeaderContextType = {
