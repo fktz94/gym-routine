@@ -8,6 +8,7 @@ import { EditExerciseModalProps } from "@/src/types/Components";
 import { Theme } from "@/src/types/Contexts";
 import { Strings } from "@/src/constants/Strings";
 import { BaseButton } from "react-native-gesture-handler";
+import { useTranslation } from "react-i18next";
 
 const EditWeightModal = ({
   closeModal,
@@ -40,6 +41,7 @@ const EditWeightModal = ({
 
   const { theme } = useSettingsContext();
   const styles = editExerciseModalStyles(theme, !!customValue, !!hasCL);
+  const { t } = useTranslation();
 
   return (
     <ThemedModal
@@ -57,7 +59,7 @@ const EditWeightModal = ({
                 { fontSize: 10, letterSpacing: 0.5 },
               ]}
             >
-              Current weight:{" "}
+              {t("currentWeight")}{" "}
             </Text>
             <Text style={[styles.previousWeightText, { fontWeight: "bold" }]}>
               {exerciseData.weight.value}
@@ -72,7 +74,9 @@ const EditWeightModal = ({
               keyboardType={customValue ? "default" : "decimal-pad"}
               onChangeText={handleNewValue}
               value={newWeightValue?.toString()}
-              placeholder={customValue ? 'Failure - 45"- RIR 2' : "12,5"}
+              placeholder={
+                customValue ? `${t("failure")} - 45"- RIR 2` : "12,5"
+              }
               placeholderTextColor={Colors.greyText}
             />
             {!customValue && (
@@ -89,7 +93,7 @@ const EditWeightModal = ({
           <CheckboxContainer
             isChecked={!!customValue}
             onPress={handleCustomCheckbox}
-            text="Customize value"
+            text={t("customizeValue")}
           />
         </>
       )}
@@ -97,14 +101,14 @@ const EditWeightModal = ({
         <CheckboxContainer
           isChecked={hasNoWeight ?? false}
           onPress={handleNoWeightCheckbox}
-          text="Exercise without weight"
+          text={t("withoutWeight")}
         />
       )}
       {!isCurrent && (
         <CheckboxContainer
           isChecked={settedToCurrent}
           onPress={handleCurrentCheckbox}
-          text="Set to current week"
+          text={t("currentWeek")}
         />
       )}
     </ThemedModal>

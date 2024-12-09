@@ -7,10 +7,12 @@ import useHeaderContext from "@/src/contexts/Header/useHeaderContext";
 import useNewRoutineContext from "@/src/contexts/NewRoutine/useNewRoutineContext";
 import useSettingsContext from "@/src/contexts/Settings/useSettingsContext";
 import { Theme } from "@/src/types/Contexts";
+import { useTranslation } from "react-i18next";
 
 const FirstStep = () => {
   const { theme } = useSettingsContext();
   const styles = firstStepStyles(theme);
+  const { t } = useTranslation();
 
   const { showQuitModal } = useHeaderContext();
 
@@ -33,8 +35,8 @@ const FirstStep = () => {
       {showQuitModal && <ProcceedQuittingModal />}
       <View style={styles.mainContainer}>
         <View style={styles.container}>
-          <Text style={styles.title}>First, give it a name.</Text>
-          <Text style={styles.subtitle}>(Normally, the month's name)</Text>
+          <Text style={styles.title}>{t("modifyLater")}</Text>
+          <Text style={styles.subtitle}>{t("usualName")}</Text>
           <TextInput
             value={name}
             onChangeText={handleName}
@@ -42,9 +44,7 @@ const FirstStep = () => {
           />
         </View>
         <View style={styles.container}>
-          <Text style={styles.title}>
-            Then, select how many days per week will the routine have.
-          </Text>
+          <Text style={styles.title}>{t("howManyDays")}</Text>
           <CustomSelectDropdown
             data={daysDropdownValues}
             defaultValue={defaultValue}
@@ -52,9 +52,7 @@ const FirstStep = () => {
           />
         </View>
         <View style={styles.checkboxContainer}>
-          <Text style={styles.checkboxText}>
-            Check if wanna write your everyday warm-up routine.
-          </Text>
+          <Text style={styles.checkboxText}>{t("wannaWarmUp")}</Text>
           <BouncyCheckbox
             size={26}
             fillColor={Colors.light.primary}

@@ -6,11 +6,13 @@ import { router } from "expo-router";
 import { Colors } from "../constants/Colors";
 import { Theme } from "../types/Contexts";
 import useHeaderContext from "../contexts/Header/useHeaderContext";
+import { useTranslation } from "react-i18next";
 
 const Congratulations = () => {
   const { toggleShowBackArrowButton } = useHeaderContext();
   const { theme } = useSettingsContext();
   const styles = congratulationsStyles(theme);
+  const { t } = useTranslation();
 
   const goHome = () => {
     router.navigate("/");
@@ -23,22 +25,18 @@ const Congratulations = () => {
         <ConfettiCannon count={200} origin={{ x: -10, y: 0 }} />
         <View style={styles.textContainer}>
           <Text style={[styles.customText, styles.title]}>
-            Congratulations!
+            {t("congratulations")}
           </Text>
-          <Text style={styles.customText}>
-            You've succeedeed on your daily objective!
-          </Text>
-          <Text style={styles.customText}>
-            Today's been a gained day, good job!
-          </Text>
-          <Text style={styles.customText}>Keep going!</Text>
+          <Text style={styles.customText}>{t("succeeded")}</Text>
+          <Text style={styles.customText}>{t("gainedDay")}</Text>
+          <Text style={styles.customText}> {t("keepGoing")}</Text>
         </View>
         <ThemedButton
           onPress={goHome}
           externalButtonStyles={styles.buttonContainer}
           externalTextStyles={styles.buttonText}
         >
-          Back home
+          {t("backHome")}
         </ThemedButton>
       </View>
     </>

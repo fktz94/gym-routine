@@ -2,6 +2,7 @@ import { StyleSheet, Text } from "react-native";
 import { Colors } from "@/src/constants/Colors";
 import { DeleteButtonProps } from "@/src/types/Components";
 import { BaseButton } from "react-native-gesture-handler";
+import { useTranslation } from "react-i18next";
 
 const DeleteButton = ({
   onDelete,
@@ -9,12 +10,14 @@ const DeleteButton = ({
   isCurrent,
 }: DeleteButtonProps) => {
   const styles = deleteButtonStyles(isCurrent);
+  const { t } = useTranslation();
+
   return (
     <BaseButton
       style={{ ...styles.exerciseBtn, ...(isRoutine && styles.routineBtn) }}
       onPress={onDelete}
     >
-      <Text style={styles.deleteButtonText}>Delete</Text>
+      <Text style={styles.deleteButtonText}>{t("delete").toUpperCase()}</Text>
     </BaseButton>
   );
 };

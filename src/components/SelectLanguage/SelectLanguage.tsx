@@ -5,17 +5,17 @@ import useSettingsContext from "@/src/contexts/Settings/useSettingsContext";
 import ThemedButton from "../Buttons/ThemedButton";
 import { Theme } from "@/src/types/Contexts";
 import { Colors } from "@/src/constants/Colors";
-import { storeLanguage } from "@/src/utils/AsyncStorage/Language";
 import { router } from "expo-router";
 import { Languages } from "@/src/constants/Strings";
-import { useTranslation } from "react-i18next";
 
 const LangButton = ({
   language,
+  text,
   selectedLanguage,
   onPress,
 }: {
   language: string;
+  text: string;
   selectedLanguage?: string;
   onPress: Dispatch<SetStateAction<string | undefined>>;
 }) => {
@@ -26,27 +26,25 @@ const LangButton = ({
   return (
     <View style={styles.languangeBtnContainer}>
       <BaseButton style={styles.languangeBtn} onPress={() => onPress(language)}>
-        <Text style={styles.languangeBtnText}>{language}</Text>
+        <Text style={styles.languangeBtnText}>{text}</Text>
       </BaseButton>
     </View>
   );
 };
 
 const SelectLanguage = () => {
-  const { theme } = useSettingsContext();
+  const { theme, changeLanguage } = useSettingsContext();
   const styles = selectLanguageStyles(theme);
-  const [selectedLanguage, setSelectedLanguage] = useState<string | undefined>(
+  const [initialLanguage, setInitialLanguage] = useState<string | undefined>(
     undefined
   );
 
-  const { i18n } = useTranslation();
-
   let continueBtnTxt;
-  switch (selectedLanguage) {
-    case "Español":
+  switch (initialLanguage) {
+    case "spanish":
       continueBtnTxt = "Continuar";
       break;
-    case "English":
+    case "english":
       continueBtnTxt = "Continue";
       break;
     default:
@@ -55,28 +53,27 @@ const SelectLanguage = () => {
   }
 
   const concludeSelectingLanguage = async () => {
-    if (!selectedLanguage) return;
-    await storeLanguage(selectedLanguage);
-    i18n.changeLanguage(selectedLanguage);
+    if (!initialLanguage) return;
+    changeLanguage(Languages[initialLanguage].code);
     router.push("/");
   };
+
+  const languageBtns = () =>
+    Object.keys(Languages).map((lang) => (
+      <LangButton
+        language={lang}
+        text={Languages[lang].name}
+        selectedLanguage={initialLanguage}
+        onPress={() => setInitialLanguage(lang)}
+        key={lang}
+      />
+    ));
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Language / Idioma</Text>
-      <View style={styles.buttonsContainer}>
-        <LangButton
-          language={Languages.english}
-          selectedLanguage={selectedLanguage}
-          onPress={setSelectedLanguage}
-        />
-        <LangButton
-          language={Languages.spanish}
-          selectedLanguage={selectedLanguage}
-          onPress={setSelectedLanguage}
-        />
-      </View>
-      {selectedLanguage && (
+      <View style={styles.buttonsContainer}>{languageBtns()}</View>
+      {initialLanguage && (
         <ThemedButton onPress={concludeSelectingLanguage}>
           {continueBtnTxt}
         </ThemedButton>

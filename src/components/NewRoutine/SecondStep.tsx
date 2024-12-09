@@ -4,10 +4,12 @@ import { Colors } from "@/src/constants/Colors";
 import useNewRoutineContext from "@/src/contexts/NewRoutine/useNewRoutineContext";
 import useSettingsContext from "@/src/contexts/Settings/useSettingsContext";
 import { Theme } from "@/src/types/Contexts";
+import { useTranslation } from "react-i18next";
 
 const SecondStep = () => {
   const { theme } = useSettingsContext();
   const styles = secondStepStyles(theme);
+  const { t } = useTranslation();
 
   const {
     newRoutineState: { data, warmUp },
@@ -35,9 +37,7 @@ const SecondStep = () => {
   return (
     <View style={styles.mainContainer}>
       <View style={styles.container}>
-        <Text style={styles.title}>
-          Now, let's start filling each day with its exercises.
-        </Text>
+        <Text style={styles.title}>{t("fillingDays")}</Text>
       </View>
       <ScrollView contentContainerStyle={styles.scrollViewContainer}>
         <>

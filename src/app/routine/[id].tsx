@@ -22,11 +22,13 @@ import { ResponseStatus } from "@/src/types/Store";
 import AnimatedDayCard from "@/src/components/ExerciseList/AnimatedDayCard";
 import WarmUpItem from "@/src/components/Routine/WarmUpItem";
 import WarmUpTitle from "@/src/components/Routine/WarmUpTitle";
+import { useTranslation } from "react-i18next";
 
 export default function RoutineScreen() {
   const { toggleShowBackArrowButton } = useHeaderContext();
   const { theme } = useSettingsContext();
   const styles = routineDescriptionStyles(theme);
+  const { t } = useTranslation();
 
   const { id } = useLocalSearchParams<{ id: string }>();
   const {
@@ -57,7 +59,7 @@ export default function RoutineScreen() {
         key={i}
         onPress={() => handleSelectedDay(i)}
       >
-        Day {i + 1}
+        {t("day")} {i + 1}
       </ThemedButton>
     ));
 
@@ -66,7 +68,7 @@ export default function RoutineScreen() {
 
   const emptyDayText = () => (
     <View style={styles.emptyDayContainer}>
-      <Text style={styles.emptyDayText}>This day is empty!</Text>
+      <Text style={styles.emptyDayText}>{t("emptyDay")}</Text>
       <Link
         href={{ pathname: `/edit-routine/[id]`, params: { id, selectedDay } }}
         asChild
@@ -75,7 +77,7 @@ export default function RoutineScreen() {
           externalButtonStyles={styles.emptyDayBtnContainer}
           externalTextStyles={styles.emptyDayBtnText}
         >
-          Fill it
+          {t("fillIt")}
         </ThemedButton>
       </Link>
     </View>
@@ -129,7 +131,7 @@ export default function RoutineScreen() {
             {hasWarmUp && (
               <>
                 <AnimatedDayCard
-                  title="WARM UP"
+                  title={t("warmUp").toUpperCase()}
                   containerStyle={{ width: "94%", paddingBottom: 20 }}
                 >
                   <WarmUpTitle />
@@ -138,7 +140,9 @@ export default function RoutineScreen() {
                   ))}
                 </AnimatedDayCard>
                 <View style={styles.routineTitle}>
-                  <Text style={styles.routineTitleText}>ROUTINE</Text>
+                  <Text style={styles.routineTitleText}>
+                    {t("routine").toUpperCase()}
+                  </Text>
                 </View>
               </>
             )}
@@ -152,13 +156,13 @@ export default function RoutineScreen() {
                 asChild
               >
                 <ThemedButton externalTextStyles={styles.modifyRoutineBtnText}>
-                  Modify routine
+                  {t("modifyRoutine")}
                 </ThemedButton>
               </Link>
               <AcceptButton
                 textStyle={styles.modifyRoutineBtnText}
                 onAccept={handleRoutineDone}
-                text="Routine done!"
+                text={`${t("routineDone")}!`}
               />
             </View>
           </ScrollView>

@@ -7,6 +7,7 @@ import useMainContainerNewRoutine from "@/src/hooks/useMainContainerNewRoutine";
 import { Theme } from "@/src/types/Contexts";
 import { Colors } from "@/src/constants/Colors";
 import useSettingsContext from "@/src/contexts/Settings/useSettingsContext";
+import { useTranslation } from "react-i18next";
 
 const MainContainer = () => {
   const {
@@ -22,6 +23,7 @@ const MainContainer = () => {
 
   const { theme } = useSettingsContext();
   const styles = mainStyles(theme);
+  const { t } = useTranslation();
 
   const renderStep = () => {
     switch (step) {
@@ -41,10 +43,12 @@ const MainContainer = () => {
         <View style={styles.inputsContainer}>{renderStep()}</View>
         <View style={styles.directionButtonsContainer}>
           <ThemedButton disabled={isFirstStep} onPress={backBtnFn}>
-            BACK
+            {t("back").toUpperCase()}
           </ThemedButton>
           <ThemedButton disabled={isNextBtnDisabled} onPress={nextBtnFn}>
-            {isLastStep ? "FINISH" : "NEXT"}
+            {isLastStep
+              ? `${t("finish").toUpperCase()}`
+              : `${t("next").toUpperCase()}`}
           </ThemedButton>
         </View>
       </View>

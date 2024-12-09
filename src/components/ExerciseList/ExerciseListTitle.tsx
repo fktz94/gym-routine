@@ -2,10 +2,13 @@ import { StyleSheet, Text, View, ViewStyle } from "react-native";
 import { Colors } from "@/src/constants/Colors";
 import useSettingsContext from "@/src/contexts/Settings/useSettingsContext";
 import { Theme } from "@/src/types/Contexts";
+import { useTranslation } from "react-i18next";
 
 const ExerciseListTitle = (props: { containerStyle?: ViewStyle }) => {
   const { theme } = useSettingsContext();
   const styles = exerciseListTitleStyles(theme);
+  const { t } = useTranslation();
+
   return (
     <View style={[styles.exerciseItem, props?.containerStyle]}>
       <Text
@@ -15,7 +18,7 @@ const ExerciseListTitle = (props: { containerStyle?: ViewStyle }) => {
           styles.exerciseTitle,
         ]}
       >
-        Exercise
+        {t("exercise")}
       </Text>
       <Text
         style={[
@@ -24,7 +27,7 @@ const ExerciseListTitle = (props: { containerStyle?: ViewStyle }) => {
           styles.exerciseTitle,
         ]}
       >
-        Sets
+        {t("sets")}
       </Text>
       <Text
         style={[
@@ -33,7 +36,7 @@ const ExerciseListTitle = (props: { containerStyle?: ViewStyle }) => {
           styles.exerciseTitle,
         ]}
       >
-        Repetitions
+        {t("repetitions")}
       </Text>
     </View>
   );

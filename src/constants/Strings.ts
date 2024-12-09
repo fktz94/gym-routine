@@ -4,6 +4,6 @@ export const Strings = {
 };
 
 export const Languages = {
-  english: "English",
-  spanish: "Español",
+  english: { name: "English", code: "en" },
+  spanish: { name: "Español", code: "es" },
 };

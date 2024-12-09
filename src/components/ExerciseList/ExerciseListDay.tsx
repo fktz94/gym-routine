@@ -10,6 +10,7 @@ import { ExerciseListDayProps } from "@/src/types/Components";
 import { Theme } from "@/src/types/Contexts";
 import AnimatedDayCard from "./AnimatedDayCard";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { useTranslation } from "react-i18next";
 
 const ExerciseListDay = ({
   dataToMap,
@@ -22,6 +23,7 @@ const ExerciseListDay = ({
 }: ExerciseListDayProps) => {
   const { theme } = useSettingsContext();
   const styles = exerciseListDayStyles(theme);
+  const { t } = useTranslation();
 
   const { closeModal, isModalOpen: isCreating, openModal } = useModal();
 
@@ -44,7 +46,11 @@ const ExerciseListDay = ({
   return (
     <AnimatedDayCard
       dayHasToBeShown={dayHasToBeShown}
-      title={isWarmUp ? "WARM UP" : `DAY ${dayIndex + 1}`}
+      title={
+        isWarmUp
+          ? `${t("warmUp").toUpperCase()}`
+          : `${t("day").toUpperCase()} ${dayIndex + 1}`
+      }
     >
       {isCreating && (
         <CreateOrEditExerciseModal

@@ -5,10 +5,12 @@ import { Colors } from "@/src/constants/Colors";
 import useHeaderContext from "@/src/contexts/Header/useHeaderContext";
 import useSettingsContext from "@/src/contexts/Settings/useSettingsContext";
 import { Theme } from "@/src/types/Contexts";
+import { useTranslation } from "react-i18next";
 
 const ProcceedQuittingModal = () => {
   const { theme } = useSettingsContext();
   const styles = quitCreatingModalStyles(theme);
+  const { t } = useTranslation();
 
   const { toggleShowQuitModal } = useHeaderContext();
 
@@ -23,8 +25,8 @@ const ProcceedQuittingModal = () => {
   return (
     <ThemedModal closeModal={cancel} handleAccept={accept}>
       <View style={styles.innerContainer}>
-        <Text style={styles.baseText}>Any changes will be lost.</Text>
-        <Text style={styles.baseText}>Procceed?</Text>
+        <Text style={styles.baseText}>{t("changesLost")}</Text>
+        <Text style={styles.baseText}>{t("procceed")}</Text>
       </View>
     </ThemedModal>
   );

@@ -10,6 +10,7 @@ import ThemedModal from "../ThemedModal";
 import CustomSelectDropdown from "../CustomSelectDropdown";
 import useCreateOrEditExercise from "@/src/hooks/useCreateOrEditExercise";
 import { Theme } from "@/src/types/Contexts";
+import { useTranslation } from "react-i18next";
 
 const CreateOrEditExerciseModal = ({
   closeModal,
@@ -18,6 +19,8 @@ const CreateOrEditExerciseModal = ({
   handleOnAccept,
   isWarmUp = false,
 }: CreateExerciseModalProps) => {
+  const { t } = useTranslation();
+
   const {
     currentVariations,
     dropdownValues,
@@ -87,13 +90,13 @@ const CreateOrEditExerciseModal = ({
           onChangeText={handleName}
           style={[styles.baseText, styles.nameTextInput]}
           value={name}
-          placeholder="Exercise's name"
+          placeholder={t("exerciseName")}
           placeholderTextColor={Colors[theme].secondary}
           multiline
         />
       </View>
       <View style={styles.innerContainer}>
-        <CustomText text="How many sets are you doing?" />
+        <CustomText text={t("howManySets")} />
         <CustomSelectDropdown
           data={dropdownValues}
           defaultValue={dropdownValues[2]}
@@ -104,7 +107,7 @@ const CreateOrEditExerciseModal = ({
       </View>
       {!isWarmUp && (
         <View style={styles.innerContainer}>
-          <CustomText text="Check if it has repetition variations along the weeks." />
+          <CustomText text={t("checkRepetitionVariations")} />
           <BouncyCheckbox
             size={18}
             fillColor={Colors.light.primary}
@@ -116,7 +119,7 @@ const CreateOrEditExerciseModal = ({
       )}
       {hasWeeksVariations && (
         <View style={styles.innerContainer}>
-          <CustomText text="How many variations?" />
+          <CustomText text={t("howManyVariations")} />
           <CustomSelectDropdown
             data={dropdownValues.slice(1)}
             defaultValue={
@@ -130,12 +133,12 @@ const CreateOrEditExerciseModal = ({
       )}
       <View style={styles.innerContainer}>
         <View style={styles.repetitionsContainer}>
-          <CustomText text="Repetitions / time:" />
+          <CustomText text={t("repetitionsTime")} />
           {repetitionsInputs()}
         </View>
       </View>
       <View style={styles.innerContainer}>
-        <CustomText text="Need to customize the text instead of just numbers?" />
+        <CustomText text={t("customizeText")} />
         <BouncyCheckbox
           size={18}
           fillColor={Colors.light.primary}

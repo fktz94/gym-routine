@@ -12,6 +12,7 @@ import { Theme } from "@/src/types/Contexts";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { getLanguage } from "../utils/AsyncStorage/Language";
 import { useTranslation } from "react-i18next";
+import "@/src/i18n/index";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -19,7 +20,7 @@ export default function RootLayout() {
   const [loaded] = useFonts({
     SpaceMono: require("@/assets/fonts/SpaceMono-Regular.ttf"),
   });
-
+  const [langLoaded, setLangLoaded] = useState(false);
   const { i18n } = useTranslation();
 
   const [initialTheme, setInitialTheme] = useState<Theme>("dark");
@@ -34,6 +35,7 @@ export default function RootLayout() {
   );
   const setStoredLanguage = async () => {
     const language = await getLanguage();
+    setLangLoaded(true);
     if (!language) return;
     setInitialLanguage(language);
     i18n.changeLanguage(language);
@@ -45,12 +47,12 @@ export default function RootLayout() {
   }, []);
 
   useEffect(() => {
-    if (loaded) {
+    if (loaded && langLoaded) {
       SplashScreen.hideAsync();
     }
-  }, [loaded]);
+  }, [loaded, langLoaded]);
 
-  if (!loaded) return null;
+  if (!loaded && !langLoaded) return null;
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>

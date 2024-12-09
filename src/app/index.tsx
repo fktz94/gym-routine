@@ -10,10 +10,12 @@ import useIndex from "@/src/hooks/useIndex";
 import useRoutines from "@/src/hooks/useRoutines";
 import { Theme } from "@/src/types/Contexts";
 import { Path } from "../types/Utils";
+import { useTranslation } from "react-i18next";
 
 export default function Index() {
   const { theme, language } = useSettingsContext();
   const styles = indexStyles(theme);
+  const { t } = useTranslation();
 
   const { currentRoutine, pastRoutines, noRoutines } = useRoutines();
   const { renderLoader } = useIndex();
@@ -27,26 +29,25 @@ export default function Index() {
       ) : (
         <>
           <Link href={`/new-routine`} asChild>
-            <ThemedButton isSecondary>New routine</ThemedButton>
+            <ThemedButton isSecondary>{t("newRoutine")}</ThemedButton>
           </Link>
 
           {currentRoutine && (
             <View style={styles.listContainer}>
-              <Text style={styles.title}>Current routine</Text>
+              <Text style={styles.title}>{t("currentRoutine")}</Text>
               <CurrentRoutineButton currentRoutine={currentRoutine} />
             </View>
           )}
           {pastRoutines.length > 0 && (
             <View style={styles.listContainer}>
-              <Text style={styles.title}>Past routines</Text>
+              <Text style={styles.title}>{t("pastRoutines")}</Text>
               <RoutinesList selectedRoutines={pastRoutines} />
             </View>
           )}
           {noRoutines && (
             <View style={styles.listContainer}>
               <Text style={[styles.title, styles.noRoutines]}>
-                It seems you haven't wrote any routine yet.{"\n\n"}Go ahead and
-                start training!
+                {t("noRoutines")}
               </Text>
             </View>
           )}

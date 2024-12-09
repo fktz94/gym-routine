@@ -5,12 +5,15 @@ import useSettingsContext from "@/src/contexts/Settings/useSettingsContext";
 import useConfirmNewRoutine from "@/src/hooks/useConfirmNewRoutine";
 import { ConfirmCreateNewExerciseModalProps } from "@/src/types/Components";
 import { Theme } from "@/src/types/Contexts";
+import { useTranslation } from "react-i18next";
 
 const ConfirmCreateNewRoutineModal = ({
   closeModal,
 }: ConfirmCreateNewExerciseModalProps) => {
   const { theme } = useSettingsContext();
   const styles = confirmCreateNewRoutineModalStyle(theme);
+  const { t } = useTranslation();
+
   const { handleCreateRoutine, isCreatingRoutine } = useConfirmNewRoutine({
     closeModal,
   });
@@ -22,10 +25,10 @@ const ConfirmCreateNewRoutineModal = ({
       isLoading={isCreatingRoutine}
     >
       <View style={styles.innerContainer}>
-        <Text style={styles.baseText}>Great! You're almost done!</Text>
-        <Text style={styles.baseText}>Confirm?</Text>
+        <Text style={styles.baseText}>{t("almostDone")}</Text>
+        <Text style={styles.baseText}>{t("confirm")}</Text>
         <Text style={[styles.baseText, { fontSize: 14 }]}>
-          (You can modify it later anyway)
+          {t("modifyLater")}
         </Text>
       </View>
     </ThemedModal>

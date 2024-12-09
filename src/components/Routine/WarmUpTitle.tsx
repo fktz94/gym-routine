@@ -2,15 +2,18 @@ import { StyleSheet, Text, View, ViewStyle } from "react-native";
 import { Colors } from "@/src/constants/Colors";
 import useSettingsContext from "@/src/contexts/Settings/useSettingsContext";
 import { Theme } from "@/src/types/Contexts";
+import { useTranslation } from "react-i18next";
 
 const WarmUpTitle = (props: { containerStyle?: ViewStyle }) => {
   const { theme } = useSettingsContext();
   const styles = exerciseListTitleStyles(theme);
+  const { t } = useTranslation();
+
   return (
     <View style={[styles.warmUpTitleItem, props?.containerStyle]}>
-      <Text style={styles.warmUpTitleText}>Exercise</Text>
-      <Text style={styles.warmUpTitleText}>Sets</Text>
-      <Text style={styles.warmUpTitleText}>Repetitions / time</Text>
+      <Text style={styles.warmUpTitleText}>{t("exercise")}</Text>
+      <Text style={styles.warmUpTitleText}>{t("sets")}</Text>
+      <Text style={styles.warmUpTitleText}>{t("repetitionsTime")}</Text>
     </View>
   );
 };

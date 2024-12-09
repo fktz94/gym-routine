@@ -3,6 +3,7 @@ import { Ionicons } from "@expo/vector-icons";
 import ThemedButton from "./ThemedButton";
 import { Colors } from "@/src/constants/Colors";
 import { AcceptButtonProps } from "@/src/types/Components";
+import { useTranslation } from "react-i18next";
 
 export const AcceptButton = ({
   onAccept,
@@ -13,6 +14,8 @@ export const AcceptButton = ({
   text,
 }: AcceptButtonProps) => {
   const styles = acceptButtonStyles(isDisabled);
+  const { t } = useTranslation();
+
   return (
     <ThemedButton
       externalButtonStyles={{ ...styles.acceptView, ...viewStyle }}
@@ -20,7 +23,13 @@ export const AcceptButton = ({
       onPress={onAccept}
       disabled={isDisabled}
     >
-      {isIcon ? <Ionicons name="checkmark" size={20} /> : text ? text : "Accept"}
+      {isIcon ? (
+        <Ionicons name="checkmark" size={20} />
+      ) : text ? (
+        text
+      ) : (
+        t("accept")
+      )}
     </ThemedButton>
   );
 };

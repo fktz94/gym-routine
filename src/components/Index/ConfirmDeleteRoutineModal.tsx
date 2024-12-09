@@ -9,6 +9,7 @@ import { resetDeleteRoutineState } from "@/src/store/Routines/RoutinesSlice";
 import { ConfirmDeleteRoutineModalProps } from "@/src/types/Components";
 import { Theme } from "@/src/types/Contexts";
 import { ResponseStatus } from "@/src/types/Store";
+import { useTranslation } from "react-i18next";
 
 const ConfirmDeleteRoutineModal = ({
   closeModal,
@@ -20,6 +21,7 @@ const ConfirmDeleteRoutineModal = ({
   const { isDeletingRoutine, deleteRoutineErrorMessage, deleteRoutineStatus } =
     useAppSelector(({ routines }) => routines);
   const dispatch = useAppDispatch();
+  const { t } = useTranslation();
 
   const handleDeleteRoutine = () => {
     dispatch(deleteRoutine({ routineId: id }));
@@ -48,11 +50,11 @@ const ConfirmDeleteRoutineModal = ({
     >
       <View style={styles.innerContainer}>
         <Text style={styles.baseText}>
-          Are you sure you want to delete this routine: {"\n"}
+          {t("wantToDelete")} {"\n"}
           <Text style={styles.routineName}>{name}</Text>?
         </Text>
         <Text style={[styles.baseText, { fontSize: 14 }]}>
-          (This change cannot be undone)
+          {t("cannotBeUndone")}
         </Text>
       </View>
     </ThemedModal>

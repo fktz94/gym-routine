@@ -11,6 +11,7 @@ import { resetEditRoutineState } from "@/src/store/Routines/RoutinesSlice";
 import useEditRoutineContext from "@/src/contexts/EditRoutine/useEditRoutineContext";
 import ThemedModal from "../ThemedModal";
 import { Theme } from "@/src/types/Contexts";
+import { useTranslation } from "react-i18next";
 
 const ConfirmEditRoutineModal = ({
   closeModal,
@@ -21,6 +22,7 @@ const ConfirmEditRoutineModal = ({
   const { isEditingRoutine, editRoutineErrorMessage, editRoutineStatus } =
     useAppSelector(({ routines }) => routines);
   const { selectedRoutine, toCurrent } = useEditRoutineContext();
+  const { t } = useTranslation();
 
   const handleCreateRoutine = () => {
     dispatch(
@@ -57,8 +59,8 @@ const ConfirmEditRoutineModal = ({
       isLoading={isEditingRoutine}
     >
       <View style={styles.innerTextContainer}>
-        <Text style={styles.baseText}>Great! You're almost done!</Text>
-        <Text style={styles.baseText}>Confirm modifications?</Text>
+        <Text style={styles.baseText}>{t("almostDone")}</Text>
+        <Text style={styles.baseText}>{t("confirmModifications")}</Text>
       </View>
     </ThemedModal>
   );

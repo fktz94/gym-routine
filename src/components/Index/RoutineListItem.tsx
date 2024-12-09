@@ -10,6 +10,7 @@ import useDeleteAnimation from "@/src/hooks/useDeleteAnimation";
 import useModal from "@/src/hooks/useModal";
 import { RoutinesListItemProps } from "@/src/types/Components";
 import { Theme } from "@/src/types/Contexts";
+import { useTranslation } from "react-i18next";
 
 export default function RoutineListItem({
   routineName,
@@ -19,6 +20,7 @@ export default function RoutineListItem({
 }: RoutinesListItemProps) {
   const { theme } = useSettingsContext();
   const styles = routinesListStyles(theme, isCurrent);
+  const { t } = useTranslation();
 
   const { isLeftSide, position, animateBackToTheBeginning } =
     useDeleteAnimation();
@@ -59,7 +61,8 @@ export default function RoutineListItem({
           )}
         </Link>
         <Text style={styles.madeOnText}>
-          Made on <Text style={styles.bold}>{madeOn}</Text>
+          {t("madeOn")}
+          <Text style={styles.bold}>{madeOn}</Text>
         </Text>
       </DeleteAnimation>
     </>

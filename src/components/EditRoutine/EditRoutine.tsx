@@ -13,10 +13,12 @@ import useEditRoutineChanges from "@/src/hooks/useEditRoutineChanges";
 import useModal from "@/src/hooks/useModal";
 import { Theme } from "@/src/types/Contexts";
 import CustomLoader from "../CustomLoader";
+import { useTranslation } from "react-i18next";
 
 const EditRoutine = () => {
   const { theme } = useSettingsContext();
   const styles = editRoutineStyles(theme);
+  const { t } = useTranslation();
 
   const [isChangingName, setIsChangingName] = useState(false);
 
@@ -86,7 +88,7 @@ const EditRoutine = () => {
       {isCreating && <ConfirmEditRoutineModal closeModal={closeModal} />}
       <View style={styles.mainContainer}>
         <View style={styles.container}>
-          <Text style={styles.title}>Let's update this routine!</Text>
+          <Text style={styles.title}>{t("letsUpdate")}</Text>
         </View>
         {isDispatching ? (
           <View style={{ flex: 1 }}>
@@ -96,7 +98,7 @@ const EditRoutine = () => {
           <>
             {!isCurrent && (
               <View style={[styles.container, styles.checkboxContainer]}>
-                <Text style={styles.baseText}>Set to current routine</Text>
+                <Text style={styles.baseText}>{t("setCurrentRoutine")}</Text>
                 <BouncyCheckbox
                   size={18}
                   fillColor={Colors.light.primary}
@@ -107,7 +109,7 @@ const EditRoutine = () => {
               </View>
             )}
             <View style={[styles.container, styles.checkboxContainer]}>
-              <Text style={styles.baseText}>Change name?</Text>
+              <Text style={styles.baseText}>{t("changeName")}</Text>
               <BouncyCheckbox
                 size={18}
                 fillColor={Colors.light.primary}
@@ -133,7 +135,7 @@ const EditRoutine = () => {
             )}
             {!hasPrevWarmUp && (
               <View style={[styles.container, styles.checkboxContainer]}>
-                <Text style={styles.baseText}>Add warm up</Text>
+                <Text style={styles.baseText}>{t("addWarmUp")}</Text>
                 <BouncyCheckbox
                   size={18}
                   fillColor={Colors.light.primary}
@@ -161,7 +163,7 @@ const EditRoutine = () => {
               onPress={handleSaveChanges}
               disabled={isButtonDisabled}
             >
-              Save changes!
+              {t("saveChanges")}
             </ThemedButton>
           </>
         )}
