@@ -1,11 +1,2 @@
-import { View, Text } from "react-native";
-
-const Settings = () => {
-  return (
-    <View>
-      <Text>Settings</Text>
-    </View>
-  );
-};
-
+import Settings from "../components/Settings/Settings";
 export default Settings;

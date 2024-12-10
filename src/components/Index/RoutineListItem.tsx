@@ -61,8 +61,7 @@ export default function RoutineListItem({
           )}
         </Link>
         <Text style={styles.madeOnText}>
-          {t("madeOn")}
-          <Text style={styles.bold}>{madeOn}</Text>
+          {t("madeOn")} <Text style={styles.bold}>{madeOn}</Text>
         </Text>
       </DeleteAnimation>
     </>

@@ -41,7 +41,7 @@ const translationEn = {
   next: "Next",
   noRoutines:
     "It seems you haven't wrote any routine yet.\n\nGo ahead and start training!",
-  pastRoutine: "Past routines",
+  pastRoutines: "Past routines",
   procceed: "Procceed?",
   repetitions: "Repetitions",
   repetitionsTime: "Repetitions / time:",

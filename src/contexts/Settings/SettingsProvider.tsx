@@ -1,22 +1,21 @@
-import useSettings from "@/src/hooks/useSettings";
 import SettingsContext from "./SettingsContext";
 import { Theme } from "@/src/types/Contexts";
 import { PropsWithChildren } from "react";
 
 interface Props extends PropsWithChildren {
-  storedTheme: Theme;
-  storedLanguage: string | undefined;
+  theme: Theme;
+  language: string | undefined;
+  toggleTheme: () => void;
+  changeLanguage: (val: string) => void;
 }
 
 export default function SettingsProvider({
   children,
-  storedTheme,
-  storedLanguage,
+  theme,
+  toggleTheme,
+  language,
+  changeLanguage,
 }: Props) {
-  const { theme, toggleTheme, language, changeLanguage } = useSettings(
-    storedTheme,
-    storedLanguage
-  );
   return (
     <SettingsContext.Provider
       value={{ theme, toggleTheme, language, changeLanguage }}

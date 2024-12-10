@@ -4,7 +4,7 @@ const translationEs = {
   almostDone: "¡Bien! ¡Ya casi estás!",
   back: "Atrás",
   backHome: "Volver al inicio",
-  confirm: "Confirmar",
+  confirm: "¿Confirmas?",
   confirmModifications: "Guardar cambios",
   congratulations: "¡Felicitaciones!",
   cancel: "Cancelar",

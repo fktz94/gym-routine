@@ -35,7 +35,7 @@ const FirstStep = () => {
       {showQuitModal && <ProcceedQuittingModal />}
       <View style={styles.mainContainer}>
         <View style={styles.container}>
-          <Text style={styles.title}>{t("modifyLater")}</Text>
+          <Text style={styles.title}>{t("giveName")}</Text>
           <Text style={styles.subtitle}>{t("usualName")}</Text>
           <TextInput
             value={name}

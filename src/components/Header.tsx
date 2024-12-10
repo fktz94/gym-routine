@@ -11,7 +11,6 @@ export default function Header() {
   const path = usePathname();
 
   const { theme, toggleTheme } = useSettingsContext();
-  const iconName = theme === "light" ? "moon" : "sunny";
 
   const styles = headerStyles(theme);
 
@@ -32,23 +31,27 @@ export default function Header() {
     }
   };
 
+  const navigateToSettings = () => router.push(Path.SETTINGS);
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        {showSettingsIcon && (
-          <Ionicons
-            name={iconName}
-            size={32}
-            color={Colors[theme].text}
-            onPress={toggleTheme}
-          />
-        )}
         {canGoBack && showBackArrowButton && (
           <Ionicons
             name="arrow-back"
             size={32}
             color={Colors[theme].text}
             onPress={goBack}
+            style={{ marginRight: "auto" }}
+          />
+        )}
+        {showSettingsIcon && (
+          <Ionicons
+            name="ellipsis-vertical"
+            size={32}
+            color={Colors[theme].text}
+            onPress={navigateToSettings}
+            style={{ marginLeft: "auto" }}
           />
         )}
       </View>
@@ -56,7 +59,7 @@ export default function Header() {
   );
 }
 
-const headerStyles = (theme: Theme) =>
+const headerStyles = (theme: Theme, showSettingsIcon: boolean) =>
   StyleSheet.create({
     container: {
       paddingHorizontal: 40,
@@ -64,5 +67,8 @@ const headerStyles = (theme: Theme) =>
       backgroundColor: Colors[theme].background,
       width: "100%",
     },
-    header: { flexDirection: "row-reverse", justifyContent: "space-between" },
+    header: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+    },
   });
