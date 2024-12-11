@@ -21,7 +21,6 @@ export const parsedWeightTxt = ({
   txt: string | undefined;
   language: string | undefined;
 }) => {
-  console.log(txt);
   if (!txt) return;
   if (!!!txt?.includes(Strings.EachSide) || language === "en") return txt;
   let weightTxt;
