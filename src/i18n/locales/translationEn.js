@@ -1,5 +1,6 @@
 const translationEn = {
   accept: "Accept",
+  addTodaysWeight: "Add today's weight!",
   addWarmUp: "Add warm up",
   almostDone: "Great! You're almost done!",
   back: "Back",
@@ -21,8 +22,10 @@ const translationEn = {
   customizeValue: "Customize value",
   day: "Day",
   delete: "Delete",
+  each: "each",
   emptyDay: "This day is empty!",
   exercise: "Exercise",
+  exercises: "Exercises",
   exerciseName: "Exercise's name",
   failure: "Failure",
   fillingDays: "Now, let's start filling each day with its exercises.",
@@ -47,7 +50,7 @@ const translationEn = {
   repetitions: "Repetitions",
   repetitionsTime: "Repetitions / time:",
   routine: "Routine",
-  routineDone: "Routine done",
+  routineDone: "Routine done!",
   saveChanges: "Save changes!",
   setCurrentRoutine: "Set to current routine",
   settings: "Settings",
@@ -56,8 +59,9 @@ const translationEn = {
   toggleMode: "Toggle mode",
   usualName: "(Usually, the month's name)",
   wannaWarmUp: "Check if wanna write your everyday warm-up routine.",
-  wantToDelete: "Are you sure you want to delete this routine:",
+  wantToDelete: "Are you sure you want to delete this routine?",
   warmUp: "Warm Up",
+  weightsAndRepetitions: "Weights and repetitions",
   withoutWeight: "Exercise without weight",
 };
 export default translationEn;

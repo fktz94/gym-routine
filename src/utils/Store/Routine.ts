@@ -25,7 +25,8 @@ export const modifyOneExercise = ({
 
     if (!selectedExercise) return;
 
-    selectedExercise.weightsAndRepetitions[selectedSerie].weight = newWeightValue;
+    selectedExercise.weightsAndRepetitions[selectedSerie].weight =
+      newWeightValue;
 
     if (makeItCurrent) {
       selectedExercise.current = selectedSerie;
@@ -41,7 +42,7 @@ export const addNewRoutine = ({
   routineName,
   routineWarmUp,
 }: AddNewRoutineUtilsProps) => {
-  const madeOn = new Date().toDateString().split(" ").slice(1).join(" ");
+  const madeOn = `${new Date().getDate()}/${new Date().getMonth() + 1}/${new Date().getFullYear()}`;
   const routineId = Crypto.randomUUID();
   const payload: RoutineStructure = {
     currentDay: 0,
@@ -61,7 +62,10 @@ export const addNewRoutine = ({
   return nextState;
 };
 
-export const editOldRoutine = ({ routineData, prevRoutinesData }: EditRoutineUtilsProps) => {
+export const editOldRoutine = ({
+  routineData,
+  prevRoutinesData,
+}: EditRoutineUtilsProps) => {
   const nextState = produce(prevRoutinesData, (draft: Routine) => {
     const routineIndex = draft.findIndex((el) => el.id === routineData.id);
     draft[routineIndex] = routineData;
@@ -69,7 +73,10 @@ export const editOldRoutine = ({ routineData, prevRoutinesData }: EditRoutineUti
   return nextState;
 };
 
-export const deleteSelectedRoutine = ({ routineId, prevRoutinesData }: DeleteRoutineUtilsProps) => {
+export const deleteSelectedRoutine = ({
+  routineId,
+  prevRoutinesData,
+}: DeleteRoutineUtilsProps) => {
   const nextState = produce(prevRoutinesData, (draft: Routine) =>
     draft.filter((el) => el.id !== routineId)
   );

@@ -10,7 +10,7 @@ import { Theme } from "../types/Contexts";
 export default function Header() {
   const path = usePathname();
 
-  const { theme, toggleTheme } = useSettingsContext();
+  const { theme } = useSettingsContext();
 
   const styles = headerStyles(theme);
 
@@ -18,7 +18,11 @@ export default function Header() {
     useHeaderContext();
 
   const canGoBack = router.canGoBack();
-  const showSettingsIcon = path !== Path.SETTINGS;
+  const showSettingsIcon =
+    path !== Path.SETTINGS &&
+    path !== Path.NEWROUTINE &&
+    !path.includes(Path.EDITROUTINE);
+
   const showBackArrow = showBackArrowButton && path !== "/";
 
   const goBack = () => {

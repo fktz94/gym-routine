@@ -43,6 +43,7 @@ const deleteButtonStyles = (isCurrent = false) =>
       fontSize: 14,
       fontWeight: "bold",
       letterSpacing: 1,
+      paddingHorizontal: 2,
       color: Colors.light.background,
     },
   });

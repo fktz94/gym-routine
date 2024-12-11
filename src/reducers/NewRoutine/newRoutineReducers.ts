@@ -5,16 +5,14 @@ import {
   NewRoutineActions,
   NewRoutineActionsTypes,
 } from "@/src/types/Reducers";
-import { Exercise, monthsOfTheYear, RoutineDay, RoutineStructure } from "@/src/types/Routines";
-
-const currentMonth = monthsOfTheYear[new Date().getMonth()];
+import { Exercise, RoutineDay, RoutineStructure } from "@/src/types/Routines";
 
 export const initialState: RoutineStructure = {
   currentDay: 0,
   data: new Array(3).fill([]),
   id: "",
   madeOn: "",
-  name: currentMonth,
+  name: "",
   warmUp: [],
 };
 
@@ -36,9 +34,15 @@ export function newRoutineReducers(
     case NewRoutineActionsTypes.ADDWARMUPEXERCISE:
       return { ...state, warmUp: [...state.warmUp, payload.exerciseData] };
     case NewRoutineActionsTypes.EDITWARMUPEXERCISE:
-      return { ...state, warmUp: findAndEditWarmUpExercise(state.warmUp, payload) };
+      return {
+        ...state,
+        warmUp: findAndEditWarmUpExercise(state.warmUp, payload),
+      };
     case NewRoutineActionsTypes.DELETEWARMUPEXERCISE:
-      return { ...state, warmUp: findAndDeleteWarmUpExercise(state.warmUp, payload) };
+      return {
+        ...state,
+        warmUp: findAndDeleteWarmUpExercise(state.warmUp, payload),
+      };
     case NewRoutineActionsTypes.CLEANWARMUP:
       return { ...state, warmUp: [] };
     default:
@@ -57,14 +61,18 @@ function findAndEditWarmUpExercise(
   warmUp: RoutineDay,
   { exerciseData, prevName }: { exerciseData: Exercise; prevName: string }
 ) {
-  return warmUp.map((exercise) => (exercise.name === prevName ? exerciseData : exercise));
+  return warmUp.map((exercise) =>
+    exercise.name === prevName ? exerciseData : exercise
+  );
 }
 
 function findDayAndAddNewExercise(
   data: RoutineDay[],
   { dayIndex, exerciseData }: AddExercisePayloadType
 ) {
-  return data.map((routine, index) => (index === dayIndex ? [...routine, exerciseData] : routine));
+  return data.map((routine, index) =>
+    index === dayIndex ? [...routine, exerciseData] : routine
+  );
 }
 
 function findDayAndEditExercise(
@@ -73,7 +81,9 @@ function findDayAndEditExercise(
 ) {
   return data.map((routine, index) =>
     index === dayIndex
-      ? routine.map((exercise) => (exercise.name === prevName ? exerciseData : exercise))
+      ? routine.map((exercise) =>
+          exercise.name === prevName ? exerciseData : exercise
+        )
       : routine
   );
 }

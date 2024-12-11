@@ -18,22 +18,27 @@ import {
 } from "react-native-gesture-handler";
 import { useAppDispatch, useAppSelector } from "@/src/hooks/reactReduxHook";
 import { toggleExerciseState } from "@/src/store/DoneExercise/DoneExerciseSlice";
+import { useTranslation } from "react-i18next";
+import translationEs from "@/src/i18n/locales/translationEs";
+import { parsedWeightTxt } from "@/src/utils/Validations/Validations";
 
 export const ExerciseItemTitle = () => {
   const { theme } = useSettingsContext();
   const styles = exerciseItemStyles(theme, true);
+  const { t } = useTranslation();
 
   return (
     <View style={styles.container}>
-      <Text style={styles.inputContainer}>Exercise</Text>
-      <Text style={styles.inputContainer}>Sets</Text>
-      <Text style={styles.inputContainer}>Weights and repetitions</Text>
+      <Text style={styles.inputContainer}>{t("exercises")}</Text>
+      <Text style={styles.inputContainer}>{t("sets")}</Text>
+      <Text style={styles.inputContainer}>{t("weightsAndRepetitions")}</Text>
     </View>
   );
 };
 
 export const ExerciseItem = ({ exercise }: { exercise: Exercise }) => {
-  const { theme } = useSettingsContext();
+  const { theme, language } = useSettingsContext();
+  const { t } = useTranslation();
 
   const dispatch = useAppDispatch();
   const doneExercises = useAppSelector(({ doneExercise }) => doneExercise);
@@ -142,13 +147,17 @@ export const ExerciseItem = ({ exercise }: { exercise: Exercise }) => {
             <Text style={[styles.inputContainer, styles.sets]}>{sets}</Text>
             <View style={styles.inputContainer}>
               {!currentWeight && (
-                <Text style={styles.prevText}>Add today's weight!</Text>
+                <Text style={styles.prevText}>{t("addTodaysWeight")}</Text>
               )}
               {hasMultipleRepetitions && (
                 <>
                   {prevWeight?.weight?.value && (
                     <Text style={styles.prevText}>
-                      Prev: {prevWeight.qty}r - {prevWeight.weight.value}
+                      Prev: {prevWeight.qty}r -{" "}
+                      {parsedWeightTxt({
+                        txt: prevWeight.weight.value,
+                        language,
+                      })}
                     </Text>
                   )}
                 </>
@@ -162,7 +171,7 @@ export const ExerciseItem = ({ exercise }: { exercise: Exercise }) => {
                     numberOfLines={2}
                     adjustsFontSizeToFit
                   >
-                    {weight}
+                    {parsedWeightTxt({ txt: weight, language })}
                   </Text>
                 )}
                 {/* {!exerciseWithoutWeight && (

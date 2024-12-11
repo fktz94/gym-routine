@@ -211,7 +211,7 @@ const editRoutineStyles = (theme: Theme) =>
       fontSize: 20,
     },
     modifyRoutineBtnContainer: {
-      width: "40%",
+      width: "50%",
       margin: "auto",
       marginTop: 15,
       marginBottom: 30,

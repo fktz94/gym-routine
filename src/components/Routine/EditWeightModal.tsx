@@ -9,6 +9,7 @@ import { Theme } from "@/src/types/Contexts";
 import { Strings } from "@/src/constants/Strings";
 import { BaseButton } from "react-native-gesture-handler";
 import { useTranslation } from "react-i18next";
+import { parsedWeightTxt } from "@/src/utils/Validations/Validations";
 
 const EditWeightModal = ({
   closeModal,
@@ -39,7 +40,7 @@ const EditWeightModal = ({
     exerciseName,
   });
 
-  const { theme } = useSettingsContext();
+  const { theme, language } = useSettingsContext();
   const styles = editExerciseModalStyles(theme, !!customValue, !!hasCL);
   const { t } = useTranslation();
 
@@ -62,7 +63,10 @@ const EditWeightModal = ({
               {t("currentWeight")}{" "}
             </Text>
             <Text style={[styles.previousWeightText, { fontWeight: "bold" }]}>
-              {exerciseData.weight.value}
+              {parsedWeightTxt({
+                txt: exerciseData.weight.value,
+                language,
+              })}
             </Text>
           </View>
         )}
@@ -84,7 +88,7 @@ const EditWeightModal = ({
                 <Text style={styles.kgText}>kg</Text>
                 <View style={styles.eachSideContainer}>
                   <BaseButton style={styles.eachSideBtn} onPress={toggleCL}>
-                    <Text style={styles.eachSideText}>{Strings.EachSide}</Text>
+                    <Text style={styles.eachSideText}>{t("each")}</Text>
                   </BaseButton>
                 </View>
               </>

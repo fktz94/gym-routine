@@ -27,7 +27,9 @@ const ThemedButton = forwardRef(
         style={[styles.buttonContainer, externalButtonStyles]}
         onPress={onPress}
       >
-        <Text style={[styles.text, externalTextStyles]}>{children}</Text>
+        <Text style={[styles.text, externalTextStyles]} m>
+          {children}
+        </Text>
       </BaseButton>
     );
   }

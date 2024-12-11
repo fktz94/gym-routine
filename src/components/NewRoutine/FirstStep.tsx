@@ -8,9 +8,11 @@ import useNewRoutineContext from "@/src/contexts/NewRoutine/useNewRoutineContext
 import useSettingsContext from "@/src/contexts/Settings/useSettingsContext";
 import { Theme } from "@/src/types/Contexts";
 import { useTranslation } from "react-i18next";
+import { mesesDelAño, monthsOfTheYear } from "@/src/types/Routines";
+import { useEffect, useMemo } from "react";
 
 const FirstStep = () => {
-  const { theme } = useSettingsContext();
+  const { theme, language } = useSettingsContext();
   const styles = firstStepStyles(theme);
   const { t } = useTranslation();
 
@@ -29,6 +31,26 @@ const FirstStep = () => {
   const daysDropdownValues = [...Array(7)].map((_, i) => i + 1);
 
   const defaultValue = daysDropdownValues[data.length - 1];
+
+  const currentMonth = useMemo(() => {
+    let month;
+    switch (language) {
+      case "en":
+        month = monthsOfTheYear[new Date().getMonth()];
+        break;
+      case "es":
+        month = mesesDelAño[new Date().getMonth()];
+        break;
+      default:
+        month = monthsOfTheYear[new Date().getMonth()];
+        break;
+    }
+    return month;
+  }, [language]);
+
+  useEffect(() => {
+    handleName(currentMonth);
+  }, [currentMonth]);
 
   return (
     <>

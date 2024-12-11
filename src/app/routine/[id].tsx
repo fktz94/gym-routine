@@ -162,7 +162,7 @@ export default function RoutineScreen() {
               <AcceptButton
                 textStyle={styles.modifyRoutineBtnText}
                 onAccept={handleRoutineDone}
-                text={`${t("routineDone")}!`}
+                text={`${t("routineDone")}`}
               />
             </View>
           </ScrollView>
