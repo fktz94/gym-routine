@@ -6,7 +6,8 @@ interface Props extends PropsWithChildren {
   theme: Theme;
   language: string | undefined;
   toggleTheme: () => void;
-  changeLanguage: (val: string) => void;
+  changeLanguage: (val: string) => Promise<void>;
+  isChangingLanguage: boolean;
 }
 
 export default function SettingsProvider({
@@ -15,10 +16,17 @@ export default function SettingsProvider({
   toggleTheme,
   language,
   changeLanguage,
+  isChangingLanguage,
 }: Props) {
   return (
     <SettingsContext.Provider
-      value={{ theme, toggleTheme, language, changeLanguage }}
+      value={{
+        theme,
+        toggleTheme,
+        language,
+        changeLanguage,
+        isChangingLanguage,
+      }}
     >
       {children}
     </SettingsContext.Provider>

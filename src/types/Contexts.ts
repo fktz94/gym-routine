@@ -95,7 +95,8 @@ export type SettingsValueType = {
   theme: Theme;
   toggleTheme: () => void;
   language: string | undefined;
-  changeLanguage: (val: string) => void;
+  changeLanguage: (val: string) => Promise<void>;
+  isChangingLanguage: boolean;
 } | null;
 
 export type HeaderContextType = {

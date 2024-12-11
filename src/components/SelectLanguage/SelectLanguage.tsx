@@ -54,7 +54,7 @@ const SelectLanguage = () => {
 
   const concludeSelectingLanguage = async () => {
     if (!initialLanguage) return;
-    changeLanguage(Languages[initialLanguage].code);
+    await changeLanguage(Languages[initialLanguage].code);
     router.push("/");
   };
 

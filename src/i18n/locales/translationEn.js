@@ -9,6 +9,7 @@ const translationEn = {
   congratulations: "Congratulations!",
   cancel: "Cancel",
   cannotBeUndone: "(This change cannot be undone)",
+  changeLanguage: "Change language",
   changeName: "Change name?",
   changesLost: "Any changes will be lost.",
   checkRepetitionVariations:
@@ -49,8 +50,10 @@ const translationEn = {
   routineDone: "Routine done",
   saveChanges: "Save changes!",
   setCurrentRoutine: "Set to current routine",
+  settings: "Settings",
   sets: "Sets",
   succeeded: "You've succeedeed on your daily objective!",
+  toggleMode: "Toggle mode",
   usualName: "(Usually, the month's name)",
   wannaWarmUp: "Check if wanna write your everyday warm-up routine.",
   wantToDelete: "Are you sure you want to delete this routine:",

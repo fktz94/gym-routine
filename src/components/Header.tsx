@@ -19,6 +19,7 @@ export default function Header() {
 
   const canGoBack = router.canGoBack();
   const showSettingsIcon = path !== Path.SETTINGS;
+  const showBackArrow = showBackArrowButton && path !== "/";
 
   const goBack = () => {
     if (
@@ -36,7 +37,7 @@ export default function Header() {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        {canGoBack && showBackArrowButton && (
+        {canGoBack && showBackArrow && (
           <Ionicons
             name="arrow-back"
             size={32}
@@ -59,7 +60,7 @@ export default function Header() {
   );
 }
 
-const headerStyles = (theme: Theme, showSettingsIcon: boolean) =>
+const headerStyles = (theme: Theme) =>
   StyleSheet.create({
     container: {
       paddingHorizontal: 40,

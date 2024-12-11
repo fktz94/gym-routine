@@ -24,6 +24,7 @@ export default function RootLayout() {
     language,
     theme,
     toggleTheme,
+    isChangingLanguage,
   } = useSettings();
 
   const appIsReady = loaded && languageLoaded && themeLoaded;
@@ -43,6 +44,7 @@ export default function RootLayout() {
         language={language}
         theme={theme}
         toggleTheme={toggleTheme}
+        isChangingLanguage={isChangingLanguage}
       >
         <Provider store={store}>
           <HeaderProvider>

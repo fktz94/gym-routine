@@ -13,6 +13,7 @@ const useSettings = () => {
   const [themeLoaded, setThemeLoaded] = useState(false);
   const [language, setLanguage] = useState<string | undefined>(undefined);
   const [languageLoaded, setLanguageLoaded] = useState(false);
+  const [isChangingLanguage, setIsChangingLanguage] = useState(false);
 
   const setStoredTheme = async () => {
     const storedTheme = (await getTheme()) as Theme | undefined | null;
@@ -35,9 +36,16 @@ const useSettings = () => {
   };
 
   const changeLanguage = async (newLang: string) => {
-    await storeLanguage(newLang);
-    setLanguage(newLang);
-    i18n.changeLanguage(newLang);
+    try {
+      setIsChangingLanguage(true);
+      await storeLanguage(newLang);
+      setLanguage(newLang);
+      await i18n.changeLanguage(newLang);
+    } catch (error) {
+      throw new Error("There's been an error changing language");
+    } finally {
+      setIsChangingLanguage(false);
+    }
   };
 
   const callAsyncStorage = async () => {
@@ -56,6 +64,7 @@ const useSettings = () => {
     language,
     languageLoaded,
     changeLanguage,
+    isChangingLanguage,
   };
 };
 

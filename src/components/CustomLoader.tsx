@@ -2,12 +2,13 @@ import { ActivityIndicator, ViewStyle } from "react-native";
 import { Colors } from "../constants/Colors";
 import useSettingsContext from "../contexts/Settings/useSettingsContext";
 
-const CustomLoader = (props: { style?: ViewStyle }) => {
+const CustomLoader = (props: { style?: ViewStyle; size?: number }) => {
   const { theme } = useSettingsContext();
   const propsStyle = props?.style;
+  const propsSize = props?.size;
   return (
     <ActivityIndicator
-      size={80}
+      size={propsSize ?? 80}
       color={Colors[theme].secondary}
       style={propsStyle}
     />
