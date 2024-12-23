@@ -1,4 +1,4 @@
-import { StyleSheet, View } from "react-native";
+import React, { StyleSheet, View } from "react-native";
 import ConfirmCreateNewRoutineModal from "./ConfirmCreateNewRoutineModal";
 import FirstStep from "./FirstStep";
 import SecondStep from "./SecondStep";
@@ -68,7 +68,7 @@ const mainStyles = (theme: Theme) =>
       backgroundColor: Colors[theme].background,
     },
     inputsContainer: {
-      height: "90%",
+      height: "87%",
       width: "100%",
       alignItems: "center",
     },

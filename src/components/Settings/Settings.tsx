@@ -3,7 +3,7 @@ import useSettingsContext from "@/src/contexts/Settings/useSettingsContext";
 import { Theme } from "@/src/types/Contexts";
 import { Ionicons } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
-import { View, Text, StyleSheet, Pressable, ViewStyle } from "react-native";
+import React, { View, Text, StyleSheet } from "react-native";
 import { Languages } from "@/src/constants/Strings";
 import SelectDropdown from "react-native-select-dropdown";
 import CustomLoader from "../CustomLoader";
@@ -27,7 +27,7 @@ const LanguagesDropdown = () => {
         renderButton={(selectedItem, isOpened) => (
           <View style={[styles.dropdownButtonStyle]}>
             {isChangingLanguage ? (
-              <CustomLoader size={27} style={{ margin: "auto" }} />
+              <CustomLoader size={21} style={{ margin: "auto" }} />
             ) : (
               <>
                 <Text style={[styles.dropdownButtonTxtStyle]}>
@@ -117,22 +117,21 @@ const settingsStyles = (theme: Theme) =>
       flex: 1,
       backgroundColor: Colors[theme].background,
       paddingTop: 20,
-      gap: 40,
     },
     title: {
       marginHorizontal: "auto",
       color: Colors[theme].text,
       fontSize: 28,
+      paddingBottom: 40,
     },
     itemList: {
       flexDirection: "row",
       marginHorizontal: "auto",
-      gap: 100,
       alignItems: "center",
       width: "90%",
       justifyContent: "space-between",
       borderTopWidth: 2,
-      paddingTop: 20,
+      paddingVertical: 30,
       borderColor: Colors[theme].text,
     },
     itemElement: { flex: 1, textAlign: "center" },
@@ -141,18 +140,18 @@ const settingsStyles = (theme: Theme) =>
       fontSize: 16,
     },
     dropdownButtonStyle: {
-      width: "100%",
+      width: "75%",
       margin: "auto",
       backgroundColor: Colors[theme].secondaryTransparent,
       borderRadius: 12,
       flexDirection: "row",
       alignItems: "center",
       paddingHorizontal: 12,
-      paddingVertical: 18,
+      paddingVertical: 12,
     },
     dropdownButtonTxtStyle: {
       flexGrow: 1,
-      fontSize: 20,
+      fontSize: 16,
       fontWeight: "500",
       color: Colors[theme].text,
       textAlign: "center",

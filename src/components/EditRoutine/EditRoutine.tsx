@@ -218,7 +218,7 @@ const editRoutineStyles = (theme: Theme) =>
     },
     modifyRoutineBtnText: {
       fontSize: 14,
-      letterSpacing: 2,
+      letterSpacing: 1,
       fontWeight: "bold",
       textAlign: "center",
       paddingVertical: 6,

@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TextInput, View } from "react-native";
+import React, { StyleSheet, Text, TextInput, View } from "react-native";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import ProcceedQuittingModal from "../ProcceedQuittingModal";
 import CustomSelectDropdown from "../CustomSelectDropdown";
@@ -93,7 +93,7 @@ export default FirstStep;
 const firstStepStyles = (theme: Theme) =>
   StyleSheet.create({
     mainContainer: {
-      paddingTop: 40,
+      paddingTop: 10,
       flex: 1,
       gap: 80,
       width: "75%",

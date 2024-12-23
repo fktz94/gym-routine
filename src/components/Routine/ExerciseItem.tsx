@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from "react";
-import { Animated, StyleSheet, Text, TextInput, View } from "react-native";
+import React, { useEffect, useRef, useState } from "react";
+import { Animated, StyleSheet, Text, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import EditWeightModal from "./EditWeightModal";
 import ThemedButton from "../Buttons/ThemedButton";
@@ -19,7 +19,6 @@ import {
 import { useAppDispatch, useAppSelector } from "@/src/hooks/reactReduxHook";
 import { toggleExerciseState } from "@/src/store/DoneExercise/DoneExerciseSlice";
 import { useTranslation } from "react-i18next";
-import translationEs from "@/src/i18n/locales/translationEs";
 import { parsedWeightTxt } from "@/src/utils/Validations/Validations";
 
 export const ExerciseItemTitle = () => {

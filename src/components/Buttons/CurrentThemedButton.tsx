@@ -3,13 +3,18 @@ import { StyleSheet } from "react-native";
 import ThemedButton from "./ThemedButton";
 import { CurrentThemedButtonProps } from "@/src/types/Components";
 
-const CurrentThemedButton = forwardRef(({ routineName, onPress }: CurrentThemedButtonProps, _) => {
-  return (
-    <ThemedButton externalTextStyles={styles.listButtonText} onPress={onPress}>
-      {routineName.toUpperCase()}
-    </ThemedButton>
-  );
-});
+const CurrentThemedButton = forwardRef(
+  ({ routineName, onPress }: CurrentThemedButtonProps, _) => {
+    return (
+      <ThemedButton
+        externalTextStyles={styles.listButtonText}
+        onPress={onPress}
+      >
+        {routineName.toUpperCase()}
+      </ThemedButton>
+    );
+  }
+);
 
 export default CurrentThemedButton;
 

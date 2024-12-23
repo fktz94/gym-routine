@@ -17,6 +17,8 @@ const ExerciseListTitle = (props: { containerStyle?: ViewStyle }) => {
           styles.exerciseName,
           styles.exerciseTitle,
         ]}
+        adjustsFontSizeToFit={true}
+        numberOfLines={1}
       >
         {t("exercise")}
       </Text>
@@ -26,6 +28,8 @@ const ExerciseListTitle = (props: { containerStyle?: ViewStyle }) => {
           styles.exerciseSets,
           styles.exerciseTitle,
         ]}
+        adjustsFontSizeToFit={true}
+        numberOfLines={1}
       >
         {t("sets")}
       </Text>
@@ -35,6 +39,8 @@ const ExerciseListTitle = (props: { containerStyle?: ViewStyle }) => {
           styles.exerciseRepetitions,
           styles.exerciseTitle,
         ]}
+        adjustsFontSizeToFit={true}
+        numberOfLines={1}
       >
         {t("repetitions")}
       </Text>

@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { View, Text, StyleSheet, Alert, ScrollView } from "react-native";
 import { useIsFocused } from "@react-navigation/native";
 import { Link, router, useLocalSearchParams } from "expo-router";
@@ -202,10 +202,10 @@ const routineDescriptionStyles = (theme: Theme) =>
       paddingTop: 32,
       lineHeight: 64,
     },
-    emptyDayBtnContainer: { width: "50%", margin: "auto" },
+    emptyDayBtnContainer: { width: "55%", margin: "auto" },
     emptyDayBtnText: {
       fontSize: 18,
-      letterSpacing: 2,
+      letterSpacing: 1,
       fontWeight: "bold",
       textAlign: "center",
     },
@@ -220,11 +220,11 @@ const routineDescriptionStyles = (theme: Theme) =>
       marginTop: 15,
       marginBottom: 30,
       margin: "auto",
-      gap: 40,
+      gap: 20,
     },
     modifyRoutineBtnText: {
       fontSize: 14,
-      letterSpacing: 2,
+      letterSpacing: 1,
       fontWeight: "bold",
       textAlign: "center",
       paddingVertical: 6,

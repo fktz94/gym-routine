@@ -62,7 +62,7 @@ export default SecondStep;
 const secondStepStyles = (theme: Theme) =>
   StyleSheet.create({
     mainContainer: {
-      paddingTop: 40,
+      paddingTop: 42,
       flex: 1,
       flexGrow: 1,
       gap: 40,
