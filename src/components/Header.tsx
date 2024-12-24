@@ -71,6 +71,7 @@ const headerStyles = (theme: Theme) =>
       paddingVertical: 20,
       backgroundColor: Colors[theme].background,
       width: "100%",
+      height: 75,
     },
     header: {
       flexDirection: "row",

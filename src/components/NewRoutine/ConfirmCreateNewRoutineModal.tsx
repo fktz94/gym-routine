@@ -26,7 +26,9 @@ const ConfirmCreateNewRoutineModal = ({
     >
       <View style={styles.innerContainer}>
         <Text style={styles.baseText}>{t("almostDone")}</Text>
-        <Text style={styles.baseText}>{t("confirm")}</Text>
+        <Text style={[styles.baseText, { fontWeight: "600" }]}>
+          {t("confirm")}
+        </Text>
         <Text style={[styles.baseText, { fontSize: 14 }]}>
           {t("modifyLater")}
         </Text>

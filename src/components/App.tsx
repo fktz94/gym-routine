@@ -1,4 +1,4 @@
-import { StyleSheet, View } from "react-native";
+import React, { StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Stack, usePathname } from "expo-router";
 import { StatusBar } from "expo-status-bar";

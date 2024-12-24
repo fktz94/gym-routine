@@ -1,4 +1,4 @@
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import React, { ScrollView, StyleSheet, Text, View } from "react-native";
 import ExerciseListDay from "../ExerciseList/ExerciseListDay";
 import { Colors } from "@/src/constants/Colors";
 import useNewRoutineContext from "@/src/contexts/NewRoutine/useNewRoutineContext";
@@ -62,7 +62,7 @@ export default SecondStep;
 const secondStepStyles = (theme: Theme) =>
   StyleSheet.create({
     mainContainer: {
-      paddingTop: 42,
+      paddingTop: 10,
       flex: 1,
       flexGrow: 1,
       gap: 40,

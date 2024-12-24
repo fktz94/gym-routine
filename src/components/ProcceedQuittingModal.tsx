@@ -26,7 +26,9 @@ const ProcceedQuittingModal = () => {
     <ThemedModal closeModal={cancel} handleAccept={accept}>
       <View style={styles.innerContainer}>
         <Text style={styles.baseText}>{t("changesLost")}</Text>
-        <Text style={styles.baseText}>{t("procceed")}</Text>
+        <Text style={[styles.baseText, { fontWeight: "600" }]}>
+          {t("procceed")}
+        </Text>
       </View>
     </ThemedModal>
   );

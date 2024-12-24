@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import React, { StyleSheet, Text, View } from "react-native";
 import { Link, Redirect } from "expo-router";
 import CustomLoader from "@/src/components/CustomLoader";
 import CurrentRoutineButton from "@/src/components/Index/CurrentRoutineButton";
