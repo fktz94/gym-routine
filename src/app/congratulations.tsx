@@ -1,5 +1,4 @@
 import { StyleSheet, Text, View } from "react-native";
-import ConfettiCannon from "react-native-confetti-cannon";
 import ThemedButton from "../components/Buttons/ThemedButton";
 import useSettingsContext from "../contexts/Settings/useSettingsContext";
 import { router } from "expo-router";
@@ -20,26 +19,23 @@ const Congratulations = () => {
   };
 
   return (
-    <>
-      <View style={styles.container}>
-        <ConfettiCannon count={200} origin={{ x: -10, y: 0 }} />
-        <View style={styles.textContainer}>
-          <Text style={[styles.customText, styles.title]}>
-            {t("congratulations")}
-          </Text>
-          <Text style={styles.customText}>{t("succeeded")}</Text>
-          <Text style={styles.customText}>{t("gainedDay")}</Text>
-          <Text style={styles.customText}> {t("keepGoing")}</Text>
-        </View>
-        <ThemedButton
-          onPress={goHome}
-          externalButtonStyles={styles.buttonContainer}
-          externalTextStyles={styles.buttonText}
-        >
-          {t("backHome")}
-        </ThemedButton>
+    <View style={styles.container}>
+      <View style={styles.textContainer}>
+        <Text style={[styles.customText, styles.title]}>
+          {t("congratulations")}
+        </Text>
+        <Text style={styles.customText}>{t("succeeded")}</Text>
+        <Text style={styles.customText}>{t("gainedDay")}</Text>
+        <Text style={styles.customText}> {t("keepGoing")}</Text>
       </View>
-    </>
+      <ThemedButton
+        onPress={goHome}
+        externalButtonStyles={styles.buttonContainer}
+        externalTextStyles={styles.buttonText}
+      >
+        {t("backHome")}
+      </ThemedButton>
+    </View>
   );
 };
 
